@@ -1,0 +1,10 @@
+{
+  "name": "@dsap/motion",
+  "private": true,
+  "description": "Scroll motion for iitjeekota.com: autoscroll (plan C5), section progress for pinned sections, motion preferences and the device quality tier. No runtime dependencies.",
+  "type": "module",
+  "exports": { ".": "./src/index.ts" },
+  "dependencies": {
+    "@dsap/tokens": "workspace:*"
+  }
+}

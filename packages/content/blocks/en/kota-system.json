@@ -1,0 +1,22 @@
+{
+  "heading": "What Kota coaching means here",
+  "body": [
+    {
+      "text": "Our JEE programme is powered by a top coaching institute in Kota. These are the five parts of it that your child meets every week.",
+      "requires": ["partner.affiliation"]
+    }
+  ],
+  "points": [
+    { "text": "Faculty from Kota, teaching in Pune.", "requires": ["faculty.kota"] },
+    {
+      "text": "Study material for the whole syllabus: theory notes, solved examples, chapter-wise problem sets and past IIT JEE papers with solutions.",
+      "requires": ["programme.study-material"]
+    },
+    {
+      "text": "A test after every chapter, a longer test every fourth week and a full JEE Main mock every month.",
+      "requires": ["test-series.format"]
+    },
+    { "text": "One-on-one time with a teacher, in mentoring slots you book.", "requires": ["programme.mentoring"] },
+    { "text": "One evening session, {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, so school comes first." }
+  ]
+}

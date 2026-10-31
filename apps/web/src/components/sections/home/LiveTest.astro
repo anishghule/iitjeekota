@@ -1,0 +1,180 @@
+---
+/**
+ * Try a test the way JEE sets it (plan C1 7): a JEE-style screen with a timer, a palette, mark for
+ * review and an instant result with solutions. Questions and marking come from the live-test widget.
+ */
+import { fill, strings, type Locale } from "../../../i18n/index.ts";
+import { minutesAndSeconds, templateParts } from "../../../lib/format.ts";
+import { syllabus } from "../../../lib/data.ts";
+import type { LiveTestData, SectionData } from "../../../lib/types.ts";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const w = section.widget as LiveTestData | undefined;
+const subjects = syllabus(locale).subjects;
+const letters = ["A", "B", "C", "D"];
+const total = w?.questions.length ?? 0;
+---
+<section id={section.id} class="live section" aria-labelledby={`${section.id}-title`}>
+  <div class="container split live__grid">
+    <div class="live__text">
+      <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} class="lede" />
+      {w && <p class="muted">{w.markingNote}</p>}
+    </div>
+    {w && (
+      <div class="cbt" data-surface="chalk" data-live-test data-minutes={w.minutes}
+        data-right={w.marking.right} data-wrong={w.marking.wrong} data-blank={w.marking.blank}>
+        <div class="cbt__bar">
+          <span>{t.liveTest.title}</span>
+          <span class="cbt__timer"><span class="visually-hidden">{t.liveTest.timeLeft}</span><span class="tabular" data-timer>{minutesAndSeconds(w.minutes * 60)}</span></span>
+        </div>
+        <div class="cbt__sheet" data-sheet>
+          <div class="cbt__tabs" role="group">
+            {subjects.map((s) => <button type="button" class="cbt__tab" data-tab={s.id} aria-selected="false">{s.name}</button>)}
+          </div>
+          <div class="cbt__palette" role="group" aria-label={t.liveTest.palette}>
+            <div class="cbt__grid">
+              {w.questions.map((_, i) => <button type="button" class="cbt__p tabular" data-palette={i} data-state="not-visited">{i + 1}</button>)}
+            </div>
+            <ul class="cbt__legend" role="list">
+              <li><i data-state="not-visited"></i>{t.liveTest.notVisited}</li>
+              <li><i data-state="not-answered"></i>{t.liveTest.notAnswered}</li>
+              <li><i data-state="answered"></i>{t.liveTest.answered}</li>
+              <li><i data-state="marked"></i>{t.liveTest.marked}</li>
+            </ul>
+          </div>
+          <div class="cbt__body">
+            <div class="cbt__main">
+              <p class="cbt__count muted" data-count data-template={fill(t.liveTest.question, { total })} aria-live="polite">{fill(t.liveTest.question, { n: 1, total })}</p>
+              {w.questions.map((q, qi) => (
+                <fieldset class="cbt__question" data-question data-subject={q.subject} data-answer={q.answer} hidden={qi > 0}>
+                  <legend>{q.text}</legend>
+                  {q.options.map((o, oi) => (
+                    <label class="cbt__option">
+                      <input type="radio" name={`q${qi}`} value={oi} />
+                      <span class="cbt__key" aria-hidden="true">{letters[oi]}</span>
+                      <span>{o}</span>
+                    </label>
+                  ))}
+                </fieldset>
+              ))}
+              <noscript><p>{t.liveTest.noScript}</p></noscript>
+            </div>
+          </div>
+          <div class="cbt__actions">
+            <button type="button" class="button button--quiet" data-action="mark">{t.liveTest.markNext}</button>
+            <button type="button" class="button button--quiet" data-action="clear">{t.liveTest.clear}</button>
+            <button type="button" class="button" data-action="next">{t.liveTest.saveNext}</button>
+            <button type="button" class="button" data-action="submit">{t.liveTest.submit}</button>
+          </div>
+        </div>
+        <div class="cbt__result" data-result tabindex="-1" hidden>
+          <p class="muted" data-time-up hidden>{t.liveTest.timeUp}</p>
+          <h3 class="t-h2">{t.liveTest.result}</h3>
+          <p class="cbt__marks t-h1 tabular">
+            {templateParts(t.liveTest.marks).map((p) =>
+              "key" in p ? <span data-score={p.key}>{p.key === "max" ? total * w.marking.right : 0}</span> : <span class="muted">{p.text}</span>)}
+          </p>
+          <dl class="cbt__counts">
+            <div><dt>{t.liveTest.right}</dt><dd class="tabular" data-score="right">0</dd></div>
+            <div><dt>{t.liveTest.wrong}</dt><dd class="tabular" data-score="wrong">0</dd></div>
+            <div><dt>{t.liveTest.left}</dt><dd class="tabular" data-score="left">0</dd></div>
+          </dl>
+          <ol class="cbt__review" role="list">
+            {w.questions.map((q, i) => (
+              <li data-review data-letters={letters.join(",")}>
+                <p><strong>{i + 1}.</strong> {q.text}</p>
+                <p class="muted">{t.liveTest.yourAnswer}: <span data-mine></span>. {t.liveTest.correct}: {letters[q.answer]}, {q.options[q.answer]}</p>
+                <p>{t.liveTest.solution}: {q.solution}</p>
+              </li>
+            ))}
+          </ol>
+          <button type="button" class="button" data-action="again">{t.liveTest.again}</button>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .live__grid { align-items: start; }
+  .live__text { display: grid; gap: var(--space-5); }
+  /* The test screen scales with its own width (container units), between the small and body type
+     sizes, so on a phone the whole question, its options and the buttons fit one screen. */
+  .cbt {
+    --cbt-text: clamp(var(--type-small-size), 3.6cqi, var(--type-body-size));
+    --cbt-pad: clamp(var(--space-2), 3cqi, var(--space-5));
+    container-type: inline-size;
+    background: var(--bg);
+    color: var(--text);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-4);
+    overflow: hidden;
+  }
+  .cbt > * { font-size: var(--cbt-text); line-height: var(--type-body-lh); }
+  .cbt__bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: calc(var(--cbt-pad) / 2) var(--cbt-pad);
+    background: var(--river);
+    color: var(--bg-raised);
+    font-weight: var(--weight-semibold);
+  }
+  .cbt__timer { padding: 0 var(--space-2); border-radius: var(--radius-sm); background: var(--bg-raised); color: var(--text); }
+  .cbt__tabs { display: flex; gap: var(--space-1); padding: var(--space-2) var(--cbt-pad) 0; background: var(--bg-sunken); }
+  .cbt__tab { border: 0; padding: var(--space-1) var(--space-3); border-radius: var(--radius-sm) var(--radius-sm) 0 0; background: transparent; color: var(--text-muted); font-size: inherit; }
+  .cbt__tab[aria-selected="true"] { background: var(--bg); color: var(--text); font-weight: var(--weight-semibold); }
+  .cbt__main { padding: var(--cbt-pad); display: grid; gap: calc(var(--cbt-pad) / 2); min-width: 0; }
+  .cbt__question { display: grid; gap: calc(var(--cbt-pad) / 2); }
+  .cbt__question legend { font-weight: var(--weight-semibold); margin-block-end: calc(var(--cbt-pad) / 2); }
+  .cbt__option {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: calc(var(--cbt-pad) / 2) var(--cbt-pad);
+    border-radius: var(--radius-md);
+    background: var(--bg-raised);
+    box-shadow: var(--shadow-1);
+    cursor: pointer;
+  }
+  .cbt__option input { position: absolute; opacity: 0; }
+  .cbt__option:has(input:checked) { outline: var(--space-1) solid var(--subject-physics); }
+  .cbt__option:has(input:focus-visible) { outline: var(--space-1) solid var(--focus); }
+  .cbt__key { display: grid; place-items: center; width: 2em; height: 2em; flex: none; border-radius: var(--radius-round); background: var(--bg-sunken); font-weight: var(--weight-semibold); }
+  .cbt__option:has(input:checked) .cbt__key { background: var(--action-bg); color: var(--action-text); }
+  /* The palette is a strip above the question: numbers in a row, the legend beside them. */
+  .cbt__palette {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--cbt-pad);
+    padding: calc(var(--cbt-pad) / 2) var(--cbt-pad);
+    background: var(--bg-sunken);
+  }
+  .cbt__grid { display: flex; gap: var(--space-2); }
+  .cbt__p { width: 2.4em; height: 2.4em; border: 0; border-radius: var(--radius-sm); background: var(--bg-raised); box-shadow: var(--shadow-1); font-size: inherit; }
+  .cbt__p[aria-current] { outline: var(--space-1) solid var(--text); }
+  .cbt [data-state="not-answered"] { background: var(--error); color: var(--bg-raised); }
+  .cbt [data-state="answered"] { background: var(--ok); color: var(--bg-raised); }
+  .cbt [data-state="marked"], .cbt [data-state="marked-answered"] { background: var(--river); color: var(--bg-raised); }
+  .cbt__legend { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); font-size: var(--type-small-size); color: var(--text-muted); }
+  .cbt__legend li { display: flex; align-items: center; gap: var(--space-1); }
+  .cbt__legend i { width: 0.8em; height: 0.8em; border-radius: var(--radius-sm); background: var(--bg-raised); box-shadow: var(--shadow-1); }
+  .cbt__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: calc(var(--cbt-pad) / 2) var(--cbt-pad); background: var(--bg-sunken); }
+  .cbt__actions .button { min-height: 2.4em; padding: 0 var(--space-3); font-size: inherit; }
+  .cbt__result { padding: var(--cbt-pad); display: grid; gap: var(--space-4); }
+  .cbt__counts { display: flex; gap: var(--space-6); }
+  .cbt__counts dt { font-size: var(--type-small-size); color: var(--text-muted); }
+  .cbt__counts dd { margin: 0; font-family: var(--font-display); font-size: var(--type-h2-size); font-weight: var(--weight-heavy); }
+  .cbt__review { display: grid; gap: var(--space-4); }
+  .cbt__review li { padding: var(--space-4); border-radius: var(--radius-md); background: var(--bg-raised); box-shadow: var(--shadow-1); display: grid; gap: var(--space-2); }
+  .cbt__review li[data-outcome="right"] { box-shadow: inset var(--space-1) 0 0 var(--ok), var(--shadow-1); }
+  .cbt__review li[data-outcome="wrong"] { box-shadow: inset var(--space-1) 0 0 var(--error), var(--shadow-1); }
+</style>

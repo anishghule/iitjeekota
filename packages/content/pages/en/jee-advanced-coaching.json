@@ -1,0 +1,51 @@
+{
+  "route": "jee-advanced-coaching",
+  "status": "draft",
+  "meta": {
+    "title": "JEE Advanced coaching in Pune | D-SAP Ghule Tutorials",
+    "description": "JEE Advanced coaching with Advanced-level problem sets, quarterly Advanced mocks in Class 12 and one-on-one mentoring with Kota faculty."
+  },
+  "h1": "JEE Advanced coaching in Pune",
+  "intro": [
+    "JEE Advanced is the exam for admission to the IITs. Only students who do well enough in JEE Main can sit it."
+  ],
+  "sections": [
+    {
+      "id": "exam",
+      "kind": "prose",
+      "heading": "How JEE Advanced is different",
+      "body": [
+        "There are {{fact:exam.jee-advanced#papers}} papers of {{fact:exam.jee-advanced#hoursEach}} hours each, on the same day. The kinds of questions and the marking change from year to year, so practice has to cover more than one kind of question."
+      ]
+    },
+    {
+      "id": "preparing",
+      "kind": "list",
+      "heading": "How we prepare students for it",
+      "body": [
+        { "text": "The two-year programme prepares for JEE Advanced alongside JEE Main, from the start.", "requires": ["programme.class-11"] }
+      ],
+      "points": [
+        { "text": "Problem sets at JEE Advanced level for every chapter.", "requires": ["programme.study-material"] },
+        { "text": "A JEE Advanced mock every quarter in Class 12.", "requires": ["test-series.format"] },
+        { "text": "One-on-one mentoring slots for the hardest problems.", "requires": ["programme.mentoring"] },
+        { "text": "Experienced faculty from Kota.", "requires": ["faculty.kota"] }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions about JEE Advanced",
+      "questions": [
+        {
+          "q": "Does every student prepare for JEE Advanced?",
+          "a": { "text": "In the two-year programme, yes. Preparing for it also helps in JEE Main.", "requires": ["programme.class-11"] }
+        },
+        {
+          "q": "Where can I read the official rules?",
+          "a": "In the JEE Advanced information brochure, published each year by the IIT that runs the exam."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

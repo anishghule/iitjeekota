@@ -1,0 +1,65 @@
+{
+  "route": "area-kalewadi",
+  "status": "draft",
+  "meta": {
+    "title": "IIT JEE coaching in Kalewadi | D-SAP Ghule Tutorials",
+    "description": "JEE coaching for Kalewadi students at our Wakad branch, via Kalewadi Phata. Faculty from Kota, {{fact:batch.days}} from {{fact:batch.timings#start}}."
+  },
+  "h1": "IIT JEE coaching in Kalewadi",
+  "intro": [
+    "Kalewadi students are about {{commute:kalewadi#km}} km from our Wakad branch, the closer of our two centres."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "Via Kalewadi Phata",
+      "body": [
+        {
+          "text": "Hedgewar Road and Kaspate Vasti Road bring you to Wakad, joining it at Kalewadi Phata.",
+          "requires": ["area.kalewadi.route"]
+        }
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Kalewadi's place on the map",
+      "body": [
+        {
+          "text": "Kalewadi is linked to Chinchwad by the Hedgewar Bridge and to Pimpri by the Pavna bridge, while Kalewadi Phata connects it to Wakad and our branch.",
+          "requires": ["area.kalewadi.bridges", "area.kalewadi.route"]
+        },
+        "Our head office in New Sangvi is farther from Kalewadi, so Wakad is the centre we suggest here."
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "For Kalewadi students",
+      "body": [
+        {
+          "text": "Start JEE preparation with the two-year programme after Class 10, or take the one-year programme in Class 12.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Kalewadi questions",
+      "questions": [
+        {
+          "q": "Which centre should a Kalewadi student join?",
+          "a": "The Wakad branch, about {{commute:kalewadi#km}} km away."
+        },
+        {
+          "q": "How long is each class day?",
+          "a": "From {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, {{fact:batch.days}}."
+        },
+        {
+          "q": "Does my child get study material?",
+          "a": { "text": "Yes: notes, solved examples, chapter-wise problem sets and past IIT JEE papers with solutions.", "requires": ["programme.study-material"] }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

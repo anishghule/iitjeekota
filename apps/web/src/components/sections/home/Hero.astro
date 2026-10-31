@@ -1,0 +1,53 @@
+---
+/**
+ * Opening (plan C1 1): the H1, the intro and the batch size beside the struck medal, which floats
+ * and leans towards the pointer, and turns away as the page scrolls on (scene "medal"). On narrow
+ * screens the medal sits above the text. On the still tier it is the official medal image.
+ */
+import { fill, strings, type Locale } from "../../../i18n/index.ts";
+import { fact, mediaFile, site } from "../../../lib/data.ts";
+import type { PageData } from "../../../lib/types.ts";
+import Icon from "../../ui/Icon.astro";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  page: PageData;
+  locale: Locale;
+}
+const { page, locale } = Astro.props;
+const t = strings(locale);
+// The intro already gives the days, hours and centres; the batch size is the one fact it leaves out.
+const size = fact(locale, "batch.size");
+const face = site.brand.logo["512"];
+const normal = mediaFile("brand/logo-medal-normal", locale);
+const phone = site.contact.phone;
+---
+<section class="hero" data-scene="medal" data-scene-progress="passage" data-face={face} data-normal={normal?.url} aria-labelledby="hero-title">
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <h1 id="hero-title" class="t-display">{page.h1}</h1>
+      <Paragraphs paragraphs={page.intro} class="lede" />
+      {size && <p class="proof"><Icon name="batch" size="md" />{fill(t.hero.batch, { size })}</p>}
+      <div class="actions">
+        <a class="button" href="#enquiry">{t.hero.enquire}</a>
+        {phone && <a class="button button--quiet" href={phone.href}><Icon name="phone" size="sm" />{fill(t.hero.call, { phone: phone.display })}</a>}
+      </div>
+    </div>
+    <div class="hero__medal" data-scene-slot>
+      <img src={face} width="512" height="512" alt={t.hero.medal} fetchpriority="high" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { padding-block: calc(var(--nav-height) + var(--space-6)) var(--space-section); min-height: 100dvh; display: grid; align-items: center; }
+  /* One row on wide screens; when the two wrap, wrap-reverse puts the medal above the text. */
+  .hero__grid { display: flex; flex-wrap: wrap-reverse; align-items: center; gap: var(--space-6); }
+  .hero__text { flex: 1 1 var(--column-min); display: grid; gap: var(--space-5); }
+  .hero__text :global(.lede) { max-width: var(--measure); }
+  .proof { display: flex; gap: var(--space-3); align-items: center; font-weight: var(--weight-semibold); }
+  .proof :global(.icon) { color: var(--accent); }
+  .hero__medal { flex: 1 1 var(--column-min); display: grid; place-items: center; height: clamp(var(--column-min), 45vw, 70dvh); }
+  .hero__medal img { max-width: 80%; max-height: 80%; object-fit: contain; filter: drop-shadow(0 var(--space-5) var(--space-7) var(--bg-sunken)); }
+  .hero__medal :global(canvas) { width: 100%; height: 100%; }
+</style>

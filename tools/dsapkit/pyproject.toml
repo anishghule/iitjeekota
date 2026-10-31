@@ -1,0 +1,19 @@
+[project]
+name = "dsapkit"
+version = "0.1.0"
+description = "Build tooling for iitjeekota.com: tokens, fonts, icons, logo, OG images, copy lint and the brand guide."
+requires-python = ">=3.12"
+dependencies = []
+
+[project.scripts]
+dsapkit = "dsapkit.__main__:main"
+
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+dsapkit = ["guide/*.css"]

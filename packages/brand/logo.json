@@ -1,0 +1,11 @@
+{
+  "$description": "The official D-SAP medal (media slot brand/logo-medal) and the renditions built from it. The build finds the medal from its alpha channel, centres it, downscales it in linear light (area average, then Lanczos-3) and sharpens small sizes. Nothing is redrawn. The 3D metallic medal uses the same slot with material.medal-* tokens.",
+  "slot": "brand/logo-medal",
+  "alphaThreshold": 8,
+  "sizes": [512, 256, 128, 64],
+  "fileName": "medal-{size}.png",
+  "sharpen": [
+    { "maxSize": 48, "radius": 0.55, "amount": 0.9, "$description": "Tab icons: restores edge contrast lost in a 20 to 60 times downscale (chosen 2026-10-30, option B)." },
+    { "maxSize": 128, "radius": 0.7, "amount": 0.35 }
+  ]
+}

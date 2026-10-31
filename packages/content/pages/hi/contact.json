@@ -1,0 +1,16 @@
+{
+  "route": "contact",
+  "status": "draft",
+  "meta": {
+    "title": "D-SAP घुले ट्यूटोरियल्स संपर्क | कॉल, WhatsApp या मिलें",
+    "description": "D-SAP घुले ट्यूटोरियल्स को {{fact:contact.phone}} पर कॉल या WhatsApp करें, या न्यू सांगवी और वाकड के हमारे JEE सेंटर पर आएँ।"
+  },
+  "h1": "हमसे संपर्क करें",
+  "intro": [
+    "हमें {{fact:contact.phone}} पर कॉल करें या {{fact:contact.whatsapp}} पर WhatsApp मैसेज भेजें। हम प्रोग्राम, समय और फीस के बारे में बता सकते हैं।"
+  ],
+  "sections": [
+    { "id": "visit", "kind": "prose", "heading": "सेंटर पर आएँ", "body": [ "हमारा हेड ऑफिस न्यू सांगवी में है और ब्रांच वाकड में। [दोनों सेंटर](page:centres) के पेज पर पता और रास्ता है।" ] },
+    { "id": "call-back", "kind": "prose", "heading": "कॉल बैक माँगें", "body": [ "फ़ॉर्म में अपना नाम और नंबर लिखें, हम आपको कॉल करेंगे।" ] }
+  ]
+}

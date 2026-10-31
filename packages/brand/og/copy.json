@@ -1,0 +1,19 @@
+{
+  "$description": "Default Open Graph text per locale. Brand name and domain come from identity.json. Hindi and Marathi are drafts until a native writer reviews them (plan Phase 4).",
+  "locales": {
+    "en": {
+      "title": "IIT JEE coaching in Pune, powered by Kota",
+      "subtitle": "Head office in New Sangvi. Branch in Wakad, Pimpri-Chinchwad."
+    },
+    "hi": {
+      "title": "पुणे में IIT JEE कोचिंग, कोटा के साथ",
+      "subtitle": "मुख्य शाखा न्यू सांगवी में। दूसरी शाखा वाकड, पिंपरी-चिंचवड में।",
+      "draft": true
+    },
+    "mr": {
+      "title": "पुण्यात IIT JEE कोचिंग, कोटाच्या साथीने",
+      "subtitle": "मुख्य शाखा नवी सांगवी येथे. दुसरी शाखा वाकड, पिंपरी-चिंचवड येथे.",
+      "draft": true
+    }
+  }
+}

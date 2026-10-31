@@ -1,0 +1,65 @@
+{
+  "route": "area-balewadi",
+  "status": "draft",
+  "meta": {
+    "title": "IIT JEE coaching in Balewadi | D-SAP Ghule Tutorials",
+    "description": "JEE coaching for Balewadi students at our Wakad branch, a short drive north across the river. Faculty from Kota, {{fact:batch.days}}."
+  },
+  "h1": "IIT JEE coaching in Balewadi",
+  "intro": [
+    "Students in Balewadi are closest to our Wakad branch, about {{commute:balewadi#km}} km north across the river."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "Balewadi to Wakad",
+      "body": [
+        {
+          "text": "From Balewadi Gaon Road, turn onto Pimple Nilakh Road and go over the Babasaheb Ambedkar Bridge. On the far side, the New DP Road leads to Wakad.",
+          "requires": ["area.balewadi.route"]
+        }
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Sport and study in Balewadi",
+      "body": [
+        {
+          "text": "Balewadi is home to the Shree Shiv Chhatrapati Sports Complex, which hosted the National Games in 1994 and the Commonwealth Youth Games in 2008.",
+          "requires": ["area.balewadi.sports-complex"]
+        },
+        "Classes run {{fact:batch.days}} from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}. If your child trains in a sport, plan practice around that window, and the two can sit side by side."
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Programmes open to Balewadi students",
+      "body": [
+        {
+          "text": "Two years from Class 11, or one year in Class 12. Either way, a batch has no more than {{fact:batch.size}} students.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Balewadi questions",
+      "questions": [
+        {
+          "q": "How far is the Wakad branch from Balewadi?",
+          "a": "About {{commute:balewadi#km}} km by road."
+        },
+        {
+          "q": "Is the head office in New Sangvi closer?",
+          "a": "No. From Balewadi, New Sangvi is farther than Wakad."
+        },
+        {
+          "q": "Which days are classes held?",
+          "a": "{{fact:batch.days}}, from {{fact:batch.timings#start}}."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

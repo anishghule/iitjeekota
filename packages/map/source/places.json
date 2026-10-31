@@ -1,0 +1,129 @@
+{
+  "$source": "OpenStreetMap via {'$description': 'Overpass lists the main server and its public mirrors, tried in order: the main one is often busy.', 'overpass': ['https://overpass-api.de/api/interpreter', 'https://overpass.kumi.systems/api/interpreter', 'https://overpass.private.coffee/api/interpreter'], 'nominatim': 'https://nominatim.openstreetmap.org/search', 'osrm': 'https://router.project-osrm.org/route/v1/driving'}",
+  "data": {
+    "areas": {
+      "aundh": {
+        "lonlat": [
+          73.8101957,
+          18.5618834
+        ],
+        "query": "Aundh, Pune, Maharashtra, India",
+        "found": "Aundh, Pune, Pune City Subdistrict, Pune, Maharashtra, 411027, India"
+      },
+      "baner": {
+        "lonlat": [
+          73.7845232,
+          18.5589937
+        ],
+        "query": "Baner, Pune, Maharashtra, India",
+        "found": "Baner, Pune, Pune City Subdistrict, Pune, Maharashtra, 411001, India"
+      },
+      "balewadi": {
+        "lonlat": [
+          73.7689831,
+          18.5820266
+        ],
+        "query": "Balewadi, Pune, Maharashtra, India",
+        "found": "Balewadi, Pune, Pune City Subdistrict, Pune, Maharashtra, 411001, India"
+      },
+      "pashan": {
+        "lonlat": [
+          73.7952542,
+          18.5386704
+        ],
+        "query": "Pashan, Pune, Maharashtra, India",
+        "found": "Pashan, Pune, Pune City Subdistrict, Pune, Maharashtra, 411001, India"
+      },
+      "wakad": {
+        "lonlat": [
+          73.7809559,
+          18.5885381
+        ],
+        "query": "Wakad, Pimpri-Chinchwad, Maharashtra, India",
+        "found": "Wakad Road, Gulmohar colony, Vishal Nagar, Pimpri-Chinchwad, Haveli Subdistrict, Pune, Maharashtra, 411027, India"
+      },
+      "sangvi": {
+        "lonlat": [
+          73.8280055,
+          18.5692744
+        ],
+        "query": "New Sangvi, Pimpri-Chinchwad, Maharashtra, India",
+        "found": "Sangvi - Bopodi New Bridge, Old Sangvi, Pimpri-Chinchwad, Haveli Subdistrict, Pune, Maharashtra, 411067, India"
+      },
+      "pimple-saudagar": {
+        "lonlat": [
+          73.7977661,
+          18.5981553
+        ],
+        "query": "Pimple Saudagar, Pimpri-Chinchwad, Maharashtra, India",
+        "found": "Pimple Saudagar, Pimpri-Chinchwad, Haveli Subdistrict, Pune, Maharashtra, 431027, India"
+      },
+      "pimple-nilakh": {
+        "lonlat": [
+          73.794051,
+          18.5696605
+        ],
+        "query": "Pimple Nilakh, Pimpri-Chinchwad, Maharashtra, India",
+        "found": "Pimple Nilakh, Pimpri-Chinchwad, Haveli Subdistrict, Pune, Maharashtra, 411069, India"
+      },
+      "pimple-gurav": {
+        "lonlat": [
+          73.8213076,
+          18.5874457
+        ],
+        "query": "Pimple Gurav, Pimpri-Chinchwad, Maharashtra, India",
+        "found": "Pimple Gurav, Pimpri-Chinchwad, Haveli Subdistrict, Pune, Maharashtra, 411061, India"
+      },
+      "rahatani": {
+        "lonlat": [
+          73.7959899,
+          18.6024826
+        ],
+        "query": "Rahatani, Pimpri-Chinchwad, Maharashtra, India",
+        "found": "Rahatani, Pimpri-Chinchwad, Haveli Subdistrict, Pune, Maharashtra, 411017, India"
+      },
+      "kalewadi": {
+        "lonlat": [
+          73.7835393,
+          18.6069696
+        ],
+        "query": "Kalewadi, Pimpri-Chinchwad, Maharashtra, India",
+        "found": "Kalewadi, Pimpri-Chinchwad, Haveli Subdistrict, Pune, Maharashtra, 411017, India"
+      },
+      "chinchwad": {
+        "lonlat": [
+          73.7917128,
+          18.6403548
+        ],
+        "query": "Chinchwad, Pimpri-Chinchwad, Maharashtra, India",
+        "found": "Chinchwad, Mangal Upvan Road, Chinchwad, Pimpri-Chinchwad, Haveli Subdistrict, Pune, Maharashtra, 411019, India"
+      },
+      "hinjewadi": {
+        "lonlat": [
+          73.7382151,
+          18.5927532
+        ],
+        "query": "Hinjawadi, Pune, Maharashtra, India",
+        "found": "Hinjawadi, Mulshi Subdistrict, Pune, Maharashtra, 411057, India"
+      }
+    },
+    "centres": {
+      "sangvi-head-office": {
+        "lonlat": [
+          73.8171253,
+          18.581049
+        ],
+        "from": "fact centre.sangvi.geo",
+        "approximate": false
+      },
+      "wakad": {
+        "lonlat": [
+          73.758887,
+          18.607703
+        ],
+        "from": "fact centre.wakad.geo",
+        "approximate": false
+      }
+    }
+  }
+}

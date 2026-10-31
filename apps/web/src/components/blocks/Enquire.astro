@@ -1,0 +1,108 @@
+---
+/**
+ * Enquiry (plan C1 15): the shared enquiry block, the four-field form, call and WhatsApp, and both
+ * centres. The form sends by the transport in config/features.json; until Phase 8 that is WhatsApp.
+ */
+import features from "../../config/features.json";
+import { fill, strings, type Locale } from "../../i18n/index.ts";
+import { localName, site } from "../../lib/data.ts";
+import type { SectionData } from "../../lib/types.ts";
+import Icon from "../ui/Icon.astro";
+import Paragraphs from "../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const e = t.enquiry;
+const phone = site.contact.phone;
+const whatsapp = site.contact.whatsapp;
+const areaNames = site.areas.map((a) => localName(a.names, locale));
+const formId = `${section.id}-form`;
+---
+<section id={section.id} class="enquire section section--sunken" aria-labelledby={`${section.id}-title`}>
+  <div class="container split enquire__grid">
+    <div class="enquire__text">
+      <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} class="lede" />
+      <div class="enquire__direct">
+        <p class="muted">{e.or}</p>
+        <div class="actions">
+          {phone && <a class="button" href={phone.href}><Icon name="phone" size="sm" />{fill(e.call, { phone: phone.display })}</a>}
+          {whatsapp && <a class="button button--quiet" href={whatsapp.href} rel="external"><Icon name="chat" size="sm" />{e.whatsapp}</a>}
+        </div>
+      </div>
+      <div class="enquire__centres">
+        <h3 class="enquire__head">{e.centres}</h3>
+        <ul role="list">
+          {site.centres.map((c) => (
+            <li>
+              <p><strong>{localName(c.names, locale)}</strong></p>
+              <p class="muted">{c.address}</p>
+              {c.directions && <a href={c.directions} rel="external"><Icon name="pin" size="sm" /> {e.directions}</a>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    {features.enquiryTransport === "whatsapp" && whatsapp && (
+      <form id={formId} class="enquiry-form card" data-enquiry aria-label={e.form}
+        data-message={e.message} data-link={site.contact.links.whatsappMessage} data-digits={whatsapp.digits}
+        data-required={e.required} data-bad-phone={e.badPhone} data-need-consent={e.needConsent}>
+        <label class="field">
+          <span>{e.name}</span>
+          <input name="name" autocomplete="name" required aria-describedby={`${formId}-name`} />
+          <span class="field__error" id={`${formId}-name`} data-error="name" aria-live="polite"></span>
+        </label>
+        <div class="enquiry-form__pair">
+          <label class="field">
+            <span>{e.class}</span>
+            <select name="class" required aria-describedby={`${formId}-class`}>
+              <option value="">{e.choose}</option>
+              {e.classes.map((c) => <option>{c}</option>)}
+            </select>
+            <span class="field__error" id={`${formId}-class`} data-error="class" aria-live="polite"></span>
+          </label>
+          <label class="field">
+            <span>{e.area}</span>
+            <select name="area" required aria-describedby={`${formId}-area`}>
+              <option value="">{e.choose}</option>
+              {areaNames.map((a) => <option>{a}</option>)}
+              <option>{e.otherArea}</option>
+            </select>
+            <span class="field__error" id={`${formId}-area`} data-error="area" aria-live="polite"></span>
+          </label>
+        </div>
+        <label class="field">
+          <span>{e.phone}</span>
+          <input name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder={e.phoneHint} required aria-describedby={`${formId}-phone`} />
+          <span class="field__error" id={`${formId}-phone`} data-error="phone" aria-live="polite"></span>
+        </label>
+        <label class="consent">
+          <input name="consent" type="checkbox" required aria-describedby={`${formId}-consent`} />
+          <span>{e.consent}</span>
+        </label>
+        <span class="field__error" id={`${formId}-consent`} data-error="consent" aria-live="polite"></span>
+        <button class="button" type="submit"><Icon name="chat" size="sm" />{e.send}</button>
+        <p class="muted enquiry-form__note">{e.sendNote}</p>
+      </form>
+    )}
+  </div>
+</section>
+
+<style>
+  .enquire__grid { align-items: start; }
+  .enquire__text { display: grid; gap: var(--space-6); }
+  .enquire__direct { display: grid; gap: var(--space-3); }
+  .enquire__head { font-size: var(--type-small-size); color: var(--text-muted); font-weight: var(--weight-semibold); margin-block-end: var(--space-3); }
+  .enquire__centres ul { display: grid; gap: var(--space-4); }
+  .enquiry-form { display: grid; gap: var(--space-3); }
+  .enquiry-form__pair { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--column-min) / 2)), 1fr)); }
+  .consent { display: grid; grid-template-columns: auto 1fr; gap: var(--space-3); align-items: start; font-size: var(--type-small-size); }
+  .consent input { width: var(--space-5); height: var(--space-5); margin: 0; accent-color: var(--action-bg); }
+  .enquiry-form__note { font-size: var(--type-small-size); }
+  .enquiry-form .button { justify-self: start; }
+</style>

@@ -1,0 +1,23 @@
+{
+  "name": "iitjeekota",
+  "private": true,
+  "description": "Browser packages for iitjeekota.com. Data and build tooling live in packages/* and tools/dsapkit; see CLAUDE.md and docs/adr/0006-browser-toolchain-and-3d.md.",
+  "type": "module",
+  "packageManager": "pnpm@12.16.1",
+  "devEngines": {
+    "runtime": { "name": "node", "version": "24.22.2", "onFail": "download" }
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "preview": "vite --config packages/scenes/preview/vite.config.ts"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/three": "0.186.0",
+    "happy-dom": "21.0.3",
+    "typescript": "7.0.2",
+    "vite": "8.3.4",
+    "vitest": "5.0.5"
+  }
+}

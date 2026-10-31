@@ -1,0 +1,155 @@
+{
+  "$description": "Sections of each page template, in order (plan C1 and C6). kind: prose (heading and paragraphs), faq (heading and questions), list (heading, paragraphs and points). paragraphs and items are [min, max]. gates: facts that must be confirmed before the section shows. component: what draws the section's data from packages/site (the copy only frames it). shared: the page points to a block in blocks/{locale}. routes: layouts for pages that differ from their template. See docs/adr/0005-content-format.md.",
+  "meta": { "titleMax": 60, "descriptionMin": 70, "descriptionMax": 160 },
+  "similarity": { "templates": ["area", "centre", "programme", "pillar"], "shingle": 4, "max": 0.2 },
+  "actions": ["call", "whatsapp", "enquire", "directions", "page"],
+  "templates": {
+    "home": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "kota-system", "kind": "list", "shared": true, "component": "KotaPrism" },
+        { "id": "kota-to-pune", "kind": "prose", "paragraphs": [1, 2], "component": "KotaRoute" },
+        { "id": "faculty", "kind": "prose", "paragraphs": [1, 2], "component": "Faculty", "gates": ["faculty.profiles"] },
+        { "id": "classroom", "kind": "prose", "paragraphs": [1, 1], "component": "Classroom", "gates": ["media:home/classroom-film"] },
+        { "id": "portal", "kind": "prose", "paragraphs": [1, 2], "component": "Portal", "widget": "portal" },
+        { "id": "live-test", "kind": "prose", "paragraphs": [1, 2], "component": "LiveTest", "widget": "live-test" },
+        { "id": "report", "kind": "prose", "paragraphs": [1, 2], "component": "Report", "widget": "report" },
+        { "id": "syllabus", "kind": "prose", "paragraphs": [1, 1], "component": "SyllabusTeaser" },
+        { "id": "journey", "kind": "prose", "paragraphs": [1, 2], "component": "Journey", "widget": "timeline" },
+        { "id": "area-map", "kind": "prose", "paragraphs": [1, 1], "component": "AreaMap" },
+        { "id": "programmes", "kind": "prose", "paragraphs": [1, 2], "component": "Programmes", "widget": "programmes" },
+        { "id": "results", "kind": "prose", "paragraphs": [1, 2], "component": "Results", "gates": ["results.verified"] },
+        { "id": "questions", "kind": "faq", "items": [4, 8] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "pillar": {
+      "intro": [1, 3],
+      "sections": [
+        { "id": "spokes", "kind": "prose", "paragraphs": [1, 2], "component": "SpokeList" },
+        { "id": "why", "kind": "prose", "paragraphs": [2, 4] },
+        { "id": "questions", "kind": "faq", "items": [3, 6] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "programme": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "who-for", "kind": "prose", "paragraphs": [1, 2] },
+        { "id": "covers", "kind": "list", "paragraphs": [1, 2], "items": [3, 8], "component": "SyllabusTable" },
+        { "id": "week", "kind": "prose", "paragraphs": [1, 3] },
+        { "id": "tests", "kind": "prose", "paragraphs": [1, 3], "component": "TestPlan" },
+        { "id": "fees", "kind": "prose", "paragraphs": [1, 1], "component": "Fees", "gates": ["fees"], "optional": true },
+        { "id": "questions", "kind": "faq", "items": [3, 6] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "topic": {
+      "intro": [1, 2],
+      "free": { "min": 2, "max": 6, "kinds": ["prose", "list"] },
+      "sections": [
+        { "id": "questions", "kind": "faq", "items": [2, 6], "optional": true },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "page": {
+      "intro": [1, 2],
+      "free": { "min": 1, "max": 6, "kinds": ["prose", "list", "faq"] },
+      "sections": []
+    },
+    "area": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "getting-there", "kind": "prose", "paragraphs": [1, 2], "component": "CommuteCard" },
+        { "id": "local", "kind": "prose", "paragraphs": [2, 3] },
+        { "id": "kota-system", "kind": "list", "shared": true, "component": "KotaPrism" },
+        { "id": "programmes", "kind": "prose", "paragraphs": [1, 1], "component": "ProgrammeTable" },
+        { "id": "questions", "kind": "faq", "items": [3, 5] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "centre": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "find-us", "kind": "prose", "paragraphs": [1, 2], "component": "CentreCard" },
+        { "id": "inside", "kind": "prose", "paragraphs": [1, 2], "component": "CentreMedia" },
+        { "id": "batches", "kind": "prose", "paragraphs": [1, 1], "component": "ProgrammeTable" },
+        { "id": "questions", "kind": "faq", "items": [3, 5] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "collection": {
+      "intro": [1, 2],
+      "sections": []
+    },
+    "legal": { "waitsFor": "Phase 1: the policies are drafted from the legal research and reviewed by a lawyer." },
+    "post": {
+      "$description": "Guides are Markdown with JSON front matter in posts/{locale}/{post-id}.md. The H1 is the post title in packages/site/blog.json. The first paragraph answers the question; the post links to each page it supports (targets in blog.json).",
+      "markdown": { "minWords": 600, "introMaxWords": 70 }
+    }
+  },
+  "routes": {
+    "powered-by-kota": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "partner", "kind": "prose", "paragraphs": [1, 3], "gates": ["partner.name", "partner.permission"] },
+        { "id": "agreement", "kind": "prose", "paragraphs": [1, 3], "gates": ["partner.agreement"] },
+        { "id": "from-kota", "kind": "list", "paragraphs": [1, 2], "items": [3, 6] },
+        { "id": "stays-local", "kind": "prose", "paragraphs": [1, 2] },
+        { "id": "verify", "kind": "list", "paragraphs": [1, 1], "items": [2, 5] },
+        { "id": "spokes", "kind": "prose", "paragraphs": [1, 1], "component": "SpokeList" },
+        { "id": "questions", "kind": "faq", "items": [3, 6] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "jee-syllabus": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "table", "kind": "prose", "paragraphs": [1, 2], "component": "SyllabusTable" },
+        { "id": "changes", "kind": "prose", "paragraphs": [1, 3] },
+        { "id": "main-vs-advanced", "kind": "prose", "paragraphs": [1, 3] },
+        { "id": "questions", "kind": "faq", "items": [3, 6] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "foundation-class-9-10": {
+      "$description": "Facts about the foundation programme are thin until programme.foundation-details arrives, so its details are one section gated on that fact, not guessed.",
+      "intro": [1, 2],
+      "sections": [
+        { "id": "who-for", "kind": "prose", "paragraphs": [1, 2] },
+        { "id": "details", "kind": "prose", "paragraphs": [1, 3], "gates": ["programme.foundation-details"] },
+        { "id": "minimum-age", "kind": "prose", "paragraphs": [1, 2], "gates": ["legal.foundation-minimum-age"] },
+        { "id": "questions", "kind": "faq", "items": [2, 5] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "fees-and-batches": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "fees", "kind": "prose", "paragraphs": [1, 2], "component": "Fees", "gates": ["fees"] },
+        { "id": "included", "kind": "list", "paragraphs": [1, 1], "items": [3, 7] },
+        { "id": "batches", "kind": "prose", "paragraphs": [1, 2], "component": "BatchCalendar", "gates": ["batch.dates"] },
+        { "id": "questions", "kind": "faq", "items": [2, 5] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "kota-faculty": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "faculty", "kind": "prose", "paragraphs": [1, 2], "component": "FacultyList", "gates": ["faculty.profiles"] },
+        { "id": "kota-teaching", "kind": "prose", "paragraphs": [1, 3] },
+        { "id": "questions", "kind": "faq", "items": [2, 5], "optional": true },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "results": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "results", "kind": "prose", "paragraphs": [1, 2], "component": "ResultsList", "gates": ["results.verified"] },
+        { "id": "how-we-report", "kind": "list", "paragraphs": [1, 1], "items": [3, 6] },
+        { "id": "questions", "kind": "faq", "items": [2, 5], "optional": true },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    }
+  }
+}

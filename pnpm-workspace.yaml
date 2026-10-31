@@ -1,0 +1,13 @@
+# Workspace for the browser packages (docs/adr/0006-browser-toolchain-and-3d.md).
+# Only folders with a package.json are packages; the data folders under packages/ are not.
+packages:
+  - "packages/*"
+  - "apps/*"
+
+# Supply chain (CLAUDE.md section 5), enforced by pnpm:
+# refuse any version, direct or transitive, published less than 14 days ago (minutes).
+minimumReleaseAge: 20160
+# exact versions only when adding a dependency
+saveExact: true
+# no install scripts run unless a package is named here, with a reason
+onlyBuiltDependencies: []

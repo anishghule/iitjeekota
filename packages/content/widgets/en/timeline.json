@@ -1,0 +1,47 @@
+{
+  "$description": "The two-year programme as a timeline for the home page's two-years section. Each step names the facts it states. The recurring rhythm is shown beside the steps.",
+  "steps": [
+    {
+      "when": "May, after Class 10",
+      "title": "Foundation period",
+      "detail": "A short start before Class 11, so the first weeks are not a shock.",
+      "requires": ["programme.start"]
+    },
+    {
+      "when": "June, Class 11",
+      "title": "The two-year programme starts",
+      "detail": "Physics, Chemistry and Maths, {{fact:batch.days}}, {{fact:batch.timings#start}} to {{fact:batch.timings#end}}.",
+      "requires": ["programme.start", "programme.subjects"]
+    },
+    {
+      "when": "Class 11",
+      "title": "The base in all three subjects",
+      "detail": "A test after every chapter and a longer test every 4th week. A full JEE Main mock every month.",
+      "requires": ["test-series.format"]
+    },
+    {
+      "when": "Class 12",
+      "title": "JEE Advanced joins the plan",
+      "detail": "A JEE Advanced mock every quarter, on top of the monthly JEE Main mock.",
+      "requires": ["test-series.format"]
+    },
+    {
+      "when": "{{fact:exam.jee-main#sessions}}, Class 12",
+      "title": "JEE Main",
+      "detail": "Two sessions. {{fact:exam.jee-main#questions}} questions in {{fact:exam.jee-main#hours}} hours, all compulsory.",
+      "requires": ["exam.jee-main"]
+    },
+    {
+      "when": "After JEE Main",
+      "title": "JEE Advanced",
+      "detail": "For those who qualify: {{fact:exam.jee-advanced#papers}} papers of {{fact:exam.jee-advanced#hoursEach}} hours each, on one day.",
+      "requires": ["exam.jee-advanced"]
+    }
+  ],
+  "rhythm": [
+    { "every": "Every week", "what": "A practice sheet", "requires": ["method.practice-sheets"] },
+    { "every": "Every week", "what": "A test on the online portal, topic-wise and full syllabus in turn", "requires": ["test-series.format", "test-series.cbt"] },
+    { "every": "Every month", "what": "A full JEE Main mock: {{fact:exam.jee-main#questions}} questions, {{fact:exam.jee-main#hours}} hours", "requires": ["test-series.format"] },
+    { "every": "Any day", "what": "Doubts on the forum, or at a doubt session", "requires": ["method.doubts"] }
+  ]
+}

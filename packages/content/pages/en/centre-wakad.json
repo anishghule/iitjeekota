@@ -1,0 +1,54 @@
+{
+  "route": "centre-wakad",
+  "status": "draft",
+  "meta": {
+    "title": "D-SAP Ghule Tutorials Wakad | JEE coaching branch",
+    "description": "Our Wakad branch in Swami Vivekanand Nagar, closer for Hinjewadi, Balewadi and Kalewadi. JEE classes powered by a top Kota institute."
+  },
+  "h1": "D-SAP Ghule Tutorials Wakad",
+  "intro": [
+    "Our Wakad branch is in Swami Vivekanand Nagar. For families in Hinjewadi, Balewadi, Rahatani, Kalewadi and Chinchwad, it is the closer of our two centres."
+  ],
+  "sections": [
+    {
+      "id": "find-us",
+      "heading": "Finding the branch",
+      "body": [
+        "Look for the Shiv Malhar building. We are on the first floor.",
+        { "text": "The map link takes you to the branch in Google Maps for directions.", "requires": ["centre.wakad.maps"] }
+      ]
+    },
+    {
+      "id": "inside",
+      "heading": "What the classrooms have",
+      "body": [
+        { "text": "AI-powered digital boards, the same as at the head office.", "requires": ["classroom.digital-board"] },
+        { "text": "Lectures are also online, so a class missed for a school event can be watched later.", "requires": ["method.online-lectures"] }
+      ]
+    },
+    {
+      "id": "batches",
+      "heading": "Classes at Wakad",
+      "body": ["JEE classes at this branch run from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, at most {{fact:batch.size}} students to a batch."]
+    },
+    {
+      "id": "questions",
+      "heading": "About the Wakad branch",
+      "questions": [
+        {
+          "q": "Is there a library at Wakad?",
+          "a": "{{fact:centre.sangvi.library}} is at our head office in New Sangvi."
+        },
+        {
+          "q": "We live in Pimple Gurav. Which centre is nearer?",
+          "a": "The [head office in New Sangvi](page:centre-sangvi-head-office) is closer to Pimple Gurav."
+        },
+        {
+          "q": "How do we fix a visit?",
+          "a": "Call {{fact:contact.phone}}, or send a WhatsApp message to {{fact:contact.whatsapp}}, and we will set a time."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

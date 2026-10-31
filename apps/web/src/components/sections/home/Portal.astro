@@ -1,0 +1,170 @@
+---
+/**
+ * Lectures, doubts and tests, online (plan C1 6): the AI digital board, playing example
+ * demonstrations (islands/board.ts), with the Mac-style window of the student portal in front of
+ * it. The window opens on the live class. Both are labelled as examples.
+ */
+import board from "../../../config/board.json";
+import { strings, type Locale } from "../../../i18n/index.ts";
+import type { PortalData, SectionData } from "../../../lib/types.ts";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const w = section.widget as PortalData | undefined;
+const id = (tab: string) => `${section.id}-${tab}`;
+const demos = w?.board.demos ?? [];
+const first = demos[0];
+const json = JSON.stringify(demos).replace(/</g, "\\u003c");
+---
+<section id={section.id} class="portal section" data-portal aria-labelledby={`${section.id}-title`}>
+  {w && <script type="application/json" is:inline data-board set:html={json} />}
+  <div class="container split portal__grid">
+    <div class="portal__text">
+      <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} class="lede" />
+      {w && (
+        <>
+          <div class="chips" role="group" aria-label={t.portal.demos}>
+            {demos.map((d, i) => <button type="button" class="chip" data-demo={d.id} aria-pressed={i === 0 ? "true" : "false"}>{d.tab}</button>)}
+          </div>
+          <p class="muted"><span class="badge">{t.common.example}</span> {w.board.label}</p>
+        </>
+      )}
+    </div>
+    {w && (
+      <div class="portal__stage" data-tilt>
+        <figure class="board">
+          <canvas data-board-canvas width={board.width} height={board.height} role="img" aria-label={t.portal.board}></canvas>
+          <span class="board__bar" aria-hidden="true"><span data-board-progress></span></span>
+          <figcaption class="board__caption"><span data-board-title>{first?.title}</span><span data-board-equation>{first?.equation}</span></figcaption>
+        </figure>
+
+        <div class="mac" data-surface="chalk" role="group" aria-label={t.portal.window}>
+          <div class="mac__bar">
+            <span class="mac__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="mac__title">{w.title}</span>
+            <span class="badge">{w.label}</span>
+          </div>
+          <div class="mac__body">
+            <div class="mac__tabs" role="tablist" aria-orientation="vertical" aria-label={w.title}>
+              <button type="button" role="tab" id={id("tab-live")} aria-controls={id("panel-live")} aria-selected="true" tabindex="0">
+                <span class="mac__live-dot" aria-hidden="true"></span>{w.live.label}
+              </button>
+              {w.tabs.map((tab) => (
+                <button type="button" role="tab" id={id(`tab-${tab.id}`)} aria-controls={id(`panel-${tab.id}`)} aria-selected="false" tabindex="-1">{tab.label}</button>
+              ))}
+            </div>
+            <div class="mac__panel" role="tabpanel" id={id("panel-live")} aria-labelledby={id("tab-live")}>
+              <p class="mac__row"><span class="mac__status">{w.live.status}</span><span>{w.live.subject}</span></p>
+              <p class="mac__row"><span>{w.live.sharing}</span><span class="tabular">{w.live.joined}</span></p>
+              <div class="mac__tiles" aria-hidden="true">{Array.from({ length: 8 }, () => <i></i>)}</div>
+            </div>
+            {w.tabs.map((tab) => (
+              <div class="mac__panel" role="tabpanel" id={id(`panel-${tab.id}`)} aria-labelledby={id(`tab-${tab.id}`)} hidden>
+                <ul role="list">
+                  {tab.items.map((item) => (
+                    <li><span class="mac__item">{item.title}</span><span class="mac__meta">{item.meta}</span></li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+</section>
+
+<style>
+  .portal__grid { align-items: center; }
+  .portal__text { display: grid; gap: var(--space-5); }
+  .portal__stage {
+    --tilt-x: 0;
+    --tilt-y: 0;
+    position: relative;
+    display: grid;
+    perspective: calc(var(--container) * 1.5);
+    padding-block-end: var(--space-10);
+  }
+  .board {
+    margin: 0;
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: var(--bg-sunken);
+    box-shadow: var(--shadow-4);
+    transform: rotateY(calc(-6deg + var(--tilt-x) * 8deg)) rotateX(calc(3deg - var(--tilt-y) * 6deg));
+    transition: transform var(--dur-slow) var(--ease-enter);
+  }
+  .board canvas { width: 100%; height: auto; }
+  .board__caption {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-4) var(--space-3);
+    font-size: var(--type-small-size);
+    color: var(--text-muted);
+  }
+  .board__caption [data-board-title] { color: var(--accent-text); font-weight: var(--weight-semibold); }
+  .board__bar { display: block; height: var(--space-1); background: var(--bg-raised); }
+  .board__bar span { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(var(--progress, 0)); }
+
+  /* The portal window sits in front of the board, lower and to the right. */
+  .mac {
+    position: absolute;
+    inset: auto 0 0 auto;
+    width: min(100%, var(--column-min));
+    background: var(--bg);
+    color: var(--text);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-4);
+    overflow: hidden;
+    font-size: var(--type-small-size);
+    transform: rotateY(calc(-8deg + var(--tilt-x) * 10deg)) rotateX(calc(4deg - var(--tilt-y) * 8deg));
+    transition: transform var(--dur-slow) var(--ease-enter);
+  }
+  .mac__bar { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-4); background: var(--bg-sunken); }
+  .mac__dots { display: flex; gap: var(--space-2); }
+  .mac__dots i { width: var(--space-3); height: var(--space-3); border-radius: var(--radius-round); background: var(--error); }
+  .mac__dots i:nth-child(2) { background: var(--warn); }
+  .mac__dots i:nth-child(3) { background: var(--ok); }
+  .mac__title { flex: 1; text-align: center; font-weight: var(--weight-semibold); }
+  .mac__body { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); }
+  .mac__tabs { display: grid; align-content: start; gap: var(--space-1); padding: var(--space-2); background: var(--bg-sunken); }
+  .mac__tabs button {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    text-align: start;
+    padding: var(--space-2);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: transparent;
+    font-size: inherit;
+  }
+  .mac__tabs button[aria-selected="true"] { background: var(--bg-raised); box-shadow: var(--shadow-1); font-weight: var(--weight-semibold); }
+  .mac__live-dot { width: var(--space-2); height: var(--space-2); border-radius: var(--radius-round); background: var(--error); flex: none; }
+  .mac__panel { padding: var(--space-3); display: grid; gap: var(--space-2); align-content: start; }
+  .mac__panel ul { display: grid; gap: var(--space-2); }
+  .mac__panel li, .mac__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-1) var(--space-3);
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-md);
+    background: var(--bg-raised);
+    box-shadow: var(--shadow-1);
+  }
+  .mac__panel li { display: grid; }
+  .mac__status { color: var(--error); font-weight: var(--weight-bold); }
+  .mac__tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-1); }
+  .mac__tiles i { aspect-ratio: 4 / 3; border-radius: var(--radius-sm); background: var(--bg-sunken); box-shadow: var(--shadow-1); }
+  .mac__item { font-weight: var(--weight-medium); }
+  .mac__meta { color: var(--text-muted); }
+</style>

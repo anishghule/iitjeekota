@@ -1,0 +1,26 @@
+{
+  "$description": "Marathi draft of the programmes table rows on home. For review by a native Marathi writer before launch.",
+  "rows": [
+    {
+      "route": "class-11-jee",
+      "for": "दहावी उत्तीर्ण विद्यार्थी, कोणत्याही बोर्डाचे",
+      "length": "2 वर्षे",
+      "exams": "JEE Main आणि JEE Advanced",
+      "requires": ["programme.class-11"]
+    },
+    {
+      "route": "class-12-jee",
+      "for": "बारावीतील विद्यार्थी",
+      "length": "1 वर्ष",
+      "exams": "JEE Main आणि JEE Advanced",
+      "requires": ["programme.class-12"]
+    },
+    {
+      "route": "foundation-class-9-10",
+      "for": "नववी आणि दहावीतील विद्यार्थी",
+      "length": "2 वर्षांपर्यंत",
+      "exams": "JEE चा पाया",
+      "requires": ["programme.foundation", "programme.foundation-details", "legal.foundation-minimum-age"]
+    }
+  ]
+}

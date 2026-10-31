@@ -1,0 +1,26 @@
+{
+  "route": "contact",
+  "status": "draft",
+  "meta": {
+    "title": "D-SAP Ghule Tutorials contact | Call, WhatsApp or visit",
+    "description": "Call or WhatsApp D-SAP Ghule Tutorials on {{fact:contact.phone}}, or visit our JEE centres in New Sangvi and Wakad."
+  },
+  "h1": "Contact us",
+  "intro": [
+    "Call us on {{fact:contact.phone}} or send a WhatsApp message to {{fact:contact.whatsapp}}. We can tell you about programmes, timings and fees."
+  ],
+  "sections": [
+    {
+      "id": "visit",
+      "kind": "prose",
+      "heading": "Visit a centre",
+      "body": ["Our head office is in New Sangvi and our branch is in Wakad. [Both centres](page:centres) have their addresses and directions."]
+    },
+    {
+      "id": "call-back",
+      "kind": "prose",
+      "heading": "Ask for a call back",
+      "body": ["Leave your name and number in the form and we will call you."]
+    }
+  ]
+}

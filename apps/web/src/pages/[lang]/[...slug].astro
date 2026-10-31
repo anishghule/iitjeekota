@@ -1,0 +1,42 @@
+---
+/** Every other live page with copy: breadcrumbs, H1, intro, then its sections (ADR 0007). */
+import Breadcrumbs from "../../components/blocks/Breadcrumbs.astro";
+import Paragraphs from "../../components/ui/Paragraphs.astro";
+import Sections from "../../components/sections/Sections.astro";
+import Base from "../../layouts/Base.astro";
+import { isLocale, strings } from "../../i18n/index.ts";
+import { pages, routePath, isRouteId } from "../../lib/data.ts";
+import type { PageData } from "../../lib/types.ts";
+
+export function getStaticPaths() {
+  return pages()
+    .filter((p) => p.template !== "home")
+    .flatMap((p) => {
+      const lang = p.locale;
+      const path = isLocale(lang) && isRouteId(p.route) ? routePath(p.route, lang) : undefined;
+      if (!path) return [];
+      const slug = path.split("/").filter(Boolean).slice(1).join("/");
+      return [{ params: { lang, slug }, props: { page: p } }];
+    });
+}
+
+const { lang } = Astro.params;
+const { page } = Astro.props as { page: PageData };
+if (!isLocale(lang)) throw new Error(`unknown language ${lang}`);
+const t = strings(lang);
+---
+<Base page={page} locale={lang}>
+  <header class="page-head section">
+    <div class="container page-head__inner">
+      <Breadcrumbs crumbs={page.breadcrumbs} label={t.breadcrumbs} />
+      <h1 class="t-display">{page.h1}</h1>
+      <div class="prose"><Paragraphs paragraphs={page.intro} class="lede" /></div>
+    </div>
+  </header>
+  <Sections sections={page.sections} locale={lang} />
+</Base>
+
+<style>
+  .page-head { padding-block-start: calc(var(--nav-height) + var(--space-8)); }
+  .page-head__inner { display: grid; gap: var(--space-5); }
+</style>

@@ -1,0 +1,68 @@
+{
+  "route": "area-hinjewadi",
+  "status": "draft",
+  "meta": {
+    "title": "IIT JEE coaching in Hinjewadi | D-SAP Ghule Tutorials",
+    "description": "JEE coaching for Hinjewadi (Hinjawadi) students at our Wakad branch, over the Wakad Flyover. Faculty from Kota, classes from {{fact:batch.timings#start}}."
+  },
+  "h1": "IIT JEE coaching in Hinjewadi",
+  "intro": [
+    "Hinjewadi, also spelt Hinjawadi, is about {{commute:hinjewadi#km}} km from our Wakad branch, the nearer of our two centres."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "Hinjawadi Road and the Wakad Flyover",
+      "body": [
+        { "text": "Come in along Hinjawadi Road and over the Wakad Flyover.", "requires": ["area.hinjewadi.route"] },
+        {
+          "text": "Traffic in Hinjewadi peaks from {{fact:area.hinjewadi.peak#evening}}, so the trip home after class ends at {{fact:batch.timings#end}} can take longer than the trip in."
+        }
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Classes while you are at work",
+      "body": [
+        {
+          "text": "Hinjewadi is home to the Rajiv Gandhi Infotech Park, with offices of over 800 companies. For parents who work there, the evening session runs while they are still at the office, and the branch is a short way off.",
+          "requires": ["area.hinjewadi.it-park"]
+        },
+        {
+          "text": "On days when the roads are at their worst, online lectures mean a missed class is not lost.",
+          "requires": ["method.online-lectures"]
+        }
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Programmes for Hinjewadi families",
+      "body": [
+        {
+          "text": "Hinjewadi students join the two-year programme after Class 10 or the one-year programme in Class 12, with at most {{fact:batch.size}} per batch.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Hinjewadi questions",
+      "questions": [
+        {
+          "q": "Is there a centre in Hinjewadi?",
+          "a": "No. Our Wakad branch is the nearest, about {{commute:hinjewadi#km}} km away."
+        },
+        {
+          "q": "Will the evening rush make my child late?",
+          "a": { "text": "Classes start at {{fact:batch.timings#start}}, before the evening peak, so the trip in is usually the easier one.", "requires": ["area.hinjewadi.peak"] }
+        },
+        {
+          "q": "How are tests taken?",
+          "a": { "text": "On our online portal, which works like the real JEE screen.", "requires": ["test-series.cbt"] }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

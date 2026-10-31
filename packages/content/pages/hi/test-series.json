@@ -1,0 +1,28 @@
+{
+  "route": "test-series",
+  "status": "draft",
+  "meta": {
+    "title": "पुणे में JEE टेस्ट सीरीज़ | D-SAP घुले ट्यूटोरियल्स",
+    "description": "चैप्टर टेस्ट, हफ़्ते के टेस्ट, हर महीने JEE मेन मॉक और हर तिमाही JEE एडवांस्ड मॉक, सब असली JEE जैसे ऑनलाइन पोर्टल पर।"
+  },
+  "h1": "पुणे में JEE टेस्ट सीरीज़",
+  "intro": [
+    { "text": "हमारे छात्र तय कैलेंडर पर टेस्ट देते हैं, हर चैप्टर के बाद के छोटे टेस्ट से लेकर JEE के पूरे मॉक तक। हर टेस्ट हमारे ऑनलाइन पोर्टल पर होता है, जो असली JEE की स्क्रीन जैसा काम करता है।", "requires": ["test-series.format", "test-series.cbt"] }
+  ],
+  "sections": [
+    { "id": "calendar", "kind": "list", "heading": "टेस्ट का कैलेंडर", "body": [ { "text": "हर तरह के टेस्ट का अपना काम है।", "requires": ["test-series.format"] } ],
+      "points": [
+        { "text": "हर चैप्टर के बाद: उस चैप्टर का टेस्ट।", "requires": ["test-series.format"] },
+        { "text": "हर हफ़्ते: कभी एक टॉपिक पर, कभी अब तक के पूरे सिलेबस पर।", "requires": ["test-series.format"] },
+        { "text": "हर चौथे हफ़्ते: अब तक पढ़ी गई हर चीज़ पर एक लंबा टेस्ट।", "requires": ["test-series.format"] },
+        { "text": "हर महीने: JEE मेन का पूरा मॉक, {{fact:exam.jee-main#hours}} घंटे में {{fact:exam.jee-main#questions}} प्रश्न।", "requires": ["test-series.format"] },
+        { "text": "कक्षा 12 में हर तिमाही: JEE एडवांस्ड का मॉक।", "requires": ["test-series.format"] } ] },
+    { "id": "after", "kind": "prose", "heading": "हर टेस्ट के बाद", "body": [
+      { "text": "हर टेस्ट के बाद आपके बच्चे के प्रदर्शन का निजी विश्लेषण मिलता है।", "requires": ["method.test-analytics"] },
+      { "text": "माता-पिता पेरेंट-टीचर मीटिंग में शिक्षकों से मिलते भी हैं।", "requires": ["method.ptm"] } ] },
+    { "id": "questions", "heading": "टेस्ट पर सवाल", "questions": [
+      { "q": "क्या मॉक असली JEE मेन जितने लंबे होते हैं?", "a": { "text": "हाँ: {{fact:exam.jee-main#hours}} घंटे में {{fact:exam.jee-main#questions}} प्रश्न, सभी अनिवार्य।", "requires": ["test-series.format"] } },
+      { "q": "क्या मेरा बच्चा पहले एक टेस्ट देकर देख सकता है?", "a": "हाँ। [होम पेज](page:home) पर एक छोटा टेस्ट है जो असली स्क्रीन जैसा काम करता है।" } ] },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

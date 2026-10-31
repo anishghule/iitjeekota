@@ -1,0 +1,30 @@
+{
+  "$description": "Marathi draft of the sample test on home. For review by a native Marathi writer and a teacher before launch.",
+  "requires": ["exam.jee-main-marking"],
+  "minutes": 6,
+  "marking": { "right": 4, "wrong": -1, "blank": 0 },
+  "markingNote": "JEE Main प्रमाणे गुण: बरोबर उत्तराला {{fact:exam.jee-main-marking#right}}, चुकीच्या उत्तराला {{fact:exam.jee-main-marking#wrong}}, सोडलेल्या प्रश्नाला {{fact:exam.jee-main-marking#blank}}.",
+  "questions": [
+    {
+      "subject": "physics",
+      "text": "एक चेंडू 20 m/s वेगाने सरळ वर फेकला जातो. g = 10 m/s² घ्या. चेंडू किती उंचीपर्यंत जाईल?",
+      "options": ["10 m", "20 m", "30 m", "40 m"],
+      "answer": 1,
+      "solution": "सर्वात वर चेंडू थांबतो, म्हणून v² = 2gh. यावरून h = 20² ÷ (2 × 10) = 20 m."
+    },
+    {
+      "subject": "chemistry",
+      "text": "0.5 mol ॲल्युमिनियम जास्त HCl शी अभिक्रिया करते: 2Al + 6HCl → 2AlCl₃ + 3H₂. H₂ चे किती मोल तयार होतील?",
+      "options": ["0.25", "0.50", "0.75", "1.50"],
+      "answer": 2,
+      "solution": "2 mol Al पासून 3 mol H₂ तयार होतो. म्हणून 0.5 mol Al पासून 0.5 × 3 ÷ 2 = 0.75 mol H₂ तयार होईल."
+    },
+    {
+      "subject": "maths",
+      "text": "∫₀¹ x·e^(x²) dx ची किंमत किती?",
+      "options": ["(e − 1) ÷ 2", "e − 1", "e ÷ 2", "(e + 1) ÷ 2"],
+      "answer": 0,
+      "solution": "u = x² घ्या, म्हणजे du = 2x dx. संकलन ½ ∫₀¹ eᵘ du = (e − 1) ÷ 2 होते."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+---
+/** Resolved copy: plain runs, and links to live pages (make web-data decides which are links). */
+import type { Rich } from "../../lib/types.ts";
+
+interface Props {
+  parts: Rich;
+}
+const { parts } = Astro.props;
+---
+{parts.map((part) => (part.path ? <a href={part.path}>{part.text}</a> : part.text))}

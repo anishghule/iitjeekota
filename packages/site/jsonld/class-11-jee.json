@@ -1,0 +1,24 @@
+{
+  "$page": "class-11-jee",
+  "$locale": "en",
+  "$description": "A programme detail page: Course plus breadcrumb.",
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Course",
+      "@id": "{{origin}}/en/class-11-jee/#course",
+      "name": "Two-year JEE Main and Advanced programme, Class 11",
+      "description": "Physics, Chemistry and Maths for JEE, Class 11 and 12",
+      "url": "{{origin}}/en/class-11-jee/",
+      "provider": { "@id": "{{origin}}/#organization" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{origin}}/en/" },
+        { "@type": "ListItem", "position": 2, "name": "Programmes", "item": "{{origin}}/en/programmes/" },
+        { "@type": "ListItem", "position": 3, "name": "Class 11 JEE" }
+      ]
+    }
+  ]
+}

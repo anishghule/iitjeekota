@@ -1,0 +1,26 @@
+---
+/** A section's action (templates.json actions): a page link, call, WhatsApp or the enquiry form. */
+import type { Locale } from "../../i18n/index.ts";
+import { site } from "../../lib/data.ts";
+import type { Action } from "../../lib/types.ts";
+import Icon from "./Icon.astro";
+
+interface Props {
+  action: Action;
+  locale: Locale;
+  quiet?: boolean;
+}
+const { action, quiet = false } = Astro.props;
+const href =
+  action.to === "page" ? action.path
+  : action.to === "call" ? site.contact.phone?.href
+  : action.to === "whatsapp" ? site.contact.whatsapp?.href
+  : action.to === "enquire" ? "#enquiry"
+  : undefined;
+---
+{href && (
+  <a class:list={["button", { "button--quiet": quiet }]} href={href}>
+    {action.label}
+    <Icon name="arrow-right" size="sm" />
+  </a>
+)}

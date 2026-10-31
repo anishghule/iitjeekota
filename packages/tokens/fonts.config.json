@@ -1,0 +1,44 @@
+{
+  "$description": "Which font files are vendored and how fallbacks are measured. Roles match the keys of font.family in tokens.json. After editing: make fonts metrics brand, then commit fonts/, fonts.lock.json and fonts.metrics.json.",
+  "cssApi": "https://fonts.googleapis.com/css2",
+  "families": [
+    {
+      "role": "body",
+      "family": "Inter",
+      "axes": "opsz,wght@14..32,100..900",
+      "subsets": ["latin", "latin-ext"],
+      "licenceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt"
+    },
+    {
+      "role": "display",
+      "family": "Archivo",
+      "axes": "wdth,wght@62..125,100..900",
+      "subsets": ["latin", "latin-ext"],
+      "licenceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/archivo/OFL.txt"
+    },
+    {
+      "role": "devanagari",
+      "family": "Mukta",
+      "axes": "wght@400;600;700;800",
+      "subsets": ["devanagari", "latin", "latin-ext"],
+      "licenceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/mukta/OFL.txt"
+    }
+  ],
+  "metrics": {
+    "$description": "Each role is measured at the weight and width of one type variant. Fallback faces get size and line overrides so the swap to the web font does not shift the layout.",
+    "variant": { "display": "display-xl", "body": "body", "devanagari": "body" },
+    "fallbacks": { "display": "Arial Bold", "body": "Arial" },
+    "matchXHeight": { "devanagari": "body" },
+    "boundsFor": { "devanagari": "कम" }
+  },
+  "systemFonts": {
+    "Arial": {
+      "path": "/System/Library/Fonts/Supplemental/Arial.ttf",
+      "local": ["Arial", "ArialMT", "Liberation Sans", "Arimo"]
+    },
+    "Arial Bold": {
+      "path": "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
+      "local": ["Arial Bold", "Arial-BoldMT", "Liberation Sans Bold", "Arimo Bold"]
+    }
+  }
+}

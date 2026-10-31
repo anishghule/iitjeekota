@@ -1,0 +1,168 @@
+/*
+ * Base styles and shared layout for apps/web. Only token variables and surface roles
+ * (packages/tokens); make web-lint rejects raw values. Component styles live in their .astro files.
+ */
+@layer reset, base, layout, shared;
+
+@layer reset {
+  *, *::before, *::after { box-sizing: border-box; }
+  body, h1, h2, h3, h4, p, ul, ol, dl, dd, figure, blockquote, fieldset { margin: 0; }
+  fieldset { padding: 0; border: 0; min-inline-size: 0; }
+  ul[role="list"], ol[role="list"] { list-style: none; padding: 0; }
+  img, svg, canvas, video { display: block; max-width: 100%; }
+  img { height: auto; }
+  button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; }
+  button { cursor: pointer; }
+  table { border-collapse: collapse; }
+}
+
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--text);
+    scroll-padding-top: var(--nav-height);
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  body {
+    font-family: var(--font-body);
+    font-size: var(--type-body-size);
+    line-height: var(--type-body-lh);
+    font-weight: var(--type-body-weight);
+    min-height: 100dvh;
+    overflow-x: clip;
+  }
+  ::selection { background: var(--selection-bg); color: var(--selection-text); }
+  :focus-visible { outline: var(--space-1) solid var(--focus); outline-offset: var(--space-1); }
+  a { color: inherit; text-decoration-thickness: from-font; text-underline-offset: 0.2em; }
+  a:hover { color: var(--accent-text); }
+  strong { font-weight: var(--weight-semibold); }
+  [hidden] { display: none !important; }
+}
+
+@layer layout {
+  .container { width: min(100% - 2 * var(--space-gutter), var(--container)); margin-inline: auto; }
+  .section { padding-block: var(--space-section); }
+  .section--raised { background: var(--bg-raised); }
+  .section--sunken { background: var(--bg-sunken); }
+  .stack > * + * { margin-block-start: var(--space-stack); }
+  .measure { max-width: var(--measure); }
+  .split {
+    display: grid;
+    gap: var(--space-7);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--column-min)), 1fr));
+    align-items: center;
+  }
+
+  /* Pinned sections (plan C5): the section is tall and part of it holds still while the reader
+     scrolls through. The pin island sets data-pin: "wide" holds the whole stage, text beside the
+     visual; "narrow" lets the text scroll past, then holds the part marked data-pin-visual. */
+  .pinned[data-pin] { position: relative; height: var(--pin-long); }
+  .pinned[data-pin].pinned--short { height: var(--pin-short); }
+  .pinned[data-pin="wide"] > .stage {
+    position: sticky;
+    top: 0;
+    min-height: 100dvh;
+    display: grid;
+    align-items: center;
+    padding-block: var(--nav-height) var(--space-6);
+    overflow: clip;
+  }
+  .pinned[data-pin="narrow"] > .stage { height: 100%; padding-block-start: calc(var(--nav-height) + var(--space-5)); }
+  .pinned[data-pin="narrow"] > .stage > .container { height: 100%; display: flex; flex-direction: column; gap: var(--space-5); }
+  .pinned[data-pin="narrow"] [data-pin-visual] {
+    position: sticky;
+    top: var(--nav-height);
+    height: calc(100dvh - var(--nav-height));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-3);
+    padding-block: var(--space-3);
+  }
+  .pinned:not([data-pin]) > .stage { padding-block: var(--space-section); }
+  .scene-canvas { width: 100%; height: 100%; }
+}
+
+@layer shared {
+  .icon { display: inline-block; }
+  .visually-hidden {
+    position: absolute !important;
+    width: 1px; height: 1px;
+    margin: -1px; padding: 0;
+    overflow: hidden; clip-path: inset(50%);
+    white-space: nowrap; border: 0;
+  }
+  .lede { font-size: var(--type-body-lg-size); line-height: var(--type-body-lg-lh); color: var(--text-muted); }
+  .muted { color: var(--text-muted); }
+  .accent { color: var(--accent-text); }
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  .button {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--space-7);
+    padding: var(--space-2) var(--space-5);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--action-bg);
+    color: var(--action-text);
+    font-weight: var(--weight-semibold);
+    text-decoration: none;
+    box-shadow: var(--shadow-1);
+    transition: background-color var(--dur-fast) var(--ease-enter), transform var(--dur-fast) var(--ease-enter);
+  }
+  .button:hover { background: var(--action-bg-hover); color: var(--action-text); }
+  .button:active { transform: translateY(1px); }
+  .button--quiet { background: var(--bg-raised); color: var(--text); }
+  .button--quiet:hover { background: var(--bg-sunken); color: var(--accent-text); }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+  .card { background: var(--bg-raised); border-radius: var(--radius-lg); box-shadow: var(--shadow-2); padding: var(--space-6); }
+
+  .badge {
+    display: inline-block;
+    padding: 0 var(--space-2);
+    border-radius: var(--radius-sm);
+    background: var(--bg-sunken);
+    color: var(--accent-text);
+    font-size: var(--type-small-size);
+    line-height: var(--type-small-lh);
+    font-weight: var(--weight-semibold);
+    vertical-align: middle;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--space-7);
+    padding: var(--space-1) var(--space-4);
+    border: 0;
+    border-radius: var(--radius-round);
+    background: var(--bg-raised);
+    color: var(--text);
+    box-shadow: var(--shadow-1);
+    transition: background-color var(--dur-fast) var(--ease-enter), color var(--dur-fast) var(--ease-enter);
+  }
+  .chip:hover { color: var(--accent-text); }
+  .chip[aria-pressed="true"], .chip[aria-selected="true"] { background: var(--action-bg); color: var(--action-text); }
+  .chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+  .field { display: grid; gap: var(--space-1); }
+  .field > span { font-size: var(--type-small-size); color: var(--text-muted); }
+  .field input, .field select {
+    min-height: var(--space-7);
+    padding: var(--space-2) var(--space-3);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--field-bg);
+    color: var(--text);
+    box-shadow: inset 0 0 0 1px var(--field-stroke);
+  }
+  .field [aria-invalid="true"] { box-shadow: inset 0 0 0 var(--space-1) var(--error); }
+  .field__error { font-size: var(--type-small-size); color: var(--error); min-height: var(--type-small-lh); }
+
+  .prose > * + * { margin-block-start: var(--space-4); }
+  .prose { max-width: var(--measure); }
+}

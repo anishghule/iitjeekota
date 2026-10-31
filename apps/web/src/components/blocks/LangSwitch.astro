@@ -1,0 +1,44 @@
+---
+/** Links to this page in the other languages that have it. Never an automatic redirect. */
+import type { Locale } from "../../i18n/index.ts";
+import { isRouteId, routePath, site } from "../../lib/data.ts";
+
+interface Props {
+  locale: Locale;
+  route: string;
+  label: string;
+  large?: boolean;
+}
+const { locale, route, label, large = false } = Astro.props;
+const options = site.locales
+  .map((l) => ({ ...l, path: isRouteId(route) ? routePath(route, l.code as Locale) : undefined }))
+  .filter((l): l is typeof l & { path: string } => l.path !== undefined);
+---
+{options.length > 1 && (
+  <nav class:list={["lang", { "lang--large": large }]} aria-label={label}>
+    <ul role="list">
+      {options.map((l) => (
+        <li>
+          <a href={l.path} hreflang={l.hreflang} lang={l.code} aria-current={l.code === locale ? "page" : undefined}>{l.nativeName}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<style>
+  .lang ul { display: flex; gap: var(--space-1); }
+  .lang a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--space-7);
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-round);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: var(--type-small-size);
+  }
+  .lang a:hover { color: var(--text); }
+  .lang a[aria-current="page"] { color: var(--text); background: var(--bg-raised); }
+  .lang--large a { font-size: var(--type-body-lg-size); min-height: var(--space-8); }
+</style>

@@ -1,0 +1,74 @@
+{
+  "$description": "Structured data rules taken from Google's live documentation on 2026-10-30. make site checks every fixture in jsonld/ against them. Re-check the docs and update 'updated' before changing any rule (plan B5: quarterly).",
+  "checked": "2026-10-30",
+  "multiType": "A node with several types must meet the required properties of every type; recommended properties come from its first type, so list the most specific type first.",
+  "types": {
+    "Organization": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/organization", "updated": "2026-09-08",
+      "required": [], "recommended": ["name", "url", "logo", "sameAs", "description", "alternateName", "contactPoint", "address"],
+      "note": "Home page or one about page. Use the most specific subtype."
+    },
+    "EducationalOrganization": { "sameAs": "Organization" },
+    "WebSite": {
+      "docs": "https://developers.google.com/search/docs/appearance/site-names", "updated": "2025-12-10",
+      "required": ["name", "url"], "recommended": ["alternateName"], "forbidden": ["potentialAction"],
+      "note": "Home page only. url is the domain root. With / redirecting to /en/, Google reads the redirect target."
+    },
+    "LocalBusiness": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/local-business", "updated": "2026-09-08",
+      "required": ["name", "address"], "recommended": ["url", "telephone", "geo", "openingHoursSpecification", "image", "priceRange"],
+      "forbidden": ["aggregateRating", "review"],
+      "note": "One per centre, on its centre page. Multiple types as an array. Ratings only for sites reviewing other businesses."
+    },
+    "PostalAddress": { "docs": "https://developers.google.com/search/docs/appearance/structured-data/local-business", "updated": "2026-09-08",
+      "required": [], "recommended": ["streetAddress", "addressLocality", "addressRegion", "postalCode", "addressCountry"] },
+    "GeoCoordinates": { "docs": "https://developers.google.com/search/docs/appearance/structured-data/local-business", "updated": "2026-09-08",
+      "required": ["latitude", "longitude"], "recommended": [], "minDecimals": 5 },
+    "OpeningHoursSpecification": { "docs": "https://developers.google.com/search/docs/appearance/structured-data/local-business", "updated": "2026-09-08",
+      "required": ["dayOfWeek", "opens", "closes"], "recommended": [] },
+    "BreadcrumbList": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/breadcrumb", "updated": "2026-09-08",
+      "required": ["itemListElement"], "recommended": [], "minItems": 2,
+      "items": { "required": ["position", "name"], "requiredExceptLast": ["item"] },
+      "note": "Shown on desktop only. Must match the visible breadcrumb; built from routes.json."
+    },
+    "ItemList": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/course", "updated": "2026-09-08",
+      "required": ["itemListElement"], "recommended": [], "minItems": 3,
+      "items": { "required": ["position", "url"] },
+      "note": "Course list summary page: ListItem entries with position and a unique url, at least 3 published courses."
+    },
+    "ListItem": { "required": ["position"], "recommended": [], "note": "Checked against the rules of the list that holds it." },
+    "Course": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/course", "updated": "2026-09-08",
+      "required": ["name", "description"], "recommended": ["provider"], "maxLength": { "description": 60 },
+      "note": "Only for real curricula with instructors and a roster. No prices or promotions in name."
+    },
+    "BlogPosting": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/article", "updated": "2026-09-08",
+      "required": [], "recommended": ["headline", "image", "datePublished", "dateModified", "author"]
+    },
+    "Person": { "required": ["name"], "recommended": ["url"] },
+    "VideoObject": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/video", "updated": "2026-09-24",
+      "required": ["name", "thumbnailUrl", "uploadDate"], "recommended": ["description", "contentUrl", "embedUrl", "duration", "creator"]
+    },
+    "Event": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/event", "updated": "2026-09-08",
+      "required": ["name", "startDate", "location"], "recommended": ["endDate", "eventStatus", "image", "description", "offers", "organizer"],
+      "note": "Physical events only (an admission test day, an open day at a centre). Not for business hours, coupons or members-only sessions."
+    },
+    "Place": { "required": ["name", "address"], "recommended": [] },
+    "ImageObject": { "required": ["url"], "recommended": ["width", "height"] },
+    "ContactPoint": { "required": [], "recommended": ["telephone", "contactType"] },
+    "WebPage": { "required": [], "recommended": ["name", "url", "inLanguage"] }
+  },
+  "retired": {
+    "FAQPage": "FAQ rich results deprecated 2026-05-08 and documentation removed 2026-06-15. FAQs stay as visible HTML.",
+    "HowTo": "Retired.",
+    "SearchAction": "Sitelinks search box retired in 2024.",
+    "SpecialAnnouncement": "Retired 2025.",
+    "EducationalOccupationalProgram": "Not a Google rich result; use Course on programme pages."
+  },
+  "urlKeys": ["@id", "url", "item", "logo", "image", "sameAs", "thumbnailUrl", "contentUrl", "embedUrl", "hasMap"]
+}

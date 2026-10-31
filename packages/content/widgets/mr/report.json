@@ -1,0 +1,50 @@
+{
+  "$description": "Marathi draft of the example report (same marks as the English file). For review by a native Marathi writer before launch.",
+  "requires": ["method.test-analytics", "test-series.format"],
+  "label": "उदाहरण रिपोर्ट. विद्यार्थी आणि गुण फक्त रिपोर्टची रचना दाखवण्यासाठी आहेत.",
+  "maxPerSubject": 100,
+  "weeks": [
+    {
+      "test": "टॉपिक टेस्ट: गतिकी, मोल संकल्पना, वर्गसमीकरणे",
+      "marks": { "physics": 36, "chemistry": 48, "maths": 40 },
+      "accuracy": 58, "minutesPerQuestion": 2.9,
+      "lost": { "careless": 40, "concept": 84, "time": 52 },
+      "focus": ["सापेक्ष गतीचे 15 प्रश्न", "उत्तर निवडण्याआधी प्रत्येक प्रश्न दोनदा वाचा"]
+    },
+    {
+      "test": "आतापर्यंतच्या पूर्ण अभ्यासक्रमाची टेस्ट",
+      "marks": { "physics": 41, "chemistry": 52, "maths": 44 },
+      "accuracy": 61, "minutesPerQuestion": 2.7,
+      "lost": { "careless": 36, "concept": 79, "time": 48 },
+      "focus": ["कोणतेही समीकरण लिहिण्याआधी फ्री-बॉडी डायग्राम", "क्वांटम संख्या: एक शीट, वेळ लावून"]
+    },
+    {
+      "test": "टॉपिक टेस्ट: गतीचे नियम, अणुरचना, श्रेढी",
+      "marks": { "physics": 38, "chemistry": 55, "maths": 47 },
+      "accuracy": 63, "minutesPerQuestion": 2.6,
+      "lost": { "careless": 38, "concept": 70, "time": 52 },
+      "focus": ["3 मिनिटांनंतर प्रश्न सोडा आणि नंतर परत या", "आठवडा 1 आणि 3 च्या भौतिकशास्त्र प्रश्नांचा मिश्र संच"]
+    },
+    {
+      "test": "एकत्रित टेस्ट, आतापर्यंतचे सगळे",
+      "marks": { "physics": 47, "chemistry": 58, "maths": 51 },
+      "accuracy": 67, "minutesPerQuestion": 2.5,
+      "lost": { "careless": 30, "concept": 72, "time": 42 },
+      "focus": ["अटी असलेली क्रमचये: 20 प्रश्न", "संकरण आणि आकारांचे तक्ते उजळणी"]
+    },
+    {
+      "test": "टॉपिक टेस्ट: कार्य आणि ऊर्जा, रासायनिक बंध, क्रमचये",
+      "marks": { "physics": 52, "chemistry": 61, "maths": 55 },
+      "accuracy": 70, "minutesPerQuestion": 2.4,
+      "lost": { "careless": 26, "concept": 68, "time": 38 },
+      "focus": ["कार्य-ऊर्जा प्रमेयावर डाउट सेशन", "संख्यात्मक उत्तरे: प्रत्येक वेळी एकक तपासा"]
+    },
+    {
+      "test": "आतापर्यंतच्या पूर्ण अभ्यासक्रमाची टेस्ट",
+      "marks": { "physics": 55, "chemistry": 63, "maths": 60 },
+      "accuracy": 73, "minutesPerQuestion": 2.3,
+      "lost": { "careless": 22, "concept": 66, "time": 34 },
+      "focus": ["हाच वेग ठेवा; भौतिकशास्त्रात अचूकता वाढवा", "मासिक टेस्टपूर्वी एक पूर्ण मॉक"]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "$description": "Colour pairs checked on every surface. The token build fails if any pair is below its minimum. AAA = 7:1, AA = 4.5:1, UI = 3:1 (WCAG 2.2: 1.4.3, 1.4.6, 1.4.11).",
+  "levels": { "AAA": 7, "AA": 4.5, "UI": 3 },
+  "pairs": [
+    { "fg": "text", "bg": "bg", "min": "AAA", "use": "Body text" },
+    { "fg": "text", "bg": "bg-raised", "min": "AAA", "use": "Body text on a raised panel" },
+    { "fg": "text", "bg": "bg-sunken", "min": "AAA", "use": "Body text on a sunken panel" },
+    { "fg": "text-muted", "bg": "bg", "min": "AA", "use": "Secondary text" },
+    { "fg": "text-muted", "bg": "bg-raised", "min": "AA", "use": "Secondary text on a raised panel" },
+    { "fg": "text-muted", "bg": "bg-sunken", "min": "AA", "use": "Secondary text on a sunken panel" },
+    { "fg": "accent-text", "bg": "bg", "min": "AA", "use": "Brass text" },
+    { "fg": "accent-text", "bg": "bg-raised", "min": "AA", "use": "Brass text on a raised panel" },
+    { "fg": "accent", "bg": "bg", "min": "UI", "use": "Icons and large numerals" },
+    { "fg": "icon-accent", "bg": "bg-raised", "min": "UI", "use": "Icon accent stroke on a panel" },
+    { "fg": "action-text", "bg": "action-bg", "min": "AA", "use": "Primary button label" },
+    { "fg": "action-text", "bg": "action-bg-hover", "min": "AA", "use": "Primary button label on hover" },
+    { "fg": "focus", "bg": "bg", "min": "UI", "use": "Keyboard focus ring" },
+    { "fg": "focus", "bg": "bg-raised", "min": "UI", "use": "Focus ring on a panel" },
+    { "fg": "field-stroke", "bg": "bg", "min": "UI", "use": "Form field edge" },
+    { "fg": "field-stroke", "bg": "field-bg", "min": "UI", "use": "Form field edge against its fill" },
+    { "fg": "text", "bg": "field-bg", "min": "AAA", "use": "Typed text in a field" },
+    { "fg": "river", "bg": "bg", "min": "UI", "use": "River and route lines on the map" },
+    { "fg": "subject-physics", "bg": "bg-raised", "min": "UI", "use": "Physics bars and tile edges on a panel" },
+    { "fg": "subject-chemistry", "bg": "bg-raised", "min": "UI", "use": "Chemistry bars and tile edges on a panel" },
+    { "fg": "subject-maths", "bg": "bg-raised", "min": "UI", "use": "Maths bars and tile edges on a panel" },
+    { "fg": "ok", "bg": "bg", "min": "AA", "use": "Success message" },
+    { "fg": "warn", "bg": "bg", "min": "AA", "use": "Warning message" },
+    { "fg": "error", "bg": "bg", "min": "AA", "use": "Error message" },
+    { "fg": "selection-text", "bg": "selection-bg", "min": "AA", "use": "Selected text" }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "route": "pune",
+  "status": "draft",
+  "meta": {
+    "title": "IIT JEE coaching in Pune, powered by Kota | D-SAP",
+    "description": "JEE coaching for students in Aundh, Baner, Balewadi and Pashan, taught by faculty from Kota at our centres in New Sangvi and Wakad."
+  },
+  "h1": "IIT JEE coaching in Pune",
+  "intro": [
+    {
+      "text": "If you live in Aundh, Baner, Balewadi or Pashan, our JEE classes are within about 10 km, at New Sangvi or Wakad. The programme is powered by a top coaching institute in Kota, and faculty from Kota teach it.",
+      "requires": ["partner.affiliation", "faculty.kota"]
+    },
+    "Classes run from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, with at most {{fact:batch.size}} students in a batch."
+  ],
+  "sections": [
+    {
+      "id": "spokes",
+      "heading": "Pick your area",
+      "body": ["Each area page shows the nearer centre, the way there and how long it takes."]
+    },
+    {
+      "id": "why",
+      "heading": "What a Kota programme means for a Pune family",
+      "body": [
+        "Classes start at {{fact:batch.timings#start}}, after the school day, so your child does not have to choose between school and JEE.",
+        {
+          "text": "Every chapter ends with a test, every fourth week brings a longer one, and every month there is a full JEE Main mock, taken on a screen like the real exam.",
+          "requires": ["test-series.format", "test-series.cbt"]
+        },
+        {
+          "text": "Students from SSC, CBSE and ICSE schools all join the same programme after Class 10. Faculty from Kota take Physics, Chemistry and Maths to the JEE level, whatever the board.",
+          "requires": ["programme.class-11", "faculty.kota"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions from Pune parents",
+      "questions": [
+        {
+          "q": "Is there a centre in Pune city?",
+          "a": "Both centres are in Pimpri-Chinchwad: the head office in New Sangvi and a branch in Wakad. From Aundh, Baner, Balewadi and Pashan, the nearer one is within about 10 km."
+        },
+        {
+          "q": "Can my child keep going to school?",
+          "a": "Yes. Classes run from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, after school hours."
+        },
+        {
+          "q": "Is the coaching the same as in Kota?",
+          "a": {
+            "text": "We are affiliated with a top coaching institute in Kota, and faculty from Kota teach here. [Powered by Kota](page:powered-by-kota) explains what that covers.",
+            "requires": ["partner.affiliation", "faculty.kota"]
+          }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

@@ -1,0 +1,98 @@
+{
+  "$description": "The example student portal shown in the Mac-style window on home, and the AI digital board demonstrations above it (plan C1 6). Titles, counts and poll results are examples, and the section says so. The board's maths is drawn by apps/web/src/islands/board.ts; its words are here.",
+  "requires": ["method.online-lectures", "method.doubts", "method.practice-sheets", "test-series.cbt", "classroom.digital-board"],
+  "title": "Student portal",
+  "label": "Example screen",
+  "live": {
+    "label": "Live class",
+    "status": "Live",
+    "subject": "Physics, Rotational motion",
+    "sharing": "The teacher is sharing the digital board",
+    "joined": "27 of {{fact:batch.size}} joined"
+  },
+  "board": {
+    "label": "Example demonstrations of the AI-powered digital board, drawn on this page",
+    "demos": [
+      {
+        "id": "area",
+        "tab": "Area",
+        "title": "Area under a curve",
+        "equation": "∫₀⁵ f(x) dx",
+        "words": { "function": "f(x) = 1 + 0.55 sin(1.3x) + 0.07x²", "sum": "Riemann sum", "error": "error", "limit": "n → ∞", "note": "The board: notice the error shrinks as the strips narrow." }
+      },
+      {
+        "id": "volume",
+        "tab": "Volume",
+        "title": "Solid of revolution",
+        "equation": "V = π ∫ [f(x)]² dx",
+        "words": { "function": "y = √x", "discs": "Discs", "rotate": "rotate about the x-axis", "exact": "V = π ∫₀⁴ x dx = 8π ≈ 25.13" }
+      },
+      {
+        "id": "quiz",
+        "seats": "{{fact:batch.size}}",
+        "tab": "Quiz",
+        "title": "Live quiz",
+        "equation": "A poll in class",
+        "words": { "poll": "Live poll", "question": "d/dx [ sin(x²) ] = ?", "answered": "Answered", "rule": "Chain rule: the outside's derivative times the inside's.", "note": "Example poll." },
+        "options": [
+          { "key": "A", "text": "2x cos(x²)", "share": 71, "right": true },
+          { "key": "B", "text": "cos(x²)", "share": 14, "right": false },
+          { "key": "C", "text": "2x sin(x²)", "share": 9, "right": false },
+          { "key": "D", "text": "−2x cos(x²)", "share": 6, "right": false }
+        ]
+      },
+      {
+        "id": "steps",
+        "tab": "Steps",
+        "title": "AI step solver",
+        "equation": "∫ x · e^(x²) dx",
+        "words": { "solver": "AI step solver", "badge": "AI", "steers": "The teacher steers;", "shows": "the board shows the steps.", "check": "Check: d/dx [½ e^(x²)] = x e^(x²)" },
+        "steps": [
+          { "label": "Spot the inner function", "math": "Let u = x²" },
+          { "label": "Differentiate it", "math": "du = 2x dx, so x dx = du ÷ 2" },
+          { "label": "Rewrite the integral", "math": "½ ∫ eᵘ du" },
+          { "label": "Integrate", "math": "= ½ eᵘ + C" },
+          { "label": "Put x back", "math": "= ½ e^(x²) + C" }
+        ]
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "lectures",
+      "label": "Lectures",
+      "items": [
+        { "title": "Rotational motion: moment of inertia", "meta": "Physics, 48 min" },
+        { "title": "Chemical bonding: hybridisation", "meta": "Chemistry, 41 min" },
+        { "title": "Definite integrals: properties", "meta": "Maths, 52 min" }
+      ]
+    },
+    {
+      "id": "sheets",
+      "label": "Practice sheets",
+      "items": [
+        { "title": "Sheet 14: Laws of motion", "meta": "30 questions" },
+        { "title": "Sheet 14: Equilibrium", "meta": "30 questions" },
+        { "title": "Sheet 14: Straight lines", "meta": "30 questions" }
+      ]
+    },
+    {
+      "id": "doubts",
+      "label": "Doubts",
+      "items": [
+        { "title": "Why is friction static when a wheel rolls without slipping?", "meta": "Physics, answered" },
+        { "title": "How do I tell SN1 from SN2 in a question?", "meta": "Chemistry, answered" },
+        { "title": "When can I use L'Hôpital's rule?", "meta": "Maths, open" }
+      ]
+    },
+    {
+      "id": "tests",
+      "label": "Tests",
+      "items": [
+        { "title": "Weekly test: full syllabus so far", "meta": "Opens on the portal screen" },
+        { "title": "Chapter test: Equilibrium", "meta": "Result with analysis" },
+        { "title": "JEE Main mock", "meta": "{{fact:exam.jee-main#questions}} questions, {{fact:exam.jee-main#hours}} hours" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "$description": "Search volumes from Google Keyword Planner, by import. 'monthly' is Google's range of average monthly searches (null when Google returned no data). make site shows them next to each page's keywords in docs/seo/site-map.md.",
+  "imports": [
+    {
+      "id": "kp-2026-10-31-paste",
+      "source": "Google Keyword Planner, rows pasted by D-SAP",
+      "date": "2026-10-31",
+      "note": "Partial: 8 rows. Location and language as set in the D-SAP account. A full CSV download of each list replaces this."
+    }
+  ],
+  "keywords": [
+    { "keyword": "iit coaching in pune", "monthly": [10, 100], "threeMonthChange": "0%", "yearChange": "0%", "competition": "Low", "import": "kp-2026-10-31-paste" },
+    { "keyword": "jee classes in pimpri chinchwad", "monthly": [10, 100], "threeMonthChange": "0%", "yearChange": "0%", "competition": "Low", "import": "kp-2026-10-31-paste" },
+    { "keyword": "jee syllabus chapter wise", "monthly": [10, 100], "threeMonthChange": "0%", "yearChange": "0%", "competition": "Low", "import": "kp-2026-10-31-paste" },
+    { "keyword": "jee एडवांस्ड सिलेबस", "monthly": [10, 100], "threeMonthChange": "0%", "yearChange": "new", "competition": "Low", "import": "kp-2026-10-31-paste" },
+    { "keyword": "iit foundation classes in pune", "monthly": [10, 100], "threeMonthChange": "new", "yearChange": "0%", "competition": "High", "import": "kp-2026-10-31-paste" },
+    { "keyword": "jee main coaching in pune", "monthly": [10, 100], "threeMonthChange": "-100%", "yearChange": "-100%", "competition": null, "import": "kp-2026-10-31-paste" },
+    { "keyword": "best iit jee coaching in pune", "monthly": [10, 100], "threeMonthChange": "0%", "yearChange": "0%", "competition": "Low", "import": "kp-2026-10-31-paste", "$copyLintAllow": ["best"] },
+    { "keyword": "kota coaching in pune", "monthly": null, "threeMonthChange": null, "yearChange": null, "competition": null, "import": "kp-2026-10-31-paste", "note": "Google returned no data: too few searches to report." }
+  ]
+}

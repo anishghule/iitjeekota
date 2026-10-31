@@ -1,0 +1,62 @@
+{
+  "route": "area-pimple-nilakh",
+  "status": "draft",
+  "meta": {
+    "title": "IIT JEE coaching in Pimple Nilakh | D-SAP Ghule",
+    "description": "Pimple Nilakh sits between our two JEE centres. The New Sangvi head office is nearer, by way of Sangvi Phata. Faculty from Kota."
+  },
+  "h1": "IIT JEE coaching in Pimple Nilakh",
+  "intro": [
+    "Pimple Nilakh lies between our two centres. The head office in New Sangvi is the nearer one, about {{commute:pimple-nilakh#km}} km away."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "By way of Sangvi Phata",
+      "body": [
+        { "text": "Take Chandrakant Raoji Jagtap Road and the Aundh-Ravet Road to Sangvi Phata, then the Pimple Gurav-Navi Sangvi Road to Krishna Nagar Road Number 2.", "requires": ["area.pimple-nilakh.route"] }
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Where Baner crosses over",
+      "body": [
+        {
+          "text": "The Babasaheb Ambedkar Bridge links Pimple Nilakh with Baner, so students from Baner pass through here on their way to New Sangvi.",
+          "requires": ["area.pimple-nilakh.bridge"]
+        },
+        "With our Wakad branch within reach as well, a Pimple Nilakh family has two centres to choose from, by school timings or a sibling's routine."
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Programmes",
+      "body": [
+        {
+          "text": "Pimple Nilakh students take the two-year route from Class 11 or the one-year route in Class 12, in the evening session from {{fact:batch.timings#start}}.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Pimple Nilakh questions",
+      "questions": [
+        {
+          "q": "Which of your two centres should we use?",
+          "a": "New Sangvi is nearer, about {{commute:pimple-nilakh#km}} km. If Wakad suits your day better, that works too: classes run at the same times."
+        },
+        {
+          "q": "What does a batch look like?",
+          "a": "Up to {{fact:batch.size}} students."
+        },
+        {
+          "q": "Is there a doubt session?",
+          "a": { "text": "Yes. There are doubt sessions and a doubts forum online.", "requires": ["method.doubts"] }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

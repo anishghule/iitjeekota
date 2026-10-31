@@ -1,0 +1,15 @@
+{
+  "$description": "Brand identity: names, domain and the surface used for app icons. Read by the favicon manifest, OG images and the brand guide.",
+  "name": "D-SAP Ghule Tutorials",
+  "localNames": {
+    "en": "D-SAP Ghule Tutorials",
+    "hi": "D-SAP घुले ट्यूटोरियल्स",
+    "mr": "D-SAP घुले ट्यूटोरियल्स"
+  },
+  "appName": "D-SAP Ghule Tutorials: IIT JEE coaching in Pune",
+  "shortName": "D-SAP JEE",
+  "domain": "iitjeekota.com",
+  "startUrl": "/en/",
+  "parentSite": "https://dsapghuletutorials.com",
+  "iconSurface": "ink"
+}

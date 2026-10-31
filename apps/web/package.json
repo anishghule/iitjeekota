@@ -1,0 +1,18 @@
+{
+  "name": "@dsap/web",
+  "private": true,
+  "description": "iitjeekota.com: a static Astro site rendered from the data dsapkit exports (make web-data) and the browser packages (docs/adr/0007-web-app.md).",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev --port 5179",
+    "build": "astro build",
+    "serve": "astro preview --port 5180"
+  },
+  "dependencies": {
+    "@dsap/icons": "workspace:*",
+    "@dsap/motion": "workspace:*",
+    "@dsap/scenes": "workspace:*",
+    "@dsap/tokens": "workspace:*",
+    "astro": "7.4.0"
+  }
+}

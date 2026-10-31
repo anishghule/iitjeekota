@@ -1,0 +1,94 @@
+{
+  "route": "powered-by-kota",
+  "status": "draft",
+  "meta": {
+    "title": "Kota institute partnership, Pune | D-SAP Ghule Tutorials",
+    "description": "How D-SAP Ghule Tutorials works with a top coaching institute in Kota: what comes from Kota, what we do in Pune, and how you can check it."
+  },
+  "h1": "Powered by Kota",
+  "intro": [
+    {
+      "text": "D-SAP Ghule Tutorials is affiliated with a top coaching institute in Kota, which powers our JEE programme. This page sets out what that means, in plain words.",
+      "requires": ["partner.affiliation"]
+    }
+  ],
+  "sections": [
+    {
+      "id": "partner",
+      "heading": "Our partner in Kota",
+      "body": [
+        "Our JEE programme is powered by {{fact:partner.name}}, a coaching institute in Kota. Its name and logo appear on this page with its written permission."
+      ]
+    },
+    {
+      "id": "agreement",
+      "heading": "What the affiliation covers",
+      "body": [
+        "{{fact:partner.agreement}}",
+        "If this page ever says more than the agreement does, the agreement is right, and we will correct the page."
+      ]
+    },
+    {
+      "id": "from-kota",
+      "heading": "What comes from Kota",
+      "body": [{ "text": "These parts of the programme come from Kota.", "requires": ["partner.agreement"] }],
+      "points": [
+        { "text": "Faculty from Kota, teaching here in Pune.", "requires": ["faculty.kota"] },
+        { "text": "The study material for JEE Main and Advanced.", "requires": ["partner.agreement", "programme.study-material"] },
+        { "text": "The calendar of tests, from chapter tests to full mocks.", "requires": ["partner.agreement", "test-series.format"] }
+      ]
+    },
+    {
+      "id": "stays-local",
+      "heading": "What we do in Pune",
+      "body": [
+        "The centres, the batches and the day-to-day care are ours: two centres in New Sangvi and Wakad, at most {{fact:batch.size}} students in a batch, and classes {{fact:batch.days}} from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}.",
+        {
+          "text": "D-SAP Ghule Tutorials has taught in Pimpri-Chinchwad since {{fact:org.founded#year}}. Your child is taught by faculty from Kota and looked after by people who know Pune, and you meet them at parent-teacher meetings.",
+          "requires": ["faculty.kota", "method.ptm"]
+        }
+      ]
+    },
+    {
+      "id": "verify",
+      "heading": "How you can check this",
+      "body": ["You should not have to take a coaching class's word for it. Here is what you can check yourself."],
+      "points": [
+        { "text": "The name of our partner in Kota is on this page, so you can contact the institute yourself.", "requires": ["partner.name"] },
+        { "text": "Ask to see the affiliation letter at either centre.", "requires": ["partner.show-agreement"] },
+        "Read what parents say on the Google Business Profiles of both our centres.",
+        "Visit a centre and ask your questions in person before you decide."
+      ]
+    },
+    {
+      "id": "spokes",
+      "heading": "Where the programme runs",
+      "body": ["The programme runs at both our centres, in New Sangvi and Wakad."]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions about the Kota affiliation",
+      "questions": [
+        {
+          "q": "Is this the same as studying in Kota?",
+          "a": {
+            "text": "The programme is powered by a top Kota institute and taught by faculty from Kota. What changes is the setting: your child lives at home and studies in Pune.",
+            "requires": ["partner.affiliation", "faculty.kota"]
+          }
+        },
+        {
+          "q": "Who owns D-SAP Ghule Tutorials?",
+          "a": {
+            "text": "D-SAP Ghule Tutorials owns its name and trademark. {{fact:org.founder#name}} founded it in {{fact:org.founded#place}} in {{fact:org.founded#year}}.",
+            "requires": ["org.trademark"]
+          }
+        },
+        {
+          "q": "Can we meet the faculty?",
+          "a": "Call {{fact:contact.phone}} to fix a visit to a centre, and ask to meet the teachers."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

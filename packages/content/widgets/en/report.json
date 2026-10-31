@@ -1,0 +1,50 @@
+{
+  "$description": "An example test report for an illustrative student, six weekly tests in the order test-series.format sets: topic and full-syllabus tests alternate, with a cumulative test in the 4th week. Not a real student's data; the section says so. Each subject is out of 100 (25 questions at 4 marks), so a test is out of 300. lost: where the other marks went (careless slips, concepts not yet clear, questions left for lack of time); they add up to 300 minus the score. focus: what the next week's practice works on.",
+  "requires": ["method.test-analytics", "test-series.format"],
+  "label": "Example report. The student and the marks are made up to show the format.",
+  "maxPerSubject": 100,
+  "weeks": [
+    {
+      "test": "Topic test: Kinematics, Mole concept, Quadratic equations",
+      "marks": { "physics": 36, "chemistry": 48, "maths": 40 },
+      "accuracy": 58, "minutesPerQuestion": 2.9,
+      "lost": { "careless": 40, "concept": 84, "time": 52 },
+      "focus": ["Relative motion problems: 15 questions", "Read each question twice before marking"]
+    },
+    {
+      "test": "Full syllabus test, chapters so far",
+      "marks": { "physics": 41, "chemistry": 52, "maths": 44 },
+      "accuracy": 61, "minutesPerQuestion": 2.7,
+      "lost": { "careless": 36, "concept": 79, "time": 48 },
+      "focus": ["Free-body diagrams before any equation", "Quantum numbers: one sheet, timed"]
+    },
+    {
+      "test": "Topic test: Laws of motion, Atomic structure, Sequences and series",
+      "marks": { "physics": 38, "chemistry": 55, "maths": 47 },
+      "accuracy": 63, "minutesPerQuestion": 2.6,
+      "lost": { "careless": 38, "concept": 70, "time": 52 },
+      "focus": ["Leave a question after 3 minutes and come back", "Mixed Physics set from weeks 1 and 3"]
+    },
+    {
+      "test": "Cumulative test, everything so far",
+      "marks": { "physics": 47, "chemistry": 58, "maths": 51 },
+      "accuracy": 67, "minutesPerQuestion": 2.5,
+      "lost": { "careless": 30, "concept": 72, "time": 42 },
+      "focus": ["Permutations with restrictions: 20 questions", "Hybridisation and shapes table, revised"]
+    },
+    {
+      "test": "Topic test: Work and energy, Chemical bonding, Permutations",
+      "marks": { "physics": 52, "chemistry": 61, "maths": 55 },
+      "accuracy": 70, "minutesPerQuestion": 2.4,
+      "lost": { "careless": 26, "concept": 68, "time": 38 },
+      "focus": ["Doubt session on the work-energy theorem", "Numerical answers: check units every time"]
+    },
+    {
+      "test": "Full syllabus test, chapters so far",
+      "marks": { "physics": 55, "chemistry": 63, "maths": 60 },
+      "accuracy": 73, "minutesPerQuestion": 2.3,
+      "lost": { "careless": 22, "concept": 66, "time": 34 },
+      "focus": ["Keep the pace; push accuracy in Physics", "One full mock before the monthly test"]
+    }
+  ]
+}

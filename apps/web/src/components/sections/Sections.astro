@@ -1,0 +1,41 @@
+---
+/**
+ * Renders a page's sections by the component templates.json names for them. A component that is
+ * not built yet renders as plain copy, so every page shows all of its approved content.
+ */
+import type { Locale } from "../../i18n/index.ts";
+import type { SectionData } from "../../lib/types.ts";
+import Enquire from "../blocks/Enquire.astro";
+import Questions from "../blocks/Questions.astro";
+import AreaMap from "./home/AreaMap.astro";
+import Journey from "./home/Journey.astro";
+import KotaRoute from "./home/KotaRoute.astro";
+import KotaSystem from "./home/KotaSystem.astro";
+import LiveTest from "./home/LiveTest.astro";
+import Portal from "./home/Portal.astro";
+import Programmes from "./home/Programmes.astro";
+import Report from "./home/Report.astro";
+import SyllabusTeaser from "./home/SyllabusTeaser.astro";
+import Prose from "./Prose.astro";
+
+interface Props {
+  sections: SectionData[];
+  locale: Locale;
+}
+const { sections, locale } = Astro.props;
+---
+{sections.map((section) => {
+  switch (section.component) {
+    case "KotaPrism": return <KotaSystem section={section} />;
+    case "KotaRoute": return <KotaRoute section={section} locale={locale} />;
+    case "Portal": return <Portal section={section} locale={locale} />;
+    case "LiveTest": return <LiveTest section={section} locale={locale} />;
+    case "Report": return <Report section={section} locale={locale} />;
+    case "SyllabusTeaser": return <SyllabusTeaser section={section} locale={locale} />;
+    case "Journey": return <Journey section={section} locale={locale} />;
+    case "AreaMap": return <AreaMap section={section} locale={locale} />;
+    case "Programmes": return <Programmes section={section} locale={locale} />;
+    case "Enquire": return <Enquire section={section} locale={locale} />;
+    default: return section.kind === "faq" ? <Questions section={section} /> : <Prose section={section} locale={locale} />;
+  }
+})}

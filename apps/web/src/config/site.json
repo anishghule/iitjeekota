@@ -1,0 +1,4 @@
+{
+  "$description": "Site settings that are not copy or data. indexing stays false until launch (plan Phase 10): every page carries noindex until then.",
+  "indexing": false
+}

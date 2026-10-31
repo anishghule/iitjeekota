@@ -1,0 +1,28 @@
+{
+  "route": "test-series",
+  "status": "draft",
+  "meta": {
+    "title": "पुण्यातील JEE टेस्ट सिरीज | D-SAP घुले ट्यूटोरियल्स",
+    "description": "धड्यांच्या टेस्ट, आठवड्याच्या टेस्ट, दर महिन्याला JEE मेन मॉक आणि दर तिमाहीला JEE ॲडव्हान्स्ड मॉक, सर्व खऱ्या JEE सारख्या ऑनलाइन पोर्टलवर."
+  },
+  "h1": "पुण्यातील JEE टेस्ट सिरीज",
+  "intro": [
+    { "text": "आमचे विद्यार्थी ठरलेल्या वेळापत्रकानुसार टेस्ट देतात, प्रत्येक धड्यानंतरच्या छोट्या टेस्टपासून JEE च्या पूर्ण मॉकपर्यंत. प्रत्येक टेस्ट आमच्या ऑनलाइन पोर्टलवर होते, जे खऱ्या JEE स्क्रीनसारखे काम करते.", "requires": ["test-series.format", "test-series.cbt"] }
+  ],
+  "sections": [
+    { "id": "calendar", "kind": "list", "heading": "टेस्टचे वेळापत्रक", "body": [ { "text": "प्रत्येक प्रकारच्या टेस्टचे स्वतःचे काम आहे.", "requires": ["test-series.format"] } ],
+      "points": [
+        { "text": "प्रत्येक धड्यानंतर: त्या धड्याची टेस्ट.", "requires": ["test-series.format"] },
+        { "text": "दर आठवड्याला: कधी एका टॉपिकवर, कधी आतापर्यंतच्या पूर्ण अभ्यासक्रमावर.", "requires": ["test-series.format"] },
+        { "text": "दर चौथ्या आठवड्याला: आतापर्यंत शिकलेल्या सगळ्यावर मोठी टेस्ट.", "requires": ["test-series.format"] },
+        { "text": "दर महिन्याला: JEE मेनची पूर्ण मॉक टेस्ट, {{fact:exam.jee-main#hours}} तासांत {{fact:exam.jee-main#questions}} प्रश्न.", "requires": ["test-series.format"] },
+        { "text": "बारावीत दर तिमाहीला: JEE ॲडव्हान्स्ड मॉक.", "requires": ["test-series.format"] } ] },
+    { "id": "after", "kind": "prose", "heading": "प्रत्येक टेस्टनंतर", "body": [
+      { "text": "प्रत्येक टेस्टनंतर तुमच्या मुलाच्या कामगिरीचे वैयक्तिक विश्लेषण मिळते.", "requires": ["method.test-analytics"] },
+      { "text": "पालक पालक-शिक्षक सभेत शिक्षकांनाही भेटतात.", "requires": ["method.ptm"] } ] },
+    { "id": "questions", "heading": "टेस्टविषयी प्रश्न", "questions": [
+      { "q": "मॉक खऱ्या JEE मेनइतक्याच लांब असतात का?", "a": { "text": "हो: {{fact:exam.jee-main#hours}} तासांत {{fact:exam.jee-main#questions}} प्रश्न, सर्व अनिवार्य.", "requires": ["test-series.format"] } },
+      { "q": "माझे मूल आधी एक टेस्ट देऊन पाहू शकते का?", "a": "हो. [मुख्यपृष्ठावर](page:home) एक छोटी टेस्ट आहे जी खऱ्या स्क्रीनसारखी काम करते." } ] },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

@@ -1,0 +1,166 @@
+---
+/**
+ * The JEE syllabus as a periodic table (plan C2, home teaser). Each subject is a block: Class 11
+ * chapters, then chapters in both classes, then Class 12, with JEE Advanced only chapters set
+ * apart below, as in the syllabus slab scene. Filters dim what does not match.
+ */
+import { fill, strings, type Locale } from "../../../i18n/index.ts";
+import { syllabus } from "../../../lib/data.ts";
+import type { Chapter, SectionData } from "../../../lib/types.ts";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const data = syllabus(locale);
+const order = (c: Chapter) => (c.classes.length > 1 ? 1 : c.classes[0] === 11 ? 0 : 2);
+const blocks = data.subjects.map((s) => {
+  const chapters = data.chapters.filter((c) => c.subject === s.id);
+  return {
+    ...s,
+    count: chapters.length,
+    main: chapters.filter((c) => !c.advancedOnly).sort((a, b) => order(a) - order(b)),
+    advancedOnly: chapters.filter((c) => c.advancedOnly),
+  };
+});
+const json = (value: unknown) => JSON.stringify(value).replace(/</g, "\\u003c");
+const labels = { advancedOnly: t.syllabus.advancedOnly, unit: t.syllabus.unit, class: t.syllabus.class, classes: t.syllabus.classes,
+  covers: t.syllabus.covers, advancedAlso: t.syllabus.advancedAlso,
+  subjects: Object.fromEntries(data.subjects.map((s) => [s.id, s.name])) };
+const classKey = (c: Chapter) => (c.classes.length > 1 ? "both" : String(c.classes[0]));
+---
+<section id={section.id} class="syllabus section section--sunken" data-syllabus aria-labelledby={`${section.id}-title`}>
+  <script type="application/json" is:inline data-chapters set:html={json(data.chapters)} />
+  <script type="application/json" is:inline data-labels set:html={json(labels)} />
+  <div class="container syllabus__inner">
+    <div class="syllabus__head">
+      <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} class="lede" />
+    </div>
+    <div class="syllabus__filters" role="group" aria-label={t.syllabus.filters}>
+      <div class="chips">
+        <button type="button" class="chip" data-filter="subject:all" aria-pressed="true">{t.syllabus.all}</button>
+        {data.subjects.map((s) => <button type="button" class="chip" data-filter={`subject:${s.id}`} aria-pressed="false">{s.name}</button>)}
+      </div>
+      <div class="chips">
+        <button type="button" class="chip" data-filter="exam:all" aria-pressed="true">{t.syllabus.all}</button>
+        <button type="button" class="chip" data-filter="exam:main" aria-pressed="false">{t.syllabus.main}</button>
+        <button type="button" class="chip" data-filter="exam:advanced" aria-pressed="false">{t.syllabus.advanced}</button>
+      </div>
+    </div>
+    <div class="syllabus__table" role="group" aria-label={t.syllabus.tableLabel}>
+      {blocks.map((b) => (
+        <div class="syllabus__block" data-subject={b.id}>
+          <h3 class="syllabus__subject"><span>{b.name}</span> <span class="muted">{fill(t.syllabus.count, { n: b.count })}</span></h3>
+          <div class="tiles">
+            {b.main.map((c) => (
+              <button type="button" class="tile" data-chapter={c.id} data-class={classKey(c)} aria-pressed="false" aria-label={c.name} title={c.name}>
+                <span class="tile__unit tabular" aria-hidden="true">{c.main}</span>
+                <span class="tile__symbol" aria-hidden="true">{c.symbol}</span>
+              </button>
+            ))}
+          </div>
+          {b.advancedOnly.length > 0 && (
+            <div class="tiles tiles--advanced" aria-label={t.syllabus.advancedOnly} role="group">
+              {b.advancedOnly.map((c) => (
+                <button type="button" class="tile" data-chapter={c.id} data-class={classKey(c)} data-advanced-only aria-pressed="false" aria-label={c.name} title={c.name}>
+                  <span class="tile__unit" aria-hidden="true">{t.syllabus.advancedMark}</span>
+                  <span class="tile__symbol" aria-hidden="true">{c.symbol}</span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+    <p class="muted">{t.syllabus.pick}</p>
+    <aside class="syllabus-panel" data-panel role="dialog" aria-labelledby={`${section.id}-panel-title`} hidden>
+      <div class="syllabus-panel__head">
+        <p class="syllabus-panel__meta" data-panel-meta></p>
+        <button type="button" class="syllabus-panel__close" data-panel-close>{t.common.close}</button>
+      </div>
+      <h3 class="syllabus-panel__title" id={`${section.id}-panel-title`} data-panel-title></h3>
+      <div class="syllabus-panel__body" data-panel-body></div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  .syllabus__inner { display: grid; gap: var(--space-6); }
+  .syllabus__head { display: grid; gap: var(--space-4); }
+  .syllabus__filters { display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: space-between; }
+  .syllabus__table { display: grid; gap: var(--space-6); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--column-min)), 1fr)); }
+  .syllabus__subject { display: flex; justify-content: space-between; gap: var(--space-3); margin-block-end: var(--space-3); font-size: var(--type-body-size); }
+  .tiles { display: grid; gap: var(--space-1); grid-template-columns: repeat(auto-fill, minmax(var(--space-8), 1fr)); }
+  .tiles--advanced { margin-block-start: var(--space-4); }
+  .tile {
+    --tint: var(--subject-physics);
+    position: relative;
+    display: grid;
+    align-content: space-between;
+    aspect-ratio: 1;
+    padding: var(--space-1) var(--space-2);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--bg-raised);
+    box-shadow: inset 0 var(--space-1) 0 var(--tint), var(--shadow-1);
+    text-align: start;
+    transition: opacity var(--dur-base) var(--ease-enter), transform var(--dur-fast) var(--ease-enter);
+  }
+  [data-subject="chemistry"] .tile { --tint: var(--subject-chemistry); }
+  [data-subject="maths"] .tile { --tint: var(--subject-maths); }
+  .tile[data-class="12"] { background: var(--bg); }
+  .tile[data-advanced-only] { box-shadow: inset 0 0 0 var(--space-1) var(--accent), var(--shadow-1); }
+  .tile:hover { transform: translateY(calc(var(--space-1) * -1)); }
+  .tile[aria-pressed="true"] { background: var(--action-bg); color: var(--action-text); }
+  .tile[data-dim] { opacity: 0.25; }
+  .tile__unit { font-size: var(--type-small-size); color: var(--text-muted); }
+  .tile[aria-pressed="true"] .tile__unit { color: inherit; }
+  .tile__symbol { font-family: var(--font-display); font-weight: var(--weight-heavy); font-size: var(--type-body-lg-size); line-height: 1; }
+  /* A sheet from the bottom on phones; on wide screens the same panel sits at the bottom right. */
+  .syllabus-panel {
+    position: fixed;
+    inset: auto 0 0 auto;
+    z-index: var(--z-overlay);
+    width: min(100%, calc(var(--column-min) * 1.4));
+    max-height: 75dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    padding-block-end: max(var(--space-6), env(safe-area-inset-bottom, 0px));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--bg-raised);
+    box-shadow: var(--shadow-4);
+    animation: sheet-in var(--dur-base) var(--ease-enter);
+  }
+  @keyframes sheet-in { from { transform: translateY(var(--space-7)); opacity: 0; } }
+  .syllabus-panel__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); }
+  .syllabus-panel__meta { color: var(--text-muted); font-weight: var(--weight-semibold); }
+  .syllabus-panel__close { border: 0; background: transparent; color: var(--text); font-weight: var(--weight-semibold); padding: var(--space-2); }
+  .syllabus-panel__title { font-family: var(--font-display); font-weight: var(--weight-heavy); font-size: var(--type-h1-size); line-height: var(--type-h1-lh); }
+  .syllabus-panel__body { display: grid; gap: var(--space-3); }
+  .syllabus-panel__body :global(h4) { font-size: var(--type-small-size); color: var(--text-muted); }
+  .syllabus-panel__body :global(ul) { display: grid; }
+  .syllabus-panel__body :global(li) {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    padding-block: var(--space-3);
+    box-shadow: inset 0 -1px 0 var(--bg-sunken);
+    font-size: var(--type-body-lg-size);
+  }
+  .syllabus-panel__body :global(li)::before {
+    content: "";
+    flex: none;
+    width: var(--space-3);
+    height: var(--space-3);
+    border-radius: var(--radius-sm);
+    background: var(--accent);
+  }
+  .syllabus-panel__body :global(.syllabus-panel__facts) { color: var(--accent-text); }
+</style>

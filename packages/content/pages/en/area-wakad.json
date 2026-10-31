@@ -1,0 +1,66 @@
+{
+  "route": "area-wakad",
+  "status": "draft",
+  "meta": {
+    "title": "IIT JEE coaching in Wakad | D-SAP Ghule Tutorials",
+    "description": "JEE coaching in Wakad at our branch in Swami Vivekanand Nagar. Faculty from Kota, {{fact:batch.days}}, {{fact:batch.timings#start}} to {{fact:batch.timings#end}}."
+  },
+  "h1": "IIT JEE coaching in Wakad",
+  "intro": [
+    "Our Wakad branch is in Swami Vivekanand Nagar, so students who live in Wakad have a centre in their own neighbourhood."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "Coming to the branch",
+      "body": [
+        "The branch is on the first floor of the Shiv Malhar building.",
+        {
+          "text": "Three BRT routes run close to Wakad: Nashik Phata to Wakad, Aundh to Ravet, and Kalewadi Phata to Dehu Alandi. That gives students a bus as well as a car or two-wheeler.",
+          "requires": ["area.wakad.brt"]
+        }
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Who studies at Wakad",
+      "body": [
+        {
+          "text": "Students come to us from schools across Wakad, and from Sangvi, Pimple Gurav and Aundh too.",
+          "requires": ["area.wakad.students"]
+        },
+        "The Wakad branch is also the nearer centre for families in Hinjewadi, Baner, Balewadi and Pashan, on the far side of the river."
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "JEE programmes in Wakad",
+      "body": [
+        {
+          "text": "A two-year programme from Class 11 and a one-year programme for Class 12, taught in the evening after school.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Wakad questions",
+      "questions": [
+        {
+          "q": "Where exactly is the Wakad centre?",
+          "a": "In Swami Vivekanand Nagar, on the first floor of Shiv Malhar. [The branch page](page:centre-wakad) has the address and directions."
+        },
+        {
+          "q": "Can a Wakad student go to the head office instead?",
+          "a": "Yes. Both centres teach JEE {{fact:batch.days}}, from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}."
+        },
+        {
+          "q": "Is there a bus?",
+          "a": { "text": "Three BRT routes pass close to Wakad, including Nashik Phata to Wakad.", "requires": ["area.wakad.brt"] }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

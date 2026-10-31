@@ -1,0 +1,27 @@
+---
+/** Home > Pillar > Page, from the same data as the BreadcrumbList structured data. */
+import type { Crumb } from "../../lib/types.ts";
+
+interface Props {
+  crumbs: Crumb[];
+  label: string;
+}
+const { crumbs, label } = Astro.props;
+---
+{crumbs.length > 1 && (
+  <nav class="crumbs" aria-label={label}>
+    <ol role="list">
+      {crumbs.map((c, i) => (
+        <li>{i === crumbs.length - 1 ? <span aria-current="page">{c.name}</span> : <a href={c.path}>{c.name}</a>}</li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+<style>
+  .crumbs ol { display: flex; flex-wrap: wrap; gap: var(--space-2); font-size: var(--type-small-size); color: var(--text-muted); }
+  .crumbs li + li::before { content: "/"; margin-inline-end: var(--space-2); color: var(--text-muted); }
+  .crumbs a { color: var(--text-muted); }
+  .crumbs a:hover { color: var(--accent-text); }
+  .crumbs [aria-current] { color: var(--text); }
+</style>

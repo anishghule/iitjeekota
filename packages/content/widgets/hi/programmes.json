@@ -1,0 +1,26 @@
+{
+  "$description": "Hindi draft of the programmes table rows on home. For review by a native Hindi writer before launch.",
+  "rows": [
+    {
+      "route": "class-11-jee",
+      "for": "कक्षा 10 पास छात्र, किसी भी बोर्ड से",
+      "length": "2 साल",
+      "exams": "JEE Main और JEE Advanced",
+      "requires": ["programme.class-11"]
+    },
+    {
+      "route": "class-12-jee",
+      "for": "कक्षा 12 के छात्र",
+      "length": "1 साल",
+      "exams": "JEE Main और JEE Advanced",
+      "requires": ["programme.class-12"]
+    },
+    {
+      "route": "foundation-class-9-10",
+      "for": "कक्षा 9 और 10 के छात्र",
+      "length": "2 साल तक",
+      "exams": "JEE की नींव",
+      "requires": ["programme.foundation", "programme.foundation-details", "legal.foundation-minimum-age"]
+    }
+  ]
+}

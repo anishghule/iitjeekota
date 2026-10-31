@@ -1,0 +1,98 @@
+{
+  "$description": "Hindi draft of the example student portal on home. For review by a native Hindi writer before launch.",
+  "requires": ["method.online-lectures", "method.doubts", "method.practice-sheets", "test-series.cbt", "classroom.digital-board"],
+  "title": "स्टूडेंट पोर्टल",
+  "label": "उदाहरण स्क्रीन",
+  "live": {
+    "label": "लाइव क्लास",
+    "status": "लाइव",
+    "subject": "भौतिकी, घूर्णन गति",
+    "sharing": "टीचर डिजिटल बोर्ड शेयर कर रहे हैं",
+    "joined": "{{fact:batch.size}} में से 27 जुड़े"
+  },
+  "board": {
+    "label": "AI डिजिटल बोर्ड के उदाहरण, इसी पेज पर बनाए गए",
+    "demos": [
+      {
+        "id": "area",
+        "tab": "क्षेत्रफल",
+        "title": "वक्र के नीचे का क्षेत्रफल",
+        "equation": "∫₀⁵ f(x) dx",
+        "words": { "function": "f(x) = 1 + 0.55 sin(1.3x) + 0.07x²", "sum": "रीमान योग", "error": "त्रुटि", "limit": "n → ∞", "note": "बोर्ड: पट्टियाँ पतली होने पर त्रुटि घटती है।" }
+      },
+      {
+        "id": "volume",
+        "tab": "आयतन",
+        "title": "परिक्रमण ठोस",
+        "equation": "V = π ∫ [f(x)]² dx",
+        "words": { "function": "y = √x", "discs": "डिस्क", "rotate": "x-अक्ष के चारों ओर घुमाएँ", "exact": "V = π ∫₀⁴ x dx = 8π ≈ 25.13" }
+      },
+      {
+        "id": "quiz",
+        "seats": "{{fact:batch.size}}",
+        "tab": "क्विज़",
+        "title": "लाइव क्विज़",
+        "equation": "क्लास में पोल",
+        "words": { "poll": "लाइव पोल", "question": "d/dx [ sin(x²) ] = ?", "answered": "उत्तर दिए", "rule": "चेन नियम: बाहरी का अवकलज गुणा भीतरी का अवकलज।", "note": "उदाहरण पोल।" },
+        "options": [
+          { "key": "A", "text": "2x cos(x²)", "share": 71, "right": true },
+          { "key": "B", "text": "cos(x²)", "share": 14, "right": false },
+          { "key": "C", "text": "2x sin(x²)", "share": 9, "right": false },
+          { "key": "D", "text": "−2x cos(x²)", "share": 6, "right": false }
+        ]
+      },
+      {
+        "id": "steps",
+        "tab": "चरण",
+        "title": "AI स्टेप सॉल्वर",
+        "equation": "∫ x · e^(x²) dx",
+        "words": { "solver": "AI स्टेप सॉल्वर", "badge": "AI", "steers": "टीचर दिशा देते हैं;", "shows": "बोर्ड चरण दिखाता है।", "check": "जाँच: d/dx [½ e^(x²)] = x e^(x²)" },
+        "steps": [
+          { "label": "भीतरी फलन पहचानें", "math": "मान लें u = x²" },
+          { "label": "उसका अवकलन करें", "math": "du = 2x dx, यानी x dx = du ÷ 2" },
+          { "label": "समाकल दोबारा लिखें", "math": "½ ∫ eᵘ du" },
+          { "label": "समाकलन करें", "math": "= ½ eᵘ + C" },
+          { "label": "x वापस रखें", "math": "= ½ e^(x²) + C" }
+        ]
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "lectures",
+      "label": "लेक्चर",
+      "items": [
+        { "title": "घूर्णन गति: जड़त्व आघूर्ण", "meta": "भौतिकी, 48 मिनट" },
+        { "title": "रासायनिक आबंधन: संकरण", "meta": "रसायन, 41 मिनट" },
+        { "title": "निश्चित समाकल: गुणधर्म", "meta": "गणित, 52 मिनट" }
+      ]
+    },
+    {
+      "id": "sheets",
+      "label": "प्रैक्टिस शीट",
+      "items": [
+        { "title": "शीट 14: गति के नियम", "meta": "30 प्रश्न" },
+        { "title": "शीट 14: साम्यावस्था", "meta": "30 प्रश्न" },
+        { "title": "शीट 14: सरल रेखाएँ", "meta": "30 प्रश्न" }
+      ]
+    },
+    {
+      "id": "doubts",
+      "label": "डाउट",
+      "items": [
+        { "title": "बिना फिसले लुढ़कते पहिये पर घर्षण स्थैतिक क्यों होता है?", "meta": "भौतिकी, उत्तर मिल गया" },
+        { "title": "प्रश्न में SN1 और SN2 में फ़र्क कैसे पहचानें?", "meta": "रसायन, उत्तर मिल गया" },
+        { "title": "L'Hôpital नियम कब लगा सकते हैं?", "meta": "गणित, खुला" }
+      ]
+    },
+    {
+      "id": "tests",
+      "label": "टेस्ट",
+      "items": [
+        { "title": "साप्ताहिक टेस्ट: अब तक का पूरा सिलेबस", "meta": "पोर्टल स्क्रीन पर खुलता है" },
+        { "title": "अध्याय टेस्ट: साम्यावस्था", "meta": "विश्लेषण के साथ परिणाम" },
+        { "title": "JEE Main मॉक", "meta": "{{fact:exam.jee-main#questions}} प्रश्न, {{fact:exam.jee-main#hours}} घंटे" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "route": "fees-and-batches",
+  "status": "draft",
+  "meta": {
+    "title": "JEE coaching fees in Pune, and batch dates | D-SAP",
+    "description": "Fees and batch dates for our JEE programmes in Pune, what the fee includes, and when the next batches start at New Sangvi and Wakad."
+  },
+  "h1": "JEE coaching fees and batches",
+  "intro": [
+    "Fees and start dates for each programme, with what the fee covers. If anything here is unclear, call us on {{fact:contact.phone}}."
+  ],
+  "sections": [
+    {
+      "id": "fees",
+      "heading": "Fees",
+      "body": ["{{fact:fees}}"]
+    },
+    {
+      "id": "included",
+      "heading": "What the fee covers",
+      "body": [{ "text": "The fee covers all of this:", "requires": ["fees"] }],
+      "points": [
+        { "text": "Study material for the whole syllabus, with past IIT JEE papers solved.", "requires": ["programme.study-material"] },
+        { "text": "Every test on the online portal, each with a personal analysis.", "requires": ["test-series.cbt", "method.test-analytics"] },
+        { "text": "A practice sheet every week.", "requires": ["method.practice-sheets"] },
+        { "text": "The doubts forum and doubt sessions.", "requires": ["method.doubts"] },
+        { "text": "One-on-one mentoring slots.", "requires": ["programme.mentoring"] },
+        { "text": "Online lectures, for any class your child misses.", "requires": ["method.online-lectures"] }
+      ]
+    },
+    {
+      "id": "batches",
+      "heading": "Batch dates",
+      "body": ["{{fact:batch.dates}}"]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions about fees and batches",
+      "questions": [
+        {
+          "q": "When do new batches start?",
+          "a": { "text": "The two-year programme starts in June, with a foundation period from May.", "requires": ["programme.start"] }
+        },
+        {
+          "q": "Are the class times the same at both centres?",
+          "a": "Yes: {{fact:batch.days}}, from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}."
+        },
+        {
+          "q": "How many students are in a batch?",
+          "a": "At most {{fact:batch.size}}."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

@@ -1,0 +1,95 @@
+---
+/**
+ * Two years, month by month (plan C1 10): the programme's steps as a timeline that fills as the
+ * reader scrolls, with the weekly and monthly rhythm beside it. Steps come from the timeline widget.
+ */
+import { strings, type Locale } from "../../../i18n/index.ts";
+import type { SectionData, TimelineData } from "../../../lib/types.ts";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const w = section.widget as TimelineData | undefined;
+const steps = w?.steps ?? [];
+---
+<section id={section.id} class:list={["journey", steps.length ? "pinned" : "section"]} data-steps={steps.length || undefined}
+  aria-labelledby={`${section.id}-title`}>
+  <div class="stage">
+    <div class="container split journey__grid">
+      <div class="journey__text">
+        <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+        <Paragraphs paragraphs={section.body} class="lede" />
+        {w && w.rhythm.length > 0 && (
+          <div class="rhythm">
+            <h3 class="rhythm__head">{t.timeline.rhythm}</h3>
+            <ul role="list">
+              {w.rhythm.map((r) => <li><span class="accent">{r.every}</span><span>{r.what}</span></li>)}
+            </ul>
+          </div>
+        )}
+      </div>
+      {steps.length > 0 && (
+        <ol class="timeline" role="list" data-pin-visual>
+          {steps.map((s) => (
+            <li data-step-item>
+              <span class="timeline__when">{s.when}</span>
+              <span class="timeline__title">{s.title}</span>
+              <span class="timeline__detail muted">{s.detail}</span>
+            </li>
+          ))}
+        </ol>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .journey__grid { align-items: center; }
+  .journey__text { display: grid; gap: var(--space-5); }
+  .rhythm { display: grid; gap: var(--space-3); }
+  .rhythm__head { font-size: var(--type-small-size); color: var(--text-muted); font-weight: var(--weight-semibold); }
+  .rhythm ul { display: grid; gap: var(--space-2); }
+  .rhythm li { display: grid; grid-template-columns: minmax(0, 8rem) 1fr; gap: var(--space-3); }
+  .timeline { position: relative; display: grid; gap: var(--space-4); padding-inline-start: var(--space-6); }
+  .timeline::before, .timeline::after {
+    content: "";
+    position: absolute;
+    inset: var(--space-2) auto var(--space-2) var(--space-2);
+    width: var(--space-1);
+    border-radius: var(--radius-round);
+    background: var(--bg-raised);
+  }
+  .timeline::after { background: var(--accent); transform-origin: top; transform: scaleY(var(--progress, 1)); }
+  .timeline li {
+    position: relative;
+    display: grid;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    transition: background-color var(--dur-base) var(--ease-enter);
+  }
+  .timeline li::before {
+    content: "";
+    position: absolute;
+    inset-inline-start: calc(var(--space-6) * -1 + var(--space-1));
+    top: var(--space-4);
+    width: var(--space-3);
+    height: var(--space-3);
+    border-radius: var(--radius-round);
+    background: var(--bg-raised);
+    box-shadow: 0 0 0 var(--space-1) var(--bg);
+  }
+  .timeline li[aria-current] { background: var(--bg-raised); box-shadow: var(--shadow-1); }
+  .timeline li[aria-current]::before { background: var(--accent); }
+  .timeline__when { font-size: var(--type-small-size); color: var(--accent-text); font-weight: var(--weight-semibold); }
+  .timeline__title { font-family: var(--font-display); font-weight: var(--weight-heavy); font-size: var(--type-body-lg-size); }
+  .journey:not([data-pin]) .timeline::after { transform: none; }
+  /* Narrow: every step keeps its date and title; only the current one shows its detail. */
+  .journey[data-pin="narrow"] .timeline { gap: var(--space-1); }
+  .journey[data-pin="narrow"] .timeline li { padding-block: var(--space-2); }
+  .journey[data-pin="narrow"] .timeline li:not([aria-current]) .timeline__detail { display: none; }
+</style>

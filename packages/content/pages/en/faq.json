@@ -1,0 +1,78 @@
+{
+  "route": "faq",
+  "status": "draft",
+  "meta": {
+    "title": "D-SAP Ghule Tutorials FAQ | JEE coaching questions",
+    "description": "Answers about our JEE coaching: the Kota affiliation, who can join, class timings, batch size, tests, doubts and how to visit a centre."
+  },
+  "h1": "Questions about our JEE coaching",
+  "intro": ["If your question is not here, call us on {{fact:contact.phone}}."],
+  "sections": [
+    {
+      "id": "kota",
+      "kind": "faq",
+      "heading": "Kota",
+      "questions": [
+        {
+          "q": "Are you connected to a Kota institute?",
+          "a": { "text": "Yes. We are affiliated with a top coaching institute in Kota, which powers our JEE programme.", "requires": ["partner.affiliation"] }
+        },
+        {
+          "q": "Who teaches?",
+          "a": { "text": "Experienced faculty from Kota.", "requires": ["faculty.kota"] }
+        }
+      ]
+    },
+    {
+      "id": "joining",
+      "kind": "faq",
+      "heading": "Joining",
+      "questions": [
+        {
+          "q": "Who can join the two-year programme?",
+          "a": { "text": "Anyone who has passed Class 10 from SSC, CBSE or ICSE.", "requires": ["programme.class-11"] }
+        },
+        {
+          "q": "When does it start?",
+          "a": { "text": "In June, with a foundation period from May.", "requires": ["programme.start"] }
+        },
+        {
+          "q": "Do you take students in a drop year?",
+          "a": { "text": "No. Our programmes are for students in Class 11 and Class 12.", "requires": ["programme.repeater"] }
+        }
+      ]
+    },
+    {
+      "id": "classes",
+      "kind": "faq",
+      "heading": "Classes",
+      "questions": [
+        { "q": "What time are classes?", "a": "{{fact:batch.days}}, from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}." },
+        { "q": "How big is a batch?", "a": "At most {{fact:batch.size}} students." },
+        {
+          "q": "What happens if my child misses a class?",
+          "a": { "text": "Lectures are also online, so the class can be watched later.", "requires": ["method.online-lectures"] }
+        },
+        {
+          "q": "Where do doubts go?",
+          "a": { "text": "To the doubts forum, a doubt session, or a one-on-one mentoring slot.", "requires": ["method.doubts", "programme.mentoring"] }
+        }
+      ]
+    },
+    {
+      "id": "tests",
+      "kind": "faq",
+      "heading": "Tests",
+      "questions": [
+        {
+          "q": "How often are tests held?",
+          "a": { "text": "After every chapter, every fourth week, once a week, and a full JEE Main mock every month.", "requires": ["test-series.format"] }
+        },
+        {
+          "q": "Are tests on paper or on a computer?",
+          "a": { "text": "On a computer, on our online portal, which works like the real JEE.", "requires": ["test-series.cbt"] }
+        }
+      ]
+    }
+  ]
+}

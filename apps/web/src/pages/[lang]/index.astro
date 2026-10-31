@@ -1,0 +1,21 @@
+---
+/** Home, in each language that has it (plan C1). */
+import Hero from "../../components/sections/home/Hero.astro";
+import Sections from "../../components/sections/Sections.astro";
+import Base from "../../layouts/Base.astro";
+import { isLocale, locales } from "../../i18n/index.ts";
+import { page } from "../../lib/data.ts";
+
+export function getStaticPaths() {
+  return locales.filter((lang) => page(lang, "home")).map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params;
+if (!isLocale(lang)) throw new Error(`unknown language ${lang}`);
+const data = page(lang, "home");
+if (!data) throw new Error(`no home page in ${lang}: run make web-data`);
+---
+<Base page={data} locale={lang}>
+  <Hero page={data} locale={lang} />
+  <Sections sections={data.sections} locale={lang} />
+</Base>

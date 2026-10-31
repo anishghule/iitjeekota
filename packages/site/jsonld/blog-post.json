@@ -1,0 +1,51 @@
+{
+  "$page": "post-kota-or-pune",
+  "$locale": "en",
+  "$description": "A blog post. Author is a real person with a page that identifies them (faculty profile); here Prof. Ghule, whose photo use is confirmed.",
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "BlogPosting",
+      "@id": "{{origin}}/en/blogs/kota-or-pune/#post",
+      "headline": "Kota or Pune for JEE: what changes for your child, week by week",
+      "image": [
+        "{{origin}}/og/kota-or-pune-en.png"
+      ],
+      "datePublished": "2027-01-15T09:00:00+05:30",
+      "dateModified": "2027-01-15T09:00:00+05:30",
+      "inLanguage": "en-IN",
+      "author": [
+        {
+          "@type": "Person",
+          "name": "Prof. Ghule",
+          "url": "{{origin}}/en/about/#prof-ghule"
+        }
+      ],
+      "publisher": {
+        "@id": "{{origin}}/#organization"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "{{origin}}/en/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Blogs",
+          "item": "{{origin}}/en/blogs/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Kota or Pune for JEE: what changes for your child, week by week"
+        }
+      ]
+    }
+  ]
+}

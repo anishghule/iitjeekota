@@ -1,0 +1,31 @@
+{
+  "route": "kota-faculty",
+  "status": "draft",
+  "meta": {
+    "title": "Kota faculty in Pune | D-SAP Ghule Tutorials",
+    "description": "Meet the faculty from Kota who teach our JEE programme in Pune: their subjects, their years of teaching and where in Kota they taught."
+  },
+  "h1": "Kota faculty in Pune",
+  "intro": [
+    { "text": "Experienced faculty from Kota teach our JEE programme, here in Pune.", "requires": ["faculty.kota"] }
+  ],
+  "sections": [
+    {
+      "id": "faculty",
+      "heading": "Meet the faculty",
+      "body": ["Each profile gives the teacher's subject, their years of teaching and where they taught in Kota."]
+    },
+    {
+      "id": "kota-teaching",
+      "heading": "What a Kota teacher brings",
+      "body": [
+        "A teacher from Kota has taught the JEE syllabus to batch after batch, on a fixed calendar of tests. That shows in the small things: which chapter needs an extra week, which mistakes turn up on a mock, and when a class needs to slow down.",
+        {
+          "text": "Here, that teaching comes with one-on-one mentoring slots, so your child can take a hard problem to the teacher directly.",
+          "requires": ["programme.mentoring"]
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

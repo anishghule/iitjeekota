@@ -1,0 +1,40 @@
+{
+  "$description": "The area map (plan C4). make map-fetch downloads OpenStreetMap data into packages/map/source and pins it in map.lock.json; make map builds packages/map/dist offline from that. The river is drawn without its name, as the brief asks. Routes are driving routes from each area to its nearer centre (packages/site/areas.json). The attribution must show wherever the map does.",
+  "attribution": "© OpenStreetMap contributors",
+  "licence": "Open Database Licence (ODbL) 1.0, https://www.openstreetmap.org/copyright",
+  "allowedHosts": ["overpass-api.de", "overpass.kumi.systems", "overpass.private.coffee", "nominatim.openstreetmap.org", "router.project-osrm.org"],
+  "userAgent": "iitjeekota-map-build/1.0 (D-SAP Ghule Tutorials area map)",
+  "endpoints": {
+    "$description": "Overpass lists the main server and its public mirrors, tried in order: the main one is often busy.",
+    "overpass": ["https://overpass-api.de/api/interpreter", "https://overpass.kumi.systems/api/interpreter", "https://overpass.private.coffee/api/interpreter"],
+    "nominatim": "https://nominatim.openstreetmap.org/search",
+    "osrm": "https://router.project-osrm.org/route/v1/driving"
+  },
+  "nominatimDelayMs": 1100,
+  "marginDegrees": 0.012,
+  "rivers": { "$description": "Rivers drawn, by OpenStreetMap name (matched as a pattern, so both spellings of the Pavana are listed). Drawn without names.", "names": ["Mula", "Pavana", "Pawana"] },
+  "roads": { "$description": "Road classes drawn for orientation.", "classes": ["motorway", "trunk", "primary"] },
+  "geocode": {
+    "$description": "How each area is found. The default query is the area name with its hub's city; overrides fix names that land in the wrong place.",
+    "hubs": { "pune": "{name}, Pune, Maharashtra, India", "pimpri-chinchwad": "{name}, Pimpri-Chinchwad, Maharashtra, India" },
+    "overrides": {
+      "sangvi": "New Sangvi, Pimpri-Chinchwad, Maharashtra, India",
+      "hinjewadi": "Hinjawadi, Pune, Maharashtra, India"
+    },
+    "centres": {
+      "$description": "A centre's pin comes from its confirmed geo fact. A new centre without one needs a query here, which gives an approximate point, marked as such. Both centres have confirmed pins (2026-10-31)."
+    }
+  },
+  "simplifyMetres": { "river": 12, "road": 20, "route": 15 },
+  "commuteCheck": {
+    "$description": "make map warns when a commute in packages/site/areas.json differs from the road route from the pinned centre by more than both limits, or when another centre is nearer by road by more than absoluteKm. D-SAP decides what to change.",
+    "relative": 0.25,
+    "absoluteKm": 1.0
+  },
+  "svg": { "width": 1000, "decimals": 1 },
+  "style": {
+    "$description": "Stroke widths, dashes, point sizes and label sizes in map units (the map is svg.width units wide). Used by the preview area-map.svg and by the site, which takes colours from the surface roles.",
+    "road": { "major": 3, "primary": 1.6 }, "river": 6, "route": 5, "routeDash": "12 9",
+    "area": 7, "centre": 14, "centreRing": 4, "label": 24, "centreLabel": 28, "attribution": 14
+  }
+}

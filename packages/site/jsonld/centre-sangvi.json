@@ -1,0 +1,42 @@
+{
+  "$page": "centre-sangvi-head-office",
+  "$locale": "en",
+  "$description": "Head office centre page.",
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["LocalBusiness", "EducationalOrganization"],
+      "@id": "{{origin}}/en/centres/sangvi-head-office/#centre",
+      "priceRange": "{{fact:fees.range}}",
+      "name": "D-SAP Ghule Tutorials, New Sangvi",
+      "url": "{{origin}}/en/centres/sangvi-head-office/",
+      "image": "{{origin}}/brand/medal-512.png",
+      "telephone": "{{fact:contact.phone}}",
+      "hasMap": "{{fact:centre.sangvi.maps}}",
+      "geo": {
+        "$onlyIfConfirmed": ["centre.sangvi.geo"],
+        "@type": "GeoCoordinates",
+        "latitude": "{{fact:centre.sangvi.geo#latitude}}",
+        "longitude": "{{fact:centre.sangvi.geo#longitude}}"
+      },
+      "openingHoursSpecification": "{{fact:centre.sangvi.hours}}",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Krishna Nagar Rd Number 2, Krishna Nagar",
+        "addressLocality": "New Sangvi, Pimpri-Chinchwad",
+        "addressRegion": "Maharashtra",
+        "postalCode": "411061",
+        "addressCountry": "IN"
+      },
+      "parentOrganization": { "@id": "{{origin}}/#organization" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{origin}}/en/" },
+        { "@type": "ListItem", "position": 2, "name": "Centres", "item": "{{origin}}/en/centres/" },
+        { "@type": "ListItem", "position": 3, "name": "D-SAP Ghule Tutorials, New Sangvi" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "route": "programmes",
+  "status": "draft",
+  "meta": {
+    "title": "IIT JEE courses in Pune | D-SAP Ghule Tutorials",
+    "description": "JEE programmes for Class 11 (two years), Class 12 (one year) and a foundation for Class 9 and 10, powered by a top Kota institute."
+  },
+  "h1": "IIT JEE courses in Pune",
+  "intro": [
+    {
+      "text": "Three programmes, by the class your child is in: two years from Class 11, one year in Class 12, and a foundation programme for Class 9 and 10.",
+      "requires": ["programme.class-11", "programme.class-12", "programme.foundation"]
+    },
+    {
+      "text": "We do not run a separate batch for students taking a drop year.",
+      "requires": ["programme.repeater"]
+    }
+  ],
+  "sections": [
+    {
+      "id": "spokes",
+      "heading": "Choose by class",
+      "body": ["Each programme page covers who it is for, what it covers, a normal week and the tests."]
+    },
+    {
+      "id": "why",
+      "heading": "What every programme includes",
+      "body": [
+        {
+          "text": "Study material for the whole syllabus: theory notes, solved examples, chapter-wise problem sets at Main and Advanced level, and past IIT JEE papers with solutions.",
+          "requires": ["programme.study-material"]
+        },
+        {
+          "text": "A practice sheet every week. A doubts forum and doubt sessions, plus one-on-one mentoring slots with a teacher.",
+          "requires": ["method.practice-sheets", "method.doubts", "programme.mentoring"]
+        },
+        {
+          "text": "Tests on a fixed calendar, all on an online portal that works like the real JEE, each with a personal analysis.",
+          "requires": ["test-series.format", "test-series.cbt", "method.test-analytics"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Choosing a programme",
+      "questions": [
+        {
+          "q": "My child is in Class 10. Which programme fits?",
+          "a": {
+            "text": "The two-year programme. It starts in June after Class 10, with a foundation period from May.",
+            "requires": ["programme.class-11", "programme.start"]
+          }
+        },
+        {
+          "q": "Can a student join in Class 12?",
+          "a": { "text": "Yes, through the one-year programme for Class 12.", "requires": ["programme.class-12"] }
+        },
+        {
+          "q": "Is there a batch for students taking a drop year?",
+          "a": { "text": "No. Our programmes are for students in school.", "requires": ["programme.repeater"] }
+        },
+        {
+          "q": "What are the fees?",
+          "a": "Fees depend on the programme. Call us on {{fact:contact.phone}} and we will explain them."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

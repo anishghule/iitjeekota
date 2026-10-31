@@ -1,0 +1,206 @@
+{
+  "$description": "Fixed pages of the site. Area pages come from areas.json (under the pillar whose areaHub matches), centre pages from centres.json (under the pillar that collects centres) and planned posts from blog.json (under the pillar that collects posts). pillar is the breadcrumb parent (pillars have none); gates are facts.json ids that must be confirmed before the page goes live; nav is the order in the main navigation, which is also the sitelinks target set. Keywords: one primary per locale, never shared with another page. Hindi and Marathi keywords are drafts until native research.",
+  "templates": ["home", "pillar", "area", "centre", "programme", "topic", "collection", "page", "legal"],
+  "routes": [
+    {
+      "id": "home", "template": "home", "slug": "",
+      "names": { "en": "Home", "hi": "होम", "mr": "मुख्यपृष्ठ" },
+      "keywords": {
+        "en": { "primary": "d-sap ghule tutorials", "secondary": ["kota coaching in pune", "iit jee coaching powered by kota", "kota coaching pimpri chinchwad"] },
+        "hi": { "primary": "D-SAP घुले ट्यूटोरियल्स", "secondary": ["पुणे में कोटा कोचिंग"], "draft": true },
+        "mr": { "primary": "D-SAP घुले ट्यूटोरियल्स", "secondary": ["पुण्यात कोटा कोचिंग"], "draft": true }
+      }
+    },
+
+    {
+      "id": "pune", "template": "pillar", "slug": "iit-jee-coaching-pune", "areaHub": "pune",
+      "names": { "en": "IIT JEE Coaching Pune", "hi": "पुणे में IIT JEE कोचिंग", "mr": "पुण्यातील IIT JEE क्लासेस" },
+      "keywords": {
+        "en": { "primary": "iit jee coaching in pune", "secondary": ["jee classes in pune", "iit coaching in pune", "jee coaching near me"] },
+        "hi": { "primary": "पुणे में IIT JEE कोचिंग", "secondary": ["पुणे में JEE क्लासेस"], "draft": true },
+        "mr": { "primary": "पुण्यातील IIT JEE क्लासेस", "secondary": ["पुण्यात JEE कोचिंग"], "draft": true }
+      }
+    },
+    {
+      "id": "pimpri-chinchwad", "template": "pillar", "slug": "iit-jee-coaching-pimpri-chinchwad", "areaHub": "pimpri-chinchwad", "nav": 6,
+      "names": { "en": "IIT JEE Coaching Pimpri-Chinchwad", "hi": "पिंपरी-चिंचवड में IIT JEE कोचिंग", "mr": "पिंपरी-चिंचवडमधील IIT JEE क्लासेस" },
+      "navNames": { "en": "Pimpri-Chinchwad", "hi": "पिंपरी-चिंचवड", "mr": "पिंपरी-चिंचवड" },
+      "keywords": {
+        "en": { "primary": "iit jee coaching in pimpri chinchwad", "secondary": ["jee classes in pimpri chinchwad", "iit coaching pcmc", "jee coaching in pcmc"] },
+        "hi": { "primary": "पिंपरी-चिंचवड में IIT JEE कोचिंग", "secondary": [], "draft": true },
+        "mr": { "primary": "पिंपरी-चिंचवडमधील IIT JEE क्लासेस", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "programmes", "template": "pillar", "slug": "programmes", "nav": 1,
+      "names": { "en": "Programmes", "hi": "प्रोग्राम", "mr": "अभ्यासक्रम" },
+      "keywords": {
+        "en": { "primary": "iit jee courses in pune", "secondary": ["jee classroom programme pune", "jee coaching courses pune"] },
+        "hi": { "primary": "पुणे में IIT JEE कोर्स", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यातील IIT JEE कोर्सेस", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "powered-by-kota", "template": "pillar", "slug": "powered-by-kota", "nav": 3,
+      "gates": ["partner.name", "partner.permission", "partner.agreement"],
+      "names": { "en": "Powered by Kota", "hi": "कोटा के साथ", "mr": "कोटाच्या साथीने" },
+      "keywords": {
+        "en": { "primary": "kota institute partnership pune", "secondary": ["kota coaching partner pune", "d-sap ghule tutorials kota"] },
+        "hi": { "primary": "पुणे में कोटा संस्थान की साझेदारी", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यात कोटा संस्थेची भागीदारी", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "centres", "template": "pillar", "slug": "centres", "nav": 4, "collects": "centres",
+      "names": { "en": "Centres", "hi": "केंद्र", "mr": "केंद्रे" },
+      "keywords": {
+        "en": { "primary": "d-sap ghule tutorials centres", "secondary": ["jee coaching centre near me"] },
+        "hi": { "primary": "D-SAP घुले ट्यूटोरियल्स के केंद्र", "secondary": [], "draft": true },
+        "mr": { "primary": "D-SAP घुले ट्यूटोरियल्सची केंद्रे", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "jee-syllabus", "template": "pillar", "slug": "jee-syllabus", "nav": 5,
+      "names": { "en": "JEE Syllabus", "hi": "JEE सिलेबस", "mr": "JEE अभ्यासक्रम" },
+      "keywords": {
+        "en": { "primary": "jee main syllabus", "secondary": ["jee advanced syllabus", "jee syllabus chapter wise"] },
+        "hi": { "primary": "JEE मेन सिलेबस", "secondary": ["JEE एडवांस्ड सिलेबस"], "draft": true },
+        "mr": { "primary": "JEE मेन अभ्यासक्रम", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "blogs", "template": "collection", "slug": "blogs", "pillarRole": true, "collects": "posts",
+      "names": { "en": "Blogs", "hi": "ब्लॉग", "mr": "ब्लॉग" },
+      "keywords": {
+        "en": { "primary": "jee preparation tips", "secondary": ["jee preparation blog pune"] },
+        "hi": { "primary": "JEE तैयारी टिप्स", "secondary": [], "draft": true },
+        "mr": { "primary": "JEE तयारी टिप्स", "secondary": [], "draft": true }
+      }
+    },
+
+    {
+      "id": "class-11-jee", "template": "programme", "slug": "class-11-jee", "pillar": "programmes", "fact": "programme.class-11",
+      "names": { "en": "Class 11 JEE", "hi": "कक्षा 11 JEE", "mr": "11वी JEE" },
+      "keywords": {
+        "en": { "primary": "jee coaching for class 11 in pune", "secondary": ["two year jee programme pune", "11th iit jee classes pune"] },
+        "hi": { "primary": "पुणे में कक्षा 11 के लिए JEE कोचिंग", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यात 11वीसाठी JEE क्लासेस", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "class-12-jee", "template": "programme", "slug": "class-12-jee", "pillar": "programmes", "fact": "programme.class-12",
+      "names": { "en": "Class 12 JEE", "hi": "कक्षा 12 JEE", "mr": "12वी JEE" },
+      "keywords": {
+        "en": { "primary": "jee coaching for class 12 in pune", "secondary": ["one year jee course pune", "12th iit jee classes pune"] },
+        "hi": { "primary": "पुणे में कक्षा 12 के लिए JEE कोचिंग", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यात 12वीसाठी JEE क्लासेस", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "foundation-class-9-10", "template": "programme", "slug": "foundation-class-9-10", "pillar": "programmes", "fact": "programme.foundation",
+      "gates": ["legal.foundation-minimum-age"],
+      "names": { "en": "Foundation, Class 9 and 10", "hi": "फाउंडेशन, कक्षा 9 और 10", "mr": "फाउंडेशन, 9वी आणि 10वी" },
+      "keywords": {
+        "en": { "primary": "iit foundation classes in pune", "secondary": ["class 9 iit foundation pune", "class 10 jee foundation pune"] },
+        "hi": { "primary": "पुणे में IIT फाउंडेशन क्लासेस", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यातील IIT फाउंडेशन क्लासेस", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "jee-main-coaching", "template": "topic", "slug": "jee-main-coaching", "pillar": "programmes",
+      "names": { "en": "JEE Main", "hi": "JEE मेन", "mr": "JEE मेन" },
+      "keywords": {
+        "en": { "primary": "jee main coaching in pune", "secondary": ["jee mains classes pune", "jee main preparation pune"] },
+        "hi": { "primary": "पुणे में JEE मेन कोचिंग", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यातील JEE मेन क्लासेस", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "jee-advanced-coaching", "template": "topic", "slug": "jee-advanced-coaching", "pillar": "programmes",
+      "names": { "en": "JEE Advanced", "hi": "JEE एडवांस्ड", "mr": "JEE ॲडव्हान्स्ड" },
+      "keywords": {
+        "en": { "primary": "jee advanced coaching in pune", "secondary": ["iit advanced classes pune", "jee advanced preparation pune"] },
+        "hi": { "primary": "पुणे में JEE एडवांस्ड कोचिंग", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यातील JEE ॲडव्हान्स्ड क्लासेस", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "test-series", "template": "topic", "slug": "test-series", "pillar": "programmes",
+      "gates": ["test-series.format"],
+      "names": { "en": "Test Series", "hi": "टेस्ट सीरीज़", "mr": "टेस्ट सिरीज" },
+      "keywords": {
+        "en": { "primary": "jee test series in pune", "secondary": ["jee cbt mock test pune", "offline jee mock test pune"] },
+        "hi": { "primary": "पुणे में JEE टेस्ट सीरीज़", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यातील JEE टेस्ट सिरीज", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "fees-and-batches", "template": "topic", "slug": "fees-and-batches", "pillar": "programmes", "nav": 2,
+      "gates": ["fees", "batch.dates"],
+      "names": { "en": "Fees and Batches", "hi": "फीस और बैच", "mr": "फी आणि बॅच" },
+      "keywords": {
+        "en": { "primary": "jee coaching fees in pune", "secondary": ["iit jee classes fees pune", "jee batch dates pune"] },
+        "hi": { "primary": "पुणे में JEE कोचिंग फीस", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यातील JEE क्लासेस फी", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "kota-faculty", "template": "topic", "slug": "kota-faculty", "pillar": "powered-by-kota",
+      "gates": ["faculty.profiles", "partner.name"],
+      "names": { "en": "Kota Faculty", "hi": "कोटा फैकल्टी", "mr": "कोटा फॅकल्टी" },
+      "keywords": {
+        "en": { "primary": "kota faculty in pune", "secondary": ["kota teachers jee pune", "kota experienced faculty pune"] },
+        "hi": { "primary": "पुणे में कोटा फैकल्टी", "secondary": [], "draft": true },
+        "mr": { "primary": "पुण्यात कोटा फॅकल्टी", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "results", "template": "topic", "slug": "results", "pillar": "powered-by-kota",
+      "gates": ["results.verified"],
+      "names": { "en": "Results", "hi": "परिणाम", "mr": "निकाल" },
+      "keywords": {
+        "en": { "primary": "d-sap ghule tutorials jee results", "secondary": ["jee results pune coaching"] },
+        "hi": { "primary": "D-SAP घुले ट्यूटोरियल्स JEE परिणाम", "secondary": [], "draft": true },
+        "mr": { "primary": "D-SAP घुले ट्यूटोरियल्स JEE निकाल", "secondary": [], "draft": true }
+      }
+    },
+
+    {
+      "id": "about", "template": "page", "slug": "about",
+      "names": { "en": "About D-SAP", "hi": "D-SAP के बारे में", "mr": "D-SAP विषयी" },
+      "keywords": {
+        "en": { "primary": "about d-sap ghule tutorials", "secondary": ["prof ghule pune", "d-sap ghule tutorials founder"] },
+        "hi": { "primary": "D-SAP घुले ट्यूटोरियल्स के बारे में", "secondary": [], "draft": true },
+        "mr": { "primary": "D-SAP घुले ट्यूटोरियल्सविषयी", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "faq", "template": "page", "slug": "faq",
+      "names": { "en": "Questions", "hi": "सवाल", "mr": "प्रश्न" },
+      "keywords": {
+        "en": { "primary": "d-sap ghule tutorials faq", "secondary": [] },
+        "hi": { "primary": "D-SAP घुले ट्यूटोरियल्स सवाल जवाब", "secondary": [], "draft": true },
+        "mr": { "primary": "D-SAP घुले ट्यूटोरियल्स प्रश्नोत्तरे", "secondary": [], "draft": true }
+      }
+    },
+    {
+      "id": "contact", "template": "page", "slug": "contact", "nav": 7,
+      "gates": ["contact.phone"],
+      "names": { "en": "Contact", "hi": "संपर्क", "mr": "संपर्क" },
+      "keywords": {
+        "en": { "primary": "d-sap ghule tutorials contact", "secondary": ["d-sap ghule tutorials phone number"] },
+        "hi": { "primary": "D-SAP घुले ट्यूटोरियल्स संपर्क", "secondary": [], "draft": true },
+        "mr": { "primary": "D-SAP घुले ट्यूटोरियल्स संपर्क क्रमांक", "secondary": [], "draft": true }
+      }
+    },
+
+    { "id": "privacy-policy", "template": "legal", "slug": "privacy-policy", "gates": ["legal.policies-reviewed"],
+      "names": { "en": "Privacy Policy", "hi": "गोपनीयता नीति", "mr": "गोपनीयता धोरण" } },
+    { "id": "terms-and-conditions", "template": "legal", "slug": "terms-and-conditions", "gates": ["legal.policies-reviewed"],
+      "names": { "en": "Terms and Conditions", "hi": "नियम और शर्तें", "mr": "अटी आणि शर्ती" } },
+    { "id": "refund-policy", "template": "legal", "slug": "refund-policy", "gates": ["legal.policies-reviewed"],
+      "names": { "en": "Refund Policy", "hi": "रिफंड नीति", "mr": "परतावा धोरण" } },
+    { "id": "grievance", "template": "legal", "slug": "grievance", "gates": ["legal.policies-reviewed"],
+      "names": { "en": "Grievance Officer", "hi": "शिकायत अधिकारी", "mr": "तक्रार अधिकारी" } }
+  ]
+}

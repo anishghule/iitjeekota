@@ -1,0 +1,69 @@
+{
+  "route": "area-chinchwad",
+  "status": "draft",
+  "meta": {
+    "title": "IIT JEE coaching in Chinchwad | D-SAP Ghule Tutorials",
+    "description": "JEE coaching for Chinchwad students at our Wakad branch, over the Mother Teresa Flyover. Online lectures help on long-trip days."
+  },
+  "h1": "IIT JEE coaching in Chinchwad",
+  "intro": [
+    "Chinchwad is one of the farther areas we serve. Our Wakad branch is about {{commute:chinchwad#km}} km away, and the head office in New Sangvi is about the same distance."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "Chinchwad to Wakad",
+      "body": [
+        {
+          "text": "Take the Mother Teresa Flyover, then Hedgewar Road and Kaspate Vasti Road down to Wakad.",
+          "requires": ["area.chinchwad.route"]
+        },
+        "On a longer trip like this one, leave home early enough to arrive before {{fact:batch.timings#start}} without rushing."
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Making the distance work",
+      "body": [
+        {
+          "text": "Lectures are also online. On a day when traffic or a school event makes the trip hard, your child can watch the class later and stay on track.",
+          "requires": ["method.online-lectures"]
+        },
+        {
+          "text": "Chinchwad has the Pimpri Chinchwad Science Park, with interactive exhibits. It is a good weekend visit for a student who likes to see Physics at work.",
+          "requires": ["area.chinchwad.science-park"]
+        }
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Programmes for Chinchwad",
+      "body": [
+        {
+          "text": "Chinchwad students can join for two years from Class 11, or for one year in Class 12.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Chinchwad questions",
+      "questions": [
+        {
+          "q": "Which centre is nearer to Chinchwad?",
+          "a": "Wakad, by a little: about {{commute:chinchwad#km}} km. New Sangvi is close behind."
+        },
+        {
+          "q": "What if my child misses a class?",
+          "a": { "text": "The lecture is online too, so it can be watched later.", "requires": ["method.online-lectures"] }
+        },
+        {
+          "q": "Can doubts be asked from home?",
+          "a": { "text": "Yes, on our doubts forum.", "requires": ["method.doubts"] }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}
