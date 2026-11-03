@@ -324,7 +324,7 @@ test.describe("on a phone", () => {
     await page.goto("/en/");
     const box = await page.locator("#kota-system").evaluate((el) => {
       const top = el.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo(0, top + (el.offsetHeight - window.innerHeight) * 0.6);
+      window.scrollTo(0, top + ((el as HTMLElement).offsetHeight - window.innerHeight) * 0.6);
       return null;
     });
     expect(box).toBeNull();
