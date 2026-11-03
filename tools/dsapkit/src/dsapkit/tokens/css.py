@@ -96,6 +96,7 @@ def tokens_css(tree: dict[str, Any]) -> str:
     root += [f"--{name}: {value if isinstance(value, str) else rem(value)};" for name, value in tree["layout"].items()]
     root += [f"--nav-{name}: {value if isinstance(value, str) else rem(value)};"
              for name, value in tree["nav"].items() if name != "menu-from"]
+    root += [f"--ghost-{name}: {value if isinstance(value, str) else rem(value)};" for name, value in tree["ghost"].items()]
     root += [f"--z-{name}: {value};" for name, value in tree["z"].items()]
 
     root.append("/* Motion */")

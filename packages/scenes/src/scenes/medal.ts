@@ -72,19 +72,34 @@ export function createMedal(ctx: SceneContext, input: MedalInput): Scene {
   const aim = { x: 0, y: 0 };
   const lean = { x: 0, y: 0 };
   const camera = c.camera as CameraPose;
+  // On arrival the medal spins in from its tilted distance and settles; scrolling then carries it on from there.
+  let target = 0;
+  let arrived = 0;
+  let introStart: number | null = null;
+  const place = () => {
+    const eased = 1 - (1 - arrived) ** 3;
+    const pose = poseAt(c.keyframes, target * eased);
+    root.position.set(...pose.position);
+    root.rotation.set(pose.rotation[0], pose.rotation[1] + (1 - eased) * c.intro.spin, pose.rotation[2]);
+  };
   const scene: Scene = {
     root,
+    halfWidth: c.halfWidth,
+    halfHeight: c.halfHeight,
     cameraAt: () => camera,
     setProgress(progress) {
-      const pose = poseAt(c.keyframes, progress);
-      root.position.set(...pose.position);
-      root.rotation.set(...pose.rotation);
+      target = progress;
+      place();
     },
     setPointer(x, y) {
       aim.x = x;
       aim.y = y;
     },
     update(timeMs) {
+      if (introStart === null) introStart = timeMs;
+      const before = arrived;
+      arrived = Math.min(1, (timeMs - introStart) / c.intro.ms);
+      if (arrived !== before) place();
       lean.x += (aim.x - lean.x) * pointer.follow;
       lean.y += (aim.y - lean.y) * pointer.follow;
       holder.rotation.set(lean.y * pointer.maxTilt, lean.x * pointer.maxTilt, 0);

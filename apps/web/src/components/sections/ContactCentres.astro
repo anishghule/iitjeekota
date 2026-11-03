@@ -1,0 +1,50 @@
+---
+/**
+ * The contact page's centres: both cards, the ways to reach D-SAP (call, WhatsApp, email) and the area
+ * map drawn from OpenStreetMap. The map is a picture, not an embedded Google map: an embed would load
+ * a third party's scripts and cookies on this page, which the site's policy does not allow
+ * (packages/site/security.json). The directions links open Google Maps in its own tab.
+ */
+import { strings, type Locale } from "../../i18n/index.ts";
+import { fact, site } from "../../lib/data.ts";
+import type { SectionData } from "../../lib/types.ts";
+import AreaMapFigure from "../ui/AreaMapFigure.astro";
+import CentreDetails from "../ui/CentreDetails.astro";
+import Icon from "../ui/Icon.astro";
+import Paragraphs from "../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const email = fact(locale, "contact.email");
+const { phone, whatsapp } = site.contact;
+---
+<section id={section.id} class="section" aria-labelledby={`${section.id}-title`}>
+  <div class="container contact">
+    <div class="prose">
+      <h2 id={`${section.id}-title`} class="t-h1">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} />
+    </div>
+    <p class="actions">
+      {phone && <a class="button" href={phone.href}><Icon name="phone" size="sm" />{t.contactPage.call} {phone.display}</a>}
+      {whatsapp && <a class="button button--quiet" href={whatsapp.href} rel="external"><Icon name="chat" size="sm" />{t.contactPage.whatsapp}</a>}
+      {email && <a class="button button--quiet" href={`mailto:${email}`}><Icon name="mail" size="sm" />{t.contactPage.email}: {email}</a>}
+    </p>
+    <div class="contact__centres">
+      {site.centres.map((c) => <CentreDetails centre={c} locale={locale} link />)}
+    </div>
+    <div class="contact__map">
+      <AreaMapFigure locale={locale} />
+      <p class="muted">{t.contactPage.mapNote}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact { display: grid; gap: var(--space-6); }
+  .contact__centres { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--column-min)), 1fr)); }
+  .contact__map { display: grid; gap: var(--space-3); }
+</style>

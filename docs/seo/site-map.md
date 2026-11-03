@@ -2,7 +2,7 @@
 
 # Site map and keywords
 
-45 pages per language. 35 are ready to build now; the rest wait for facts in `packages/site/facts.json` or are planned posts. Languages: en, hi, mr. Every URL is `https://iitjeekota.com/{language}/{page}/`; the root `/` redirects to `/en/`.
+45 pages per language. 37 are ready to build now; the rest wait for facts in `packages/site/facts.json` or are planned posts. Languages: en, hi, mr. Every URL is `https://iitjeekota.com/{language}/{page}/`; the root `/` redirects to `/en/`.
 
 Pages by type: area 13, centre 2, collection 1, home 1, legal 4, page 3, pillar 6, post 6, programme 3, topic 6.
 
@@ -29,11 +29,11 @@ Breadcrumbs never go deeper than Home, a pillar, then the page. Only pillars app
   - **Programmes** `/en/programmes/` (Ready)
     - Class 11 JEE `/en/class-11-jee/` (Ready)
     - Class 12 JEE `/en/class-12-jee/` (Ready)
-    - Foundation, Class 9 and 10 `/en/foundation-class-9-10/` (Waits for `legal.foundation-minimum-age`)
+    - Foundation, Class 9 and 10 `/en/foundation-class-9-10/` (Ready)
     - JEE Main `/en/jee-main-coaching/` (Ready)
     - JEE Advanced `/en/jee-advanced-coaching/` (Ready)
     - Test Series `/en/test-series/` (Ready)
-    - Fees and Batches `/en/fees-and-batches/` (Waits for `fees`, `batch.dates`)
+    - Fees and Batches `/en/fees-and-batches/` (Ready)
   - **Powered by Kota** `/en/powered-by-kota/` (Waits for `partner.name`, `partner.permission`, `partner.agreement`)
     - Kota Faculty `/en/kota-faculty/` (Waits for `faculty.profiles`, `partner.name`)
     - Results `/en/results/` (Waits for `results.verified`)
@@ -158,18 +158,20 @@ Links come from the rules in `site.json`. Every pillar links all its pages. Each
 
 | Page | Body links | Clicks from home |
 | --- | --- | --- |
-| `/en/` | 8 | 0 |
+| `/en/` | 9 | 0 |
 | `/en/iit-jee-coaching-pune/` | 5 | 1 |
 | `/en/iit-jee-coaching-pimpri-chinchwad/` | 11 | 1 |
-| `/en/programmes/` | 6 | 1 |
+| `/en/programmes/` | 8 | 1 |
 | `/en/centres/` | 2 | 1 |
 | `/en/jee-syllabus/` | 0 | 1 |
 | `/en/blogs/` | 5 | 1 |
-| `/en/class-11-jee/` | 6 | 2 |
-| `/en/class-12-jee/` | 6 | 2 |
-| `/en/jee-main-coaching/` | 5 | 2 |
-| `/en/jee-advanced-coaching/` | 5 | 2 |
-| `/en/test-series/` | 5 | 2 |
+| `/en/class-11-jee/` | 8 | 2 |
+| `/en/class-12-jee/` | 8 | 2 |
+| `/en/foundation-class-9-10/` | 7 | 2 |
+| `/en/jee-main-coaching/` | 7 | 2 |
+| `/en/jee-advanced-coaching/` | 7 | 2 |
+| `/en/test-series/` | 7 | 2 |
+| `/en/fees-and-batches/` | 8 | 1 |
 | `/en/about/` | 0 | 1 |
 | `/en/faq/` | 0 | 1 |
 | `/en/contact/` | 0 | 1 |
@@ -186,10 +188,10 @@ Links come from the rules in `site.json`. Every pillar links all its pages. Each
 | `/en/iit-jee-coaching-kalewadi/` | 6 | 2 |
 | `/en/iit-jee-coaching-chinchwad/` | 6 | 2 |
 | `/en/iit-jee-coaching-hinjewadi/` | 6 | 2 |
-| `/en/centres/sangvi-head-office/` | 4 | 1 |
-| `/en/centres/wakad/` | 4 | 1 |
+| `/en/centres/sangvi-head-office/` | 5 | 1 |
+| `/en/centres/wakad/` | 5 | 1 |
 | `/en/blogs/choosing-jee-coaching-pune/` | 3 | 2 |
 | `/en/blogs/kota-or-pune/` | 2 | 1 |
 | `/en/blogs/choosing-jee-coaching-pcmc/` | 4 | 2 |
 | `/en/blogs/class-11-or-12-start/` | 3 | 2 |
-| `/en/blogs/jee-coaching-fees-pune/` | 2 | 2 |
+| `/en/blogs/jee-coaching-fees-pune/` | 3 | 2 |

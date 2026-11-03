@@ -114,6 +114,10 @@ class Paths:
         return self.media / "manifest.json"
 
     @property
+    def media_encode(self) -> Path:
+        return self.media / "encode.json"
+
+    @property
     def media_assets(self) -> Path:
         return (self.media / "assets").resolve()
 
@@ -173,6 +177,11 @@ class Paths:
     @property
     def web_src(self) -> Path:
         return self.web / "src"
+
+    @property
+    def web_site_config(self) -> Path:
+        """Site settings that are not copy or data (indexing before launch)."""
+        return self.web_src / "config" / "site.json"
 
     @property
     def web_generated(self) -> Path:

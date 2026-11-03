@@ -1,0 +1,177 @@
+---
+/**
+ * One test, question by question (plan C1 8, under the weekly report): the test map. A window in
+ * the style of the student portal holds a bar for every question (time taken, coloured by how it
+ * ended, a tick for the class average, dots for revisits, a band for difficulty), then the chapters'
+ * accuracy and difficulty against result. An example, labelled as such; the numbers come from the
+ * report widget's testMap. The picture is SVG drawn here, so it reads without JavaScript; the
+ * island (islands/test-map.ts) only switches subject and shows the question picked.
+ */
+import { fill, strings, type Locale } from "../../../i18n/index.ts";
+import { syllabus } from "../../../lib/data.ts";
+import { averageY, axisTop, barBox, chapterAccuracy, difficultyMatrix, difficulties, statuses, tally, type Chart, type TestMapData } from "../../../lib/test-map.ts";
+
+interface Props {
+  id: string;
+  map: TestMapData;
+  label: string;
+  locale: Locale;
+}
+const { id, map, label, locale } = Astro.props;
+const t = strings(locale);
+const m = t.report.map;
+const data = syllabus(locale);
+const chapterName = (chapterId: string) => data.chapters.find((c) => c.id === chapterId)?.name ?? chapterId;
+const chart: Chart = { slot: 10, bar: 6.4, height: 64, dots: 10 };
+const band = { gap: 2, height: 3 };
+const opacity = { easy: 0.3, medium: 0.6, hard: 1 } as const;
+const top = axisTop(map.questions);
+const perSubject = data.subjects.map((s) => ({ ...s, questions: map.questions.filter((q) => q.subject === s.id) }));
+const width = Math.max(...perSubject.map((s) => s.questions.length)) * chart.slot;
+const baseline = chart.dots + chart.height;
+const height = baseline + band.gap + band.height + 7;
+---
+<section id={`${id}-test`} class="tm section" aria-labelledby={`${id}-test-title`}>
+  <div class="container tm__inner">
+    <div class="tm__head">
+      <h3 id={`${id}-test-title`} class="t-h1">{m.heading}</h3>
+      <p class="lede">{m.lede}</p>
+    </div>
+    <div class="tmwin" data-test-map data-surface="chalk" role="group" aria-label={m.window}>
+      <div class="tmwin__bar">
+        <span class="tmwin__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="tmwin__title">{map.test}</span>
+        <span class="badge">{t.common.example}</span>
+      </div>
+      <div class="tmwin__body">
+        <div class="chips" role="group" aria-label={m.pick}>
+          {perSubject.map((s, i) => <button type="button" class="chip" data-map-tab={s.id} aria-pressed={String(i === 0)}>{s.name}</button>)}
+        </div>
+        {perSubject.map((s, si) => {
+          const counts = tally(s.questions);
+          const matrix = difficultyMatrix(s.questions);
+          return (
+            <div class="tm__panel" data-map-panel={s.id} hidden={si > 0}>
+              <ul class="tm__counts" role="list">
+                {statuses.map((k) => <li><i data-status={k}></i><span class="tabular">{counts[k]}</span> {m[k]}</li>)}
+              </ul>
+              <figure class="tm__chart">
+                <figcaption class="muted">{m.time}</figcaption>
+                <svg viewBox={`0 0 ${width} ${height}`} role="group" aria-label={m.time}>
+                  <line class="tm__axis" x1="0" x2={width} y1={baseline} y2={baseline} />
+                  <line class="tm__axis tm__axis--mid" x1="0" x2={width} y1={chart.dots + chart.height / 2} y2={chart.dots + chart.height / 2} />
+                  {s.questions.map((q, i) => {
+                    const box = barBox(i, q.seconds, top, chart);
+                    const avgY = averageY(q.average, top, chart);
+                    const name = fill(m.question, { n: i + 1 });
+                    return (
+                      <g class="tm__q" data-q={`${s.id}-${i}`} data-status={q.status} tabindex="0" role="button" aria-label={`${name}, ${m[q.status]}`}>
+                        <rect class="tm__hit" x={i * chart.slot} y="0" width={chart.slot} height={baseline + band.gap + band.height} />
+                        <rect class="tm__bar" x={box.x} y={box.y} width={box.width} height={box.height} rx="0.8" />
+                        {Array.from({ length: q.visits - 1 }, (_, k) => <circle class="tm__visit" cx={box.x + box.width / 2} cy={box.y - 2.4 - k * 2.6} r="1.05" />)}
+                        <line class="tm__avg" x1={i * chart.slot + 0.6} x2={(i + 1) * chart.slot - 0.6} y1={avgY} y2={avgY} />
+                        <rect class="tm__band" x={box.x} y={baseline + band.gap} width={box.width} height={band.height} fill-opacity={opacity[q.difficulty]} />
+                        {(i === 0 || (i + 1) % 5 === 0) && <text class="tm__n" x={i * chart.slot + chart.slot / 2} y={height - 0.5} text-anchor="middle" font-size="5">{i + 1}</text>}
+                      </g>
+                    );
+                  })}
+                </svg>
+                <p class="tm__key muted"><span class="tm__swatch tm__swatch--avg"></span>{m.average} · <span class="tm__swatch tm__swatch--visit"></span>{m.revisit}</p>
+              </figure>
+              <div class="tm__detail" aria-live="polite">
+                <p class="muted" data-detail-hint>{m.tap}</p>
+                {s.questions.map((q, i) => (
+                  <div data-detail={`${s.id}-${i}`} hidden>
+                    <p><strong>{fill(m.question, { n: i + 1 })}</strong> · {chapterName(q.chapter)}</p>
+                    <p><i class="tm__chip" data-status={q.status}></i>{m[q.status]} · {m.difficulty}: {m[q.difficulty]}</p>
+                    <p class="muted tabular">{fill(m.yours, { s: q.seconds })} · {fill(m.class, { s: q.average })} · {fill(m.visits, { n: q.visits })}</p>
+                  </div>
+                ))}
+              </div>
+              <div class="tm__tables">
+                <div>
+                  <h4 class="tm__sub">{m.chapters}</h4>
+                  <ul class="tm__chapters" role="list">
+                    {chapterAccuracy(s.questions).map((c) => (
+                      <li>
+                        <span>{chapterName(c.chapter)}</span>
+                        <svg viewBox="0 0 100 1" preserveAspectRatio="none" aria-hidden="true">
+                          <rect data-status="right" width={(100 * c.correct) / c.total} height="1" />
+                          <rect data-status="wrong" x={(100 * c.correct) / c.total} width={(100 * (c.attempted - c.correct)) / c.total} height="1" />
+                          <rect data-status="left" x={(100 * c.attempted) / c.total} width={(100 * (c.total - c.attempted)) / c.total} height="1" />
+                        </svg>
+                        <span class="muted tabular">{fill(m.outcome, { correct: c.correct, attempted: c.attempted })}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <table class="tm__matrix">
+                  <caption class="tm__sub">{m.matrix}</caption>
+                  <thead><tr><th></th>{statuses.map((k) => <th scope="col"><i data-status={k}></i><span class="visually-hidden">{m[k]}</span></th>)}</tr></thead>
+                  <tbody>
+                    {difficulties.map((d) => <tr><th scope="row">{m[d]}</th>{statuses.map((k) => <td class="tabular" data-zero={matrix[d][k] === 0 ? "" : undefined}>{matrix[d][k]}</td>)}</tr>)}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+        })}
+        <p class="muted tm__label">{label}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .tm__inner { display: grid; gap: var(--space-6); }
+  .tm__head { display: grid; gap: var(--space-3); max-width: var(--measure); }
+  .tmwin { background: var(--bg); color: var(--text); border-radius: var(--radius-lg); box-shadow: var(--shadow-4); overflow: hidden; }
+  .tmwin__bar { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-2) var(--space-4); background: var(--bg-sunken); font-size: var(--type-small-size); }
+  .tmwin__dots { display: flex; gap: var(--space-2); }
+  .tmwin__dots i { width: var(--space-3); height: var(--space-3); border-radius: var(--radius-round); background: var(--error); }
+  .tmwin__dots i:nth-child(2) { background: var(--warn); }
+  .tmwin__dots i:nth-child(3) { background: var(--ok); }
+  .tmwin__title { flex: 1; text-align: center; font-weight: var(--weight-semibold); }
+  .tmwin__body { display: grid; gap: var(--space-5); padding: var(--space-5); }
+  .tm__panel { display: grid; gap: var(--space-4); }
+  .tm__counts { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+  .tm__counts li { display: flex; align-items: center; gap: var(--space-2); }
+  [data-status="right"] { --status: var(--ok); }
+  [data-status="slow"] { --status: var(--warn); }
+  [data-status="wrong"] { --status: var(--error); }
+  [data-status="left"] { --status: var(--text-muted); }
+  .tm__counts i, .tm__chip, .tm__matrix i { display: inline-block; width: var(--space-3); height: var(--space-3); margin-inline-end: var(--space-2); border-radius: var(--radius-sm); background: var(--status); }
+  .tm__counts i { margin: 0; }
+  .tm__chart { display: grid; gap: var(--space-2); margin: 0; }
+  .tm__chart svg { width: 100%; height: auto; overflow: visible; }
+  .tm__axis { stroke: var(--text-muted); stroke-width: 0.3; }
+  .tm__axis--mid { stroke-dasharray: 1 1.5; opacity: 0.5; }
+  .tm__bar { fill: var(--status); transition: opacity var(--dur-fast) var(--ease-enter); }
+  .tm__hit { fill: transparent; }
+  .tm__avg { stroke: var(--text); stroke-width: 0.7; }
+  .tm__visit { fill: var(--text); }
+  .tm__band { fill: var(--text-muted); }
+  .tm__n { fill: var(--text-muted); }
+  .tm__q { cursor: pointer; outline: 0; }
+  .tm__q:hover .tm__bar, .tm__q:focus-visible .tm__bar { opacity: 0.7; }
+  .tm__q:focus-visible .tm__hit { stroke: var(--focus); stroke-width: 0.6; }
+  .tm__q[data-selected] .tm__hit { fill: var(--bg-raised); }
+  .tm__key { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-1) var(--space-2); font-size: var(--type-small-size); }
+  .tm__swatch { display: inline-block; }
+  .tm__swatch--avg { width: var(--space-4); height: var(--space-1); background: var(--text); }
+  .tm__swatch--visit { width: var(--space-2); height: var(--space-2); border-radius: var(--radius-round); background: var(--text); }
+  .tm__detail { display: grid; gap: var(--space-1); min-height: calc(var(--type-body-lh) * 3em); padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--bg-raised); box-shadow: var(--shadow-1); }
+  .tm__chip { vertical-align: baseline; }
+  .tm__tables { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--column-min)), 1fr)); align-items: start; }
+  .tm__sub { margin-block-end: var(--space-2); font-size: var(--type-small-size); color: var(--text-muted); font-weight: var(--weight-semibold); text-align: start; }
+  .tm__chapters { display: grid; gap: var(--space-2); }
+  .tm__chapters li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: var(--space-3); align-items: center; }
+  .tm__chapters svg { width: 100%; height: var(--space-2); border-radius: var(--radius-round); overflow: hidden; background: var(--bg-sunken); }
+  .tm__chapters rect { fill: var(--status); }
+  .tm__matrix { width: 100%; }
+  .tm__matrix th, .tm__matrix td { padding: var(--space-1) var(--space-2); text-align: center; font-weight: var(--weight-regular); }
+  .tm__matrix th[scope="row"] { text-align: start; }
+  .tm__matrix td[data-zero] { color: var(--text-muted); }
+  .tm__matrix i { margin: 0; }
+  .tm__label { font-size: var(--type-small-size); }
+</style>

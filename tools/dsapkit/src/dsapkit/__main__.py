@@ -23,14 +23,17 @@ from .fonts.vendor import fetch_fonts, verify_fonts
 from .guide.build import build_guide
 from .icons.build import build_icons
 from .jsonio import read_json
+from .media.encode import encode_all
 from .media.library import check_media, fetch_media, load_library, waiting
+from .media.photos import encode_photos
 from .media.report import write_media_todo
 from .paths import Paths
 from .web.export import export_web
-from .web.lint import check_output, lint_source
+from .web.lint import check_not_found, check_output, lint_source
 from .map.build import build_map
 from .map.fetch import fetch_map
 from .site.build import build_site
+from .site.drift import check_drift, require_no_drift
 from .site.model import load_site
 from .tokens.build import build_tokens
 
@@ -94,6 +97,15 @@ def cmd_og(ctx: Context, args: argparse.Namespace) -> None:
         print(f"wrote {_rel(ctx, path)}")
 
 
+def cmd_media_encode(ctx: Context, _args: argparse.Namespace) -> None:
+    for done in encode_all(ctx.paths):
+        print(f"  {done.slot}: {done.width}x{done.height}, {done.seconds:.1f} s, {done.bytes / 1_000_000:.1f} MB (no sound, no metadata); "
+              f"poster {done.poster_slot}, {done.poster_bytes // 1000} KB")
+    for photo in encode_photos(ctx.paths):
+        print(f"  {photo.slot}: {photo.width}x{photo.height}, {photo.bytes // 1000} KB (no metadata)")
+    print("encoded; run make media-fetch to check each file against its slot and pin it")
+
+
 def cmd_media(ctx: Context, _args: argparse.Namespace) -> None:
     slots = check_media(ctx.paths)
     waiting_slots = waiting(ctx.paths, slots)
@@ -133,12 +145,16 @@ def cmd_site(ctx: Context, _args: argparse.Namespace) -> None:
     planned = sum(r.planned for r in site.routes.values())
     print(f"site: {len(site.routes)} pages per language: {len(live)} ready, "
           f"{len(site.routes) - len(live) - planned} waiting for facts or confirmed commutes, {planned} planned posts")
-    counts = {s: sum(f.severity == s for f in result.findings) for s in ("warning", "pending")}
-    print(f"structured data: no errors, {counts['warning']} warnings, {counts['pending']} values waiting for facts")
-    for f in result.findings:
-        if f.severity == "warning":
-            print(f"  warning {f.fixture}: {f.message}")
+    print(f"structured data rules: read from Google's docs on {result.rules_checked}, {result.rules_age_days} days ago")
     print(f"wrote {_rel(ctx, ctx.paths.site_dist)} and docs/seo/site-map.md, structured-data.md, listings-and-citations.md")
+
+
+def cmd_docs_drift(ctx: Context, _args: argparse.Namespace) -> None:
+    drifts = check_drift(read_json(ctx.paths.site / "jsonld-rules.json"))
+    for d in drifts:
+        print(f"  {'CHANGED' if d.changed else 'same   '} {d.live or 'no date'}  {d.page.url}")
+    require_no_drift(drifts)
+    print(f"docs drift: {len(drifts)} Google pages, none changed since the rules were read")
 
 
 def cmd_map_fetch(ctx: Context, _args: argparse.Namespace) -> None:
@@ -165,6 +181,12 @@ def cmd_web_data(ctx: Context, _args: argparse.Namespace) -> None:
     by_locale = {loc: sum(1 for _, l in report.pages if l == loc) for loc in site.locales}
     print(f"web data: {', '.join(f'{n} {loc}' for loc, n in by_locale.items())} pages; {report.files} files "
           f"in {_rel(ctx, ctx.paths.web_generated)}")
+    counts = {s: sum(f.severity == s for f in report.findings) for s in ("warning", "pending")}
+    print(f"structured data: {len(report.pages)} pages, no errors, {counts['warning']} warnings, "
+          f"{counts['pending']} properties waiting for facts (docs/seo/structured-data-results.md)")
+    for f in report.findings:
+        if f.severity == "warning":
+            print(f"  warning {f.page}: {f.message}")
     for line in report.left_out:
         print(f"  not shown: {line}")
 
@@ -173,7 +195,7 @@ def cmd_web_lint(ctx: Context, _args: argparse.Namespace) -> None:
     problems = lint_source(ctx.paths.web_src, ctx.paths.web_generated)
     dist = ctx.paths.web / "dist"
     if dist.is_dir():
-        problems += check_output(dist)
+        problems += check_output(dist) + check_not_found(dist)
     for problem in problems:
         print(problem.format(ctx.paths.root))
     print(f"web lint: {len(problems)} problems" + ("" if dist.is_dir() else " (no build to check: run make web)"))
@@ -213,6 +235,7 @@ COMMANDS: dict[str, tuple[Command, str]] = {
     "fonts": (cmd_fonts, "download the vendored woff2 files and write fonts.lock.json (network)"),
     "fonts-verify": (cmd_fonts_verify, "check vendored fonts against fonts.lock.json"),
     "metrics": (cmd_metrics, "measure fonts, write fallback and size-adjust metrics (macOS, network)"),
+    "media-encode": (cmd_media_encode, "turn supplied videos and large photos into the files the site serves, without sound or metadata (needs ffmpeg)"),
     "media-fetch": (cmd_media_fetch, "fetch supplied media from their recorded sources and write media.lock.json"),
     "tokens": (cmd_tokens, "build packages/tokens/dist and check contrast"),
     "icons": (cmd_icons, "check icon sources and build the sprite"),
@@ -223,6 +246,7 @@ COMMANDS: dict[str, tuple[Command, str]] = {
     "guide": (cmd_guide, "write the brand guide into docs/brand/guide"),
     "copy-lint": (cmd_copy_lint, "apply the voice rules to docs and content"),
     "site": (cmd_site, "check routes, keywords, links and structured data; write the SEO reports"),
+    "docs-drift": (cmd_docs_drift, "compare Google's documentation with the structured data rules (network)"),
     "map-fetch": (cmd_map_fetch, "download the area map's OpenStreetMap data and pin it (network)"),
     "map": (cmd_map, "build the area map from the pinned OpenStreetMap data"),
     "web-data": (cmd_web_data, "write the resolved data and static files apps/web renders"),

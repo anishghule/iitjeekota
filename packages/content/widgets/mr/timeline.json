@@ -2,7 +2,7 @@
   "$description": "Marathi draft of the two-year timeline on home. For review by a native Marathi writer before launch.",
   "steps": [
     {
-      "when": "मे, दहावीनंतर",
+      "when": "एप्रिल, दहावीनंतर",
       "title": "फाउंडेशन कालावधी",
       "detail": "अकरावीपूर्वी एक छोटी सुरुवात, म्हणजे पहिले काही आठवडे जड जात नाहीत.",
       "requires": ["programme.start"]

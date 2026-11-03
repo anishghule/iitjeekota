@@ -1,0 +1,2 @@
+# OWASP ZAP baseline rules (.github/workflows/zap.yml): rule id, IGNORE|WARN|FAIL, a note. Empty on purpose:
+# every alert fails the run until it is looked at and a reason is written here.

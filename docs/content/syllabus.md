@@ -12,96 +12,96 @@ From the Syllabus for JEE (Main) 2027, Paper 1 (B.E./B.Tech.) (National Testing 
 
 ## Physics
 
-| Symbol | Chapter | Class | JEE Main unit | JEE Advanced | Advanced adds |
+| Code | Chapter | Class | JEE Main unit | JEE Advanced | Advanced adds |
 | --- | --- | --- | --- | --- | --- |
-| Um | Units and Measurements | 11 | 1. Units and measurements | General |  |
-| Ki | Kinematics | 11 | 2. Kinematics | Mechanics |  |
-| Lm | Laws of Motion | 11 | 3. Laws of motion | Mechanics |  |
-| We | Work, Energy and Power | 11 | 4. Work, energy and power | Mechanics |  |
-| Rm | Rotational Motion | 11 | 5. Rotational motion | Mechanics | Rolling without slipping of rings, cylinders and spheres; Collisions of point masses with rigid bodies |
-| Gr | Gravitation | 11 | 6. Gravitation | Mechanics |  |
-| Mf | Mechanical Properties of Solids and Fluids | 11 | 7. Properties of solids and liquids | Mechanics | Buoyancy; Equation of continuity |
-| Tp | Thermal Properties of Matter | 11 | 7. Properties of solids and liquids | Thermal Physics | Newton's law of cooling; Blackbody radiation: Kirchhoff's law, Wien's displacement law, Stefan's law |
-| Th | Thermodynamics | 11 | 8. Thermodynamics | Thermal Physics | Carnot engine and its efficiency |
-| Kt | Kinetic Theory of Gases | 11 | 9. Kinetic theory of gases | Thermal Physics |  |
-| Os | Oscillations | 11 | 10. Oscillations and waves | Mechanics | Forced and damped oscillations, resonance; Angular simple harmonic motion |
-| Wa | Waves | 11 | 10. Oscillations and waves | Mechanics | Doppler effect in sound; Speed of sound in gases |
-| Ef | Electric Charges and Fields | 12 | 11. Electrostatics | Electricity and Magnetism |  |
-| Ca | Electrostatic Potential and Capacitance | 12 | 11. Electrostatics | Electricity and Magnetism |  |
-| Ce | Current Electricity | 12 | 12. Current electricity | Electricity and Magnetism |  |
-| Mc | Moving Charges and Magnetism | 12 | 13. Magnetic effects of current and magnetism | Electricity and Magnetism |  |
-| Mm | Magnetism and Matter | 12 | 13. Magnetic effects of current and magnetism | not in the syllabus |  |
-| Ei | Electromagnetic Induction | 12 | 14. Electromagnetic induction and alternating currents | Electricity and Magnetism |  |
-| Ac | Alternating Current | 12 | 14. Electromagnetic induction and alternating currents | Electricity and Magnetism | RC, LR and LC circuits with d.c. and a.c. sources |
-| Ew | Electromagnetic Waves | 12 | 15. Electromagnetic waves | Electromagnetic Waves |  |
-| Ro | Ray Optics | 12 | 16. Optics | Optics |  |
-| Wo | Wave Optics | 12 | 16. Optics | Optics |  |
-| Dn | Dual Nature of Matter and Radiation | 12 | 17. Dual nature of matter and radiation | Modern Physics |  |
-| At | Atoms | 12 | 18. Atoms and nuclei | Modern Physics | Characteristic and continuous X-rays, Moseley's law |
-| Nu | Nuclei | 12 | 18. Atoms and nuclei | Modern Physics | Alpha, beta and gamma radiation; Law of radioactive decay, half-life and mean life |
-| Sd | Semiconductor Devices | 12 | 19. Electronic devices | not in the syllabus |  |
-| Ex | Experimental Skills | 11, 12 | 20. Experimental skills | General |  |
+| 11-P-01 | Units and Measurements | 11 | 1. Units and measurements | General |  |
+| 11-P-02 | Kinematics | 11 | 2. Kinematics | Mechanics |  |
+| 11-P-03 | Laws of Motion | 11 | 3. Laws of motion | Mechanics |  |
+| 11-P-04 | Work, Energy and Power | 11 | 4. Work, energy and power | Mechanics |  |
+| 11-P-05 | Rotational Motion | 11 | 5. Rotational motion | Mechanics | Rolling without slipping of rings, cylinders and spheres; Collisions of point masses with rigid bodies |
+| 11-P-06 | Gravitation | 11 | 6. Gravitation | Mechanics |  |
+| 11-P-07 | Mechanical Properties of Solids and Fluids | 11 | 7. Properties of solids and liquids | Mechanics | Buoyancy; Equation of continuity |
+| 11-P-08 | Thermal Properties of Matter | 11 | 7. Properties of solids and liquids | Thermal Physics | Newton's law of cooling; Blackbody radiation: Kirchhoff's law, Wien's displacement law, Stefan's law |
+| 11-P-09 | Thermodynamics | 11 | 8. Thermodynamics | Thermal Physics | Carnot engine and its efficiency |
+| 11-P-10 | Kinetic Theory of Gases | 11 | 9. Kinetic theory of gases | Thermal Physics |  |
+| 11-P-11 | Oscillations | 11 | 10. Oscillations and waves | Mechanics | Forced and damped oscillations, resonance; Angular simple harmonic motion |
+| 11-P-12 | Waves | 11 | 10. Oscillations and waves | Mechanics | Doppler effect in sound; Speed of sound in gases |
+| 12-P-01 | Electric Charges and Fields | 12 | 11. Electrostatics | Electricity and Magnetism |  |
+| 12-P-02 | Electrostatic Potential and Capacitance | 12 | 11. Electrostatics | Electricity and Magnetism |  |
+| 12-P-03 | Current Electricity | 12 | 12. Current electricity | Electricity and Magnetism |  |
+| 12-P-04 | Moving Charges and Magnetism | 12 | 13. Magnetic effects of current and magnetism | Electricity and Magnetism |  |
+| 12-P-05 | Magnetism and Matter | 12 | 13. Magnetic effects of current and magnetism | not in the syllabus |  |
+| 12-P-06 | Electromagnetic Induction | 12 | 14. Electromagnetic induction and alternating currents | Electricity and Magnetism |  |
+| 12-P-07 | Alternating Current | 12 | 14. Electromagnetic induction and alternating currents | Electricity and Magnetism | RC, LR and LC circuits with d.c. and a.c. sources |
+| 12-P-08 | Electromagnetic Waves | 12 | 15. Electromagnetic waves | Electromagnetic Waves |  |
+| 12-P-09 | Ray Optics | 12 | 16. Optics | Optics |  |
+| 12-P-10 | Wave Optics | 12 | 16. Optics | Optics |  |
+| 12-P-11 | Dual Nature of Matter and Radiation | 12 | 17. Dual nature of matter and radiation | Modern Physics |  |
+| 12-P-12 | Atoms | 12 | 18. Atoms and nuclei | Modern Physics | Characteristic and continuous X-rays, Moseley's law |
+| 12-P-13 | Nuclei | 12 | 18. Atoms and nuclei | Modern Physics | Alpha, beta and gamma radiation; Law of radioactive decay, half-life and mean life |
+| 12-P-14 | Semiconductor Devices | 12 | 19. Electronic devices | not in the syllabus |  |
+| 11-P-13 | Experimental Skills | 11, 12 | 20. Experimental skills | General |  |
 
 ## Chemistry
 
-| Symbol | Chapter | Class | JEE Main unit | JEE Advanced | Advanced adds |
+| Code | Chapter | Class | JEE Main unit | JEE Advanced | Advanced adds |
 | --- | --- | --- | --- | --- | --- |
-| Bc | Some Basic Concepts of Chemistry | 11 | 1. Some basic concepts in chemistry | General topics |  |
-| As | Atomic Structure | 11 | 2. Atomic structure | Atomic Structure |  |
-| Cb | Chemical Bonding and Molecular Structure | 11 | 3. Chemical bonding and molecular structure | Chemical Bonding and Molecular Structure |  |
-| Ct | Chemical Thermodynamics | 11 | 4. Chemical thermodynamics | Chemical Thermodynamics |  |
-| So | Solutions | 12 | 5. Solutions | Solutions |  |
-| Eq | Equilibrium | 11 | 6. Equilibrium | Chemical and Ionic Equilibrium |  |
-| Rx | Redox Reactions | 11 | 7. Redox reactions and electrochemistry | General topics |  |
-| Ec | Electrochemistry | 12 | 7. Redox reactions and electrochemistry | Electrochemistry | Faraday's laws of electrolysis; Corrosion |
-| Ck | Chemical Kinetics | 12 | 8. Chemical kinetics | Chemical Kinetics | Catalysis: homogeneous, heterogeneous and enzyme catalysis |
-| Pe | Classification of Elements and Periodicity | 11 | 9. Classification of elements and periodicity in properties | Classification of Elements and Periodicity in Properties |  |
-| Pb | p-Block Elements | 11, 12 | 10. p-Block elements | p-Block Elements | Named compounds of each group: borax, diborane, silicones, ammonia, nitric acid, ozone, sulphuric acid, interhalogens, xenon compounds |
-| Df | d- and f-Block Elements | 12 | 11. d- and f-Block elements | d-Block Elements, f-Block Elements |  |
-| Cc | Coordination Compounds | 12 | 12. Coordination compounds | Coordination Compounds | Spectrochemical series and stability; Metal carbonyls |
-| Pu | Purification and Characterisation of Organic Compounds | 11 | 13. Purification and characterisation of organic compounds | Practical Organic Chemistry |  |
-| Go | Basic Principles of Organic Chemistry | 11 | 14. Some basic principles of organic chemistry | Basic Principles of Organic Chemistry |  |
-| Hc | Hydrocarbons | 11 | 15. Hydrocarbons | Alkanes, Alkenes and Alkynes, Benzene |  |
-| Ha | Haloalkanes and Haloarenes | 12 | 16. Organic compounds containing halogens | Alkyl Halides, Haloarenes | Grignard reactions; Fittig and Wurtz-Fittig reactions; Nucleophilic aromatic substitution |
-| Ap | Alcohols, Phenols and Ethers | 12 | 17. Organic compounds containing oxygen | Alcohols, Phenols, Ethers | Kolbe reaction and aspirin synthesis; Williamson's synthesis of ethers |
-| Ak | Aldehydes, Ketones and Carboxylic Acids | 12 | 17. Organic compounds containing oxygen | Aldehydes and Ketones, Carboxylic Acids |  |
-| Am | Amines | 12 | 18. Organic compounds containing nitrogen | Amines | Hoffmann bromamide and Gabriel phthalimide reactions; Sandmeyer, carbylamine and Hinsberg reactions |
-| Bm | Biomolecules | 12 | 19. Biomolecules | Biomolecules |  |
-| Pc | Practical Chemistry | 11, 12 | 20. Principles related to practical chemistry | Principles of Qualitative Analysis, Practical Organic Chemistry |  |
-| Sm | States of Matter | 11 |  | States of Matter: Gases and Liquids |  |
-| Ss | Solid State | 12 |  | Solid State |  |
-| Sc | Surface Chemistry | 12 |  | Surface Chemistry |  |
-| Hy | Hydrogen | 11 |  | Hydrogen |  |
-| Sb | s-Block Elements | 11 |  | s-Block Elements |  |
-| Im | Isolation of Metals | 12 |  | Isolation of Metals |  |
-| En | Environmental Chemistry | 11 |  | Environmental Chemistry |  |
-| Po | Polymers | 12 |  | Polymers |  |
-| Ed | Chemistry in Everyday Life | 12 |  | Chemistry in Everyday Life |  |
+| 11-C-01 | Some Basic Concepts of Chemistry | 11 | 1. Some basic concepts in chemistry | General topics |  |
+| 11-C-02 | Atomic Structure | 11 | 2. Atomic structure | Atomic Structure |  |
+| 11-C-03 | Chemical Bonding and Molecular Structure | 11 | 3. Chemical bonding and molecular structure | Chemical Bonding and Molecular Structure |  |
+| 11-C-04 | Chemical Thermodynamics | 11 | 4. Chemical thermodynamics | Chemical Thermodynamics |  |
+| 12-C-01 | Solutions | 12 | 5. Solutions | Solutions |  |
+| 11-C-05 | Equilibrium | 11 | 6. Equilibrium | Chemical and Ionic Equilibrium |  |
+| 11-C-06 | Redox Reactions | 11 | 7. Redox reactions and electrochemistry | General topics |  |
+| 12-C-02 | Electrochemistry | 12 | 7. Redox reactions and electrochemistry | Electrochemistry | Faraday's laws of electrolysis; Corrosion |
+| 12-C-03 | Chemical Kinetics | 12 | 8. Chemical kinetics | Chemical Kinetics | Catalysis: homogeneous, heterogeneous and enzyme catalysis |
+| 11-C-07 | Classification of Elements and Periodicity | 11 | 9. Classification of elements and periodicity in properties | Classification of Elements and Periodicity in Properties |  |
+| 11-C-08 | p-Block Elements | 11, 12 | 10. p-Block elements | p-Block Elements | Named compounds of each group: borax, diborane, silicones, ammonia, nitric acid, ozone, sulphuric acid, interhalogens, xenon compounds |
+| 12-C-04 | d- and f-Block Elements | 12 | 11. d- and f-Block elements | d-Block Elements, f-Block Elements |  |
+| 12-C-05 | Coordination Compounds | 12 | 12. Coordination compounds | Coordination Compounds | Spectrochemical series and stability; Metal carbonyls |
+| 11-C-09 | Purification and Characterisation of Organic Compounds | 11 | 13. Purification and characterisation of organic compounds | Practical Organic Chemistry |  |
+| 11-C-10 | Basic Principles of Organic Chemistry | 11 | 14. Some basic principles of organic chemistry | Basic Principles of Organic Chemistry |  |
+| 11-C-11 | Hydrocarbons | 11 | 15. Hydrocarbons | Alkanes, Alkenes and Alkynes, Benzene |  |
+| 12-C-06 | Haloalkanes and Haloarenes | 12 | 16. Organic compounds containing halogens | Alkyl Halides, Haloarenes | Grignard reactions; Fittig and Wurtz-Fittig reactions; Nucleophilic aromatic substitution |
+| 12-C-07 | Alcohols, Phenols and Ethers | 12 | 17. Organic compounds containing oxygen | Alcohols, Phenols, Ethers | Kolbe reaction and aspirin synthesis; Williamson's synthesis of ethers |
+| 12-C-08 | Aldehydes, Ketones and Carboxylic Acids | 12 | 17. Organic compounds containing oxygen | Aldehydes and Ketones, Carboxylic Acids |  |
+| 12-C-09 | Amines | 12 | 18. Organic compounds containing nitrogen | Amines | Hoffmann bromamide and Gabriel phthalimide reactions; Sandmeyer, carbylamine and Hinsberg reactions |
+| 12-C-10 | Biomolecules | 12 | 19. Biomolecules | Biomolecules |  |
+| 11-C-12 | Practical Chemistry | 11, 12 | 20. Principles related to practical chemistry | Principles of Qualitative Analysis, Practical Organic Chemistry |  |
+| 11-C-13 | States of Matter | 11 |  | States of Matter: Gases and Liquids |  |
+| 12-C-11 | Solid State | 12 |  | Solid State |  |
+| 12-C-12 | Surface Chemistry | 12 |  | Surface Chemistry |  |
+| 11-C-14 | Hydrogen | 11 |  | Hydrogen |  |
+| 11-C-15 | s-Block Elements | 11 |  | s-Block Elements |  |
+| 12-C-13 | Isolation of Metals | 12 |  | Isolation of Metals |  |
+| 11-C-16 | Environmental Chemistry | 11 |  | Environmental Chemistry |  |
+| 12-C-14 | Polymers | 12 |  | Polymers |  |
+| 12-C-15 | Chemistry in Everyday Life | 12 |  | Chemistry in Everyday Life |  |
 
 ## Mathematics
 
-| Symbol | Chapter | Class | JEE Main unit | JEE Advanced | Advanced adds |
+| Code | Chapter | Class | JEE Main unit | JEE Advanced | Advanced adds |
 | --- | --- | --- | --- | --- | --- |
-| Sr | Sets, Relations and Functions | 11, 12 | 1. Sets, relations and functions | Sets, Relations and Functions | De Morgan's laws; Special functions: absolute value, greatest integer |
-| Cn | Complex Numbers | 11 | 2. Complex numbers and quadratic equations | Algebra | Polar form, triangle inequality, cube roots of unity |
-| Qe | Quadratic Equations | 11 | 2. Complex numbers and quadratic equations | Algebra |  |
-| Md | Matrices and Determinants | 12 | 3. Matrices and determinants | Matrices |  |
-| Pn | Permutations and Combinations | 11 | 4. Permutations and combinations | Algebra |  |
-| Bt | Binomial Theorem | 11 | 5. Binomial theorem and its simple applications | Algebra | Properties of binomial coefficients |
-| Sq | Sequences and Series | 11 | 6. Sequence and series | Algebra | Infinite geometric series; Sums of n, n squared and n cubed; Logarithms and their properties |
-| Li | Limits and Continuity | 11, 12 | 7. Limit, continuity and differentiability | Differential Calculus | L'Hospital's rule; Intermediate value property |
-| Di | Differentiation | 12 | 7. Limit, continuity and differentiability | Differential Calculus |  |
-| Ad | Applications of Derivatives | 12 | 7. Limit, continuity and differentiability | Differential Calculus | Tangents and normals; Rolle's theorem and Lagrange's mean value theorem |
-| In | Integrals | 12 | 8. Integral calculus | Integral Calculus | Definite integral as the limit of a sum |
-| De | Differential Equations | 12 | 9. Differential equations | Integral Calculus |  |
-| Sl | Straight Lines | 11 | 10. Co-ordinate geometry | Analytical Geometry | Angle bisectors, incentre, shift of origin |
-| Ci | Circles | 11 | 10. Co-ordinate geometry | Analytical Geometry | Tangents, normals and chords; Parametric form; Intersecting circles |
-| Co | Conic Sections | 11 | 10. Co-ordinate geometry | Analytical Geometry | Foci, directrices and eccentricity; Parametric equations, tangents and normals; Locus problems |
-| Tg | Three-Dimensional Geometry | 12 | 11. Three dimensional geometry | Analytical Geometry | Equation of a plane, distance of a point from a plane; Angles between lines and planes, coplanar lines |
-| Va | Vector Algebra | 12 | 12. Vector algebra | Vectors | Scalar and vector triple products |
-| St | Statistics | 11 | 13. Statistics and probability | Probability and Statistics |  |
-| Pr | Probability | 11, 12 | 13. Statistics and probability | Probability and Statistics | Conditional probability and independence; Mean and variance of a random variable |
-| Tr | Trigonometry | 11, 12 | 14. Trigonometry | Trigonometry | Graphs and periodicity; Multiple and sub-multiple angle formulae; General solutions of trigonometric equations |
+| 11-M-01 | Sets, Relations and Functions | 11, 12 | 1. Sets, relations and functions | Sets, Relations and Functions | De Morgan's laws; Special functions: absolute value, greatest integer |
+| 11-M-02 | Complex Numbers | 11 | 2. Complex numbers and quadratic equations | Algebra | Polar form, triangle inequality, cube roots of unity |
+| 11-M-03 | Quadratic Equations | 11 | 2. Complex numbers and quadratic equations | Algebra |  |
+| 12-M-01 | Matrices and Determinants | 12 | 3. Matrices and determinants | Matrices |  |
+| 11-M-04 | Permutations and Combinations | 11 | 4. Permutations and combinations | Algebra |  |
+| 11-M-05 | Binomial Theorem | 11 | 5. Binomial theorem and its simple applications | Algebra | Properties of binomial coefficients |
+| 11-M-06 | Sequences and Series | 11 | 6. Sequence and series | Algebra | Infinite geometric series; Sums of n, n squared and n cubed; Logarithms and their properties |
+| 11-M-07 | Limits and Continuity | 11, 12 | 7. Limit, continuity and differentiability | Differential Calculus | L'Hospital's rule; Intermediate value property |
+| 12-M-02 | Differentiation | 12 | 7. Limit, continuity and differentiability | Differential Calculus |  |
+| 12-M-03 | Applications of Derivatives | 12 | 7. Limit, continuity and differentiability | Differential Calculus | Tangents and normals; Rolle's theorem and Lagrange's mean value theorem |
+| 12-M-04 | Integrals | 12 | 8. Integral calculus | Integral Calculus | Definite integral as the limit of a sum |
+| 12-M-05 | Differential Equations | 12 | 9. Differential equations | Integral Calculus |  |
+| 11-M-08 | Straight Lines | 11 | 10. Co-ordinate geometry | Analytical Geometry | Angle bisectors, incentre, shift of origin |
+| 11-M-09 | Circles | 11 | 10. Co-ordinate geometry | Analytical Geometry | Tangents, normals and chords; Parametric form; Intersecting circles |
+| 11-M-10 | Conic Sections | 11 | 10. Co-ordinate geometry | Analytical Geometry | Foci, directrices and eccentricity; Parametric equations, tangents and normals; Locus problems |
+| 12-M-06 | Three-Dimensional Geometry | 12 | 11. Three dimensional geometry | Analytical Geometry | Equation of a plane, distance of a point from a plane; Angles between lines and planes, coplanar lines |
+| 12-M-07 | Vector Algebra | 12 | 12. Vector algebra | Vectors | Scalar and vector triple products |
+| 11-M-11 | Statistics | 11 | 13. Statistics and probability | Probability and Statistics |  |
+| 11-M-12 | Probability | 11, 12 | 13. Statistics and probability | Probability and Statistics | Conditional probability and independence; Mean and variance of a random variable |
+| 11-M-13 | Trigonometry | 11, 12 | 14. Trigonometry | Trigonometry | Graphs and periodicity; Multiple and sub-multiple angle formulae; General solutions of trigonometric equations |
 
 Sources:
 

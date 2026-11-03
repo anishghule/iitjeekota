@@ -1,11 +1,13 @@
 ---
-/** Every other live page with copy: breadcrumbs, H1, intro, then its sections (ADR 0007). */
+/** Every other live page with copy: breadcrumbs, H1, intro, the date, then its sections, or a guide's body (ADR 0007). */
 import Breadcrumbs from "../../components/blocks/Breadcrumbs.astro";
+import Guide from "../../components/blocks/Guide.astro";
 import Paragraphs from "../../components/ui/Paragraphs.astro";
 import Sections from "../../components/sections/Sections.astro";
 import Base from "../../layouts/Base.astro";
-import { isLocale, strings } from "../../i18n/index.ts";
+import { fill, isLocale, strings } from "../../i18n/index.ts";
 import { pages, routePath, isRouteId } from "../../lib/data.ts";
+import { formatDay } from "../../lib/format.ts";
 import type { PageData } from "../../lib/types.ts";
 
 export function getStaticPaths() {
@@ -24,6 +26,9 @@ const { lang } = Astro.params;
 const { page } = Astro.props as { page: PageData };
 if (!isLocale(lang)) throw new Error(`unknown language ${lang}`);
 const t = strings(lang);
+const { published, modified } = page.dates;
+// What the page says about when it was written is what its structured data says: the same two days.
+const updated = modified ?? published;
 ---
 <Base page={page} locale={lang}>
   <header class="page-head section">
@@ -31,12 +36,31 @@ const t = strings(lang);
       <Breadcrumbs crumbs={page.breadcrumbs} label={t.breadcrumbs} />
       <h1 class="t-display">{page.h1}</h1>
       <div class="prose"><Paragraphs paragraphs={page.intro} class="lede" /></div>
+      <p class="page-head__meta muted">
+        {page.author && <span>{page.author.path ? <a href={page.author.path}>{fill(t.page.by, { name: page.author.name })}</a> : fill(t.page.by, { name: page.author.name })}</span>}
+        {page.template === "post" && published && <time datetime={published}>{fill(t.page.published, { date: formatDay(published, lang) })}</time>}
+        {updated && <time datetime={updated}>{fill(t.page.updated, { date: formatDay(updated, lang) })}</time>}
+      </p>
     </div>
   </header>
-  <Sections sections={page.sections} locale={lang} />
+  {page.blocks && <Guide blocks={page.blocks} />}
+  <Sections sections={page.sections} locale={lang} route={page.route} />
+  {page.related && page.related.length > 0 && (
+    <nav class="related section" aria-labelledby="related-title">
+      <div class="container related__inner">
+        <h2 id="related-title" class="t-h2">{t.page.related}</h2>
+        <ul class="related__list" role="list">
+          {page.related.map((r) => <li><a href={r.path}>{r.name}</a></li>)}
+        </ul>
+      </div>
+    </nav>
+  )}
 </Base>
 
 <style>
   .page-head { padding-block-start: calc(var(--nav-height) + var(--space-8)); }
   .page-head__inner { display: grid; gap: var(--space-5); }
+  .related__inner { display: grid; gap: var(--space-4); }
+  .related__list { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+  .page-head__meta { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); font-size: var(--type-small-size); }
 </style>

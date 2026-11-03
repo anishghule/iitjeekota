@@ -1,5 +1,6 @@
 {
-  "$description": "The media library: every image and video the site and brand outputs use, one slot each. Supplied files are fetched and pinned in media.lock.json (make media-fetch); awaited files are added by D-SAP at the slot's path, then pinned the same way; generated files come from make brand. Components ask for a slot id, never a path. Internet placeholders are allowed only where placeholderAllowed is true, with a licence that allows commercial use (plan Part 0.2). make media writes the list of files still to add to docs/setup/media-to-add.md.",
+  "$description": "The media library: every image and video the site and brand outputs use, one slot each. Supplied files are fetched and pinned in media.lock.json (make media-fetch); awaited files are added by D-SAP at the slot's path, then pinned the same way; encoded files are made from a supplied original by make media-encode (packages/media/encode.json), then pinned; generated files come from make brand. Components ask for a slot id, never a path. Internet placeholders are allowed only where placeholderAllowed is true, with a licence that allows commercial use (plan Part 0.2). make media writes the list of files still to add to docs/setup/media-to-add.md.",
+  "scrub": { "$description": "Every image is rewritten before it is pinned, without EXIF, XMP, IPTC, comments, thumbnails, timestamps or anything after the picture (phone photos carry where and when they were taken). keepColourProfile keeps the colour profile only, because dropping it can change how colours look. Videos are made clean by make media-encode and checked here.", "keepColourProfile": true },
   "allowedHosts": ["www.dsapghuletutorials.com", "dsapghuletutorials.com"],
   "limits": { "image": 12000000, "video": 80000000 },
   "slots": [
@@ -17,18 +18,16 @@
       "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials trademark, all rights reserved", "placeholder": false
     },
     {
-      "id": "brand/logo-medal-normal", "origin": "supplied", "kind": "image",
+      "id": "brand/logo-medal-normal", "origin": "committed", "kind": "image",
       "file": "packages/media/assets/brand/dsap-medal-normal.webp",
-      "source": "resources/dsap-iitjeekota-v3.2/assets/img/medal-normal.webp",
-      "sourceNote": "Normal map of the medal relief from the v3.2 reference build; gives the 3D medal its metallic depth (material.medal-face).",
+      "sourceNote": "Normal map of the medal relief from the v3.2 reference build (medal-normal.webp); gives the 3D medal its metallic depth (material.medal-face). This committed file is the copy.",
       "decorative": true,
       "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved", "placeholder": false
     },
     {
-      "id": "people/prof-ghule", "origin": "supplied", "kind": "image",
+      "id": "people/prof-ghule", "origin": "committed", "kind": "image",
       "file": "packages/media/assets/people/prof-ghule-full.png",
-      "source": "resources/pic.png",
-      "sourceNote": "Full-length cut-out on a transparent background, supplied by D-SAP. Use on iitjeekota.com confirmed by D-SAP on 2026-10-30.",
+      "sourceNote": "Full-length cut-out on a transparent background, supplied by D-SAP (pic.png). Use on iitjeekota.com confirmed by D-SAP on 2026-10-30. This committed file is the copy.",
       "alt": {
         "en": "Prof. Ghule, founder of D-SAP Ghule Tutorials, standing with arms folded",
         "hi": "प्रो. घुले, D-SAP घुले ट्यूटोरियल्स के संस्थापक, हाथ बांधे खड़े हुए",
@@ -38,10 +37,9 @@
       "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved; personal image, consent confirmed 2026-10-30", "placeholder": false
     },
     {
-      "id": "people/prof-ghule-portrait", "origin": "supplied", "kind": "image",
+      "id": "people/prof-ghule-portrait", "origin": "committed", "kind": "image",
       "file": "packages/media/assets/people/prof-ghule-portrait.png",
-      "source": "resources/Ghule Sir.png",
-      "sourceNote": "Square portrait on a light peach background, supplied by D-SAP. Use on iitjeekota.com confirmed by D-SAP on 2026-10-30.",
+      "sourceNote": "Square portrait on a light peach background, supplied by D-SAP (Ghule Sir.png). Use on iitjeekota.com confirmed by D-SAP on 2026-10-30. This committed file is the copy.",
       "alt": {
         "en": "Portrait of Prof. Ghule, founder of D-SAP Ghule Tutorials",
         "hi": "प्रो. घुले का चित्र, D-SAP घुले ट्यूटोरियल्स के संस्थापक",
@@ -84,6 +82,24 @@
       "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved", "placeholder": false
     },
     {
+      "id": "centres/sangvi-head-office/parent-meeting", "origin": "committed", "kind": "video",
+      "file": "packages/media/assets/centres/sangvi-head-office/parent-meeting.mp4",
+      "spec": { "orientation": "landscape", "minWidth": 1920, "minHeight": 800, "shows": "A meeting of parents and students at the New Sangvi centre. Made by make media-encode." },
+      "alt": { "en": "Parents and students seated at a meeting at the New Sangvi centre" },
+      "usedOn": ["centre-sangvi-head-office"],
+      "note": "Made with the clip-wide profile in packages/media/encode.json from VID_classroom_2.mp4 (14 s from 0 s), filmed at the New Sangvi centre and supplied by D-SAP on 2026-11-02; sound and metadata removed. The 145 MB original stays outside the repository (GitHub refuses files over 100 MB); this committed film is the copy.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved", "placeholder": false
+    },
+    {
+      "id": "centres/sangvi-head-office/parent-meeting-poster", "origin": "committed", "kind": "image",
+      "file": "packages/media/assets/centres/sangvi-head-office/parent-meeting-poster.jpg",
+      "spec": { "orientation": "landscape", "minWidth": 1920, "minHeight": 800, "shows": "A still from the parent meeting film. Made by make media-encode." },
+      "alt": { "en": "Parents and students seated at a meeting at the New Sangvi centre" },
+      "usedOn": ["centre-sangvi-head-office"],
+      "note": "Made by make media-encode, with the film.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved", "placeholder": false
+    },
+    {
       "id": "centres/wakad/entrance", "origin": "awaited", "kind": "image",
       "file": "packages/media/assets/centres/wakad/entrance.jpg",
       "spec": { "orientation": "landscape", "minWidth": 2400, "minHeight": 1600, "shows": "Shiv Malhar building with the D-SAP sign on the first floor, in daylight." },
@@ -117,12 +133,21 @@
     },
 
     {
-      "id": "home/classroom-film", "origin": "awaited", "kind": "video",
+      "id": "home/classroom-film", "origin": "committed", "kind": "video",
       "file": "packages/media/assets/home/classroom-film.mp4",
-      "spec": { "orientation": "portrait", "minWidth": 1080, "minHeight": 1920, "shows": "8 to 15 seconds, filmed upright on a phone held still: notebooks, the teacher at the board, students solving. The home page plays it frame by frame as the reader scrolls." },
+      "spec": { "orientation": "portrait", "minWidth": 1080, "minHeight": 1920, "shows": "8 to 15 seconds, filmed upright on a phone held still: notebooks, the teacher at the board, students solving. The home page plays it when the reader presses Play." },
       "alt": { "en": "Students writing in their notebooks while the teacher works at the board" },
       "usedOn": ["home"],
-      "note": "The v3.2 clip (resources/dsap-iitjeekota-v3.2/assets/video/classroom.mp4) is 432x1010, too small for this slot.",
+      "note": "Made with the clip profile in packages/media/encode.json from VID_classroom.mp4 (14 s from 1 s), supplied by D-SAP on 2026-11-01; sound and metadata removed. The 173 MB original stays outside the repository (GitHub refuses files over 100 MB); this committed film is the copy. The v3.2 clip is 432x1010, too small for this slot.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved", "placeholder": false
+    },
+    {
+      "id": "home/classroom-film-poster", "origin": "committed", "kind": "image",
+      "file": "packages/media/assets/home/classroom-film-poster.jpg",
+      "spec": { "orientation": "portrait", "minWidth": 1080, "minHeight": 1920, "shows": "A still from the classroom film, shown before it loads and to anyone who does not play it. Made by make media-encode." },
+      "alt": { "en": "Students writing in their notebooks in a classroom with a digital board" },
+      "usedOn": ["home"],
+      "note": "Made by make media-encode, with the film.",
       "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved", "placeholder": false
     },
     {
@@ -189,6 +214,114 @@
       "spec": { "orientation": "square", "minWidth": 1200, "minHeight": 1200, "shows": "Head-and-shoulders portrait of the Mathematics faculty, plain background." },
       "alt": { "en": "Mathematics faculty at D-SAP Ghule Tutorials" },
       "usedOn": ["kota-faculty", "home"], "note": "Shown publicly only once faculty.profiles is confirmed.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved; consent required", "placeholder": false
+    },
+
+    {
+      "id": "gallery/entrance", "origin": "committed", "kind": "image",
+      "file": "packages/media/assets/gallery/entrance.webp",
+      "spec": { "orientation": "portrait", "minWidth": 500, "minHeight": 900, "shows": "The building entrance with the gate, seen from the street in daylight." },
+      "alt": {
+        "en": "The D-SAP building entrance in Pune, a four-storey building with balconies and a gate",
+        "hi": "पुणे में D-SAP की इमारत का प्रवेश, बालकनियों और गेट वाली चार मंज़िला इमारत",
+        "mr": "पुण्यातील D-SAP च्या इमारतीचे प्रवेशद्वार, बाल्कनी आणि गेट असलेली चार मजली इमारत"
+      },
+      "draftLocales": ["hi", "mr"],
+      "usedOn": ["home"], "note": "Supplied by D-SAP (building.webp), 2026-11-03; this committed file is the copy. Which centre this is needs confirming before the alt text names it.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved", "placeholder": false
+    },
+    {
+      "id": "gallery/class-at-work", "origin": "committed", "kind": "image",
+      "file": "packages/media/assets/gallery/class-at-work.webp",
+      "spec": { "orientation": "portrait", "minWidth": 800, "minHeight": 1800, "shows": "An upright still from a class: students writing in their books, a teacher at the back." },
+      "alt": {
+        "en": "Students working from their books at their desks while a teacher looks on",
+        "hi": "छात्र अपनी किताबों से डेस्क पर काम करते हुए, पीछे एक शिक्षिका देखती हुई",
+        "mr": "विद्यार्थी आपल्या पुस्तकांतून डेस्कवर काम करताना, मागे एक शिक्षिका पाहत आहेत"
+      },
+      "draftLocales": ["hi", "mr"],
+      "usedOn": ["home"], "note": "Supplied by D-SAP (still6.webp), 2026-11-03; this committed file is the copy. Students are identifiable: needs media.students.consent.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved; consent required", "placeholder": false
+    },
+    {
+      "id": "gallery/batch", "origin": "committed", "kind": "image",
+      "file": "packages/media/assets/gallery/batch.jpg",
+      "spec": { "orientation": "square", "minWidth": 1200, "minHeight": 1200, "shows": "A batch of students standing around their teacher." },
+      "alt": {
+        "en": "A D-SAP batch of students standing around their teacher",
+        "hi": "अपने शिक्षक के चारों ओर खड़ा D-SAP का एक बैच",
+        "mr": "आपल्या शिक्षकांभोवती उभा असलेला D-SAP चा एक बॅच"
+      },
+      "draftLocales": ["hi", "mr"],
+      "usedOn": ["home"], "note": "Supplied by D-SAP (students.jpeg), 2026-11-03; this committed file is the copy. Students are identifiable: needs media.students.consent.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved; consent required", "placeholder": false
+    },
+    {
+      "id": "gallery/students-group", "origin": "committed", "kind": "image",
+      "file": "packages/media/assets/gallery/students-group.jpg",
+      "spec": { "orientation": "landscape", "minWidth": 1200, "minHeight": 900, "shows": "Students in a classroom with their teacher." },
+      "alt": {
+        "en": "Students standing together in a classroom with their teacher",
+        "hi": "कक्षा में अपने शिक्षक के साथ खड़े छात्र",
+        "mr": "वर्गात आपल्या शिक्षकांसोबत उभे असलेले विद्यार्थी"
+      },
+      "draftLocales": ["hi", "mr"],
+      "usedOn": ["home"], "note": "Supplied by D-SAP (students2.jpg), 2026-11-03; this committed file is the copy. Students are identifiable: needs media.students.consent.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved; consent required", "placeholder": false
+    },
+    {
+      "id": "gallery/full-class", "origin": "committed", "kind": "image",
+      "file": "packages/media/assets/gallery/full-class.webp",
+      "spec": { "orientation": "landscape", "minWidth": 1200, "minHeight": 500, "shows": "A classroom full of people seated at desks." },
+      "alt": {
+        "en": "A full classroom of students and parents seated at desks",
+        "hi": "डेस्क पर बैठे छात्रों और अभिभावकों से भरी कक्षा",
+        "mr": "डेस्कवर बसलेल्या विद्यार्थी आणि पालकांनी भरलेला वर्ग"
+      },
+      "draftLocales": ["hi", "mr"],
+      "usedOn": ["home"], "note": "Supplied by D-SAP (classroom3.webp), 2026-11-03; this committed file is the copy. 1360 px wide, so it looks soft on a screen that doubles pixels; a larger original would help. Students and parents are identifiable: needs media.students.consent.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved; consent required", "placeholder": false
+    },
+    {
+      "id": "gallery/old-batch", "origin": "encoded", "kind": "image",
+      "file": "packages/media/assets/gallery/old-batch.jpg",
+      "source": "packages/media/originals/gallery/old-batch.jpg",
+      "spec": { "orientation": "landscape", "minWidth": 1200, "minHeight": 900, "shows": "Prof. Ghule seated with a group of students on a sofa." },
+      "alt": {
+        "en": "Prof. Ghule seated on a sofa with five students",
+        "hi": "सोफ़े पर पाँच छात्रों के साथ बैठे प्रो. घुले",
+        "mr": "सोफ्यावर पाच विद्यार्थ्यांसोबत बसलेले प्रा. घुले"
+      },
+      "draftLocales": ["hi", "mr"],
+      "usedOn": ["home"], "note": "Made by make media-encode from packages/media/originals/gallery/old-batch.jpg, a copy of old_students.jpg (4160 px wide, carried GPS data, now removed), supplied by D-SAP on 2026-11-03. Students are identifiable: needs media.students.consent.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved; consent required", "placeholder": false
+    },
+    {
+      "id": "gallery/office-chat", "origin": "encoded", "kind": "image",
+      "file": "packages/media/assets/gallery/office-chat.jpg",
+      "source": "packages/media/originals/gallery/office-chat.jpg",
+      "spec": { "orientation": "landscape", "minWidth": 1200, "minHeight": 900, "shows": "Prof. Ghule at his desk talking with students and visitors." },
+      "alt": {
+        "en": "Prof. Ghule at his desk, talking with students and visitors",
+        "hi": "अपनी मेज़ पर छात्रों और आगंतुकों से बात करते प्रो. घुले",
+        "mr": "आपल्या टेबलावर विद्यार्थी आणि पाहुण्यांशी बोलणारे प्रा. घुले"
+      },
+      "draftLocales": ["hi", "mr"],
+      "usedOn": ["home"], "note": "Made by make media-encode from packages/media/originals/gallery/office-chat.jpg, a 3200 px copy of parents_with_sir.jpg (8000 px, 13.5 MB, carried the phone model and a date, now removed), supplied by D-SAP on 2026-11-03. People are identifiable: needs media.students.consent.",
+      "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved; consent required", "placeholder": false
+    },
+    {
+      "id": "gallery/mht-cet-poster", "origin": "encoded", "kind": "image",
+      "file": "packages/media/assets/gallery/mht-cet-poster.jpg",
+      "source": "packages/media/originals/gallery/mht-cet-poster.png",
+      "spec": { "orientation": "portrait", "minWidth": 1000, "minHeight": 1000, "shows": "D-SAP's congratulations poster for five students and their MHT-CET 2025-26 percentiles." },
+      "alt": {
+        "en": "Congratulations poster from D-SAP Ghule Tutorials: five students with their MHT-CET 2025-26 percentiles, from 97.5 to 99.3",
+        "hi": "D-SAP घुले ट्यूटोरियल्स का बधाई पोस्टर: पाँच छात्र और उनके MHT-CET 2025-26 के पर्सेंटाइल, 97.5 से 99.3 तक",
+        "mr": "D-SAP घुले ट्यूटोरियल्सचे अभिनंदन पोस्टर: पाच विद्यार्थी आणि त्यांचे MHT-CET 2025-26 चे पर्सेंटाइल, 97.5 ते 99.3"
+      },
+      "draftLocales": ["hi", "mr"],
+      "usedOn": ["home"], "note": "Made by make media-encode from packages/media/originals/gallery/mht-cet-poster.png, a copy of mhtcet 26.png supplied by D-SAP; added to the gallery at D-SAP's request on 2026-11-03. It states results, so the CCPA coaching guidelines apply: the poster does not say which course the students took or for how long.",
       "credit": "D-SAP Ghule Tutorials", "licence": "D-SAP Ghule Tutorials, all rights reserved; consent required", "placeholder": false
     },
 

@@ -2,7 +2,7 @@
   "$description": "The two-year programme as a timeline for the home page's two-years section. Each step names the facts it states. The recurring rhythm is shown beside the steps.",
   "steps": [
     {
-      "when": "May, after Class 10",
+      "when": "April, after Class 10",
       "title": "Foundation period",
       "detail": "A short start before Class 11, so the first weeks are not a shock.",
       "requires": ["programme.start"]

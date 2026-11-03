@@ -17,6 +17,7 @@ from pathlib import Path
 
 from ..errors import BuildError
 from ..fonts.render import RenderFonts
+from ..images.scrub import scrub
 
 INSTALL_HINT = "install librsvg: brew install librsvg (macOS) or apt-get install librsvg2-bin fontconfig (Linux)"
 
@@ -38,7 +39,10 @@ class Rasteriser:
             conf = self._fonts.fontconfig(folder) if self._fonts else RenderFonts.empty_fontconfig(folder)
             env = {**os.environ, "FONTCONFIG_FILE": str(conf), "PANGOCAIRO_BACKEND": "fc"}
             size = ["-w", str(width)] + (["-h", str(height)] if height else [])
-            result = subprocess.run([self._exe, *size, "-o", str(out), str(source)], env=env,
+            # An argument list (no shell) for rsvg-convert, found with shutil.which; the SVG is our own.
+            result = subprocess.run([self._exe, *size, "-o", str(out), str(source)], env=env,  # noqa: S603
                                     capture_output=True, text=True)
             if result.returncode != 0:
                 raise BuildError(f"rsvg-convert failed for {out.name}: {result.stderr.strip()}")
+        # Every image the site ships is made of its picture alone (images/scrub.py), whoever drew it.
+        out.write_bytes(scrub(out.read_bytes()))

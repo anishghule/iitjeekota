@@ -1,5 +1,5 @@
 ---
-/** Resolved copy: plain runs, and links to live pages (make web-data decides which are links). */
+/** Resolved copy: plain runs, bold runs, and links to live pages (make web-data decides which are links). */
 import type { Rich } from "../../lib/types.ts";
 
 interface Props {
@@ -7,4 +7,7 @@ interface Props {
 }
 const { parts } = Astro.props;
 ---
-{parts.map((part) => (part.path ? <a href={part.path}>{part.text}</a> : part.text))}
+{parts.map((part) => {
+  const text = part.strong ? <strong>{part.text}</strong> : part.text;
+  return part.path ? <a href={part.path}>{text}</a> : text;
+})}

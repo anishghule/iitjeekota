@@ -31,3 +31,34 @@ export function readJson<T>(root: ParentNode, selector: string): T | undefined {
   const text = root.querySelector(selector)?.textContent;
   return text ? (JSON.parse(text) as T) : undefined;
 }
+
+/** A stored day (YYYY-MM-DD) as people read it in a page's language: 2 November 2026. Latin digits in every language, as the copy uses. */
+export function formatDay(day: string, lang: string): string {
+  const [year, month, date] = day.slice(0, 10).split("-").map(Number);
+  return new Intl.DateTimeFormat(`${lang}-IN-u-nu-latn`, { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" })
+    .format(new Date(Date.UTC(year ?? 1970, (month ?? 1) - 1, date ?? 1)));
+}
+
+/** A time of day written HH:MM in the facts, as it reads in a page's language: 7:00 am. */
+export function clockLabel(time: string, lang: string): string {
+  const [hour, minute] = time.split(":").map(Number);
+  return new Intl.DateTimeFormat(`${lang}-IN-u-nu-latn`, { hour: "numeric", minute: "2-digit", timeZone: "UTC" })
+    .format(new Date(Date.UTC(2024, 0, 1, hour ?? 0, minute ?? 0)));
+}
+
+const WEEK = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"] as const;
+
+/** A day name from the opening-hours facts (Monday to Sunday) in a page's language. */
+export function weekdayName(day: string, lang: string): string {
+  const index = WEEK.indexOf(day as (typeof WEEK)[number]);
+  return new Intl.DateTimeFormat(`${lang}-IN`, { weekday: "long", timeZone: "UTC" }).format(new Date(Date.UTC(2024, 0, 1 + Math.max(index, 0))));
+}
+
+/** Opening hours as lines: the days with the same times together, "Monday to Friday" where they run in a row. */
+export function hoursLines(specs: { dayOfWeek: string[]; opens: string; closes: string }[], lang: string, to: string): { days: string; times: string }[] {
+  return specs.map((s) => {
+    const names = s.dayOfWeek.map((d) => weekdayName(d, lang));
+    const days = s.dayOfWeek.length > 2 ? `${names[0]} ${to} ${names[names.length - 1]}` : names.join(", ");
+    return { days, times: `${clockLabel(s.opens, lang)} ${to} ${clockLabel(s.closes, lang)}` };
+  });
+}

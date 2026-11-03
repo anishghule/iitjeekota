@@ -1,6 +1,7 @@
 ---
 {
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "title": "IIT foundation Class 9: worth it? | D-SAP Ghule",
   "description": "Is an IIT foundation course in Class 9 worth it? What a good foundation programme should do, what it should never do, and how to tell if your child is ready.",
   "author": "org.founder",

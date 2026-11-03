@@ -1,14 +1,14 @@
-"""Outputs of make site: the resolved route table, sitemap previews and the generated SEO documents."""
+"""Outputs of make site: the resolved route table and the generated SEO documents (the sitemaps are
+written by make web-data, from the pages that are really built)."""
 
 from __future__ import annotations
 
 from collections import Counter
 from pathlib import Path
-from xml.sax.saxutils import escape
 
 from ..jsonio import GENERATED, reset_dir, write_json, write_text
 from ..paths import Paths
-from .jsonld import Finding, Fixture
+from .jsonld import Finding
 from .keywords import planner_files
 from .links import alternates, body_links, breadcrumbs, clicks_from_home, live_links
 from .model import Route, Site
@@ -38,28 +38,6 @@ def resolved(site: Site) -> dict:
         })
     return {"$generated": GENERATED.format(source="packages/site"), "origin": site.origin,
             "root": site.config["root"]["redirectTo"], "pages": pages}
-
-
-def sitemaps(site: Site, out: Path) -> list[Path]:
-    """One sitemap per locale with hreflang alternates, and an index. Live pages only."""
-    written = []
-    for loc in site.locales:
-        entries = []
-        for route in site.routes.values():
-            if loc not in route.locales or not site.is_live(route.id):
-                continue
-            alts = "".join(f'<xhtml:link rel="alternate" hreflang="{escape(code)}" href="{escape(url)}"/>'
-                           for code, url in alternates(site, route).items())
-            entries.append(f"<url><loc>{escape(site.url(route.id, loc))}</loc>{alts}</url>")
-        path = out / f"sitemap-{loc}.xml"
-        write_text(path, '<?xml version="1.0" encoding="UTF-8"?>\n'
-                   '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
-                   + "\n".join(entries) + "\n</urlset>\n")
-        written.append(path)
-    index = "".join(f"<sitemap><loc>{site.origin}/sitemap-{loc}.xml</loc></sitemap>\n" for loc in site.locales)
-    write_text(out / "sitemap.xml", '<?xml version="1.0" encoding="UTF-8"?>\n'
-               f'<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{index}</sitemapindex>\n')
-    return written + [out / "sitemap.xml"]
 
 
 def _md_row(cells: list[str]) -> str:
@@ -177,25 +155,40 @@ def site_map_doc(site: Site) -> str:
     return "\n".join(lines) + "\n"
 
 
-def structured_data_doc(rules: dict, fixtures: list[Fixture], findings: list[Finding]) -> str:
+def structured_data_doc(rules: dict) -> str:
     lines = [HEADER + "# Structured data", "",
-             f"Rules checked against Google's documentation on {rules['checked']}. Fixtures in `packages/site/jsonld/` are the expected JSON-LD "
-             "of each page template; the web build must produce the same output.", "",
-             "## Types in use", "", _md_row(["Type", "Required", "Recommended", "Google docs updated", "Note"]), _md_row(["---"] * 5)]
+             f"Rules read from Google's live documentation on {rules['checked']} (re-read after {rules['staleAfterDays']} days; "
+             "`make docs-drift` compares the pages with the lock file). The builders in `dsapkit/site/jsonld_build.py` write every page's "
+             "JSON-LD from data, and `make web-data` checks each page against these rules "
+             "(results: `docs/seo/structured-data-results.md`).", "",
+             "## Value formats", "", _md_row(["Format", "Rule"]), _md_row(["---"] * 2)]
+    lines += [_md_row([f"`{name}`", text]) for name, text in rules["formats"].items()]
+    lines += ["", "## Types in use", "", _md_row(["Type", "Required", "Recommended", "Formats checked", "Google docs updated", "Note"]), _md_row(["---"] * 6)]
     for name, rule in rules["types"].items():
         if "sameAs" in rule:
-            lines.append(_md_row([name, f"as {rule['sameAs']}", "", "", ""]))
+            lines.append(_md_row([name, f"as {rule['sameAs']}", "", "", "", ""]))
             continue
         docs = f"[{rule['updated']}]({rule['docs']})" if "docs" in rule else ""
-        lines.append(_md_row([name, ", ".join(rule.get("required", [])) or "none", ", ".join(rule.get("recommended", [])), docs, rule.get("note", "")]))
+        fields = ", ".join(f"{p}: {f}" for p, f in rule.get("fields", {}).items())
+        lines.append(_md_row([name, ", ".join(rule.get("required", [])) or "none", ", ".join(rule.get("recommended", [])), fields, docs, rule.get("note", "")]))
     lines += ["", "## Not used", ""] + [f"- **{k}**: {v}" for k, v in rules["retired"].items()]
-    lines += ["", "## Fixture results", ""]
-    for fx in fixtures:
-        own = [f for f in findings if f.fixture == fx.name]
-        lines.append(f"### {fx.name} (`{fx.route}`, {fx.locale})")
-        lines.append("")
-        lines += [f"- {f.severity}: {f.message}" for f in own] or ["- Passes with nothing pending."]
-        lines.append("")
+    lines += ["", "## Other Google pages the rules depend on", "", _md_row(["Page", "Updated", "Why"]), _md_row(["---"] * 3)]
+    lines += [_md_row([f"[{w['id']}]({w['url']})", w["updated"], w["why"]]) for w in rules["watch"]]
+    return "\n".join(lines) + "\n"
+
+
+def structured_data_results_doc(findings: list[Finding], pages: list[tuple[str, str]]) -> str:
+    """What the last export found, per page. Written by make web-data, which builds the JSON-LD."""
+    lines = [HEADER.replace("make site", "make web-data") + "# Structured data results", "",
+             f"{len(pages)} pages checked: {sum(f.severity == 'error' for f in findings)} errors, "
+             f"{sum(f.severity == 'warning' for f in findings)} warnings, {sum(f.severity == 'pending' for f in findings)} properties left out "
+             "while their facts are pending.", ""]
+    by_page: dict[str, list[Finding]] = {}
+    for f in findings:
+        by_page.setdefault(f.page, []).append(f)
+    for rid, loc in pages:
+        name = f"{rid} ({loc})"
+        lines += [f"### {name}", ""] + ([f"- {f.severity}: {f.message}" for f in by_page.get(name, [])] or ["- Passes with nothing pending."]) + [""]
     return "\n".join(lines)
 
 
@@ -226,14 +219,14 @@ def citations_doc(site: Site) -> str:
     return "\n".join(lines) + "\n"
 
 
-def write_reports(paths: Paths, site: Site, rules: dict, fixtures: list[Fixture], findings: list[Finding]) -> list[Path]:
+def write_reports(paths: Paths, site: Site, rules: dict) -> list[Path]:
     out = reset_dir(paths.site_dist)
     write_json(out / "routes.resolved.json", resolved(site))
-    written = [out / "routes.resolved.json"] + sitemaps(site, out)
+    written = [out / "routes.resolved.json"]
     for name, text in planner_files(site).items():
         write_text(out / "keyword-planner" / name, text)
         written.append(out / "keyword-planner" / name)
-    docs = {"site-map.md": site_map_doc(site), "structured-data.md": structured_data_doc(rules, fixtures, findings),
+    docs = {"site-map.md": site_map_doc(site), "structured-data.md": structured_data_doc(rules),
             "listings-and-citations.md": citations_doc(site)}
     for name, text in docs.items():
         write_text(paths.seo_docs / name, text)

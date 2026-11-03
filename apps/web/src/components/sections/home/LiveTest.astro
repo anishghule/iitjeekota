@@ -32,7 +32,22 @@ const total = w?.questions.length ?? 0;
         data-right={w.marking.right} data-wrong={w.marking.wrong} data-blank={w.marking.blank}>
         <div class="cbt__bar">
           <span>{t.liveTest.title}</span>
-          <span class="cbt__timer"><span class="visually-hidden">{t.liveTest.timeLeft}</span><span class="tabular" data-timer>{minutesAndSeconds(w.minutes * 60)}</span></span>
+          <span class="cbt__clock">
+            <button type="button" class="cbt__start" data-action="start">{t.liveTest.start}</button>
+            <span class="cbt__timer"><span class="visually-hidden">{t.liveTest.timeLeft}</span><span class="tabular" data-timer>{minutesAndSeconds(w.minutes * 60)}</span></span>
+          </span>
+        </div>
+        <div class="cbt__result" data-result tabindex="-1" hidden>
+          <p class="muted" data-time-up hidden>{t.liveTest.timeUp}</p>
+          <p class="cbt__marks t-h2 tabular">
+            {templateParts(t.liveTest.marks).map((p) =>
+              "key" in p ? <span data-score={p.key}>{p.key === "max" ? total * w.marking.right : 0}</span> : <span class="muted">{p.text}</span>)}
+          </p>
+          <dl class="cbt__counts">
+            <div><dt>{t.liveTest.right}</dt><dd class="tabular" data-score="right">0</dd></div>
+            <div><dt>{t.liveTest.wrong}</dt><dd class="tabular" data-score="wrong">0</dd></div>
+            <div><dt>{t.liveTest.left}</dt><dd class="tabular" data-score="left">0</dd></div>
+          </dl>
         </div>
         <div class="cbt__sheet" data-sheet>
           <div class="cbt__tabs" role="group">
@@ -42,11 +57,16 @@ const total = w?.questions.length ?? 0;
             <div class="cbt__grid">
               {w.questions.map((_, i) => <button type="button" class="cbt__p tabular" data-palette={i} data-state="not-visited">{i + 1}</button>)}
             </div>
-            <ul class="cbt__legend" role="list">
+            <ul class="cbt__legend" role="list" data-legend="taking">
               <li><i data-state="not-visited"></i>{t.liveTest.notVisited}</li>
               <li><i data-state="not-answered"></i>{t.liveTest.notAnswered}</li>
               <li><i data-state="answered"></i>{t.liveTest.answered}</li>
               <li><i data-state="marked"></i>{t.liveTest.marked}</li>
+            </ul>
+            <ul class="cbt__legend" role="list" data-legend="reviewing">
+              <li><i data-state="right"></i>{t.liveTest.right}</li>
+              <li><i data-state="wrong"></i>{t.liveTest.wrong}</li>
+              <li><i data-state="left"></i>{t.liveTest.left}</li>
             </ul>
           </div>
           <div class="cbt__body">
@@ -62,6 +82,7 @@ const total = w?.questions.length ?? 0;
                       <span>{o}</span>
                     </label>
                   ))}
+                  <p class="cbt__solution" data-solution hidden><strong>{t.liveTest.solution}:</strong> {q.solution}</p>
                 </fieldset>
               ))}
               <noscript><p>{t.liveTest.noScript}</p></noscript>
@@ -72,30 +93,8 @@ const total = w?.questions.length ?? 0;
             <button type="button" class="button button--quiet" data-action="clear">{t.liveTest.clear}</button>
             <button type="button" class="button" data-action="next">{t.liveTest.saveNext}</button>
             <button type="button" class="button" data-action="submit">{t.liveTest.submit}</button>
+            <button type="button" class="button" data-action="again">{t.liveTest.again}</button>
           </div>
-        </div>
-        <div class="cbt__result" data-result tabindex="-1" hidden>
-          <p class="muted" data-time-up hidden>{t.liveTest.timeUp}</p>
-          <h3 class="t-h2">{t.liveTest.result}</h3>
-          <p class="cbt__marks t-h1 tabular">
-            {templateParts(t.liveTest.marks).map((p) =>
-              "key" in p ? <span data-score={p.key}>{p.key === "max" ? total * w.marking.right : 0}</span> : <span class="muted">{p.text}</span>)}
-          </p>
-          <dl class="cbt__counts">
-            <div><dt>{t.liveTest.right}</dt><dd class="tabular" data-score="right">0</dd></div>
-            <div><dt>{t.liveTest.wrong}</dt><dd class="tabular" data-score="wrong">0</dd></div>
-            <div><dt>{t.liveTest.left}</dt><dd class="tabular" data-score="left">0</dd></div>
-          </dl>
-          <ol class="cbt__review" role="list">
-            {w.questions.map((q, i) => (
-              <li data-review data-letters={letters.join(",")}>
-                <p><strong>{i + 1}.</strong> {q.text}</p>
-                <p class="muted">{t.liveTest.yourAnswer}: <span data-mine></span>. {t.liveTest.correct}: {letters[q.answer]}, {q.options[q.answer]}</p>
-                <p>{t.liveTest.solution}: {q.solution}</p>
-              </li>
-            ))}
-          </ol>
-          <button type="button" class="button" data-action="again">{t.liveTest.again}</button>
         </div>
       </div>
     )}
@@ -108,7 +107,8 @@ const total = w?.questions.length ?? 0;
   /* The test screen scales with its own width (container units), between the small and body type
      sizes, so on a phone the whole question, its options and the buttons fit one screen. */
   .cbt {
-    --cbt-text: clamp(var(--type-small-size), 3.6cqi, var(--type-body-size));
+    --cbt-text: clamp(var(--type-small-size), 3.6cqi, var(--type-body-lg-size));
+    --cbt-line: color-mix(in srgb, var(--text) 22%, transparent);
     --cbt-pad: clamp(var(--space-2), 3cqi, var(--space-5));
     container-type: inline-size;
     background: var(--bg);
@@ -127,6 +127,10 @@ const total = w?.questions.length ?? 0;
     color: var(--bg-raised);
     font-weight: var(--weight-semibold);
   }
+  .cbt__clock { display: flex; align-items: center; gap: var(--space-2); }
+  .cbt__start { border: 0; padding: 0 var(--space-3); min-height: 2em; border-radius: var(--radius-sm); background: var(--action-bg); color: var(--action-text); font-size: inherit; font-weight: var(--weight-semibold); }
+  .cbt__start:hover { background: var(--action-bg-hover); }
+  .cbt[data-running] .cbt__start { display: none; }
   .cbt__timer { padding: 0 var(--space-2); border-radius: var(--radius-sm); background: var(--bg-raised); color: var(--text); }
   .cbt__tabs { display: flex; gap: var(--space-1); padding: var(--space-2) var(--cbt-pad) 0; background: var(--bg-sunken); }
   .cbt__tab { border: 0; padding: var(--space-1) var(--space-3); border-radius: var(--radius-sm) var(--radius-sm) 0 0; background: transparent; color: var(--text-muted); font-size: inherit; }
@@ -141,12 +145,13 @@ const total = w?.questions.length ?? 0;
     padding: calc(var(--cbt-pad) / 2) var(--cbt-pad);
     border-radius: var(--radius-md);
     background: var(--bg-raised);
-    box-shadow: var(--shadow-1);
+    box-shadow: inset 0 0 0 1px var(--cbt-line);
     cursor: pointer;
   }
   .cbt__option input { position: absolute; opacity: 0; }
-  .cbt__option:has(input:checked) { outline: var(--space-1) solid var(--subject-physics); }
-  .cbt__option:has(input:focus-visible) { outline: var(--space-1) solid var(--focus); }
+  /* Thin lines, as on the JEE screen: a hairline round every option, the picked one tinted and lined in blue. */
+  .cbt__option:has(input:checked) { background: color-mix(in srgb, var(--river) 14%, var(--bg-raised)); box-shadow: inset 0 0 0 1px var(--river); }
+  .cbt__option:has(input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
   .cbt__key { display: grid; place-items: center; width: 2em; height: 2em; flex: none; border-radius: var(--radius-round); background: var(--bg-sunken); font-weight: var(--weight-semibold); }
   .cbt__option:has(input:checked) .cbt__key { background: var(--action-bg); color: var(--action-text); }
   /* The palette is a strip above the question: numbers in a row, the legend beside them. */
@@ -159,8 +164,8 @@ const total = w?.questions.length ?? 0;
     background: var(--bg-sunken);
   }
   .cbt__grid { display: flex; gap: var(--space-2); }
-  .cbt__p { width: 2.4em; height: 2.4em; border: 0; border-radius: var(--radius-sm); background: var(--bg-raised); box-shadow: var(--shadow-1); font-size: inherit; }
-  .cbt__p[aria-current] { outline: var(--space-1) solid var(--text); }
+  .cbt__p { width: 2.4em; height: 2.4em; border: 0; border-radius: var(--radius-sm); background: var(--bg-raised); box-shadow: inset 0 0 0 1px var(--cbt-line); font-size: inherit; }
+  .cbt__p[aria-current] { outline: 2px solid var(--river); outline-offset: 1px; }
   .cbt [data-state="not-answered"] { background: var(--error); color: var(--bg-raised); }
   .cbt [data-state="answered"] { background: var(--ok); color: var(--bg-raised); }
   .cbt [data-state="marked"], .cbt [data-state="marked-answered"] { background: var(--river); color: var(--bg-raised); }
@@ -169,12 +174,39 @@ const total = w?.questions.length ?? 0;
   .cbt__legend i { width: 0.8em; height: 0.8em; border-radius: var(--radius-sm); background: var(--bg-raised); box-shadow: var(--shadow-1); }
   .cbt__actions { display: flex; flex-wrap: wrap; gap: var(--space-2); padding: calc(var(--cbt-pad) / 2) var(--cbt-pad); background: var(--bg-sunken); }
   .cbt__actions .button { min-height: 2.4em; padding: 0 var(--space-3); font-size: inherit; }
-  .cbt__result { padding: var(--cbt-pad); display: grid; gap: var(--space-4); }
-  .cbt__counts { display: flex; gap: var(--space-6); }
+  .cbt__result { padding: var(--cbt-pad); display: grid; gap: var(--space-3); background: var(--bg-sunken); }
+  .cbt__counts { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-6); }
   .cbt__counts dt { font-size: var(--type-small-size); color: var(--text-muted); }
-  .cbt__counts dd { margin: 0; font-family: var(--font-display); font-size: var(--type-h2-size); font-weight: var(--weight-heavy); }
-  .cbt__review { display: grid; gap: var(--space-4); }
-  .cbt__review li { padding: var(--space-4); border-radius: var(--radius-md); background: var(--bg-raised); box-shadow: var(--shadow-1); display: grid; gap: var(--space-2); }
-  .cbt__review li[data-outcome="right"] { box-shadow: inset var(--space-1) 0 0 var(--ok), var(--shadow-1); }
-  .cbt__review li[data-outcome="wrong"] { box-shadow: inset var(--space-1) 0 0 var(--error), var(--shadow-1); }
+  .cbt__counts div { display: flex; align-items: baseline; gap: var(--space-2); }
+  .cbt__counts dd { margin: 0; font-weight: var(--weight-semibold); }
+  /* After submitting, the same screen stays and shows how each question went, as the JEE screen does:
+     the right option in green, a wrong pick in red, the palette coloured the same way. */
+  .cbt__option[data-verdict="right"], .cbt__option[data-verdict="right"]:has(input:checked) { background: color-mix(in srgb, var(--ok) 20%, var(--bg-raised)); box-shadow: inset 0 0 0 1px var(--ok); }
+  .cbt__option[data-verdict="wrong"], .cbt__option[data-verdict="wrong"]:has(input:checked) { background: color-mix(in srgb, var(--error) 18%, var(--bg-raised)); box-shadow: inset 0 0 0 1px var(--error); }
+  .cbt__option[data-verdict] { cursor: default; }
+  .cbt__option[data-verdict="right"] .cbt__key { background: var(--ok); color: var(--bg-raised); }
+  .cbt__option[data-verdict="wrong"] .cbt__key { background: var(--error); color: var(--bg-raised); }
+  .cbt__solution { padding: calc(var(--cbt-pad) / 2) var(--cbt-pad); border-radius: var(--radius-md); background: var(--bg-sunken); box-shadow: inset 0 0 0 1px var(--cbt-line); }
+  .cbt [data-state="right"] { background: var(--ok); color: var(--bg-raised); }
+  .cbt [data-state="wrong"] { background: var(--error); color: var(--bg-raised); }
+  .cbt [data-state="left"] { background: var(--text-muted); color: var(--bg-raised); }
+  /* Wide: the test takes the full width under the text, the question on the left and the palette beside it, as on the JEE screen. */
+  :global(:root[data-layout="wide"]) .live__grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+  :global(:root[data-layout="wide"]) .live__text { max-width: var(--measure); }
+  :global(:root[data-layout="wide"]) .cbt { --cbt-pad: var(--space-6); }
+  :global(:root[data-layout="wide"]) .cbt__sheet {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 15rem;
+    grid-template-areas: "tabs tabs" "body palette" "actions actions";
+  }
+  :global(:root[data-layout="wide"]) .cbt__tabs { grid-area: tabs; }
+  :global(:root[data-layout="wide"]) .cbt__body { grid-area: body; min-height: 22rem; }
+  :global(:root[data-layout="wide"]) .cbt__palette { grid-area: palette; flex-direction: column; align-items: stretch; align-content: start; gap: var(--space-4); padding: var(--cbt-pad); background: var(--bg-sunken); box-shadow: inset 1px 0 0 var(--cbt-line); }
+  :global(:root[data-layout="wide"]) .cbt__grid { flex-wrap: wrap; }
+  :global(:root[data-layout="wide"]) .cbt__legend { flex-direction: column; gap: var(--space-2); }
+  :global(:root[data-layout="wide"]) .cbt__actions { grid-area: actions; padding-block: var(--space-4); box-shadow: inset 0 1px 0 var(--cbt-line); }
+  :global(:root[data-layout="wide"]) .cbt__question legend { font-size: var(--type-body-lg-size); }
+  .cbt:not([data-done]) [data-legend="reviewing"], .cbt[data-done] [data-legend="taking"] { display: none; }
+  .cbt:not([data-done]) [data-action="again"], .cbt[data-done] .cbt__actions [data-action]:not([data-action="again"]) { display: none; }
+  .cbt[data-done] .cbt__start { display: none; }
 </style>

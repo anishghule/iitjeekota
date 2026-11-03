@@ -2,7 +2,7 @@
 
 # Photos and videos to add
 
-18 of 18 files still to add. Put each file at its path (same name, same extension), then run `make media-fetch`. It checks the type, size and orientation, and pins the file in `packages/media/media.lock.json`. To change what a slot needs, edit `packages/media/manifest.json`.
+17 of 17 files still to add. Put each file at its path (same name, same extension), then run `make media-fetch`. It checks the type, size and orientation, and pins the file in `packages/media/media.lock.json`. To change what a slot needs, edit `packages/media/manifest.json`.
 
 Rules for every file:
 
@@ -23,7 +23,6 @@ Rules for every file:
 | `packages/media/assets/centres/wakad/classroom.jpg` | A classroom during a session. Students seen from behind, or only with parents' written consent. | landscape, at least 2400x1600 | `/en/centres/wakad/` |
 | `packages/media/assets/centres/wakad/digital-board.jpg` | The AI-powered digital board in use, with a worked problem on it. | landscape, at least 2400x1600 | `/en/centres/wakad/` |
 | `packages/media/assets/centres/wakad/walkthrough.mp4` | A 20 to 45 second walk from the entrance to a classroom. MP4 (H.264). No music needed; it plays muted. | landscape, at least 1920x1080 | `/en/centres/wakad/` |
-| `packages/media/assets/home/classroom-film.mp4` | 8 to 15 seconds, filmed upright on a phone held still: notebooks, the teacher at the board, students solving. The home page plays it frame by frame as the reader scrolls. The v3.2 clip (resources/dsap-iitjeekota-v3.2/assets/video/classroom.mp4) is 432x1010, too small for this slot. | portrait, at least 1080x1920 | `/en/` |
 | `packages/media/assets/gallery/board-1.jpg` | The digital board: a diagram or graph being drawn. | landscape, at least 2000x1333 | `/en/` |
 | `packages/media/assets/gallery/board-2.jpg` | The digital board: a step-by-step solution. | landscape, at least 2000x1333 | `/en/` |
 | `packages/media/assets/gallery/board-3.jpg` | The digital board with the teacher explaining. | landscape, at least 2000x1333 | `/en/` |

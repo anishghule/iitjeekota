@@ -1,6 +1,7 @@
 {
   "route": "area-aundh",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "IIT JEE coaching in Aundh | D-SAP Ghule Tutorials",
     "description": "Our New Sangvi head office is the nearest JEE centre to Aundh, just across the Rajiv Gandhi Bridge. Kota faculty, classes from {{fact:batch.timings#start}}."

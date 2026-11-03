@@ -1,0 +1,62 @@
+---
+/**
+ * The programmes at a glance: one row per programme page that is live, with who it is for, how long it
+ * runs, the exams, the batch size and the fees (ask us until a fee is confirmed). Rows come from the
+ * programmes widget (packages/content/widgets); batch size and fees from the facts.
+ */
+import { fill, strings, type Locale } from "../../i18n/index.ts";
+import { fact, isRouteId, routeName, routePath } from "../../lib/data.ts";
+import type { ProgrammesData } from "../../lib/types.ts";
+
+interface Props {
+  widget: ProgrammesData | undefined;
+  locale: Locale;
+}
+const { widget, locale } = Astro.props;
+const t = strings(locale);
+const size = fact(locale, "batch.size");
+const fees = fact(locale, "fees.range");
+const rows = (widget?.rows ?? []).filter((r) => isRouteId(r.route)).map((r) => {
+  const id = r.route as Parameters<typeof routeName>[0];
+  return { ...r, name: routeName(id, locale), path: routePath(id, locale) };
+});
+---
+{rows.length > 0 && (
+  <div class="table-scroll">
+    <table class="programmes__table">
+      <caption class="visually-hidden">{t.programmes.caption}</caption>
+      <thead>
+        <tr>
+          <th scope="col">{t.programmes.programme}</th>
+          <th scope="col">{t.programmes.for}</th>
+          <th scope="col">{t.programmes.length}</th>
+          <th scope="col">{t.programmes.exams}</th>
+          <th scope="col">{t.programmes.batch}</th>
+          <th scope="col">{t.programmes.fees}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {rows.map((r) => (
+          <tr>
+            <th scope="row">{r.path ? <a href={r.path}>{r.name}</a> : r.name}</th>
+            <td>{r.for}</td>
+            <td>{r.length}</td>
+            <td>{r.exams}</td>
+            <td class="tabular">{size ? fill(t.programmes.batchSize, { size }) : ""}</td>
+            <td>{fees ?? <a href="#enquiry">{t.programmes.askFees}</a>}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+)}
+
+<style>
+  .table-scroll { overflow-x: auto; }
+  .programmes__table { width: 100%; min-width: calc(var(--column-min) * 2); text-align: start; }
+  .programmes__table th, .programmes__table td { padding: var(--space-4) var(--space-3); text-align: start; vertical-align: top; }
+  .programmes__table thead th { font-size: var(--type-small-size); color: var(--text-muted); font-weight: var(--weight-semibold); }
+  .programmes__table tbody tr { background: var(--bg); }
+  .programmes__table tbody tr + tr { box-shadow: inset 0 var(--space-1) 0 var(--bg-raised); }
+  .programmes__table tbody th { font-family: var(--font-display); font-weight: var(--weight-heavy); }
+</style>

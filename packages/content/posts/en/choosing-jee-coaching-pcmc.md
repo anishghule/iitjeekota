@@ -1,6 +1,7 @@
 ---
 {
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "title": "JEE coaching in Pimpri-Chinchwad: questions to ask",
   "description": "What to look at and ask when you visit a JEE coaching centre in Pimpri-Chinchwad: the classroom, a test report, a parent's view and the route home.",
   "author": "org.founder",

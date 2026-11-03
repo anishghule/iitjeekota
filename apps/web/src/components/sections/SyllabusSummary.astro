@@ -1,0 +1,35 @@
+---
+/** What a programme covers: its words and points, then the size of the syllabus by subject, with a link to every chapter. */
+import { fill, strings, type Locale } from "../../i18n/index.ts";
+import { routeName, routePath, syllabus } from "../../lib/data.ts";
+import type { SectionData } from "../../lib/types.ts";
+import Paragraphs from "../ui/Paragraphs.astro";
+import Rich from "../ui/Rich.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const data = syllabus(locale);
+const subjects = data.subjects.map((s) => ({ ...s, chapters: data.chapters.filter((c) => c.subject === s.id).length }));
+const path = routePath("jee-syllabus", locale);
+---
+<section id={section.id} class="section" aria-labelledby={`${section.id}-title`}>
+  <div class="container prose">
+    <h2 id={`${section.id}-title`} class="t-h1">{section.heading}</h2>
+    <Paragraphs paragraphs={section.body} />
+    {section.points && <ul class="points">{section.points.map((p) => <li><Rich parts={p} /></li>)}</ul>}
+    <ul class="subjects" role="list">
+      {subjects.map((s) => <li class="card"><span class="t-h2">{s.name}</span> <span class="muted tabular">{fill(t.syllabus.count, { n: s.chapters })}</span></li>)}
+    </ul>
+    {path && <p><a href={path}>{routeName("jee-syllabus", locale)}</a></p>}
+  </div>
+</section>
+
+<style>
+  .points { display: grid; gap: var(--space-2); padding-inline-start: var(--space-5); }
+  .subjects { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--column-min)), 1fr)); }
+  .subjects li { display: grid; gap: var(--space-1); }
+</style>

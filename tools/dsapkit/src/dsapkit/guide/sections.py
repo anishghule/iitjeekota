@@ -188,7 +188,7 @@ def type_(d: GuideData) -> str:
         + table(["Fallback face", "Uses", "Size adjust", "Ascent", "Descent"], fb_rows, {2, 3, 4})
         + f'<ul class="rules">{sa}</ul></div>'
     )
-    return section("type", "Type", "Archivo for headlines, Inter for reading, Mukta for Hindi and Marathi. Sentence case, no labels above headings.", body)
+    return section("type", "Type", "Archivo for headlines, Google Sans Flex for reading, Mukta for Hindi and Marathi. Sentence case, no labels above headings.", body)
 
 
 def space(d: GuideData) -> str:

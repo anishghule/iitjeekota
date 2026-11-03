@@ -37,6 +37,7 @@ class Fact:
 
 
 LATIN_WORD_RE = re.compile(r"[A-Za-z]{2,}")  # a value with words in it needs a translation; digits and phone numbers do not
+WEB_ADDRESS_RE = re.compile(r"https://\S+")  # an address is the same in every language, so it never needs one
 
 
 @dataclass(frozen=True)
@@ -114,7 +115,7 @@ class Site:
             local = local.get(field_name)
         if isinstance(local, str):
             return local, None
-        if LATIN_WORD_RE.search(value):
+        if LATIN_WORD_RE.search(value) and not WEB_ADDRESS_RE.fullmatch(value):
             return None, f"pending fact {ref} in {locale}"
         return value, None
 

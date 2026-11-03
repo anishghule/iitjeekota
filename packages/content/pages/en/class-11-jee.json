@@ -1,6 +1,7 @@
 {
   "route": "class-11-jee",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "JEE coaching for Class 11 in Pune | D-SAP Ghule",
     "description": "A two-year JEE Main and Advanced programme from Class 11, for students who passed Class 10 from any board. Evening classes in Pune."
@@ -8,7 +9,7 @@
   "h1": "JEE coaching for Class 11 in Pune",
   "intro": [
     {
-      "text": "The two-year programme starts in June after Class 10, with a foundation period from May. It runs through Class 11 and Class 12 and prepares for both JEE Main and JEE Advanced.",
+      "text": "The two-year programme starts in June after Class 10, with a foundation period from April. It runs through Class 11 and Class 12 and prepares for both JEE Main and JEE Advanced.",
       "requires": ["programme.class-11", "programme.start"]
     }
   ],
@@ -73,7 +74,7 @@
         },
         {
           "q": "When does it start?",
-          "a": { "text": "In June after the Class 10 exams, with a foundation period from May.", "requires": ["programme.start"] }
+          "a": { "text": "In June after the Class 10 exams, with a foundation period from April.", "requires": ["programme.start"] }
         },
         {
           "q": "How many students are in a batch?",

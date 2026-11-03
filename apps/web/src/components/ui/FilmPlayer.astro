@@ -1,0 +1,54 @@
+---
+/**
+ * A short film with one Play and Pause button (islands/film.ts). Scrolling never moves it. The film
+ * comes from a media slot: no sound, no hidden data (make media-encode), served from this site only.
+ * Without JavaScript it is an ordinary video with its own controls and the still as its poster.
+ */
+import { strings, type Locale } from "../../i18n/index.ts";
+import type { MediaFile } from "../../lib/data.ts";
+import Icon from "./Icon.astro";
+
+interface Props {
+  film: MediaFile;
+  poster?: MediaFile | undefined;
+  locale: Locale;
+}
+const { film, poster, locale } = Astro.props;
+const t = strings(locale);
+---
+<figure class="film" data-film-player>
+  <video class="film__video" data-film controls muted playsinline preload="metadata" width={film.width} height={film.height}
+    poster={poster?.url} aria-label={film.alt}>
+    <source src={film.url} type="video/mp4" />
+  </video>
+  <!-- Shown by the island once it takes over from the video's own controls. -->
+  <button class="film__toggle chip" type="button" data-film-toggle hidden aria-pressed="false"
+    data-play={t.classroom.play} data-pause={t.classroom.pause}>
+    <Icon name="play" size="sm" />
+    <span data-label>{t.classroom.play}</span>
+  </button>
+</figure>
+
+<style>
+  .film { position: relative; display: grid; place-items: center; margin: 0; }
+  .film__toggle {
+    position: absolute;
+    inset: auto 0 var(--space-4);
+    margin-inline: auto;
+    width: max-content;
+    gap: var(--space-2);
+    box-shadow: var(--shadow-3);
+  }
+  .film__toggle[hidden] { display: none; }
+  .film__video {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 80dvh;
+    border-radius: var(--radius-lg);
+    background: var(--bg-sunken);
+    box-shadow: var(--shadow-3);
+    cursor: pointer;
+  }
+</style>

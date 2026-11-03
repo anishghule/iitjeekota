@@ -1,6 +1,7 @@
 {
   "route": "programmes",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "IIT JEE courses in Pune | D-SAP Ghule Tutorials",
     "description": "JEE programmes for Class 11 (two years), Class 12 (one year) and a foundation for Class 9 and 10, powered by a top Kota institute."
@@ -21,6 +22,11 @@
       "id": "spokes",
       "heading": "Choose by class",
       "body": ["Each programme page covers who it is for, what it covers, a normal week and the tests."]
+    },
+    {
+      "id": "compare",
+      "heading": "The programmes side by side",
+      "body": ["Who each programme is for, how long it runs, what it prepares for and the batch size."]
     },
     {
       "id": "why",
@@ -47,7 +53,7 @@
         {
           "q": "My child is in Class 10. Which programme fits?",
           "a": {
-            "text": "The two-year programme. It starts in June after Class 10, with a foundation period from May.",
+            "text": "The two-year programme. It starts in June after Class 10, with a foundation period from April.",
             "requires": ["programme.class-11", "programme.start"]
           }
         },

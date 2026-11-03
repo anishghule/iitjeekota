@@ -98,6 +98,11 @@ class ProjectTokensTest(unittest.TestCase):
         self.assertIn("--type-display-xl-tracking: 0em;", block)
         self.assertIn("--font-display: var(--font-devanagari);", block)
 
+    def test_floating_controls_get_a_tint_and_a_blur(self):
+        css = tokens_css(self.tokens.tree)
+        self.assertIn("--ghost-tint: 30%;", css)
+        self.assertRegex(css, r"--ghost-blur: 0\.5rem;")
+
     def test_brass_300_is_the_medal_sand(self):
         self.assertEqual(self.tokens.get("color.brass.300"), "#e6c296")
 

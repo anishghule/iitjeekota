@@ -1,6 +1,7 @@
 {
   "route": "faq",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "D-SAP घुले ट्यूटोरियल्स सवाल जवाब | JEE कोचिंग",
     "description": "हमारी JEE कोचिंग के बारे में जवाब: कोटा से जुड़ाव, कौन जुड़ सकता है, क्लास का समय, बैच का आकार, टेस्ट, डाउट और सेंटर पर आना।"
@@ -13,7 +14,7 @@
       { "q": "कौन पढ़ाता है?", "a": { "text": "कोटा की अनुभवी फैकल्टी।", "requires": ["faculty.kota"] } } ] },
     { "id": "joining", "kind": "faq", "heading": "प्रवेश", "questions": [
       { "q": "दो साल के प्रोग्राम में कौन जुड़ सकता है?", "a": { "text": "SSC, CBSE या ICSE से कक्षा 10 पास कोई भी छात्र।", "requires": ["programme.class-11"] } },
-      { "q": "यह कब शुरू होता है?", "a": { "text": "जून में, और मई से फाउंडेशन पीरियड।", "requires": ["programme.start"] } },
+      { "q": "यह कब शुरू होता है?", "a": { "text": "जून में, और अप्रैल से फाउंडेशन पीरियड।", "requires": ["programme.start"] } },
       { "q": "क्या आप ड्रॉप ईयर वाले छात्रों को लेते हैं?", "a": { "text": "नहीं। हमारे प्रोग्राम कक्षा 11 और कक्षा 12 के छात्रों के लिए हैं।", "requires": ["programme.repeater"] } } ] },
     { "id": "classes", "kind": "faq", "heading": "क्लास", "questions": [
       { "q": "क्लास किस समय होती है?", "a": "{{fact:batch.days}}, {{fact:batch.timings#start}} बजे से {{fact:batch.timings#end}} बजे तक।" },

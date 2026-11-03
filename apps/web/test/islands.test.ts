@@ -1,10 +1,13 @@
 import { describe, expect, it } from "vitest";
 import { compare } from "../src/islands/cost-calc.ts";
 import { normalisePhone, validate, whatsappLink } from "../src/islands/enquiry.ts";
-import { paletteState, score } from "../src/islands/live-test.ts";
-import { stepAt } from "../src/islands/steps.ts";
-import { matches } from "../src/islands/syllabus.ts";
+import { edges, stepTarget } from "../src/islands/gallery.ts";
+import { outcome, paletteState, score } from "../src/islands/live-test.ts";
+import { progressForStep, scrollForStep, stepAt } from "../src/islands/steps.ts";
+import { matches, type RowFacts } from "../src/islands/syllabus.ts";
+import { currentStep, railFill } from "../src/islands/timeline.ts";
 import { fill, minutesAndSeconds, templateParts } from "../src/lib/format.ts";
+import { axisTop, barBox, chapterAccuracy, difficultyMatrix, tally, type MapQuestion } from "../src/lib/test-map.ts";
 
 describe("the sample test", () => {
   const marking = { right: 4, wrong: -1, blank: 0 };
@@ -21,6 +24,12 @@ describe("the sample test", () => {
     expect(paletteState(true, true, false)).toBe("answered");
     expect(paletteState(true, false, true)).toBe("marked");
     expect(paletteState(true, true, true)).toBe("marked-answered");
+  });
+
+  it("tells a right answer, a wrong one and a question left", () => {
+    expect(outcome(2, 2)).toBe("right");
+    expect(outcome(1, 2)).toBe("wrong");
+    expect(outcome(null, 2)).toBe("left");
   });
 
   it("shows the time as minutes and seconds", () => {
@@ -40,18 +49,62 @@ describe("scroll steps", () => {
   });
 });
 
-describe("the syllabus filters", () => {
-  type Tile = Parameters<typeof matches>[0];
-  const mainOnly: Tile = { subject: "physics", main: 18, advanced: [] };
-  const both: Tile = { subject: "physics", main: 5, advanced: ["Mechanics"] };
-  const advancedOnly: Tile = { subject: "chemistry", main: null, advanced: ["Solid state"] };
+describe("jumping to a step", () => {
+  it("is the inverse of stepAt, with and without a held-back start", () => {
+    for (const from of [0, 0.3]) {
+      for (let i = 0; i < 5; i++) expect(stepAt((progressForStep(i, 5, from) - from) / (1 - from), 5)).toBe(i);
+    }
+    expect(progressForStep(0, 5, 0.3)).toBeCloseTo(0.3);
+    expect(progressForStep(4, 5, 0.3)).toBe(1);
+  });
 
-  it("matches by subject and by exam", () => {
-    expect(matches(mainOnly, { subject: "all", exam: "all" })).toBe(true);
-    expect(matches(mainOnly, { subject: "chemistry", exam: "all" })).toBe(false);
-    expect(matches(mainOnly, { subject: "all", exam: "advanced" })).toBe(false);
-    expect(matches(both, { subject: "physics", exam: "advanced" })).toBe(true);
-    expect(matches(advancedOnly, { subject: "all", exam: "main" })).toBe(false);
+  it("scrolls to the point in the section where the step holds", () => {
+    expect(scrollForStep(0, 5, 0.3, 1000, 3000, 800, 0)).toBeCloseTo(1000 + 0.3 * 2200);
+    expect(scrollForStep(4, 5, 0.3, 1000, 3000, 800, 0)).toBe(1000 + 2200);
+    expect(scrollForStep(4, 5, 0.3, 1000, 3000, 800, 200)).toBe(1000 + 200 + 2000);
+  });
+});
+
+describe("the syllabus filters", () => {
+  const mainOnly: RowFacts = { subject: "physics", classes: [12], inMain: true, inAdvanced: false };
+  const both: RowFacts = { subject: "physics", classes: [11, 12], inMain: true, inAdvanced: true };
+  const advancedOnly: RowFacts = { subject: "chemistry", classes: [12], inMain: false, inAdvanced: true };
+  const all = { class: "all", exam: "all" };
+
+  it("shows one subject, and narrows it by class and by exam", () => {
+    expect(matches(mainOnly, { subject: "physics", ...all })).toBe(true);
+    expect(matches(mainOnly, { subject: "chemistry", ...all })).toBe(false);
+    expect(matches(mainOnly, { subject: "physics", class: "all", exam: "advanced" })).toBe(false);
+    expect(matches(advancedOnly, { subject: "chemistry", class: "all", exam: "main" })).toBe(false);
+    expect(matches(advancedOnly, { subject: "chemistry", class: "all", exam: "advanced" })).toBe(true);
+  });
+
+  it("shows every subject on All", () => {
+    expect(matches(mainOnly, { subject: "all", ...all })).toBe(true);
+    expect(matches(advancedOnly, { subject: "all", ...all })).toBe(true);
+  });
+
+  it("lists a chapter taught across both classes under each class", () => {
+    expect(matches(both, { subject: "physics", class: "11", exam: "all" })).toBe(true);
+    expect(matches(both, { subject: "physics", class: "12", exam: "all" })).toBe(true);
+    expect(matches(mainOnly, { subject: "physics", class: "11", exam: "all" })).toBe(false);
+  });
+});
+
+describe("the photo strip", () => {
+  it("moves most of a screen at a time and stays inside the strip", () => {
+    expect(stepTarget(0, 1000, 2000, 1)).toBe(800);
+    expect(stepTarget(800, 1000, 2000, 1)).toBe(1600);
+    expect(stepTarget(1600, 1000, 2000, 1)).toBe(2000);
+    expect(stepTarget(300, 1000, 2000, -1)).toBe(0);
+    expect(stepTarget(0, 1000, 0, 1)).toBe(0); // everything fits: nowhere to go
+  });
+
+  it("knows when it is at either end", () => {
+    expect(edges(0, 1000, 3000)).toEqual({ atStart: true, atEnd: false });
+    expect(edges(1000, 1000, 3000)).toEqual({ atStart: false, atEnd: false });
+    expect(edges(1999.6, 1000, 3000)).toEqual({ atStart: false, atEnd: true }); // rounding on a fractional scale
+    expect(edges(0, 1000, 900)).toEqual({ atStart: true, atEnd: true });
   });
 });
 
@@ -95,5 +148,52 @@ describe("UI string templates", () => {
 
   it("splits at placeholders in the language's own order", () => {
     expect(templateParts("{max} में से {marks}")).toEqual([{ key: "max" }, { text: " में से " }, { key: "marks" }]);
+  });
+});
+
+describe("the journey timeline", () => {
+  it("fills as the list passes the reading line at mid-screen", () => {
+    expect(railFill(800, 1000, 800)).toBe(0);
+    expect(railFill(400, 1000, 800)).toBe(0);
+    expect(railFill(-100, 1000, 800)).toBe(0.5);
+    expect(railFill(-900, 1000, 800)).toBe(1);
+  });
+
+  it("makes the last step above the reading line current", () => {
+    expect(currentStep([300, 700, 1300], 800)).toBe(0);
+    expect(currentStep([100, 350, 1300], 800)).toBe(1);
+    expect(currentStep([-200, -50, 390], 800)).toBe(2);
+    expect(currentStep([450, 900], 800)).toBe(-1);
+  });
+});
+
+describe("the test map", () => {
+  const q = (chapter: string, difficulty: MapQuestion["difficulty"], status: MapQuestion["status"], seconds = 60): MapQuestion =>
+    ({ subject: "physics", chapter, difficulty, status, seconds, average: 90, visits: 1 });
+  const questions = [q("a", "easy", "right"), q("a", "hard", "wrong"), q("b", "hard", "left", 12), q("b", "medium", "slow", 150)];
+
+  it("counts how the questions ended", () => {
+    expect(tally(questions)).toEqual({ right: 1, slow: 1, wrong: 1, left: 1 });
+  });
+
+  it("scores a chapter on what was tried, and counts a slow right answer as right", () => {
+    expect(chapterAccuracy(questions)).toEqual([
+      { chapter: "a", total: 2, attempted: 2, correct: 1 },
+      { chapter: "b", total: 2, attempted: 1, correct: 1 },
+    ]);
+  });
+
+  it("sets difficulty against result", () => {
+    const matrix = difficultyMatrix(questions);
+    expect(matrix.hard).toEqual({ right: 0, slow: 0, wrong: 1, left: 1 });
+    expect(matrix.easy.right).toBe(1);
+    expect(matrix.medium.slow).toBe(1);
+  });
+
+  it("sizes bars against an axis rounded up to a whole step", () => {
+    expect(axisTop(questions)).toBe(150);
+    const chart = { slot: 10, bar: 6, height: 100, dots: 8 };
+    expect(barBox(2, 75, 150, chart)).toEqual({ x: 22, y: 58, width: 6, height: 50 });
+    expect(barBox(0, 999, 150, chart).height).toBe(100);
   });
 });

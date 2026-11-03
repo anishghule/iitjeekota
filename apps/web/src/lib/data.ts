@@ -63,6 +63,28 @@ export function navRoutes(locale: Locale): { id: RouteId; path: string; name: st
     .map(({ id, path }) => ({ id, path, name: localName(site.routes[id].navNames, locale) }));
 }
 
+export interface AreaGroup {
+  name: string;
+  path: string;
+  areas: { name: string; path: string }[];
+}
+
+/** Each area hub page (Pune, Pimpri-Chinchwad) with the live area pages under it, for the footer. */
+export function areaGroups(locale: Locale): AreaGroup[] {
+  const groups: AreaGroup[] = [];
+  for (const id of Object.keys(site.routes) as RouteId[]) {
+    const hub = site.routes[id].areaHub;
+    const path = routePath(id, locale);
+    if (!hub || path === undefined) continue;
+    const areas = site.areas
+      .filter((a) => a.hub === hub)
+      .flatMap((a) => (a.page && isRouteId(a.page) ? [{ name: localName(a.names, locale), path: routePath(a.page, locale) }] : []))
+      .filter((a): a is { name: string; path: string } => a.path !== undefined);
+    groups.push({ name: routeName(id, locale), path, areas });
+  }
+  return groups;
+}
+
 type Facts = Site["facts"]["en"];
 
 /** A confirmed fact as it reads in a language; undefined while pending or untranslated. */
@@ -73,6 +95,11 @@ export function fact<K extends keyof Facts>(locale: Locale, id: K): Facts[K] | u
 
 export function brandName(locale: Locale): string {
   return site.brand.names[locale];
+}
+
+/** The brand name split where the wide header breaks it onto two lines. */
+export function brandLines(locale: Locale): readonly string[] {
+  return site.brand.nameLines[locale];
 }
 
 export function localName(names: Partial<Record<string, string>>, locale: Locale): string {
@@ -86,11 +113,39 @@ export interface MediaFile {
   alt: string;
 }
 
-/** A media slot's file, or undefined while D-SAP has not supplied it. */
+export function isMediaSlotId(id: string): id is MediaSlotId {
+  return id in media.slots;
+}
+
+/** A media slot's file, or undefined while D-SAP has not supplied it (or the slot does not exist). */
 export function mediaFile(id: MediaSlotId, locale: Locale): MediaFile | undefined {
-  const slot: { url?: string; width?: number; height?: number; alt: Partial<Record<string, string>> } = media.slots[id];
-  if (!slot.url || !slot.width || !slot.height) return undefined;
+  const slot: { url?: string; width?: number; height?: number; alt: Partial<Record<string, string>> } | undefined = media.slots[id];
+  if (!slot?.url || !slot.width || !slot.height) return undefined;
   return { url: slot.url, width: slot.width, height: slot.height, alt: localName(slot.alt, locale) };
+}
+
+/** The centre a centre page is about. */
+export function centreOfRoute(route: string): Centre | undefined {
+  return site.centres.find((c) => c.page === route);
+}
+
+/** The area an area page is about. */
+export function areaOfRoute(route: string): Area | undefined {
+  return site.areas.find((a) => a.page === route);
+}
+
+const CENTRE_PHOTOS = ["entrance", "classroom", "digital-board"] as const;
+const CENTRE_FILMS = ["walkthrough", "parent-meeting"] as const;
+
+/** What a centre has to show, from the media slots D-SAP has filled: photos, and films each with its still. */
+export function centreMedia(centre: string, locale: Locale): { photos: MediaFile[]; films: { film: MediaFile; poster?: MediaFile | undefined }[] } {
+  const slot = (name: string) => mediaFile(`centres/${centre}/${name}` as MediaSlotId, locale);
+  const photos = CENTRE_PHOTOS.map(slot).filter((m): m is MediaFile => m !== undefined);
+  const films = CENTRE_FILMS.flatMap((name) => {
+    const film = slot(name);
+    return film ? [{ film, poster: slot(`${name}-poster`) }] : [];
+  });
+  return { photos, films };
 }
 
 /** A contact link pattern from packages/site/site.json (contactLinks) with its values filled. */

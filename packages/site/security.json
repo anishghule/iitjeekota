@@ -1,0 +1,44 @@
+{
+  "$description": "Security headers the site is served with (make web-data writes apps/web dist/_headers for Cloudflare Pages from this file). Read on 2026-11-01 from Cloudflare Pages' headers documentation (rule format, 100 rules, 2,000 characters a line), MDN's header references (Permissions-Policy, CSP, COOP, CORP, Referrer-Policy) and hstspreload.org (preload needs max-age of one year or more, includeSubDomains and preload). The Content Security Policy is as strict as the built site allows: every script, style, font, image, film and request comes from this site, there is no inline script or style (make web-lint checks this), no eval, and nothing may frame the site. JSON-LD and the scene input blocks are data, not scripts, so script-src does not govern them. A browser test (apps/web/e2e/security.spec.ts) loads real pages under exactly this policy and fails on any violation.",
+  "checked": "2026-11-01",
+  "staleAfterDays": 90,
+  "csp": {
+    "default-src": ["'none'"],
+    "script-src": ["'self'"],
+    "style-src": ["'self'"],
+    "img-src": ["'self'"],
+    "font-src": ["'self'"],
+    "media-src": ["'self'"],
+    "connect-src": ["'self'"],
+    "manifest-src": ["'self'"],
+    "worker-src": ["'self'"],
+    "object-src": ["'none'"],
+    "base-uri": ["'none'"],
+    "form-action": ["'self'"],
+    "frame-ancestors": ["'none'"],
+    "upgrade-insecure-requests": []
+  },
+  "apiOrigin": null,
+  "headers": {
+    "Referrer-Policy": "strict-origin-when-cross-origin",
+    "X-Content-Type-Options": "nosniff",
+    "X-Frame-Options": "DENY",
+    "Cross-Origin-Opener-Policy": "same-origin",
+    "Cross-Origin-Resource-Policy": "same-site"
+  },
+  "permissionsPolicy": ["accelerometer", "ambient-light-sensor", "bluetooth", "camera", "display-capture", "geolocation", "gyroscope", "hid", "magnetometer", "microphone", "midi", "payment", "serial", "usb", "xr-spatial-tracking"],
+  "hsts": {
+    "$description": "Off until launch (docs/setup/cloudflare.md step 7): HSTS is hard to undo. At launch ramp up as hstspreload.org advises: 300 seconds, a week (604800), a month (2592000), then two years (63072000) with preload, checking the site between stages. Preload needs maxAge of at least 31536000, includeSubDomains and preload.",
+    "enabled": false,
+    "maxAge": 300,
+    "includeSubDomains": true,
+    "preload": false
+  },
+  "securityTxt": {
+    "$description": "/.well-known/security.txt (RFC 9116, read 2026-11-01): Contact and Expires are required; Expires is an RFC 3339 date and time, recommended less than a year ahead, so the build fails once it has passed or if it is more than a year away. The contact is a confirmed fact, so it is never typed twice. Renew Expires and the date at least once a year.",
+    "contactFacts": ["contact.email"],
+    "expires": "2027-10-30T00:00:00+05:30",
+    "preferredLanguages": ["en", "hi", "mr"]
+  },
+  "noindexHosts": ["https://:project.pages.dev/*", "https://:version.:project.pages.dev/*"]
+}

@@ -45,7 +45,7 @@ const builders: Record<string, (ctx: SceneContext) => Scene> = {
   "syllabus-slab": (ctx) =>
     createSyllabusSlab(ctx, {
       subjects: syllabus.subjects.map((s) => s.id),
-      chapters: syllabus.chapters.map((c) => ({ id: c.id, subject: c.subject, symbol: c.symbol, classes: c.classes, main: c.main })),
+      chapters: syllabus.chapters.map((c) => ({ id: c.id, subject: c.subject, label: c.names.en.slice(0, 2), classes: c.classes, main: c.main })),
     }),
   specimens: (ctx) => createSpecimens(ctx),
 };

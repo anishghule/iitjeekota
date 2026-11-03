@@ -1,6 +1,7 @@
 {
   "route": "area-pimple-gurav",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "पिंपळे गुरवमधील IIT JEE क्लासेस | D-SAP घुले",
     "description": "पिंपळे गुरव हा आमच्या नवी सांगवी मुख्य कार्यालयाच्या सर्वात जवळचा परिसर. कोट्याच्या शिक्षकांसह JEE क्लासेस, {{fact:batch.timings#start}} ते {{fact:batch.timings#end}}."

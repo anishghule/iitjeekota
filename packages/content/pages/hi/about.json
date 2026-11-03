@@ -1,6 +1,7 @@
 {
   "route": "about",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "D-SAP घुले ट्यूटोरियल्स के बारे में, {{fact:org.founded#year}} से",
     "description": "D-SAP घुले ट्यूटोरियल्स की शुरुआत {{fact:org.founded#year}} में {{fact:org.founded#place}} में हुई। आज यह पुणे में कोटा के एक टॉप संस्थान के साथ JEE कोचिंग चलाता है।"

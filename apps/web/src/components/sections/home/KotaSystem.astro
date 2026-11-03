@@ -20,7 +20,7 @@ const input = JSON.stringify({ points: points.map((p) => p.map((part) => part.te
 // The list starts stepping where the prism has finished assembling (packages/scenes/scenes.json).
 const stepsFrom = config.scenes["kota-prism"].assemble.until;
 ---
-<section id={section.id} class="kota pinned" data-scene="kota-prism" data-steps={points.length} data-steps-from={stepsFrom}
+<section id={section.id} class="kota pinned" data-scene="kota-prism" data-steps={points.length} data-steps-from={stepsFrom} data-steps-goto
   aria-labelledby={`${section.id}-title`}>
   <script type="application/json" is:inline data-scene-input set:html={input} />
   <div class="stage">
@@ -35,7 +35,7 @@ const stepsFrom = config.scenes["kota-prism"].assemble.until;
         </div>
         <ol class="kota__points" role="list">
           {points.map((p, i) => (
-            <li data-step-item>
+            <li data-step-item data-step-goto tabindex="0">
               <span class="kota__n tabular" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
               <span><Rich parts={p} /></span>
             </li>
@@ -48,7 +48,9 @@ const stepsFrom = config.scenes["kota-prism"].assemble.until;
 
 <style>
   .kota__grid { display: grid; gap: var(--space-5); }
-  .kota__text { display: grid; gap: var(--space-5); align-content: end; }
+  .kota__text { display: grid; gap: var(--space-5); }
+  /* Narrow: the text then the held visual, in a column (the layout layer's flex column loses to the grid above). */
+  .kota[data-pin="narrow"] .kota__grid { display: flex; flex-direction: column; }
   /* Wide: text and points on the left, the prism on the right. */
   .kota[data-pin="wide"] .kota__grid {
     /* minmax(0, …): the canvas's pixel size must not widen its column. */
@@ -56,7 +58,7 @@ const stepsFrom = config.scenes["kota-prism"].assemble.until;
     grid-template-areas: "text prism" "points prism";
     column-gap: var(--space-7);
   }
-  .kota[data-pin="wide"] .kota__text { grid-area: text; }
+  .kota[data-pin="wide"] .kota__text { grid-area: text; align-content: end; }
   .kota[data-pin="wide"] .kota__visual { display: contents; }
   .kota[data-pin="wide"] .kota__prism { grid-area: prism; }
   .kota[data-pin="wide"] .kota__points { grid-area: points; align-self: start; }
@@ -72,6 +74,8 @@ const stepsFrom = config.scenes["kota-prism"].assemble.until;
     color: var(--text-muted);
     transition: background-color var(--dur-base) var(--ease-enter), color var(--dur-base) var(--ease-enter);
   }
+  .kota__points li { cursor: pointer; }
+  .kota__points li:hover { color: var(--text); }
   .kota__points li[aria-current] { background: var(--bg-raised); color: var(--text); box-shadow: var(--shadow-1); }
   .kota__n { font-family: var(--font-display); font-weight: var(--weight-heavy); color: var(--accent); }
   .kota__prism { display: grid; place-items: center; aspect-ratio: 1; min-height: 0; min-width: 0; max-height: 80dvh; }

@@ -1,4 +1,4 @@
-# 0003. Typefaces: Archivo, Inter and Mukta
+# 0003. Typefaces: Archivo, Google Sans Flex (Inter as fallback) and Mukta
 
 Date: 2026-10-30. Status: accepted.
 
@@ -17,9 +17,11 @@ Both are shown side by side, in all three languages, in the brand guide.
 
 A. Archivo's wide, heavy cut stays clear on a phone and sits well beside the 3D medal, and Mukta matches its weight in Devanagari. B echoes the slab lettering on the medal, but reads like print and competes with the medal itself.
 
-- Body and interface text: Inter (variable, with tabular figures for scores and fees).
-- Hindi and Marathi: Mukta for headlines and text, set 116.64% larger so its x-height matches Inter, with taller lines and no letter-spacing.
-- While web fonts load, Arial stands in with measured overrides (Inter Fallback 107.34%, Archivo Fallback 115.5%), so the layout does not move.
+- Body and interface text: Google Sans Flex (variable, SIL Open Font License, self-hosted), then Inter as the vendored web fallback, then Arial. Google Sans Flex has no Devanagari, so Hindi and Marathi text is unaffected.
+- Hindi and Marathi: Mukta for headlines and text, set 108.97% larger so its x-height matches Google Sans Flex, with taller lines and no letter-spacing.
+- While the display font loads, Arial stands in with measured overrides (Archivo Fallback 115.5%), so headlines do not move. Body text has no such stand-in: Inter is the next face in its stack, as chosen on 2026-11-01. Inter is never preloaded.
+
+Amended 2026-11-01: body text moved from Inter to Google Sans Flex.
 
 ## Consequences
 

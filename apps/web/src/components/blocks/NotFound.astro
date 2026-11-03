@@ -1,0 +1,48 @@
+---
+/**
+ * What a visitor sees at an address that does not exist: the same message in every language, each
+ * with a way back to its home page and to the pages people look for (the main navigation).
+ * Cloudflare Pages serves one 404.html for the whole site (the closest up the folder tree, and
+ * Astro can only write that file at the root), so one page answers in all three languages.
+ * A site with no 404.html is treated as a single-page app and answers 200 for every address.
+ */
+import { strings, type Locale } from "../../i18n/index.ts";
+import { navRoutes, routePath, site } from "../../lib/data.ts";
+
+const first = site.defaultLocale as Locale;
+const blocks = site.locales
+  .map((l) => l.code as Locale)
+  .sort((a, b) => Number(b === first) - Number(a === first))
+  .map((locale) => ({
+    locale,
+    t: strings(locale).notFound,
+    home: routePath("home", locale) ?? site.root.redirectTo,
+    links: navRoutes(locale),
+  }));
+---
+<section class="not-found section">
+  <div class="container not-found__inner">
+    {blocks.map(({ locale, t, home, links }, i) => {
+      const Heading = i === 0 ? "h1" : "h2";
+      return (
+        <div class="not-found__block" lang={locale}>
+          <Heading class={i === 0 ? "t-display" : "t-h2"}>{t.heading}</Heading>
+          <p class="lede">{t.body}</p>
+          <p><a class="button" href={home}>{t.home}</a></p>
+          <nav aria-label={t.pages}>
+            <ul class="not-found__list" role="list">
+              {links.map((l) => <li><a href={l.path}>{l.name}</a></li>)}
+            </ul>
+          </nav>
+        </div>
+      );
+    })}
+  </div>
+</section>
+
+<style>
+  .not-found { padding-block-start: calc(var(--nav-height) + var(--space-8)); }
+  .not-found__inner { display: grid; gap: var(--space-8); }
+  .not-found__block { display: grid; gap: var(--space-4); justify-items: start; }
+  .not-found__list { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+</style>

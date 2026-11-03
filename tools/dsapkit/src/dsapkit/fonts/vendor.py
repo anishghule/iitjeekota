@@ -14,7 +14,7 @@ from .google import GoogleFonts
 def fetch_fonts(paths: Paths, cfg: FontsConfig, client: GoogleFonts) -> list[dict]:
     entries: list[dict] = []
     keep: set[str] = set()
-    for fam in cfg.families:
+    for fam, is_fallback in cfg.vendored():
         faces = [f for f in client.web_faces(fam.query) if f.subset in fam.subsets]
         missing = set(fam.subsets) - {f.subset for f in faces}
         if missing:
@@ -25,7 +25,7 @@ def fetch_fonts(paths: Paths, cfg: FontsConfig, client: GoogleFonts) -> list[dic
             write_bytes(paths.fonts_dir / name, data)
             keep.add(name)
             entries.append({
-                "family": fam.family, "role": fam.role, "subset": face.subset, "style": face.style,
+                "family": fam.family, "role": fam.role, "fallback": is_fallback, "subset": face.subset, "style": face.style,
                 "weight": face.weight, "stretch": face.stretch, "unicodeRange": face.unicode_range,
                 "file": name, "url": face.url, "bytes": len(data), "sha256": hashlib.sha256(data).hexdigest(),
             })

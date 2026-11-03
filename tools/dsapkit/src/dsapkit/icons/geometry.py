@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 import re
-import xml.etree.ElementTree as ET
+# Builds elements only; parsing is in icons/build.py, which refuses entity declarations.
+import xml.etree.ElementTree as ET  # nosec B405
 
 from ..errors import BuildError
 

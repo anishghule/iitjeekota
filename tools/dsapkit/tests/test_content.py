@@ -195,13 +195,22 @@ class SyllabusTest(unittest.TestCase):
         syllabus = load_syllabus(PATHS)
         trig = next(c for c in syllabus.chapters if c.id == "m-trigonometry")
         others = tuple(c for c in syllabus.chapters if c.id != "m-trigonometry")
-        broken = replace(syllabus, chapters=others + (replace(trig, main=99, advanced=("Astronomy",), symbol="Sr"),))
+        broken = replace(syllabus, chapters=others + (replace(trig, main=99, advanced=("Astronomy",)),))
         problems = check_syllabus(broken)
         self.assertTrue(any("unit 14 (Trigonometry) has no chapter" in p for p in problems))
         self.assertTrue(any("heading 'Trigonometry' has no chapter" in p for p in problems))
         self.assertTrue(any("unit 99 is not one of" in p for p in problems))
         self.assertTrue(any("'Astronomy' is not a JEE Advanced" in p for p in problems))
-        self.assertTrue(any("symbol Sr is used twice" in p for p in problems))
+
+    def test_chapter_codes_number_each_subject_within_its_first_class(self):
+        syllabus = load_syllabus(PATHS)
+        codes = [syllabus.code(c) for c in syllabus.chapters]
+        self.assertEqual(len(set(codes)), len(codes))
+        self.assertEqual(syllabus.code(syllabus.chapters[0]), "11-P-01")
+        both = next(c for c in syllabus.chapters if c.classes == (11, 12))
+        self.assertTrue(syllabus.code(both).startswith("11-"))
+        clash = replace(syllabus, subject_codes={**syllabus.subject_codes, "maths": "P"})
+        self.assertTrue(any("single capital letter" in p for p in check_syllabus(clash)))
 
     def test_translations_name_every_chapter(self):
         syllabus = load_syllabus(PATHS)

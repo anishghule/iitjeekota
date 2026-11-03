@@ -2,69 +2,71 @@
 
 # Structured data
 
-Rules checked against Google's documentation on 2026-10-30. Fixtures in `packages/site/jsonld/` are the expected JSON-LD of each page template; the web build must produce the same output.
+Rules read from Google's live documentation on 2026-11-01 (re-read after 90 days; `make docs-drift` compares the pages with the lock file). The builders in `dsapkit/site/jsonld_build.py` write every page's JSON-LD from data, and `make web-data` checks each page against these rules (results: `docs/seo/structured-data-results.md`).
+
+## Value formats
+
+| Format | Rule |
+| --- | --- |
+| `datetime` | ISO 8601 date and time with a timezone offset or Z, for example 2026-11-01T09:00:00+05:30. Google recommends the offset; without it Google assumes Googlebot's timezone. |
+| `datetime-or-date` | ISO 8601. A date alone (2026-11-01) when the hour is not known; otherwise a local date and time (2026-11-01T19:00) whose zone is the event's. A midnight timestamp is wrong unless the event starts at midnight. |
+| `date` | ISO 8601 date, YYYY-MM-DD. |
+| `date-partial` | ISO 8601 date as a year (1994), a month (1994-06) or a day (1994-06-15); Google asks for 'ISO 8601 date format' for foundingDate. |
+| `time` | hh:mm:ss, for example 15:00:00. |
+| `duration` | ISO 8601 duration, for example PT1H30M5S. |
+| `url` | Absolute https URL that works. |
+| `phone` | With the country code and the area code, for example +91 22 6971 9828. |
+| `email` | An email address, name@domain. |
+| `country` | ISO 3166-1 alpha-2 code, for example IN. |
+| `day-of-week` | A schema.org day URL (https://schema.org/Monday) or the short name (Monday). |
+| `text` | Plain text: not empty, no HTML tags. |
 
 ## Types in use
 
-| Type | Required | Recommended | Google docs updated | Note |
-| --- | --- | --- | --- | --- |
-| Organization | none | name, url, logo, sameAs, description, alternateName, contactPoint, address | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/organization) | Home page or one about page. Use the most specific subtype. |
-| EducationalOrganization | as Organization |  |  |  |
-| WebSite | name, url | alternateName | [2025-12-10](https://developers.google.com/search/docs/appearance/site-names) | Home page only. url is the domain root. With / redirecting to /en/, Google reads the redirect target. |
-| LocalBusiness | name, address | url, telephone, geo, openingHoursSpecification, image, priceRange | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/local-business) | One per centre, on its centre page. Multiple types as an array. Ratings only for sites reviewing other businesses. |
-| PostalAddress | none | streetAddress, addressLocality, addressRegion, postalCode, addressCountry | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/local-business) |  |
-| GeoCoordinates | latitude, longitude |  | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/local-business) |  |
-| OpeningHoursSpecification | dayOfWeek, opens, closes |  | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/local-business) |  |
-| BreadcrumbList | itemListElement |  | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/breadcrumb) | Shown on desktop only. Must match the visible breadcrumb; built from routes.json. |
-| ItemList | itemListElement |  | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/course) | Course list summary page: ListItem entries with position and a unique url, at least 3 published courses. |
-| ListItem | position |  |  | Checked against the rules of the list that holds it. |
-| Course | name, description | provider | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/course) | Only for real curricula with instructors and a roster. No prices or promotions in name. |
-| BlogPosting | none | headline, image, datePublished, dateModified, author | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/article) |  |
-| Person | name | url |  |  |
-| VideoObject | name, thumbnailUrl, uploadDate | description, contentUrl, embedUrl, duration, creator | [2026-09-24](https://developers.google.com/search/docs/appearance/structured-data/video) |  |
-| Event | name, startDate, location | endDate, eventStatus, image, description, offers, organizer | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/event) | Physical events only (an admission test day, an open day at a centre). Not for business hours, coupons or members-only sessions. |
-| Place | name, address |  |  |  |
-| ImageObject | url | width, height |  |  |
-| ContactPoint | none | telephone, contactType |  |  |
-| WebPage | none | name, url, inLanguage |  |  |
+| Type | Required | Recommended | Formats checked | Google docs updated | Note |
+| --- | --- | --- | --- | --- | --- |
+| Organization | none | name, url, logo, sameAs, description, alternateName, contactPoint, address | url: url, logo: url, sameAs: url, telephone: phone, email: email, foundingDate: date-partial, description: text, name: text | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/organization) | Home page. Use the same name and alternateName as the site name. Logo at least 112x112 px, crawlable. address.addressCountry is the two-letter code. |
+| EducationalOrganization | as Organization |  |  |  |  |
+| WebSite | name, url | alternateName | url: url, name: text | [2025-12-10](https://developers.google.com/search/docs/appearance/site-names) | Home page only, domain root url. The root redirects to /en/ and Google reads the redirect target, so the markup lives on /en/. One WebSite node per home page; use the same data on every duplicate home page. |
+| LocalBusiness | name, address | url, telephone, geo, openingHoursSpecification, image, priceRange | url: url, image: url, hasMap: url, telephone: phone, name: text | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/local-business) | One per centre, on its centre page, with the most specific subtype. Several types go in an array (additionalType is not supported). Ratings only for sites that review other businesses. |
+| PostalAddress | none | streetAddress, addressLocality, addressRegion, postalCode, addressCountry | addressCountry: country | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/local-business) |  |
+| GeoCoordinates | latitude, longitude |  |  | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/local-business) |  |
+| OpeningHoursSpecification | dayOfWeek, opens, closes |  | dayOfWeek: day-of-week, opens: time, closes: time, validFrom: date, validThrough: date | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/local-business) |  |
+| BreadcrumbList | itemListElement |  |  | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/breadcrumb) | At least two ListItems. The last item may leave out item; Google then uses the page itself. Must match the visible trail; built from routes.json. |
+| ItemList | itemListElement |  |  | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/course) | Course list on a summary page: at least three courses, each ListItem with position and a unique canonical url. |
+| ListItem | position |  | url: url |  | Checked against the rules of the list that holds it. |
+| Course | name, description | provider |  | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/course) | Only for real curricula. Google shows only the first 60 characters of description, so the first sentence must stand alone. |
+| BlogPosting | none | headline, image, datePublished, dateModified, author | datePublished: datetime, dateModified: datetime, headline: text, image: url | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/article) | No required properties. Each author is its own object; do not merge several authors into one name. Images: crawlable, at least 50,000 pixels (width times height), ideally 16x9, 4x3 and 1x1. |
+| Person | name | url | url: url |  |  |
+| VideoObject | name, thumbnailUrl, uploadDate | description, contentUrl, embedUrl, duration, creator | uploadDate: datetime, duration: duration, thumbnailUrl: url, contentUrl: url, embedUrl: url | [2026-09-24](https://developers.google.com/search/docs/appearance/structured-data/video) |  |
+| Event | name, startDate, location | endDate, eventStatus, image, description, offers, organizer | startDate: datetime-or-date, endDate: datetime-or-date | [2026-09-08](https://developers.google.com/search/docs/appearance/structured-data/event) | Physical events only (an admission test day, an open day). Never remove startDate when an event is cancelled or postponed. Not for business hours or coupons. |
+| Place | name, address |  |  |  |  |
+| ImageObject | url | width, height | url: url |  |  |
+| ContactPoint | none | telephone, contactType | telephone: phone, email: email |  |  |
+| WebPage | none | name, url, inLanguage | url: url, dateModified: datetime, datePublished: datetime |  |  |
+| CollectionPage | as WebPage |  |  |  |  |
+| AboutPage | as WebPage |  |  |  |  |
+| ContactPage | as WebPage |  |  |  |  |
 
 ## Not used
 
-- **FAQPage**: FAQ rich results deprecated 2026-05-08 and documentation removed 2026-06-15. FAQs stay as visible HTML.
+- **FAQPage**: FAQ rich results are no longer shown and the documentation was removed 2026-06-15. FAQs stay as visible HTML.
 - **HowTo**: Retired.
 - **SearchAction**: Sitelinks search box retired in 2024.
 - **SpecialAnnouncement**: Retired 2025.
-- **EducationalOccupationalProgram**: Not a Google rich result; use Course on programme pages.
+- **EducationalOccupationalProgram**: Not a Google rich result; there is no Course-info result either (retired 2025).
+- **PracticeProblem**: Removed from Google Search in 2026.
 
-## Fixture results
+## Other Google pages the rules depend on
 
-### area-wakad (`area-wakad`, en)
-
-- Passes with nothing pending.
-
-### blog-post (`post-kota-or-pune`, en)
-
-- Passes with nothing pending.
-
-### centre-sangvi (`centre-sangvi-head-office`, en)
-
-- pending: priceRange left out: pending fact fees.range
-
-### centre-wakad (`centre-wakad`, en)
-
-- pending: priceRange left out: pending fact fees.range
-- pending: hasMap left out: pending fact centre.wakad.maps
-- pending: openingHoursSpecification left out: pending fact centre.wakad.hours
-
-### class-11-jee (`class-11-jee`, en)
-
-- Passes with nothing pending.
-
-### home (`home`, en)
-
-- Passes with nothing pending.
-
-### programmes (`programmes`, en)
-
-- pending: itemListElement left out: page foundation-class-9-10 gated
-- warning: ItemList has 2 items; Google needs at least 3
+| Page | Updated | Why |
+| --- | --- | --- |
+| [structured-data-policies](https://developers.google.com/search/docs/appearance/structured-data/sd-policies) | 2026-07-10 | Markup must be visible on the page, up to date, relevant and complete. |
+| [search-gallery](https://developers.google.com/search/docs/appearance/structured-data/search-gallery) | 2026-10-16 | Which types have a rich result at all. |
+| [sitelinks](https://developers.google.com/search/docs/appearance/sitelinks) | 2025-12-10 | Sitelinks are automatic; titles and structure are what we control. |
+| [sitemaps](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap) | 2026-07-08 | lastmod is used only if consistently and verifiably accurate; priority and changefreq are ignored. |
+| [localized-versions](https://developers.google.com/search/docs/specialty/international/localized-versions) | 2026-09-21 | hreflang and x-default, in tags or in the sitemap. |
+| [robots-intro](https://developers.google.com/search/docs/crawling-indexing/robots/intro) | 2025-12-10 | robots.txt controls crawling, not indexing. |
+| [robots-meta-tag](https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag) | 2026-03-24 | max-image-preview:large lets Search show a large image preview; noindex keeps a page out. |
+| [ai-features](https://developers.google.com/search/docs/appearance/ai-features) | 2025-12-10 | No extra requirements for AI Overviews and AI Mode; structured data must match visible text. |
+| [ai-optimization-guide](https://developers.google.com/search/docs/fundamentals/ai-optimization-guide) | 2026-07-10 | llms.txt, chunking and special markup are not used by Google Search. |

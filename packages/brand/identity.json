@@ -1,10 +1,19 @@
 {
-  "$description": "Brand identity: names, domain and the surface used for app icons. Read by the favicon manifest, OG images and the brand guide.",
+  "$description": "Brand identity: names, domain and the surface used for app icons. Read by the favicon manifest, OG images, the site header and the brand guide. nameLines is localNames split where the header breaks it on wide screens; joined with a space it must equal localNames. alternateNames and description feed the Organization and WebSite structured data, which must use one site name and the same alternate names.",
   "name": "D-SAP Ghule Tutorials",
   "localNames": {
     "en": "D-SAP Ghule Tutorials",
     "hi": "D-SAP घुले ट्यूटोरियल्स",
     "mr": "D-SAP घुले ट्यूटोरियल्स"
+  },
+  "nameLines": {
+    "en": ["D-SAP Ghule", "Tutorials"],
+    "hi": ["D-SAP घुले", "ट्यूटोरियल्स"],
+    "mr": ["D-SAP घुले", "ट्यूटोरियल्स"]
+  },
+  "alternateNames": ["D-SAP", "iitjeekota.com"],
+  "description": {
+    "en": "IIT JEE coaching in Pune and Pimpri-Chinchwad, powered by a Kota institute, with centres in New Sangvi and Wakad."
   },
   "appName": "D-SAP Ghule Tutorials: IIT JEE coaching in Pune",
   "shortName": "D-SAP JEE",

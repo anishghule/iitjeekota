@@ -1,6 +1,7 @@
 {
   "route": "about",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "About D-SAP Ghule Tutorials, since {{fact:org.founded#year}}",
     "description": "D-SAP Ghule Tutorials began in {{fact:org.founded#place}} in {{fact:org.founded#year}}. Today it runs JEE coaching in Pune, powered by a top Kota institute."

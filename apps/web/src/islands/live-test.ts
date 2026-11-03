@@ -33,6 +33,13 @@ export function score(answers: (number | null)[], key: number[], marking: Markin
   return { right, wrong, left, marks: right * marking.right + wrong * marking.wrong + left * marking.blank, max: key.length * marking.right };
 }
 
+export type Outcome = "right" | "wrong" | "left";
+
+export function outcome(chosen: number | null | undefined, correct: number): Outcome {
+  if (chosen === null || chosen === undefined) return "left";
+  return chosen === correct ? "right" : "wrong";
+}
+
 export type PaletteState = "not-visited" | "not-answered" | "answered" | "marked" | "marked-answered";
 
 export function paletteState(visited: boolean, answered: boolean, marked: boolean): PaletteState {
@@ -47,7 +54,6 @@ export function initLiveTest(root: HTMLElement, win: Window): void {
   const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-tab]"));
   const timer = root.querySelector<HTMLElement>("[data-timer]");
   const count = root.querySelector<HTMLElement>("[data-count]");
-  const sheet = root.querySelector<HTMLElement>("[data-sheet]");
   const result = root.querySelector<HTMLElement>("[data-result]");
   const timeUp = root.querySelector<HTMLElement>("[data-time-up]");
   const marking: Marking = { right: Number(root.dataset.right), wrong: Number(root.dataset.wrong), blank: Number(root.dataset.blank) };
@@ -59,6 +65,7 @@ export function initLiveTest(root: HTMLElement, win: Window): void {
   let visited = questions.map((_, i) => i === 0);
   let left = seconds;
   let clock = 0;
+  let done = false;
 
   const chosen = (i: number): number | null => {
     const input = questions[i]?.querySelector<HTMLInputElement>("input:checked");
@@ -67,7 +74,7 @@ export function initLiveTest(root: HTMLElement, win: Window): void {
   const render = () => {
     questions.forEach((q, i) => (q.hidden = i !== current));
     palette.forEach((p, i) => {
-      p.dataset.state = paletteState(visited[i] ?? false, chosen(i) !== null, marked[i] ?? false);
+      p.dataset.state = done ? outcome(chosen(i), key[i] ?? -1) : paletteState(visited[i] ?? false, chosen(i) !== null, marked[i] ?? false);
       p.toggleAttribute("aria-current", i === current);
     });
     const subject = questions[current]?.dataset.subject;
@@ -84,27 +91,37 @@ export function initLiveTest(root: HTMLElement, win: Window): void {
     if (timer) timer.textContent = minutesAndSeconds(left);
     if (left <= 0) submit(true);
   };
+  /** The clock waits for the reader: the Start button, or the first touch of anything on the sheet. */
   const start = () => {
-    if (!clock) clock = win.setInterval(tick, 1000);
+    if (clock || done) return;
+    clock = win.setInterval(tick, 1000);
+    root.toggleAttribute("data-running", true);
   };
-  const submit = (outOfTime: boolean) => {
+  const stop = () => {
     win.clearInterval(clock);
     clock = 0;
+    root.toggleAttribute("data-running", false);
+  };
+  const submit = (outOfTime: boolean) => {
+    stop();
     const answers = questions.map((_, i) => chosen(i));
     const s = score(answers, key, marking);
     for (const [name, value] of Object.entries(s)) {
       const out = root.querySelector<HTMLElement>(`[data-score="${name}"]`);
       if (out) out.textContent = String(value);
     }
-    root.querySelectorAll<HTMLElement>("[data-review]").forEach((row, i) => {
-      const a = answers[i];
-      row.dataset.outcome = a === null || a === undefined ? "left" : a === key[i] ? "right" : "wrong";
-      const mine = row.querySelector<HTMLElement>("[data-mine]");
-      const letters = (row.dataset.letters ?? "").split(",");
-      if (mine) mine.textContent = a === null || a === undefined ? "" : (letters[a] ?? "");
+    done = true;
+    root.toggleAttribute("data-done", true);
+    questions.forEach((q, i) => {
+      q.querySelectorAll<HTMLInputElement>("input").forEach((input) => (input.disabled = true));
+      q.querySelectorAll<HTMLElement>(".cbt__option").forEach((label, oi) => {
+        if (oi === key[i]) label.dataset.verdict = "right";
+        else if (oi === answers[i]) label.dataset.verdict = "wrong";
+      });
+      q.querySelector<HTMLElement>("[data-solution]")?.removeAttribute("hidden");
     });
+    render();
     if (timeUp) timeUp.hidden = !outOfTime;
-    if (sheet) sheet.hidden = true;
     if (result) {
       result.hidden = false;
       result.focus();
@@ -117,18 +134,24 @@ export function initLiveTest(root: HTMLElement, win: Window): void {
     left = seconds;
     if (timer) timer.textContent = minutesAndSeconds(left);
     if (result) result.hidden = true;
-    if (sheet) sheet.hidden = false;
+    done = false;
+    root.toggleAttribute("data-done", false);
+    questions.forEach((q) => {
+      q.querySelectorAll<HTMLInputElement>("input").forEach((input) => (input.disabled = false));
+      q.querySelectorAll<HTMLElement>(".cbt__option").forEach((label) => label.removeAttribute("data-verdict"));
+      q.querySelector<HTMLElement>("[data-solution]")?.setAttribute("hidden", "");
+    });
+    stop();
     go(0);
   };
 
-  root.addEventListener("change", () => {
-    start();
-    render();
-  });
+  root.addEventListener("pointerdown", start);
+  root.addEventListener("focusin", start);
+  root.addEventListener("change", render);
   root.addEventListener("click", (e) => {
     const target = (e.target as Element).closest<HTMLElement>("[data-action], [data-palette], [data-tab]");
     if (!target) return;
-    start();
+    if (target.dataset.action === "start") return start();
     if (target.dataset.palette !== undefined) return go(Number(target.dataset.palette));
     if (target.dataset.tab !== undefined) return go(questions.findIndex((q) => q.dataset.subject === target.dataset.tab));
     switch (target.dataset.action) {

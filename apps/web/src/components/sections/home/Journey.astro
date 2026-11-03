@@ -2,6 +2,10 @@
 /**
  * Two years, month by month (plan C1 10): the programme's steps as a timeline that fills as the
  * reader scrolls, with the weekly and monthly rhythm beside it. Steps come from the timeline widget.
+ * Only the timeline scrolls: the text and the tree hold still beside it on wide screens (and scroll
+ * past as usual on a phone, where the timeline follows in full). The section does not pin. The
+ * tree (scene "tree": a tree growing from an open book, a branch per step) is drawn on the page's
+ * background canvas; its box here is the slot.
  */
 import { strings, type Locale } from "../../../i18n/index.ts";
 import type { SectionData, TimelineData } from "../../../lib/types.ts";
@@ -15,25 +19,19 @@ const { section, locale } = Astro.props;
 const t = strings(locale);
 const w = section.widget as TimelineData | undefined;
 const steps = w?.steps ?? [];
+const input = JSON.stringify({ milestones: steps.length }).replace(/</g, "\\u003c");
 ---
-<section id={section.id} class:list={["journey", steps.length ? "pinned" : "section"]} data-steps={steps.length || undefined}
-  aria-labelledby={`${section.id}-title`}>
-  <div class="stage">
-    <div class="container split journey__grid">
-      <div class="journey__text">
-        <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
-        <Paragraphs paragraphs={section.body} class="lede" />
-        {w && w.rhythm.length > 0 && (
-          <div class="rhythm">
-            <h3 class="rhythm__head">{t.timeline.rhythm}</h3>
-            <ul role="list">
-              {w.rhythm.map((r) => <li><span class="accent">{r.every}</span><span>{r.what}</span></li>)}
-            </ul>
-          </div>
-        )}
-      </div>
+<section id={section.id} class="journey section" data-scene={steps.length ? "tree" : undefined} aria-labelledby={`${section.id}-title`}>
+  {steps.length > 0 && <script type="application/json" is:inline data-scene-input set:html={input} />}
+  <div class="container split journey__grid">
+    <div class="journey__text">
+      <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} class="lede" />
+      {steps.length > 0 && <div class="journey__tree" data-scene-slot aria-hidden="true"></div>}
+    </div>
+    <div class="journey__flow">
       {steps.length > 0 && (
-        <ol class="timeline" role="list" data-pin-visual>
+        <ol class="timeline" role="list" data-timeline>
           {steps.map((s) => (
             <li data-step-item>
               <span class="timeline__when">{s.when}</span>
@@ -43,18 +41,32 @@ const steps = w?.steps ?? [];
           ))}
         </ol>
       )}
+      {w && w.rhythm.length > 0 && (
+        <div class="rhythm">
+          <h3 class="rhythm__head">{t.timeline.rhythm}</h3>
+          <ul role="list">
+            {w.rhythm.map((r) => <li><span class="accent">{r.every}</span><span>{r.what}</span></li>)}
+          </ul>
+        </div>
+      )}
     </div>
   </div>
 </section>
 
 <style>
-  .journey__grid { align-items: center; }
+  .journey__grid { align-items: start; }
+  .journey__flow { display: grid; gap: var(--space-7); min-width: 0; }
+  /* The tree's slot: empty, the page's background canvas shows through it. */
+  .journey__tree { height: 46dvh; }
   .journey__text { display: grid; gap: var(--space-5); }
+  /* The text holds still while the timeline beside it scrolls past. */
+  :global(:root[data-layout="wide"]) .journey__text { position: sticky; top: calc(var(--nav-height) + var(--space-6)); }
+  :global(:root[data-layout="wide"]) .journey__tree { height: 38dvh; }
   .rhythm { display: grid; gap: var(--space-3); }
   .rhythm__head { font-size: var(--type-small-size); color: var(--text-muted); font-weight: var(--weight-semibold); }
   .rhythm ul { display: grid; gap: var(--space-2); }
   .rhythm li { display: grid; grid-template-columns: minmax(0, 8rem) 1fr; gap: var(--space-3); }
-  .timeline { position: relative; display: grid; gap: var(--space-4); padding-inline-start: var(--space-6); }
+  .timeline { position: relative; display: grid; gap: var(--space-5); padding-inline-start: var(--space-6); }
   .timeline::before, .timeline::after {
     content: "";
     position: absolute;
@@ -87,9 +99,4 @@ const steps = w?.steps ?? [];
   .timeline li[aria-current]::before { background: var(--accent); }
   .timeline__when { font-size: var(--type-small-size); color: var(--accent-text); font-weight: var(--weight-semibold); }
   .timeline__title { font-family: var(--font-display); font-weight: var(--weight-heavy); font-size: var(--type-body-lg-size); }
-  .journey:not([data-pin]) .timeline::after { transform: none; }
-  /* Narrow: every step keeps its date and title; only the current one shows its detail. */
-  .journey[data-pin="narrow"] .timeline { gap: var(--space-1); }
-  .journey[data-pin="narrow"] .timeline li { padding-block: var(--space-2); }
-  .journey[data-pin="narrow"] .timeline li:not([aria-current]) .timeline__detail { display: none; }
 </style>

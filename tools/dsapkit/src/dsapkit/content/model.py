@@ -11,6 +11,7 @@ from ..errors import BuildError
 from ..jsonio import read_json
 from ..media.library import load_library
 from ..paths import Paths
+from ..site.formats import is_stored_day
 from .syllabus import Syllabus, load_syllabus
 
 KINDS = {"prose", "faq", "list"}
@@ -74,6 +75,8 @@ class Page:
     intro: tuple[Paragraph, ...]
     sections: tuple[Section, ...]
     file: Path
+    published: str | None = None  # YYYY-MM-DD (or YYYY-MM-DDTHH:MM); site/formats.py turns it into a timestamp
+    modified: str | None = None
 
 
 @dataclass(frozen=True)
@@ -88,6 +91,8 @@ class Post:
     requires: tuple[str, ...]
     body: str
     file: Path
+    published: str | None = None
+    modified: str | None = None
 
     @property
     def blocks(self) -> list[str]:
@@ -170,6 +175,24 @@ def _locale_files(root: Path, locales: list[str], pattern: str = "*.json") -> li
 FRONT_MATTER = "---\n"
 
 
+def page_dates(raw: Any, where: str) -> tuple[str | None, str | None]:
+    """published and modified, each a day (YYYY-MM-DD) or a day and minute; modified never before published."""
+    raw = raw or {}
+    unknown = sorted(set(raw) - {"published", "modified"})
+    if unknown:
+        raise BuildError(f"{where}: dates holds only published and modified, not {unknown}")
+    published, modified = raw.get("published"), raw.get("modified")
+    for name, value in (("published", published), ("modified", modified)):
+        if value is not None and not is_stored_day(value):
+            raise BuildError(f"{where}: dates.{name} {value!r} is not a date: write YYYY-MM-DD, or YYYY-MM-DDTHH:MM")
+    if modified and not published:
+        raise BuildError(f"{where}: dates.modified needs dates.published")
+    minute = lambda s: s if "T" in s else f"{s}T00:00"  # a bare day counts from its first minute
+    if published and modified and minute(modified) < minute(published):
+        raise BuildError(f"{where}: dates.modified {modified} is before dates.published {published}")
+    return published, modified
+
+
 def _post(file: Path, locale: str, where: str) -> Post:
     """JSON between two --- lines, then Markdown. JSON is valid YAML, so Astro reads the same front matter."""
     text = file.read_text(encoding="utf-8")
@@ -182,8 +205,10 @@ def _post(file: Path, locale: str, where: str) -> Post:
         raise BuildError(f"{where}: front matter is not valid JSON: {err.msg}") from err
     if meta.get("status") not in STATUSES:
         raise BuildError(f"{where}: status must be one of {sorted(STATUSES)}")
+    published, modified = page_dates(meta.get("dates"), where)
     return Post(f"post-{file.stem}", locale, meta["status"], meta.get("title", ""), meta.get("description", ""),
-                meta.get("author", ""), tuple(meta.get("requires", [])), text[end + 1 + len(FRONT_MATTER):], file)
+                meta.get("author", ""), tuple(meta.get("requires", [])), text[end + 1 + len(FRONT_MATTER):], file,
+                published, modified)
 
 
 def load_content(paths: Paths, locales: list[str]) -> Content:
@@ -199,9 +224,11 @@ def load_content(paths: Paths, locales: list[str]) -> Content:
         if data.get("status") not in STATUSES:
             raise BuildError(f"{where}: status must be one of {sorted(STATUSES)}")
         meta = data.get("meta", {})
+        published, modified = page_dates(data.get("dates"), where)
         pages[(file.stem, loc)] = Page(file.stem, loc, data["status"], meta.get("title", ""), meta.get("description", ""),
                                        data.get("h1", ""), tuple(_paragraph(p, where) for p in data.get("intro", [])),
-                                       tuple(_section(s, where) for s in data.get("sections", [])), file)
+                                       tuple(_section(s, where) for s in data.get("sections", [])), file,
+                                       published, modified)
     blocks = {}
     for loc, file in _locale_files(paths.content / "blocks", locales):
         blocks[(file.stem, loc)] = _section({**read_json(file), "id": file.stem}, str(file.relative_to(paths.root)))

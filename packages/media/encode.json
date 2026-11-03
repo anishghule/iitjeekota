@@ -1,0 +1,52 @@
+{
+  "$description": "How supplied videos and large photos become the files the site serves (make media-encode; needs ffmpeg). photos shrinks a phone photo to a profile's longest edge and drops its metadata; the rest of this note is about videos. Sources are clean copies kept in packages/media/originals (committed; nothing here reads resources/, which is gitignored). Each job reads one source, writes the file of one encoded video slot (and a poster photo for it), then make media-fetch checks it against the slot's spec and pins it. Every profile drops the sound and all metadata (phone videos carry the place and time they were filmed), keeps the picture to the size and frame rate below, and checks its own output with ffprobe. Sources are only read from inside the repository.",
+  "timeoutSeconds": 900,
+  "profiles": {
+    "clip-wide": {
+      "$description": "The same, for a landscape film: up to 1920 px wide.",
+      "maxWidth": 1920,
+      "fps": 30,
+      "crf": 27,
+      "preset": "slow",
+      "gop": 60,
+      "posterQuality": 3,
+      "allowedTags": ["major_brand", "minor_version", "compatible_brands", "handler_name", "vendor_id", "language"]
+    },
+    "clip": {
+      "$description": "A short film the reader plays with a Play button. A keyframe every gop frames (two seconds), so it starts at once and seeks quickly.",
+      "maxWidth": 1080,
+      "fps": 30,
+      "crf": 27,
+      "preset": "slow",
+      "gop": 60,
+      "posterQuality": 3,
+      "allowedTags": ["major_brand", "minor_version", "compatible_brands", "handler_name", "vendor_id", "language"]
+    }
+  },
+  "$jobs": "Video jobs, as {slot, source, profile, startSeconds, seconds, poster: {slot, atSeconds}}. None now: the two films on the site were made on 2026-11-01 and 2026-11-02 from phone originals of 173 MB and 145 MB (home/classroom-film with profile clip, 14 s from 1 s, poster at 5 s; centres/sangvi-head-office/parent-meeting with profile clip-wide, 14 s from 0 s, poster at 6 s). GitHub refuses files over 100 MB, so the originals stay outside the repository and the committed films are the copy. A new film whose source fits in packages/media/originals gets a job here.",
+  "jobs": [],
+  "photoProfiles": {
+    "gallery": {
+      "$description": "A photo shown at up to about 520 px tall on a screen that doubles pixels, so 1600 px on the longest edge is enough for any shape. Never enlarged. quality is ffmpeg's JPEG scale (2 best, 31 worst).",
+      "maxEdge": 1600,
+      "quality": 3
+    }
+  },
+  "photos": [
+    {
+      "slot": "gallery/old-batch",
+      "source": "packages/media/originals/gallery/old-batch.jpg",
+      "profile": "gallery"
+    },
+    {
+      "slot": "gallery/office-chat",
+      "source": "packages/media/originals/gallery/office-chat.jpg",
+      "profile": "gallery"
+    },
+    {
+      "slot": "gallery/mht-cet-poster",
+      "source": "packages/media/originals/gallery/mht-cet-poster.png",
+      "profile": "gallery"
+    }
+  ]
+}

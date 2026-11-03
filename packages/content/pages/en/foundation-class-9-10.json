@@ -1,6 +1,7 @@
 {
   "route": "foundation-class-9-10",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "IIT foundation classes in Pune for Class 9 and 10 | D-SAP",
     "description": "A foundation programme for Class 9 and Class 10 students in Pune, before the two-year JEE programme. What it covers and who can join."
@@ -41,7 +42,7 @@
       "questions": [
         {
           "q": "When does my child move to the two-year programme?",
-          "a": { "text": "After Class 10. The two-year programme starts in June, with a foundation period from May.", "requires": ["programme.start"] }
+          "a": { "text": "After Class 10. The two-year programme starts in June, with a foundation period from April.", "requires": ["programme.start"] }
         },
         {
           "q": "Is the foundation programme needed before Class 11?",

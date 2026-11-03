@@ -1,12 +1,10 @@
 import unittest
 from dataclasses import replace
 
-from dsapkit.jsonio import read_json
 from dsapkit.paths import Paths
-from dsapkit.site.jsonld import Fixture, _fill, check_fixtures, load_fixtures
 from dsapkit.site.keywords import check_planner_limits, planner_files
 from dsapkit.site.links import breadcrumbs, check_links, clicks_from_home, live_links
-from dsapkit.site.model import Fact, Keywords, load_site
+from dsapkit.site.model import Keywords, load_site
 from dsapkit.site.validate import check_commutes, check_keywords, check_routes, check_site, commute_notes
 from dsapkit.tokens import load_tokens
 
@@ -60,6 +58,18 @@ class RegistryTest(unittest.TestCase):
         site = project_site()
         self.assertFalse(site.is_live("powered-by-kota"))
         self.assertNotIn("powered-by-kota", live_links(site, site.routes["area-wakad"]))
+
+
+class FactLanguageTest(unittest.TestCase):
+    def test_a_web_address_is_the_same_in_every_language_but_words_need_a_translation(self):
+        site = project_site()
+        for locale in ("hi", "mr"):
+            value, why = site.fact_value("centre.sangvi.maps", None, locale)
+            self.assertIsNone(why)
+            self.assertTrue(value.startswith("https://"))
+        no_hindi = replace(site.facts["batch.days"], localized={})
+        site = replace(site, facts={**site.facts, "batch.days": no_hindi})
+        self.assertTrue(site.fact_value("batch.days", None, "hi")[1].startswith("pending"))
 
 
 class CommuteTest(unittest.TestCase):
@@ -120,57 +130,6 @@ class KeywordPlannerTest(unittest.TestCase):
         self.assertEqual({"search-volume-en.txt", "search-volume-hi.txt", "search-volume-mr.txt",
                           "seed-keywords-en.txt", "keyword-map.csv"}, set(files))
         self.assertIn("en,iit jee coaching in wakad,area-wakad,primary,", files["keyword-map.csv"])
-
-
-class JsonLdTest(unittest.TestCase):
-    RULES = read_json(PATHS.site / "jsonld-rules.json")
-
-    def fixture(self, site, data, page="home"):
-        pending = []
-        filled = _fill({**data, "$page": page}, site, pending)
-        return Fixture("test", page, "en", filled, pending)
-
-    def test_pending_fact_drops_the_property_and_confirming_restores_it(self):
-        site = project_site()
-        data = {"@context": "https://schema.org", "@graph": [{"@type": "WebSite", "name": "D", "url": "{{origin}}/", "email": "{{fact:contact.email}}"}]}
-        site.facts["contact.email"] = Fact("contact.email", "pending", None, None, None)
-        fx = self.fixture(site, data)
-        self.assertNotIn("email", fx.data["@graph"][0])
-        site.facts["contact.email"] = Fact("contact.email", "confirmed", "jee@example.com", "test", None)
-        fx = self.fixture(site, data)
-        self.assertEqual(fx.data["@graph"][0]["email"], "jee@example.com")
-
-    def test_structured_fact_fields_fill_one_value_each(self):
-        site = project_site()
-        site.facts["centre.wakad.geo"] = Fact("centre.wakad.geo", "confirmed", {"latitude": 18.59, "longitude": 73.77}, "test", None)
-        data = {"@graph": [{"@type": "GeoCoordinates", "latitude": "{{fact:centre.wakad.geo#latitude}}",
-                            "longitude": "{{fact:centre.wakad.geo#longitude}}", "elevation": "{{fact:centre.wakad.geo#elevation}}"}]}
-        fx = self.fixture(site, data, page="centre-wakad")
-        node = fx.data["@graph"][0]
-        self.assertEqual((node["latitude"], node["longitude"]), (18.59, 73.77))
-        self.assertNotIn("elevation", node)
-        self.assertTrue(any("unknown fact" in why for _, why in fx.pending))
-
-    def test_retired_type_and_missing_required_are_errors(self):
-        site = project_site()
-        fx = self.fixture(site, {"@graph": [{"@type": "FAQPage"}, {"@type": "WebSite", "name": "D"}]})
-        messages = [f.message for f in check_fixtures(site, self.RULES, [fx]) if f.severity == "error"]
-        self.assertTrue(any("FAQPage is not used" in m for m in messages))
-        self.assertTrue(any("missing required url" in m for m in messages))
-
-    def test_breadcrumb_must_match_the_registry(self):
-        site = project_site()
-        wrong = {"@graph": [{"@type": "BreadcrumbList", "itemListElement": [
-            {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{origin}}/en/"},
-            {"@type": "ListItem", "position": 2, "name": "Wakad"}]}]}
-        fx = self.fixture(site, wrong, page="area-wakad")
-        self.assertTrue(any("does not match" in f.message for f in check_fixtures(site, self.RULES, [fx])))
-
-    def test_project_fixtures_have_no_errors(self):
-        site = project_site()
-        fixtures = load_fixtures(PATHS.site / "jsonld", site)
-        errors = [f"{f.fixture}: {f.message}" for f in check_fixtures(site, self.RULES, fixtures) if f.severity == "error"]
-        self.assertEqual(errors, [])
 
 
 if __name__ == "__main__":

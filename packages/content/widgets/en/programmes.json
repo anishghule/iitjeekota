@@ -1,5 +1,5 @@
 {
-  "$description": "Rows of the programmes table on home. route is the programme's page; its name comes from routes.json. A row waits for the facts it states, so Foundation shows once its details and the legal age check are confirmed. Fees show from the fees facts once confirmed; until then the table says to ask.",
+  "$description": "Rows of the programmes table on home. route is the programme's page; its name comes from routes.json. A row waits for the facts it states. Fees show from the fees facts once confirmed; until then the table says to ask.",
   "rows": [
     {
       "route": "class-11-jee",
@@ -20,7 +20,7 @@
       "for": "Students in Class 9 and 10",
       "length": "Up to 2 years",
       "exams": "Builds the base for JEE",
-      "requires": ["programme.foundation", "programme.foundation-details", "legal.foundation-minimum-age"]
+      "requires": ["programme.foundation"]
     }
   ]
 }

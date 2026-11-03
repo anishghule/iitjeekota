@@ -50,11 +50,10 @@
     "wrong": "Wrong",
     "left": "Left",
     "marks": "{marks} out of {max}",
-    "yourAnswer": "Your answer",
-    "correct": "Right answer",
     "solution": "Solution",
     "again": "Try again",
-    "noScript": "The sample test needs JavaScript."
+    "noScript": "The sample test needs JavaScript.",
+    "start": "Start timer"
   },
   "report": {
     "weeks": "Pick a week",
@@ -73,7 +72,32 @@
     "concept": "Concepts not clear yet",
     "time": "Left for lack of time",
     "focus": "Next week's practice",
-    "subjects": "By subject"
+    "subjects": "By subject",
+    "map": {
+      "heading": "One test, question by question",
+      "lede": "Every test is read back like this: how each question ended, how long it took against the class, and which chapters cost marks.",
+      "window": "Example test report",
+      "pick": "Subject",
+      "time": "Time on each question, in seconds",
+      "tap": "Tap a bar to read that question.",
+      "question": "Question {n}",
+      "yours": "Your time: {s} s",
+      "class": "Class average: {s} s",
+      "visits": "Opened {n} times",
+      "difficulty": "Difficulty",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "right": "Right",
+      "slow": "Right, but slow",
+      "wrong": "Wrong",
+      "left": "Left",
+      "chapters": "Accuracy by chapter",
+      "outcome": "{correct} of {attempted} tried",
+      "matrix": "Difficulty against result",
+      "average": "Class average",
+      "revisit": "Dots above a bar: times the question was opened again"
+    }
   },
   "syllabus": {
     "filters": "Show chapters",
@@ -83,12 +107,16 @@
     "advancedOnly": "JEE Advanced only",
     "class": "Class {n}",
     "classes": "Class {a} and {b}",
-    "unit": "Unit {n} of the JEE Main syllabus",
     "covers": "What it covers",
     "advancedAlso": "JEE Advanced also asks",
     "count": "{n} chapters",
     "tableLabel": "JEE syllabus chapters",
-    "pick": "Tap a chapter to see what it covers.",
+    "subject": "Subject",
+    "classFilter": "Class",
+    "exam": "Exam",
+    "expandAll": "Expand all",
+    "collapseAll": "Collapse all",
+    "rowUnit": "JEE Main unit {n}",
     "advancedMark": "A"
   },
   "timeline": {
@@ -117,7 +145,10 @@
     "askFees": "Ask us",
     "calc": {
       "title": "Kota or Pune: work out the cost",
-      "note": "Type the amounts you have been quoted for one year. Nothing you type leaves this page.",
+      "note": "The Kota side starts with typical amounts for one year. Change any of them to what you have been quoted. Nothing you type leaves this page.",
+      "coachingHint": "A leading Kota institute charges about {typical} a year. Others charge up to {high} or more.",
+      "hostelHint": "Hostel and food in Kota cost {low} to {high} a month.",
+      "source": "Kota amounts are from institute fee pages and hostel listings, checked on {date}. Fees change each session.",
       "kota": "In Kota, a year",
       "pune": "In Pune, a year",
       "coaching": "Coaching fee",
@@ -167,6 +198,68 @@
     "on": "Autoscroll on",
     "off": "Autoscroll off",
     "label": "Keep scrolling through animated sections after you pause"
+  },
+  "classroom": {
+    "play": "Play the film",
+    "pause": "Pause the film"
+  },
+  "page": {
+    "related": "Related pages",
+    "updated": "Last updated {date}",
+    "published": "Published {date}",
+    "by": "By {name}"
+  },
+  "notFound": {
+    "title": "Page not found | {brand}",
+    "description": "This page does not exist. Go to the home page or one of the main pages of {brand}.",
+    "heading": "This page was not found",
+    "body": "The address may have a typo, or the page may have moved. Start from the home page or one of these pages.",
+    "home": "Go to the home page",
+    "pages": "Pages people look for"
+  },
+  "gallery": {
+    "label": "Photos of D-SAP. Scroll sideways to see more.",
+    "previous": "Previous photos",
+    "next": "Next photos"
+  },
+  "centre": {
+    "head": "Head office",
+    "branch": "Branch",
+    "address": "Address",
+    "phone": "Phone",
+    "email": "Email",
+    "hours": "Opening hours",
+    "to": "to",
+    "closed": "Closed {days}",
+    "directions": "Get directions",
+    "map": "Open in Google Maps",
+    "serves": "Areas this centre serves",
+    "other": "Other centre",
+    "gallery": "Inside the centre",
+    "film": "A film from this centre"
+  },
+  "commute": {
+    "nearest": "Nearest centre",
+    "other": "Other centre",
+    "route": "{km} km by road, {time}",
+    "details": "Centre details and directions"
+  },
+  "batch": {
+    "caption": "The next batch",
+    "exam": "Batch",
+    "starts": "Starts",
+    "admissions": "Admissions",
+    "days": "Class days",
+    "times": "Class times",
+    "size": "Students in a batch",
+    "upTo": "At most {size}",
+    "ask": "Ask us about a seat"
+  },
+  "contactPage": {
+    "call": "Call",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "mapNote": "The map is drawn from OpenStreetMap. The links open Google Maps."
   },
   "breadcrumbs": "Breadcrumbs"
 }

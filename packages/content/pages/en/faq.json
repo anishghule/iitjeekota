@@ -1,6 +1,7 @@
 {
   "route": "faq",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "D-SAP Ghule Tutorials FAQ | JEE coaching questions",
     "description": "Answers about our JEE coaching: the Kota affiliation, who can join, class timings, batch size, tests, doubts and how to visit a centre."
@@ -34,7 +35,7 @@
         },
         {
           "q": "When does it start?",
-          "a": { "text": "In June, with a foundation period from May.", "requires": ["programme.start"] }
+          "a": { "text": "In June, with a foundation period from April.", "requires": ["programme.start"] }
         },
         {
           "q": "Do you take students in a drop year?",

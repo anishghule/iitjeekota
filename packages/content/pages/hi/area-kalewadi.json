@@ -1,6 +1,7 @@
 {
   "route": "area-kalewadi",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "काळेवाड़ी में IIT JEE कोचिंग | D-SAP घुले ट्यूटोरियल्स",
     "description": "काळेवाड़ी के छात्रों के लिए हमारी वाकड ब्रांच पर JEE कोचिंग, काळेवाड़ी फाटा के रास्ते। कोटा की फैकल्टी, {{fact:batch.days}} {{fact:batch.timings#start}} बजे से।"

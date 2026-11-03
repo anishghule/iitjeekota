@@ -3,7 +3,7 @@
  * scroll progress. Renders only while the canvas is on screen, and only when something changed or
  * the scene is animating. Everything it creates is released when the returned function runs.
  */
-import { observeProgress, passageProgress, pinnedProgress } from "@dsap/motion";
+import { holdProgress, observeProgress, passageProgress } from "@dsap/motion";
 import {
   ACESFilmicToneMapping,
   AmbientLight,
@@ -84,7 +84,7 @@ export function browserTextures(doc: Document, changed: () => void = () => {}): 
 }
 
 /** The studio the metal reflects: glowing panels, blurred into an environment map. */
-function studioEnvironment(renderer: WebGLRenderer): Texture {
+export function studioEnvironment(renderer: WebGLRenderer): Texture {
   const s = config.studio;
   const studio = new World();
   studio.background = new Color(tokenColor(s.background));
@@ -109,7 +109,7 @@ function studioEnvironment(renderer: WebGLRenderer): Texture {
   return texture;
 }
 
-function addLights(world: World): void {
+export function addLights(world: World): void {
   const s = config.studio;
   world.add(new AmbientLight(tokenColor(s.ambient.color), s.ambient.intensity));
   const key = new DirectionalLight(tokenColor(s.key.color), s.key.intensity);
@@ -119,7 +119,7 @@ function addLights(world: World): void {
   world.add(key, rim);
 }
 
-function disposeAll(world: World): void {
+export function disposeAll(world: World): void {
   world.traverse((obj) => {
     if (!(obj instanceof Mesh)) return;
     obj.geometry.dispose();
@@ -201,7 +201,7 @@ export function mountScene(options: MountOptions): () => void {
     progress = p;
     scene.setProgress(p);
     request();
-  }, win, options.progress === "passage" ? passageProgress : pinnedProgress);
+  }, win, options.progress === "passage" ? passageProgress : holdProgress(options.section, win));
 
   // Scenes that follow the pointer get its position across the whole window.
   const follow = scene.setPointer?.bind(scene);

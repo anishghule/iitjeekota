@@ -7,6 +7,7 @@ import { fill, strings, type Locale } from "../../../i18n/index.ts";
 import { syllabus } from "../../../lib/data.ts";
 import type { ReportData, SectionData } from "../../../lib/types.ts";
 import Paragraphs from "../../ui/Paragraphs.astro";
+import ReportMap from "./ReportMap.astro";
 
 interface Props {
   section: SectionData;
@@ -102,6 +103,7 @@ const lostKeys = ["careless", "concept", "time"] as const;
     </div>
   </div>
 </section>
+{w?.testMap && <ReportMap id={section.id} map={w.testMap} label={w.label} locale={locale} />}
 
 <style>
   .report__grid { align-items: center; }
@@ -135,4 +137,13 @@ const lostKeys = ["careless", "concept", "time"] as const;
   .report__legend li { display: flex; align-items: center; gap: var(--space-2); }
   .report__legend i { width: var(--space-3); height: var(--space-3); border-radius: var(--radius-sm); }
   .report__focus { display: grid; gap: var(--space-1); padding-inline-start: var(--space-5); }
+  /* Narrow: the card is the part that holds still, so it must fit one screen with its tallest week.
+     It sizes to its content (never a fixed height the content can spill out of) and runs tighter. */
+  .report[data-pin="narrow"] .report__card { height: auto; justify-content: start; padding: var(--space-4); gap: var(--space-2); }
+  .report[data-pin="narrow"] .report__week { gap: var(--space-2); }
+  .report[data-pin="narrow"] .report__score .t-display { font-size: var(--type-h1-size); line-height: var(--type-h1-lh); }
+  .report[data-pin="narrow"] .report__stats { gap: var(--space-5); }
+  .report[data-pin="narrow"] .report__stats dd { font-size: var(--type-body-lg-size); line-height: var(--type-body-lg-lh); }
+  .report[data-pin="narrow"] .report__bars { gap: var(--space-1); }
+  .report[data-pin="narrow"] .report__head { margin-block-start: var(--space-1); }
 </style>

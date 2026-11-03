@@ -1,6 +1,7 @@
 {
   "route": "fees-and-batches",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "JEE coaching fees in Pune, and batch dates | D-SAP",
     "description": "Fees and batch dates for our JEE programmes in Pune, what the fee includes, and when the next batches start at New Sangvi and Wakad."
@@ -13,7 +14,8 @@
     {
       "id": "fees",
       "heading": "Fees",
-      "body": ["{{fact:fees}}"]
+      "body": ["{{fact:fees}}."],
+      "action": { "to": "enquire", "label": "Ask us" }
     },
     {
       "id": "included",
@@ -31,7 +33,7 @@
     {
       "id": "batches",
       "heading": "Batch dates",
-      "body": ["{{fact:batch.dates}}"]
+      "body": ["{{fact:batch.dates}}."]
     },
     {
       "id": "questions",
@@ -39,7 +41,7 @@
       "questions": [
         {
           "q": "When do new batches start?",
-          "a": { "text": "The two-year programme starts in June, with a foundation period from May.", "requires": ["programme.start"] }
+          "a": { "text": "The two-year programme starts in June, with a foundation period from April.", "requires": ["programme.start"] }
         },
         {
           "q": "Are the class times the same at both centres?",

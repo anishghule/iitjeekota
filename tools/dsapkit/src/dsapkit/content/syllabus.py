@@ -7,7 +7,6 @@ be covered by at least one chapter, so a change to the official syllabus shows u
 
 from __future__ import annotations
 
-import re
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
@@ -15,7 +14,6 @@ from typing import Any
 from ..jsonio import GENERATED, read_json, write_text
 from ..paths import Paths
 
-SYMBOL_RE = re.compile(r"^[A-Z][a-z]$")
 CLASSES = {11, 12}
 
 
@@ -23,7 +21,6 @@ CLASSES = {11, 12}
 class Chapter:
     id: str
     subject: str
-    symbol: str
     classes: tuple[int, ...]
     names: dict[str, str]
     main: int | None
@@ -40,12 +37,21 @@ class Chapter:
 class Syllabus:
     sources: dict[str, Any]
     subjects: dict[str, dict[str, str]]  # id -> names
+    subject_codes: dict[str, str]  # id -> the letter in chapter codes (P, C, M)
     units: dict[str, dict[str, list[str]]]  # exam -> subject -> official unit or heading names
     chapters: tuple[Chapter, ...]
     translations: dict[str, dict[str, Any]] = field(default_factory=dict)  # locale -> syllabus/{locale}.json
 
     def of(self, subject: str) -> list[Chapter]:
         return [c for c in self.chapters if c.subject == subject]
+
+    def code(self, chapter: Chapter) -> str:
+        """The chapter's code, like 11-P-03: the class it is first taught in, the subject's letter and its
+        place among that subject's chapters of that class, in the order of syllabus.json. A chapter taught
+        across both classes is listed with Class 11."""
+        first = chapter.classes[0]
+        peers = [c for c in self.of(chapter.subject) if c.classes[0] == first]
+        return f"{first}-{self.subject_codes[chapter.subject]}-{peers.index(chapter) + 1:02d}"
 
     def value(self, key: str, field_name: str) -> tuple[Any, str | None]:
         """Values copy may quote, read like Site.fact_value:
@@ -73,29 +79,28 @@ def load_syllabus(paths: Paths) -> Syllabus:
         local = {loc: t[kind][key] for loc, t in translations.items() if key in t.get(kind, {})}
         return {**english, **local}
 
-    chapters = tuple(Chapter(c["id"], c["subject"], c["symbol"], tuple(c["classes"]), names(c["names"], "chapters", c["id"]),
+    chapters = tuple(Chapter(c["id"], c["subject"], tuple(c["classes"]), names(c["names"], "chapters", c["id"]),
                              c["main"], tuple(c["advanced"]), tuple(c["topics"]), tuple(c.get("advancedAlso", [])))
                      for c in raw["chapters"])
     subjects = {s["id"]: names(s["names"], "subjects", s["id"]) for s in raw["subjects"]}
-    return Syllabus(raw["sources"], subjects, raw["units"], chapters, translations)
+    codes = {s["id"]: s["code"] for s in raw["subjects"]}
+    return Syllabus(raw["sources"], subjects, codes, raw["units"], chapters, translations)
 
 
 def check_syllabus(syllabus: Syllabus) -> list[str]:
     problems = []
-    seen_ids, seen_symbols = set(), set()
+    seen_ids = set()
+    letters = list(syllabus.subject_codes.values())
+    if len(set(letters)) != len(letters) or not all(len(letter) == 1 and letter.isupper() for letter in letters):
+        problems.append("syllabus subjects: each needs its own single capital letter as code")
     for c in syllabus.chapters:
         where = f"syllabus chapter {c.id}"
         if c.id in seen_ids:
             problems.append(f"{where}: duplicate id")
-        if c.symbol in seen_symbols:
-            problems.append(f"{where}: symbol {c.symbol} is used twice")
         seen_ids.add(c.id)
-        seen_symbols.add(c.symbol)
         if c.subject not in syllabus.subjects:
             problems.append(f"{where}: unknown subject {c.subject!r}")
             continue
-        if not SYMBOL_RE.match(c.symbol):
-            problems.append(f"{where}: symbol {c.symbol!r} must be one capital and one small letter")
         if not c.classes or not set(c.classes) <= CLASSES:
             problems.append(f"{where}: classes must be 11, 12 or both")
         if "en" not in c.names:
@@ -147,11 +152,11 @@ def write_syllabus_doc(paths: Paths, syllabus: Syllabus) -> Path:
         count = {k: sum(_exams(c) == k for c in chapters) for k in ("Main and Advanced", "Main only", "Advanced only")}
         lines.append(f"| {names['en']} | {len(chapters)} | {count['Main and Advanced']} | {count['Main only']} | {count['Advanced only']} |")
     for subject, names in syllabus.subjects.items():
-        lines += ["", f"## {names['en']}", "", "| Symbol | Chapter | Class | JEE Main unit | JEE Advanced | Advanced adds |",
+        lines += ["", f"## {names['en']}", "", "| Code | Chapter | Class | JEE Main unit | JEE Advanced | Advanced adds |",
                   "| --- | --- | --- | --- | --- | --- |"]
         for c in syllabus.of(subject):
             unit = f"{c.main}. {syllabus.units['main'][subject][c.main - 1]}" if c.main else ""
-            lines.append(f"| {c.symbol} | {c.names['en']} | {', '.join(map(str, c.classes))} | {unit} | "
+            lines.append(f"| {syllabus.code(c)} | {c.names['en']} | {', '.join(map(str, c.classes))} | {unit} | "
                          f"{', '.join(c.advanced) or 'not in the syllabus'} | {'; '.join(c.advanced_also)} |")
     lines += ["", "Sources:", "", f"- [{main['title']}]({main['url']}), read {main['read']}",
               f"- [{adv['title']}]({adv['url']}), read {adv['read']}. {adv.get('note', '')}".rstrip()]

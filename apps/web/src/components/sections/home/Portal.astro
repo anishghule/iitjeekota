@@ -88,8 +88,8 @@ const json = JSON.stringify(demos).replace(/</g, "\\u003c");
     --tilt-y: 0;
     position: relative;
     display: grid;
+    gap: var(--space-5);
     perspective: calc(var(--container) * 1.5);
-    padding-block-end: var(--space-10);
   }
   .board {
     margin: 0;
@@ -114,11 +114,11 @@ const json = JSON.stringify(demos).replace(/</g, "\\u003c");
   .board__bar { display: block; height: var(--space-1); background: var(--bg-raised); }
   .board__bar span { display: block; height: 100%; background: var(--accent); transform-origin: left; transform: scaleX(var(--progress, 0)); }
 
-  /* The portal window sits in front of the board, lower and to the right. */
+  /* The portal window sits below the board. From the wide layout (islands/pin.ts) it moves in front
+     of it instead, lower and to the right, so the two overlap only where there is room for both. */
+  :global(:root[data-layout="wide"]) .portal__stage { padding-block-end: var(--space-10); }
+  :global(:root[data-layout="wide"]) .mac { position: absolute; inset: auto 0 0 auto; width: min(100%, var(--column-min)); }
   .mac {
-    position: absolute;
-    inset: auto 0 0 auto;
-    width: min(100%, var(--column-min));
     background: var(--bg);
     color: var(--text);
     border-radius: var(--radius-lg);

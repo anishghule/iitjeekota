@@ -1,5 +1,6 @@
 /**
- * Wires the autoscroll core to the page: sections that opt in with `data-autoscroll`, the reader's
+ * Wires the autoscroll core to the page: sections that opt in with `data-autoscroll` (give several the
+ * same value to make them one unit), the reader's
  * input, things that must hold it still (a hovered control, a focused field, an open dialog, a
  * hidden tab), reduced motion, and the reader's own on/off choice, remembered in this browser only.
  */
@@ -38,14 +39,43 @@ function saveChoice(win: Window, on: boolean): void {
   }
 }
 
+/** An element that opted in: its `data-autoscroll` value (a unit name, or empty) and where it sits on the page. */
+export interface Span extends Section {
+  name: string;
+}
+
+/**
+ * Elements that share a unit name are one section, from the top of the first to the bottom of the
+ * last, so autoscroll carries on across them without stopping between (a hero and the section
+ * after it). An element with no name is a section of its own.
+ */
+export function mergeUnits(spans: readonly Span[]): Section[] {
+  const units = new Map<string, Section>();
+  const out: Section[] = [];
+  for (const { name, start, end } of spans) {
+    const unit = name ? units.get(name) : undefined;
+    if (unit) {
+      unit.start = Math.min(unit.start, start);
+      unit.end = Math.max(unit.end, end);
+      continue;
+    }
+    const section = { start, end };
+    out.push(section);
+    if (name) units.set(name, section);
+  }
+  return out;
+}
+
 export function bindAutoscroll(win: Window, settings: AutoscrollSettings = tokens.motion.autoscroll): AutoscrollBinding {
   const doc = win.document;
   const sections = (): Section[] =>
-    Array.from(doc.querySelectorAll<HTMLElement>(SECTION_SELECTOR), (el) => {
-      const box = el.getBoundingClientRect();
-      const start = box.top + win.scrollY;
-      return { start, end: start + box.height };
-    });
+    mergeUnits(
+      Array.from(doc.querySelectorAll<HTMLElement>(SECTION_SELECTOR), (el) => {
+        const box = el.getBoundingClientRect();
+        const start = box.top + win.scrollY;
+        return { name: el.getAttribute("data-autoscroll") ?? "", start, end: start + box.height };
+      }),
+    );
 
   const auto = new Autoscroll(settings, {
     position: () => win.scrollY,

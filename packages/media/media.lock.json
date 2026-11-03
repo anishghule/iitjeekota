@@ -8,13 +8,13 @@
       "type": "image/png",
       "width": 1024,
       "height": 1024,
-      "bytes": 2057237,
-      "sha256": "83516d68ba3794e982eb63ed28a54bc55f639c777c481f28094c3f77c243e17e"
+      "bytes": 2057216,
+      "sha256": "3e179566fd8e1e53bcf039ff1ccd3a3bee50ab309fddbd5f6161c60024153068"
     },
     {
       "id": "brand/logo-medal-normal",
       "file": "packages/media/assets/brand/dsap-medal-normal.webp",
-      "source": "resources/dsap-iitjeekota-v3.2/assets/img/medal-normal.webp",
+      "source": "added by D-SAP",
       "type": "image/webp",
       "width": 1024,
       "height": 1024,
@@ -24,7 +24,7 @@
     {
       "id": "people/prof-ghule",
       "file": "packages/media/assets/people/prof-ghule-full.png",
-      "source": "resources/pic.png",
+      "source": "added by D-SAP",
       "type": "image/png",
       "width": 2080,
       "height": 4608,
@@ -34,12 +34,132 @@
     {
       "id": "people/prof-ghule-portrait",
       "file": "packages/media/assets/people/prof-ghule-portrait.png",
-      "source": "resources/Ghule Sir.png",
+      "source": "added by D-SAP",
       "type": "image/png",
       "width": 629,
       "height": 629,
-      "bytes": 321420,
-      "sha256": "14a505a2f72b09bd171c6f23f77355b4d6cbe682570d302164dbc1081f1e0213"
+      "bytes": 321399,
+      "sha256": "a8c9348b8bb1c07d96a04211a3cb1631fa4914a7065aa12b9aac15d6203c6389"
+    },
+    {
+      "id": "centres/sangvi-head-office/parent-meeting",
+      "file": "packages/media/assets/centres/sangvi-head-office/parent-meeting.mp4",
+      "source": "added by D-SAP",
+      "type": "video/mp4",
+      "width": 1920,
+      "height": 822,
+      "bytes": 5137738,
+      "sha256": "f03d5799968ac3779f9e99255fe046d570ae49a287bf4593e03a88e661129674"
+    },
+    {
+      "id": "centres/sangvi-head-office/parent-meeting-poster",
+      "file": "packages/media/assets/centres/sangvi-head-office/parent-meeting-poster.jpg",
+      "source": "added by D-SAP",
+      "type": "image/jpeg",
+      "width": 1920,
+      "height": 822,
+      "bytes": 153561,
+      "sha256": "7d544ec561d47326937b4385c0fdec7cf4ffc7ea0d460c85cffc716ec80932d2"
+    },
+    {
+      "id": "home/classroom-film",
+      "file": "packages/media/assets/home/classroom-film.mp4",
+      "source": "added by D-SAP",
+      "type": "video/mp4",
+      "width": 1080,
+      "height": 2522,
+      "bytes": 5523837,
+      "sha256": "e6d896f257cb577e20bdd1f36db7e0a9eed0425dae8f510e3af6e6183dadfdb3"
+    },
+    {
+      "id": "home/classroom-film-poster",
+      "file": "packages/media/assets/home/classroom-film-poster.jpg",
+      "source": "added by D-SAP",
+      "type": "image/jpeg",
+      "width": 1080,
+      "height": 2522,
+      "bytes": 189168,
+      "sha256": "e67eb485c472c02fdc47074bfbf2ad8d44bef1b54531acefe04a87e25085fbb1"
+    },
+    {
+      "id": "gallery/entrance",
+      "file": "packages/media/assets/gallery/entrance.webp",
+      "source": "added by D-SAP",
+      "type": "image/webp",
+      "width": 596,
+      "height": 1020,
+      "bytes": 103110,
+      "sha256": "ba24581ca836895ca7608d684c0db2728a483ebe2940c3789e133405b77c8f43"
+    },
+    {
+      "id": "gallery/class-at-work",
+      "file": "packages/media/assets/gallery/class-at-work.webp",
+      "source": "added by D-SAP",
+      "type": "image/webp",
+      "width": 900,
+      "height": 2102,
+      "bytes": 83574,
+      "sha256": "7b4bd6d41d270ba0e8fd0e1706bf71ffeae63522c48554ff57b81c5b99d945ae"
+    },
+    {
+      "id": "gallery/batch",
+      "file": "packages/media/assets/gallery/batch.jpg",
+      "source": "added by D-SAP",
+      "type": "image/jpeg",
+      "width": 1300,
+      "height": 1300,
+      "bytes": 281630,
+      "sha256": "a5f8a0db9948f7ac1917237278e2c03ebeeefbc7ab52342d335d66e1eb79f852"
+    },
+    {
+      "id": "gallery/students-group",
+      "file": "packages/media/assets/gallery/students-group.jpg",
+      "source": "added by D-SAP",
+      "type": "image/jpeg",
+      "width": 1536,
+      "height": 1152,
+      "bytes": 258475,
+      "sha256": "9a3f4529660dfab90387af50827dfd1816f16d05e1521f19e89d5924ae74eaf0"
+    },
+    {
+      "id": "gallery/full-class",
+      "file": "packages/media/assets/gallery/full-class.webp",
+      "source": "added by D-SAP",
+      "type": "image/webp",
+      "width": 1360,
+      "height": 614,
+      "bytes": 120150,
+      "sha256": "09cf72dd2b740294bbcf74c52ebbd6a4fc165ed2dc56aa316f5812c34a4819e2"
+    },
+    {
+      "id": "gallery/old-batch",
+      "file": "packages/media/assets/gallery/old-batch.jpg",
+      "source": "packages/media/originals/gallery/old-batch.jpg",
+      "type": "image/jpeg",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 168083,
+      "sha256": "6c311d8a848602b9ff46382eef150048c94423bd1593ab18fa386ad8f1358e8c"
+    },
+    {
+      "id": "gallery/office-chat",
+      "file": "packages/media/assets/gallery/office-chat.jpg",
+      "source": "packages/media/originals/gallery/office-chat.jpg",
+      "type": "image/jpeg",
+      "width": 1600,
+      "height": 1200,
+      "bytes": 233798,
+      "sha256": "3c03164d250ccf071ab6dda2e84d6d2d929f8e8be53d4c552511102ef9fede53"
+    },
+    {
+      "id": "gallery/mht-cet-poster",
+      "file": "packages/media/assets/gallery/mht-cet-poster.jpg",
+      "source": "packages/media/originals/gallery/mht-cet-poster.png",
+      "type": "image/jpeg",
+      "width": 1182,
+      "height": 1258,
+      "bytes": 357971,
+      "sha256": "29c10170a9e00ec6715e96bb90146b4902007d52335ea5eb54f7acb1d97ce7f2"
     }
   ]
 }

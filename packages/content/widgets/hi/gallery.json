@@ -1,0 +1,13 @@
+{
+  "$description": "Hindi captions of the home page's gallery strip. Draft for review by a native Hindi writer.",
+  "items": [
+    { "slot": "gallery/entrance", "shape": "arch", "caption": "प्रवेश द्वार" },
+    { "slot": "gallery/students-group", "shape": "frame", "caption": "अपने शिक्षक के साथ" },
+    { "slot": "gallery/batch", "shape": "circle", "caption": "एक बैच, साथ में" },
+    { "slot": "gallery/class-at-work", "shape": "arch", "caption": "सिर झुकाए, काम में" },
+    { "slot": "gallery/full-class", "shape": "frame", "caption": "भरी हुई कक्षा" },
+    { "slot": "gallery/old-batch", "shape": "frame", "caption": "एक पिछला बैच" },
+    { "slot": "gallery/office-chat", "shape": "frame", "caption": "बैठकर बात करें" },
+    { "slot": "gallery/mht-cet-poster", "shape": "frame" }
+  ]
+}

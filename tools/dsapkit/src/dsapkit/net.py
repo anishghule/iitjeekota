@@ -21,10 +21,10 @@ def https_get(url: str, *, allow: frozenset[str], user_agent: str,
     parsed = urllib.parse.urlparse(url)
     if parsed.scheme != "https" or parsed.hostname not in allow:
         raise BuildError(f"refusing to download {url}: only https from {sorted(allow)}")
-    request = urllib.request.Request(url, headers={"User-Agent": user_agent})
+    request = urllib.request.Request(url, headers={"User-Agent": user_agent})  # noqa: S310 (https and an allowed host, checked above)
     for attempt in range(1, attempts + 1):
         try:
-            with urllib.request.urlopen(request, timeout=30) as response:  # noqa: S310 (scheme and host checked above)
+            with urllib.request.urlopen(request, timeout=30) as response:  # noqa: S310  # nosec B310
                 data = response.read(max_bytes + 1)
             break
         except (urllib.error.URLError, TimeoutError) as err:

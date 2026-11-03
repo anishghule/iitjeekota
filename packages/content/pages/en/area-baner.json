@@ -1,6 +1,7 @@
 {
   "route": "area-baner",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "IIT JEE coaching in Baner | D-SAP Ghule Tutorials",
     "description": "Our New Sangvi head office is the nearest D-SAP JEE centre to Baner, across the Babasaheb Ambedkar Bridge. Kota faculty, evening classes from {{fact:batch.timings#start}}."

@@ -25,6 +25,9 @@ export interface CameraPose {
 
 export interface Scene {
   readonly root: Group;
+  /** Half the width and height (world units) the scene needs inside its slot; the world moves the camera back until both fit. */
+  readonly halfWidth?: number;
+  readonly halfHeight?: number;
   /** Where the camera is at this progress through the section (0 to 1), for a screen of this width / height. */
   cameraAt(progress: number, aspect: number): CameraPose;
   /** Moves the scene to this progress through its section (0 to 1). */

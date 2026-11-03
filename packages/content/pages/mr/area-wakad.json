@@ -1,6 +1,7 @@
 {
   "route": "area-wakad",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "वाकडमधील IIT JEE क्लासेस | D-SAP घुले ट्यूटोरियल्स",
     "description": "स्वामी विवेकानंद नगरमधील आमच्या शाखेत वाकडमध्ये JEE क्लासेस. कोट्याचे शिक्षक, {{fact:batch.days}}, {{fact:batch.timings#start}} ते {{fact:batch.timings#end}}."

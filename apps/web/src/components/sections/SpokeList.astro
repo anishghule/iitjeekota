@@ -1,0 +1,46 @@
+---
+/**
+ * A pillar's pages (plan B2): every page that hangs under it, each linked by the page's own heading
+ * with its description under it, so the link says what is behind it. The list is made by make
+ * web-data from the pages that are built, in the registry's order.
+ */
+import type { Locale } from "../../i18n/index.ts";
+import type { SectionData } from "../../lib/types.ts";
+import ActionLink from "../ui/ActionLink.astro";
+import Paragraphs from "../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const links = section.links ?? [];
+---
+<section id={section.id} class="spokes section" aria-labelledby={`${section.id}-title`}>
+  <div class="container spokes__inner">
+    <div class="spokes__head">
+      <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} class="lede" />
+    </div>
+    {links.length > 0 && (
+      <ul class="spokes__list" role="list">
+        {links.map((l) => (
+          <li class="card">
+            <h3 class="t-h2"><a href={l.path}>{l.name}</a></h3>
+            <p class="muted">{l.description}</p>
+          </li>
+        ))}
+      </ul>
+    )}
+    {section.action && <div class="actions"><ActionLink action={section.action} locale={locale} quiet /></div>}
+  </div>
+</section>
+
+<style>
+  .spokes__inner { display: grid; gap: var(--space-6); }
+  .spokes__head { display: grid; gap: var(--space-4); max-width: var(--measure); }
+  .spokes__list { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--column-min)), 1fr)); }
+  .spokes__list li { display: grid; gap: var(--space-2); align-content: start; }
+  .spokes__list a { text-decoration: none; }
+  .spokes__list a:hover { text-decoration: underline; }
+</style>

@@ -1,6 +1,7 @@
 {
   "route": "test-series",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "JEE test series in Pune | D-SAP Ghule Tutorials",
     "description": "Chapter tests, weekly tests, monthly JEE Main mocks and quarterly JEE Advanced mocks, all on an online portal that works like the real JEE."

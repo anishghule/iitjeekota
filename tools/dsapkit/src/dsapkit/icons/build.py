@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 import json
-import xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ET  # nosec B405
 from dataclasses import dataclass
+from pathlib import Path
 
 from ..errors import BuildError
 from ..jsonio import GENERATED, read_json, reset_dir, write_text
@@ -21,6 +22,15 @@ class Icon:
     name: str
     meaning: str
     elements: tuple[ET.Element, ...]
+
+
+def parse_svg(path: Path) -> ET.Element:
+    """An icon's root element. A parser expands entities, which lets a crafted file exhaust memory; an icon
+    never needs a document type or entity declaration, so a file with one is refused before it is parsed."""
+    text = path.read_text(encoding="utf-8")
+    if "<!DOCTYPE" in text.upper() or "<!ENTITY" in text.upper():
+        raise BuildError(f"{path.name}: an icon needs no document type or entity declaration")
+    return ET.fromstring(text)  # noqa: S314  # nosec B314
 
 
 def _validate(name: str, root: ET.Element, cfg: dict) -> tuple[ET.Element, ...]:
@@ -74,7 +84,7 @@ def load_icons(paths: Paths) -> list[Icon]:
         if name not in files:
             continue
         try:
-            icons.append(Icon(name, meaning, _validate(name, ET.parse(files[name]).getroot(), cfg)))
+            icons.append(Icon(name, meaning, _validate(name, parse_svg(files[name]), cfg)))
         except (BuildError, ET.ParseError) as err:
             problems.append(str(err))
     if problems:

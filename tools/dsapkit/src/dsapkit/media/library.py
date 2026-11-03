@@ -5,6 +5,14 @@ Origins:
              repository path) into packages/media/assets and pinned in media.lock.json
   awaited    D-SAP puts the file at the slot's path; until then the slot is listed
              as waiting, and once the file is there make media-fetch pins it
+  committed  the file is already in the repository at the slot's path, a clean copy
+             of what D-SAP supplied (the note says what it came from). Pinned like the
+             others, never fetched, no source: nothing is read from resources/, which is
+             gitignored, and a file too large for git (raw phone video) is kept only as
+             its encoded copy
+  encoded    made by make media-encode from a clean copy of an original D-SAP supplied
+             (source, a path under packages/media/originals); pinned like the others, but
+             never fetched from its source: that is the unprocessed original
   generated  produced by make brand
   placeholder  a licensed stand-in fetched like a supplied file
 
@@ -21,11 +29,13 @@ from typing import Any
 
 from ..errors import BuildError
 from ..images.info import media_size, media_type
+from ..images.scrub import metadata_found, scrub
 from ..jsonio import GENERATED, read_json, write_bytes, write_json
 from ..net import https_get
 from ..paths import Paths
 
-ORIGINS = {"supplied", "awaited", "generated", "placeholder"}
+ORIGINS = {"supplied", "awaited", "committed", "encoded", "generated", "placeholder"}
+KEPT_IN_REPOSITORY = ("supplied", "awaited", "committed", "encoded", "placeholder")  # files under packages/media/assets, pinned by hash
 KIND_TYPES = {"image": {"image/png", "image/jpeg", "image/webp"}, "video": {"video/mp4"}}
 USER_AGENT = "dsapkit/0.1 (media library)"
 
@@ -49,7 +59,7 @@ class Slot:
     @property
     def pinned(self) -> bool:
         """Slots whose files live in the repository and are pinned by hash."""
-        return self.origin in ("supplied", "awaited", "placeholder")
+        return self.origin in KEPT_IN_REPOSITORY
 
 
 @dataclass(frozen=True)
@@ -57,6 +67,7 @@ class Library:
     slots: list[Slot]
     allow: frozenset[str]
     limits: dict[str, int]
+    keep_profile: bool = True  # scrub.keepColourProfile: images keep their colour profile, nothing else hidden
 
 
 def load_library(paths: Paths) -> Library:
@@ -72,9 +83,9 @@ def load_library(paths: Paths) -> Library:
             problems.append(f"{sid}: origin must be one of {sorted(ORIGINS)}")
         if kind not in KIND_TYPES:
             problems.append(f"{sid}: kind must be one of {sorted(KIND_TYPES)}")
-        if origin in ("supplied", "placeholder") and not entry.get("source"):
+        if origin in ("supplied", "encoded", "placeholder") and not entry.get("source"):
             problems.append(f"{sid}: a {origin} slot needs a source")
-        if origin in ("supplied", "awaited", "placeholder") and not (paths.root / entry.get("file", "")).resolve().is_relative_to(paths.media_assets):
+        if origin in KEPT_IN_REPOSITORY and not (paths.root / entry.get("file", "")).resolve().is_relative_to(paths.media_assets):
             problems.append(f"{sid}: files kept in the repository live under packages/media/assets")
         decorative = bool(entry.get("decorative"))
         alt = entry.get("alt") or {}
@@ -88,7 +99,7 @@ def load_library(paths: Paths) -> Library:
                           entry.get("spec", {}), tuple(entry.get("usedOn", [])), bool(entry.get("placeholderAllowed"))))
     if problems:
         raise BuildError("packages/media/manifest.json:\n  " + "\n  ".join(problems))
-    return Library(slots, frozenset(raw.get("allowedHosts", [])), raw["limits"])
+    return Library(slots, frozenset(raw.get("allowedHosts", [])), raw["limits"], bool(raw.get("scrub", {}).get("keepColourProfile", True)))
 
 
 def load_slots(paths: Paths) -> tuple[list[Slot], frozenset[str]]:
@@ -137,6 +148,27 @@ def _obtain(paths: Paths, slot: Slot, allow: frozenset[str], limits: dict[str, i
     return source.read_bytes()
 
 
+def _clean(slot: Slot, target: Path, library: Library, problems: list[str]) -> bytes | None:
+    """The file's bytes with nothing hidden in them. An image is rewritten without its metadata (where it was
+    taken, when, by which phone) and the clean file is the one that is pinned and shipped; a video must
+    already be clean (make media-encode makes it so). Returns None, with the reason in problems, if it cannot be."""
+    data = target.read_bytes()
+    if slot.kind == "image":
+        try:
+            clean = scrub(data, library.keep_profile)
+        except BuildError as err:
+            problems.append(f"{slot.id}: {err}")
+            return None
+        if clean != data:
+            write_bytes(target, clean)
+        return clean
+    found = metadata_found(data)
+    if found:
+        problems.append(f"{slot.id}: the video still carries {', '.join(found)}; make it with make media-encode")
+        return None
+    return data
+
+
 def fetch_media(paths: Paths, refresh: bool = False) -> tuple[list[dict], list[Path]]:
     """Fetch missing supplied files (or all, with refresh), pin every file present, remove files no slot uses.
 
@@ -148,11 +180,13 @@ def fetch_media(paths: Paths, refresh: bool = False) -> tuple[list[dict], list[P
         if not slot.pinned:
             continue
         target = paths.root / slot.file
-        if slot.origin != "awaited" and (refresh or not target.exists()):
+        if slot.origin not in ("awaited", "committed", "encoded") and (refresh or not target.exists()):
             write_bytes(target, _obtain(paths, slot, library.allow, library.limits))
         if not target.exists():
-            continue  # awaited: D-SAP has not added it yet
-        data = target.read_bytes()
+            continue  # awaited: D-SAP has not added it yet; encoded: make media-encode has not run; committed: reported by check_media
+        data = _clean(slot, target, library, problems)
+        if data is None:
+            continue
         found = check_file(slot, data, library.limits)
         if found:
             problems += found
@@ -180,12 +214,16 @@ def check_media(paths: Paths, require_generated: bool = True) -> list[Slot]:
         path = paths.root / slot.file
         if slot.pinned:
             if not path.exists():
-                if slot.origin != "awaited":
+                if slot.origin == "encoded":
+                    problems.append(f"{slot.id}: {slot.file} is not made yet; run make media-encode, then make media-fetch")
+                elif slot.origin != "awaited":
                     problems.append(f"{slot.id}: {slot.file} is missing")
             elif slot.id not in lock:
                 problems.append(f"{slot.id}: {slot.file} is new; run make media-fetch to check and pin it")
             elif hashlib.sha256(path.read_bytes()).hexdigest() != lock[slot.id]["sha256"]:
                 problems.append(f"{slot.id}: {slot.file} changed; run make media-fetch to check and pin it")
+            elif found := metadata_found(path.read_bytes(), library.keep_profile):
+                problems.append(f"{slot.id}: {slot.file} still carries {', '.join(found)}; run make media-fetch")
         elif require_generated and not path.exists():
             problems.append(f"{slot.id}: {slot.file} not built yet (run make brand)")
     if problems:

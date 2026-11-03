@@ -1,6 +1,7 @@
 {
   "route": "area-balewadi",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "IIT JEE coaching in Balewadi | D-SAP Ghule Tutorials",
     "description": "JEE coaching for Balewadi students at our Wakad branch, a short drive north across the river. Faculty from Kota, {{fact:batch.days}}."

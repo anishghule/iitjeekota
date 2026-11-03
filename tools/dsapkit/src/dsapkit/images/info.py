@@ -11,7 +11,7 @@ def is_mp4(data: bytes) -> bool:
     return data[4:8] == b"ftyp"
 
 
-def _boxes(data: bytes, start: int, end: int):
+def boxes(data: bytes, start: int, end: int):
     """(type, content start, content end) of each MP4 box between start and end."""
     pos = start
     while pos + 8 <= end:
@@ -33,13 +33,13 @@ def mp4_size(data: bytes) -> tuple[int, int]:
     Width and height are 16.16 fixed point. Phones store upright video as landscape
     frames with a 90 or 270 degree matrix, so a quarter turn swaps the two.
     """
-    for kind, start, end in _boxes(data, 0, len(data)):
+    for kind, start, end in boxes(data, 0, len(data)):
         if kind != b"moov":
             continue
-        for trak_kind, t_start, t_end in _boxes(data, start, end):
+        for trak_kind, t_start, t_end in boxes(data, start, end):
             if trak_kind != b"trak":
                 continue
-            for box, b_start, _b_end in _boxes(data, t_start, t_end):
+            for box, b_start, _b_end in boxes(data, t_start, t_end):
                 if box != b"tkhd":
                     continue
                 matrix_at = b_start + (52 if data[b_start] == 1 else 40)

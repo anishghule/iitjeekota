@@ -1,6 +1,7 @@
 {
   "route": "area-hinjewadi",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "हिंजवडी में IIT JEE कोचिंग | D-SAP घुले ट्यूटोरियल्स",
     "description": "हिंजवडी के छात्रों के लिए हमारी वाकड ब्रांच पर JEE कोचिंग, वाकड फ़्लाईओवर के रास्ते। कोटा की फैकल्टी, क्लास {{fact:batch.timings#start}} बजे से।"

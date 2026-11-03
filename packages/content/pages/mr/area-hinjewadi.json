@@ -1,6 +1,7 @@
 {
   "route": "area-hinjewadi",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "हिंजवडीमधील IIT JEE क्लासेस | D-SAP घुले ट्यूटोरियल्स",
     "description": "हिंजवडीच्या विद्यार्थ्यांसाठी आमच्या वाकड शाखेत JEE क्लासेस, वाकड उड्डाणपुलामार्गे. कोट्याचे शिक्षक, क्लास {{fact:batch.timings#start}} वाजता."

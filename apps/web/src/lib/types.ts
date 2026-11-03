@@ -8,8 +8,22 @@
 export interface Part {
   text: string;
   path?: string;
+  strong?: boolean;
 }
 export type Rich = Part[];
+
+/** A page under a pillar, as its spoke list shows it: the page's own heading and description. */
+export interface SpokeLink {
+  path: string;
+  name: string;
+  description: string;
+}
+
+/** A guide's body (Markdown in packages/content/posts), as typed blocks. */
+export type Block =
+  | { type: "h2" | "h3"; text: string }
+  | { type: "p"; runs: Rich }
+  | { type: "ul" | "ol"; items: Rich[] };
 
 export type ActionKind = "page" | "call" | "whatsapp" | "enquire" | "directions";
 
@@ -34,6 +48,7 @@ export interface SectionData {
   questions?: Question[];
   action?: Action;
   widget?: unknown;
+  links?: SpokeLink[];
 }
 
 export interface Crumb {
@@ -51,6 +66,24 @@ export interface PageData {
   intro: Rich[];
   breadcrumbs: Crumb[];
   sections: SectionData[];
+  /** Set on guides: their body, and who wrote them. */
+  blocks?: Block[];
+  /** Links to the pages around this one (the linking rules in packages/site/site.json), each by the page's own heading. */
+  related?: { path: string; name: string }[];
+  author?: { name: string; path?: string } | null;
+  /** When the page was first published and last changed, as stored (YYYY-MM-DD); either may be missing. */
+  dates: { published: string | null; modified: string | null };
+  jsonld: unknown[];
+}
+
+/**
+ * What the head and header need from a page. A page has an address of its own (canonical) and
+ * language versions (alternates); an error page has neither, so it carries no canonical link and
+ * is always noindex.
+ */
+export interface HeadData {
+  route: string;
+  meta: { title: string; description: string; canonical?: string; alternates?: Record<string, string> };
   jsonld: unknown[];
 }
 
@@ -59,7 +92,7 @@ export type SubjectId = "physics" | "chemistry" | "maths";
 export interface Chapter {
   id: string;
   subject: SubjectId;
-  symbol: string;
+  code: string;
   classes: number[];
   name: string;
   main: number | null;
@@ -73,6 +106,8 @@ export interface SyllabusData {
   subjects: { id: SubjectId; name: string }[];
   chapters: Chapter[];
 }
+
+import type { TestMapData } from "./test-map.ts";
 
 /* Widget data (packages/content/widgets/{locale}/{name}.json), resolved. */
 
@@ -96,6 +131,8 @@ export interface ReportData {
   label: string;
   maxPerSubject: number;
   weeks: ReportWeek[];
+  /** One test read question by question (lib/test-map.ts). */
+  testMap?: TestMapData;
 }
 
 export interface TimelineData {
@@ -105,6 +142,10 @@ export interface TimelineData {
 
 export interface ProgrammesData {
   rows: { route: string; for: string; length: string; exams: string }[];
+}
+
+export interface GalleryData {
+  items: { slot: string; shape: "arch" | "circle" | "frame"; caption?: string }[];
 }
 
 /** One AI digital board demonstration; its maths is drawn by islands/board.ts, keyed by id. */

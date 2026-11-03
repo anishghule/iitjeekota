@@ -1,6 +1,7 @@
 {
   "route": "area-kalewadi",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "काळेवाडीमधील IIT JEE क्लासेस | D-SAP घुले ट्यूटोरियल्स",
     "description": "काळेवाडीच्या विद्यार्थ्यांसाठी आमच्या वाकड शाखेत JEE क्लासेस, काळेवाडी फाट्यामार्गे. कोट्याचे शिक्षक, {{fact:batch.days}} {{fact:batch.timings#start}} वाजल्यापासून."

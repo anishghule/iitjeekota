@@ -22,11 +22,11 @@ Copy lives in `packages/content/pages/{locale}/{page}.json`, guides in `packages
 | `/en/blogs/` | yes | draft | draft | draft |
 | `/en/class-11-jee/` | yes | draft | draft | draft |
 | `/en/class-12-jee/` | yes | draft | draft | draft |
-| `/en/foundation-class-9-10/` | no | draft | draft | draft |
+| `/en/foundation-class-9-10/` | yes | draft | draft | draft |
 | `/en/jee-main-coaching/` | yes | draft | draft | draft |
 | `/en/jee-advanced-coaching/` | yes | draft | draft | draft |
 | `/en/test-series/` | yes | draft | draft | draft |
-| `/en/fees-and-batches/` | no | draft | draft | draft |
+| `/en/fees-and-batches/` | yes | draft | draft | draft |
 | `/en/kota-faculty/` | no | draft | draft | draft |
 | `/en/results/` | no | draft | draft | draft |
 | `/en/about/` | yes | draft | draft | draft |
@@ -66,14 +66,9 @@ Waits:
 
 Paragraphs and sections that show once their facts are confirmed in `packages/site/facts.json`.
 
-- centre-wakad (en): find-us.body[1]: waits for centre.wakad.maps
-- fees-and-batches (en): included.body[0]: waits for fees
-- fees-and-batches (en): section fees is hidden until fees
-- fees-and-batches (en): section batches is hidden until batch.dates
 - foundation-class-9-10 (en): section details is hidden until programme.foundation-details
 - foundation-class-9-10 (en): section minimum-age is hidden until legal.foundation-minimum-age
 - home (en): section faculty is hidden until faculty.profiles
-- home (en): section classroom is hidden until media:home/classroom-film
 - home (en): section results is hidden until results.verified
 - kota-faculty (en): section faculty is hidden until faculty.profiles
 - powered-by-kota (en): from-kota.body[0]: waits for partner.agreement
@@ -84,14 +79,9 @@ Paragraphs and sections that show once their facts are confirmed in `packages/si
 - powered-by-kota (en): section partner is hidden until partner.name, partner.permission
 - powered-by-kota (en): section agreement is hidden until partner.agreement
 - results (en): section results is hidden until results.verified
-- centre-wakad (hi): find-us.body[1]: waits for centre.wakad.maps
-- fees-and-batches (hi): included.body[0]: waits for fees
-- fees-and-batches (hi): section fees is hidden until fees
-- fees-and-batches (hi): section batches is hidden until batch.dates
 - foundation-class-9-10 (hi): section details is hidden until programme.foundation-details
 - foundation-class-9-10 (hi): section minimum-age is hidden until legal.foundation-minimum-age
 - home (hi): section faculty is hidden until faculty.profiles
-- home (hi): section classroom is hidden until media:home/classroom-film
 - home (hi): section results is hidden until results.verified
 - kota-faculty (hi): section faculty is hidden until faculty.profiles
 - powered-by-kota (hi): from-kota.body[0]: waits for partner.agreement
@@ -102,14 +92,9 @@ Paragraphs and sections that show once their facts are confirmed in `packages/si
 - powered-by-kota (hi): section partner is hidden until partner.name, partner.permission
 - powered-by-kota (hi): section agreement is hidden until partner.agreement
 - results (hi): section results is hidden until results.verified
-- centre-wakad (mr): find-us.body[1]: waits for centre.wakad.maps
-- fees-and-batches (mr): included.body[0]: waits for fees
-- fees-and-batches (mr): section fees is hidden until fees
-- fees-and-batches (mr): section batches is hidden until batch.dates
 - foundation-class-9-10 (mr): section details is hidden until programme.foundation-details
 - foundation-class-9-10 (mr): section minimum-age is hidden until legal.foundation-minimum-age
 - home (mr): section faculty is hidden until faculty.profiles
-- home (mr): section classroom is hidden until media:home/classroom-film
 - home (mr): section results is hidden until results.verified
 - kota-faculty (mr): section faculty is hidden until faculty.profiles
 - powered-by-kota (mr): from-kota.body[0]: waits for partner.agreement
@@ -120,16 +105,11 @@ Paragraphs and sections that show once their facts are confirmed in `packages/si
 - powered-by-kota (mr): section partner is hidden until partner.name, partner.permission
 - powered-by-kota (mr): section agreement is hidden until partner.agreement
 - results (mr): section results is hidden until results.verified
-- widget programmes (en): rows[2]: waits for programme.foundation-details, legal.foundation-minimum-age
-- widget programmes (hi): rows[2]: waits for programme.foundation-details, legal.foundation-minimum-age
-- widget programmes (mr): rows[2]: waits for programme.foundation-details, legal.foundation-minimum-age
 
 ## Links to pages not live yet
 
 These anchors show as plain text until the page goes live.
 
-- post-foundation-when-to-start (en): block 24: links to foundation-class-9-10, not live yet (shown as plain text)
-- post-jee-coaching-fees-pune (en): block 22: links to fees-and-batches, not live yet (shown as plain text)
 - post-kota-or-pune (en): block 9: links to powered-by-kota, not live yet (shown as plain text)
 - about (en): jee-programme.body[0]: links to powered-by-kota, not live yet (shown as plain text)
 - home (en): questions.questions[0]: links to powered-by-kota, not live yet (shown as plain text)

@@ -2,7 +2,7 @@
   "$description": "Hindi draft of the two-year timeline on home. For review by a native Hindi writer before launch.",
   "steps": [
     {
-      "when": "मई, कक्षा 10 के बाद",
+      "when": "अप्रैल, कक्षा 10 के बाद",
       "title": "फ़ाउंडेशन अवधि",
       "detail": "कक्षा 11 से पहले एक छोटी शुरुआत, ताकि पहले कुछ हफ़्ते भारी न लगें।",
       "requires": ["programme.start"]

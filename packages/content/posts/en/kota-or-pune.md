@@ -1,6 +1,7 @@
 ---
 {
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "title": "Kota or Pune for JEE: what changes for your child",
   "description": "Kota or Pune for JEE? A week in each, the costs outside the fee, life away from home at 16, and when Kota may still be the right choice.",
   "author": "org.founder",

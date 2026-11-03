@@ -1,6 +1,7 @@
 ---
 {
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "title": "Choosing IIT JEE coaching in Pune: what to check",
   "description": "Eight things to check before you pay any IIT JEE coaching class in Pune: teachers, batch size, tests, doubts, travel, fees, refunds and results.",
   "author": "org.founder",

@@ -1,13 +1,14 @@
 {
   "route": "jee-syllabus",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "JEE Main syllabus {{syllabus:main#year}}, chapter by chapter | D-SAP",
     "description": "All {{syllabus:all#chapters}} chapters of the JEE Main {{syllabus:main#year}} and JEE Advanced syllabus in one table, with each chapter's topics and what JEE Advanced adds."
   },
   "h1": "JEE Main syllabus {{syllabus:main#year}} and JEE Advanced, chapter by chapter",
   "intro": [
-    "The full JEE syllabus for Physics, Chemistry and Mathematics, laid out like a periodic table: {{syllabus:all#chapters}} chapters, each with its topics.",
+    "The full JEE syllabus for Physics, Chemistry and Mathematics, {{syllabus:all#chapters}} chapters, each with a code and its topics.",
     "It follows the official JEE Main {{syllabus:main#year}} syllabus from the National Testing Agency and the JEE Advanced {{syllabus:advanced#year}} information brochure."
   ],
   "sections": [
@@ -15,7 +16,7 @@
       "id": "table",
       "heading": "Find a chapter",
       "body": [
-        "Filter by subject, by class or by exam, and tap a chapter to see its topics. A brass corner on a tile means JEE Advanced asks for more in that chapter.",
+        "Pick a subject, then narrow it by class or by exam. Open a chapter to see its topics, and what JEE Advanced asks for on top. The code in front of a chapter is its class, its subject and its place in the list: 11-P-03 is the third Class 11 Physics chapter.",
         "Prefer a list? The full syllabus is written out below the table, and you can download it as a PDF made from the same data."
       ]
     },
@@ -24,7 +25,7 @@
       "heading": "Chapters that are not in JEE Main",
       "body": [
         "Some chapters in older JEE books are not in the JEE Main {{syllabus:main#year}} syllabus. In Chemistry: States of Matter, Solid State, Surface Chemistry, Hydrogen, s-Block Elements, Isolation of Metals, Environmental Chemistry, Polymers and Chemistry in Everyday Life. Mathematical Reasoning and Communication Systems are gone too.",
-        "Those {{syllabus:advanced-only#chapters}} Chemistry chapters are still in the JEE Advanced syllabus, so they sit in their own rows below the table, like the two separate rows of a real periodic table. A student aiming for the IITs needs them. A student aiming only for JEE Main can leave them."
+        "Those {{syllabus:advanced-only#chapters}} Chemistry chapters are still in the JEE Advanced syllabus, so the list marks them JEE Advanced only. A student aiming for the IITs needs them. A student aiming only for JEE Main can leave them."
       ]
     },
     {

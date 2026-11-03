@@ -11,6 +11,6 @@
     { "text": "पूरे सिलेबस का स्टडी मटीरियल: थ्योरी नोट्स, हल किए गए उदाहरण, हर चैप्टर के प्रश्न और पिछले IIT JEE पेपर, हल के साथ।", "requires": ["programme.study-material"] },
     { "text": "हर चैप्टर के बाद टेस्ट, हर चौथे हफ़्ते एक लंबा टेस्ट और हर महीने JEE मेन का पूरा मॉक टेस्ट।", "requires": ["test-series.format"] },
     { "text": "मेंटरिंग स्लॉट में टीचर के साथ अकेले में समय।", "requires": ["programme.mentoring"] },
-    { "text": "शाम का एक सत्र, {{fact:batch.timings#start}} बजे से {{fact:batch.timings#end}} बजे तक, ताकि स्कूल पहले आए।" }
+    { "text": "शाम का एक सत्र, {{fact:batch.timings#start}} बजे से {{fact:batch.timings#end}} बजे तक।" }
   ]
 }

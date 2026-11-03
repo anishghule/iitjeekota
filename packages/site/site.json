@@ -4,6 +4,21 @@
   "trailingSlash": true,
   "defaultLocale": "en",
   "xDefault": "en",
+  "dates": {
+    "$description": "Pages and posts store dates as YYYY-MM-DD. dsapkit renders them as full timestamps (jsonld rules: datetime) with this offset and time of day, so no structured data date is ever written by hand. India has no daylight saving, so a fixed offset is right. When only the day is known, a daytime hour in India is used, not midnight; write YYYY-MM-DDTHH:MM in the page to give the real time.",
+    "offset": "+05:30",
+    "timeOfDay": "09:00:00"
+  },
+  "jsonld": {
+    "$description": "Page markup choices for the builders (site/jsonld_build.py). pageTypes: the schema.org WebPage subtype of a route ('route:id') or of every page of a template ('template:name'); a route entry wins; anything else is WebPage. courseListRoute: the one page that lists the courses (ItemList of Course).",
+    "courseListRoute": "programmes",
+    "pageTypes": {
+      "template:pillar": "CollectionPage",
+      "template:collection": "CollectionPage",
+      "route:about": "AboutPage",
+      "route:contact": "ContactPage"
+    }
+  },
   "root": {
     "redirectTo": "/en/",
     "status": 301,

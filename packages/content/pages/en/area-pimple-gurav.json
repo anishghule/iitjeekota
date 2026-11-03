@@ -1,6 +1,7 @@
 {
   "route": "area-pimple-gurav",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "IIT JEE coaching in Pimple Gurav | D-SAP Ghule",
     "description": "Pimple Gurav is the closest area to our New Sangvi head office. JEE coaching with faculty from Kota, from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}."

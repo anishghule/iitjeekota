@@ -5,7 +5,7 @@
  */
 import { tokens } from "@dsap/tokens";
 
-const FOCUSABLE = "a[href], button:not([disabled]), [tabindex]:not([tabindex='-1'])";
+const FOCUSABLE = "a[href], button:not([disabled]), summary, [tabindex]:not([tabindex='-1'])";
 
 export function initMenu(win: Window): void {
   const doc = win.document;

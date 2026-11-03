@@ -1,6 +1,7 @@
 {
   "route": "area-hinjewadi",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "IIT JEE coaching in Hinjewadi | D-SAP Ghule Tutorials",
     "description": "JEE coaching for Hinjewadi (Hinjawadi) students at our Wakad branch, over the Wakad Flyover. Faculty from Kota, classes from {{fact:batch.timings#start}}."

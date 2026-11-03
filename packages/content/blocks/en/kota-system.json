@@ -17,6 +17,6 @@
       "requires": ["test-series.format"]
     },
     { "text": "One-on-one time with a teacher, in mentoring slots you book.", "requires": ["programme.mentoring"] },
-    { "text": "One evening session, {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, so school comes first." }
+    { "text": "One evening session, {{fact:batch.timings#start}} to {{fact:batch.timings#end}}." }
   ]
 }

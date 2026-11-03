@@ -1,6 +1,7 @@
 ---
 {
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "title": "Start JEE preparation: Class 11 or 12? | D-SAP",
   "description": "Should JEE preparation start in Class 11 or Class 12? What each start gives you, what Class 12 alone asks of a student, and who it can still work for.",
   "author": "org.founder",
@@ -49,7 +50,7 @@ Class 12 board marks matter for college admission rules, and they come a few mon
 
 ## If your child is in Class 10 now
 
-Plan for the two-year route. Our [two-year programme](page:class-11-jee) starts in June after Class 10, with a foundation period from May.
+Plan for the two-year route. Our [two-year programme](page:class-11-jee) starts in June after Class 10, with a foundation period from April.
 
 ## If your child is already in Class 12
 

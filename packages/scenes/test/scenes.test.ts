@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { Color, InstancedMesh, Mesh, MeshPhysicalMaterial, Texture } from "three";
+import { Color, InstancedMesh, Mesh, MeshPhysicalMaterial, Texture, type PointLight } from "three";
 import { tokens } from "@dsap/tokens";
 import syllabus from "../../content/syllabus.json";
 import kotaSystem from "../../content/blocks/en/kota-system.json";
@@ -8,7 +8,17 @@ import {
   createKotaPrism,
   createMedal,
   createSpecimens,
+  createRoute,
+  routeDrawn,
+  terrainHeight,
   createSyllabusSlab,
+  createTree,
+  branchHeight,
+  branchStart,
+  trunkGrowth,
+  dustPositions,
+  railAt,
+  railOpacity,
   fitWidth,
   plateArrival,
   plateFacing,
@@ -27,7 +37,7 @@ const context = (tier: RenderTier): SceneContext => ({ tier, textures: stubTextu
 const points = kotaSystem.points.map((p) => (typeof p === "string" ? p : p.text));
 const slabInput: SlabInput = {
   subjects: syllabus.subjects.map((s) => s.id),
-  chapters: syllabus.chapters.map((c) => ({ id: c.id, subject: c.subject, symbol: c.symbol, classes: c.classes, main: c.main })),
+  chapters: syllabus.chapters.map((c) => ({ id: c.id, subject: c.subject, label: c.names.en.slice(0, 2), classes: c.classes, main: c.main })),
 };
 
 const scenes: Record<string, (ctx: SceneContext) => Scene> = {
@@ -35,6 +45,7 @@ const scenes: Record<string, (ctx: SceneContext) => Scene> = {
   "kota-prism": (ctx) => createKotaPrism(ctx, { points }),
   "syllabus-slab": (ctx) => createSyllabusSlab(ctx, slabInput),
   specimens: (ctx) => createSpecimens(ctx),
+  route: (ctx) => createRoute(ctx, { kota: "Kota", pune: "Pune" }),
 };
 
 describe("budgets", () => {
@@ -191,8 +202,22 @@ describe("materials and motion", () => {
     const [first] = config.scenes.medal.keyframes;
     scene.setProgress(0);
     expect(scene.root.position.toArray()).toEqual(first!.position);
+    // Once it has spun in and settled, scrolling carries it through its keyframes.
+    scene.update(0);
+    scene.update(config.scenes.medal.intro.ms + 1);
     scene.setProgress(0.45);
     expect(scene.root.position.length()).toBeCloseTo(0);
+  });
+
+  it("spins in on arrival and is facing the reader once it has settled", () => {
+    const scene = createMedal(context("lite"), { faceUrl: "f", normalUrl: "n" });
+    scene.setProgress(0.45);
+    scene.update(0);
+    const turning = Math.abs(scene.root.rotation.y);
+    expect(turning).toBeGreaterThan(1);
+    scene.update(config.scenes.medal.intro.ms + 1);
+    expect(Math.abs(scene.root.rotation.y)).toBeLessThan(turning);
+    expect(scene.root.rotation.y).toBeCloseTo(0);
   });
 });
 
@@ -205,5 +230,115 @@ describe("quality tiers", () => {
     expect(qualityTier({ ...strong, reducedMotion: true })).toBe("still");
     expect(qualityTier({ ...strong, saveData: true })).toBe("still");
     expect(qualityTier({ ...strong, webgl2: false })).toBe("still");
+  });
+});
+
+/** Runs the tree's clock until it has settled at this progress, as the page would over a second or two of scrolling. */
+function grown(milestones: number, progress: number, tier: RenderTier = "full") {
+  const tree = createTree(context(tier), { milestones });
+  tree.setProgress(progress);
+  for (let t = 0; t <= 6000; t += 100) tree.update(t);
+  return tree;
+}
+
+describe("the journey tree", () => {
+  it("staggers its branches up the trunk, each starting after the one below", () => {
+    for (let i = 1; i < 8; i++) {
+      expect(branchHeight(i, 8)).toBeGreaterThan(branchHeight(i - 1, 8));
+      expect(branchStart(i, 8)).toBeGreaterThan(branchStart(i - 1, 8));
+    }
+  });
+
+  it("grows the trunk to each branch as that branch starts, and to the top at the crown", () => {
+    expect(trunkGrowth(0, 8)).toBe(0);
+    expect(trunkGrowth(branchStart(3, 8), 8)).toBeCloseTo(branchHeight(3, 8));
+    expect(trunkGrowth(1, 8)).toBe(1);
+  });
+
+  it("is bare at the start and full at the end, within its budget", () => {
+    // Limbs that have not started to grow are hidden, so a bare tree draws far fewer meshes than a full one.
+    const bare = sceneStats(grown(8, 0).root).drawCalls;
+    const full = sceneStats(grown(8, 1).root).drawCalls;
+    expect(full).toBeGreaterThan(bare + 20);
+    for (const tier of ["full", "lite"] as const) {
+      const stats = sceneStats(grown(8, 1, tier).root);
+      expect(stats.triangles).toBeLessThanOrEqual(config.scenes.tree.budget.triangles[tier]);
+      expect(stats.drawCalls).toBeLessThanOrEqual(config.scenes.tree.budget.drawCalls);
+    }
+  });
+
+  it("has a branch for each milestone", () => {
+    const few = sceneStats(grown(3, 1).root).drawCalls;
+    const many = sceneStats(grown(8, 1).root).drawCalls;
+    expect(many).toBeGreaterThan(few);
+  });
+});
+
+describe("the camera rail", () => {
+  const sections = [{ start: 0, end: 1000 }, { start: 1000, end: 3000 }, { start: 5000, end: 6600 }];
+
+  it("dwells on a scene while its section holds the screen", () => {
+    expect(railAt(sections, 0, 800)).toMatchObject({ from: 0, to: 0 });
+    expect(railAt(sections, 1500, 800)).toMatchObject({ from: 1, to: 1 });
+  });
+
+  it("travels to the next scene over the scroll between two dwells, and arrives when its section reaches the top", () => {
+    const mid = railAt(sections, 3600, 800);
+    expect(mid).toMatchObject({ from: 1, to: 2 });
+    expect(mid.t).toBeGreaterThan(0);
+    expect(mid.t).toBeLessThan(1);
+    expect(railAt(sections, 4999, 800).t).toBeCloseTo(1, 1);
+    expect(railAt(sections, 5000, 800)).toMatchObject({ from: 2, to: 2 });
+  });
+
+  it("keeps the canvas full between adjacent sections and hides it over plain content", () => {
+    expect(railOpacity(sections, 500, 800)).toBe(1);
+    expect(railOpacity(sections, 3300, 800)).toBe(0);
+    expect(railOpacity(sections, 4600, 800)).toBeCloseTo(0.5);
+  });
+});
+
+describe("the dust", () => {
+  it("is the same on every visit and stays within the world", () => {
+    const a = dustPositions(50, 3, 7);
+    expect(Array.from(dustPositions(50, 3, 7))).toEqual(Array.from(a));
+    expect(Math.max(...Array.from(a).filter((_, i) => i % 3 === 0).map(Math.abs))).toBeLessThanOrEqual(config.world.dust.width);
+  });
+});
+
+describe("the Kota to Pune route", () => {
+  it("draws from nothing to the whole route as the section scrolls", () => {
+    expect(routeDrawn(0)).toBe(0);
+    expect(routeDrawn(0.5)).toBeGreaterThan(0.2);
+    expect(routeDrawn(0.5)).toBeLessThan(0.8);
+    expect(routeDrawn(1)).toBe(1);
+  });
+
+  it("is the same land on every visit: a ridge between the cities, plains by Kota, nothing at the edge", () => {
+    const t = config.scenes.route.terrain;
+    expect(terrainHeight(1, 1)).toBe(terrainHeight(1, 1));
+    expect(terrainHeight(t.ridge.at, 0)).toBeGreaterThan(terrainHeight(-6, 0));
+    expect(terrainHeight(t.halfWidth, 0)).toBe(0);
+    expect(terrainHeight(0, t.halfDepth)).toBe(0);
+  });
+
+  it("lights the house, and the ground round it, only once the route has arrived", () => {
+    const scene = createRoute(context("full"), { kota: "Kota", pune: "Pune" });
+    const light = () => {
+      let intensity = -1;
+      scene.root.traverse((o) => "isPointLight" in o && (intensity = (o as PointLight).intensity));
+      return intensity;
+    };
+    scene.setProgress(0.5);
+    expect(light()).toBe(0);
+    scene.setProgress(1);
+    expect(light()).toBeGreaterThan(0);
+  });
+
+  it("is within its budget", () => {
+    for (const tier of ["full", "lite"] as const) {
+      const stats = sceneStats(createRoute(context(tier), { kota: "Kota", pune: "Pune" }).root);
+      expect(stats.triangles).toBeLessThanOrEqual(config.scenes.route.budget.triangles[tier]);
+    }
   });
 });

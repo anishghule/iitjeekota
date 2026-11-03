@@ -22,9 +22,8 @@
       }
     },
     {
-      "id": "pimpri-chinchwad", "template": "pillar", "slug": "iit-jee-coaching-pimpri-chinchwad", "areaHub": "pimpri-chinchwad", "nav": 6,
+      "id": "pimpri-chinchwad", "template": "pillar", "slug": "iit-jee-coaching-pimpri-chinchwad", "areaHub": "pimpri-chinchwad",
       "names": { "en": "IIT JEE Coaching Pimpri-Chinchwad", "hi": "पिंपरी-चिंचवड में IIT JEE कोचिंग", "mr": "पिंपरी-चिंचवडमधील IIT JEE क्लासेस" },
-      "navNames": { "en": "Pimpri-Chinchwad", "hi": "पिंपरी-चिंचवड", "mr": "पिंपरी-चिंचवड" },
       "keywords": {
         "en": { "primary": "iit jee coaching in pimpri chinchwad", "secondary": ["jee classes in pimpri chinchwad", "iit coaching pcmc", "jee coaching in pcmc"] },
         "hi": { "primary": "पिंपरी-चिंचवड में IIT JEE कोचिंग", "secondary": [], "draft": true },
@@ -98,7 +97,6 @@
     },
     {
       "id": "foundation-class-9-10", "template": "programme", "slug": "foundation-class-9-10", "pillar": "programmes", "fact": "programme.foundation",
-      "gates": ["legal.foundation-minimum-age"],
       "names": { "en": "Foundation, Class 9 and 10", "hi": "फाउंडेशन, कक्षा 9 और 10", "mr": "फाउंडेशन, 9वी आणि 10वी" },
       "keywords": {
         "en": { "primary": "iit foundation classes in pune", "secondary": ["class 9 iit foundation pune", "class 10 jee foundation pune"] },
@@ -155,7 +153,7 @@
       }
     },
     {
-      "id": "results", "template": "topic", "slug": "results", "pillar": "powered-by-kota",
+      "id": "results", "template": "topic", "slug": "results", "pillar": "powered-by-kota", "nav": 6,
       "gates": ["results.verified"],
       "names": { "en": "Results", "hi": "परिणाम", "mr": "निकाल" },
       "keywords": {

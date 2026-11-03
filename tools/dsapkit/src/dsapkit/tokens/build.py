@@ -29,8 +29,10 @@ def _check_font_stacks(tokens: TokenSet, metrics: dict) -> None:
 
 
 def preload_files(lock: dict, base_url: str, roles: tuple[str, ...] = ("display", "body")) -> list[str]:
-    """Latin files of the fonts the first screen needs."""
-    return [f"{base_url.rstrip('/')}/{f['file']}" for f in lock["files"] if f["subset"] == "latin" and f["role"] in roles]
+    """Latin files of the fonts the first screen needs. Web fallbacks are not preloaded: they are
+    fetched only if the page ends up needing them."""
+    return [f"{base_url.rstrip('/')}/{f['file']}" for f in lock["files"]
+            if f["subset"] == "latin" and f["role"] in roles and not f["fallback"]]
 
 
 def build_tokens(paths: Paths, font_base_url: str = "/fonts") -> TokenBuild:

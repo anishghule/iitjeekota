@@ -20,7 +20,7 @@
       "for": "कक्षा 9 और 10 के छात्र",
       "length": "2 साल तक",
       "exams": "JEE की नींव",
-      "requires": ["programme.foundation", "programme.foundation-details", "legal.foundation-minimum-age"]
+      "requires": ["programme.foundation"]
     }
   ]
 }

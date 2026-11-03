@@ -29,3 +29,16 @@ docs/brand/guide/
 
 # Caches (render fonts are plain TTF instances for PNG rendering, never shipped)
 packages/tokens/.cache/
+
+resources
+
+# Keys, certificates and local deployment state: never committed
+*.pem
+*.key
+*.p12
+*.pfx
+.dev.vars
+.wrangler/
+
+# Software bills of materials are build artifacts
+sbom*.json

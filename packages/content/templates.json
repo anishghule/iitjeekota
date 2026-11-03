@@ -20,7 +20,8 @@
         { "id": "programmes", "kind": "prose", "paragraphs": [1, 2], "component": "Programmes", "widget": "programmes" },
         { "id": "results", "kind": "prose", "paragraphs": [1, 2], "component": "Results", "gates": ["results.verified"] },
         { "id": "questions", "kind": "faq", "items": [4, 8] },
-        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" },
+        { "id": "gallery", "kind": "prose", "paragraphs": [1, 1], "component": "Gallery", "widget": "gallery" }
       ]
     },
     "pillar": {
@@ -63,7 +64,7 @@
         { "id": "getting-there", "kind": "prose", "paragraphs": [1, 2], "component": "CommuteCard" },
         { "id": "local", "kind": "prose", "paragraphs": [2, 3] },
         { "id": "kota-system", "kind": "list", "shared": true, "component": "KotaPrism" },
-        { "id": "programmes", "kind": "prose", "paragraphs": [1, 1], "component": "ProgrammeTable" },
+        { "id": "programmes", "kind": "prose", "paragraphs": [1, 1], "component": "ProgrammeTable", "widget": "programmes" },
         { "id": "questions", "kind": "faq", "items": [3, 5] },
         { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
       ]
@@ -73,14 +74,16 @@
       "sections": [
         { "id": "find-us", "kind": "prose", "paragraphs": [1, 2], "component": "CentreCard" },
         { "id": "inside", "kind": "prose", "paragraphs": [1, 2], "component": "CentreMedia" },
-        { "id": "batches", "kind": "prose", "paragraphs": [1, 1], "component": "ProgrammeTable" },
+        { "id": "batches", "kind": "prose", "paragraphs": [1, 1], "component": "ProgrammeTable", "widget": "programmes" },
         { "id": "questions", "kind": "faq", "items": [3, 5] },
         { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
       ]
     },
     "collection": {
       "intro": [1, 2],
-      "sections": []
+      "sections": [
+        { "id": "guides", "kind": "prose", "paragraphs": [1, 1], "component": "SpokeList" }
+      ]
     },
     "legal": { "waitsFor": "Phase 1: the policies are drafted from the legal research and reviewed by a lawyer." },
     "post": {
@@ -89,6 +92,23 @@
     }
   },
   "routes": {
+    "programmes": {
+      "intro": [1, 3],
+      "sections": [
+        { "id": "spokes", "kind": "prose", "paragraphs": [1, 2], "component": "SpokeList" },
+        { "id": "compare", "kind": "prose", "paragraphs": [1, 1], "component": "ProgrammeTable", "widget": "programmes" },
+        { "id": "why", "kind": "prose", "paragraphs": [2, 4] },
+        { "id": "questions", "kind": "faq", "items": [3, 6] },
+        { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
+      ]
+    },
+    "contact": {
+      "intro": [1, 2],
+      "sections": [
+        { "id": "visit", "kind": "prose", "paragraphs": [1, 2], "component": "ContactCentres" },
+        { "id": "enquiry", "kind": "prose", "paragraphs": [1, 1], "component": "Enquire" }
+      ]
+    },
     "powered-by-kota": {
       "intro": [1, 2],
       "sections": [
@@ -128,7 +148,7 @@
       "sections": [
         { "id": "fees", "kind": "prose", "paragraphs": [1, 2], "component": "Fees", "gates": ["fees"] },
         { "id": "included", "kind": "list", "paragraphs": [1, 1], "items": [3, 7] },
-        { "id": "batches", "kind": "prose", "paragraphs": [1, 2], "component": "BatchCalendar", "gates": ["batch.dates"] },
+        { "id": "batches", "kind": "prose", "paragraphs": [1, 2], "component": "BatchCalendar", "gates": ["batch.next"] },
         { "id": "questions", "kind": "faq", "items": [2, 5] },
         { "id": "enquiry", "kind": "prose", "shared": true, "component": "Enquire" }
       ]

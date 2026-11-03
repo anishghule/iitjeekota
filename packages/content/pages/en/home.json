@@ -1,6 +1,7 @@
 {
   "route": "home",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "D-SAP Ghule Tutorials | IIT JEE coaching, powered by Kota",
     "description": "JEE Main and Advanced coaching in Pune, powered by a top coaching institute in Kota. Faculty from Kota. Centres in New Sangvi and Wakad."
@@ -19,7 +20,7 @@
       "id": "kota-to-pune",
       "heading": "From Kota to Pune",
       "body": [
-        "Many families in Pune think about sending their child to Kota for JEE. That means a hostel, a new city and two years away from home at 15 or 16.",
+        "Many families in Pune think about sending their child to Kota for JEE. That means a hostel, a new city and two years away from home.",
         {
           "text": "Here the Kota programme comes to your child instead. They sleep at home, eat at home and keep their school.",
           "requires": ["partner.affiliation"]
@@ -41,7 +42,7 @@
       "heading": "A class, as it happens",
       "body": [
         {
-          "text": "This is a real class at one of our centres, taught on an AI-powered digital board. Scroll to move through it.",
+          "text": "This is a real class at one of our centres, taught on an AI-powered digital board. Press play to watch it.",
           "requires": ["classroom.digital-board"]
         }
       ]
@@ -51,11 +52,11 @@
       "heading": "Lectures, doubts and tests, online",
       "body": [
         {
-          "text": "Lectures are online too, so a missed class can be watched again. Doubts go to the doubts forum, or to a doubt session with a teacher.",
+          "text": "Watch the live lecture online, or each class recording whenever you need to. Post on our doubt forum or get it cleared directly with a teacher during a doubt session.",
           "requires": ["method.online-lectures", "method.doubts"]
         },
         {
-          "text": "Every week brings a practice sheet. Every test is taken on our online portal, which works like the real JEE screen.",
+          "text": "Weekly practice sheet to keep your preparation on track. Computer-Based Tests (CBT) on our online portal, designed to give you the same experience as the actual JEE exam.",
           "requires": ["method.practice-sheets", "test-series.cbt"]
         }
       ]
@@ -89,7 +90,7 @@
       "id": "syllabus",
       "heading": "The JEE syllabus, chapter by chapter",
       "body": [
-        "Physics, Chemistry and Maths for JEE Main and Advanced, laid out like a periodic table. Tap a chapter to see what it covers. The [full syllabus table](page:jee-syllabus) has every chapter."
+        "Physics, Chemistry and Maths for JEE Main and Advanced, one chapter to a line, each with a code like 11-P-03. Open a chapter to see what it covers. The [full syllabus](page:jee-syllabus) has every chapter."
       ]
     },
     {
@@ -97,7 +98,7 @@
       "heading": "Two years, month by month",
       "body": [
         {
-          "text": "The programme starts in June after Class 10, with a foundation period from May. Class 11 builds the base in all three subjects. In Class 12, a JEE Advanced mock every quarter joins the monthly JEE Main mock.",
+          "text": "The programme starts in June after Class 10, with a foundation period from April. Class 11 builds the base in all three subjects. In Class 12, a JEE Advanced mock every quarter joins the monthly JEE Main mock.",
           "requires": ["programme.start", "test-series.format"]
         }
       ]
@@ -165,6 +166,7 @@
         }
       ]
     },
-    { "id": "enquiry", "block": "enquiry" }
+    { "id": "enquiry", "block": "enquiry" },
+    { "id": "gallery", "heading": "Come and see it.", "body": ["The building, the classroom and the people in it."] }
   ]
 }

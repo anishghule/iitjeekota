@@ -1,7 +1,7 @@
 ---
 /** Footer: both centres with their addresses (NAP as on Google), the pages, contact, the parent site. */
 import { fill, strings, type Locale } from "../../i18n/index.ts";
-import { brandName, fact, isRouteId, localName, navRoutes, routePath, site } from "../../lib/data.ts";
+import { areaGroups, brandName, fact, localName, navRoutes, routePath, site } from "../../lib/data.ts";
 import Icon from "../ui/Icon.astro";
 
 interface Props {
@@ -11,10 +11,7 @@ const { locale } = Astro.props;
 const t = strings(locale);
 const brand = brandName(locale);
 const trademark = fact(locale, "org.trademark");
-// Every area page that is live, by the area's own name (packages/site/areas.json).
-const areaLinks = site.areas
-  .map((a) => ({ name: localName(a.names, locale), path: a.page && isRouteId(a.page) ? routePath(a.page, locale) : undefined }))
-  .filter((a): a is { name: string; path: string } => a.path !== undefined);
+const groups = areaGroups(locale);
 const year = new Date().getFullYear();
 ---
 <footer class="site-footer section section--sunken">
@@ -32,10 +29,17 @@ const year = new Date().getFullYear();
       <ul role="list">{navRoutes(locale).map((l) => <li><a href={l.path}>{l.name}</a></li>)}</ul>
     </nav>
 
-    {areaLinks.length > 0 && (
+    {groups.length > 0 && (
       <nav aria-label={t.footer.areas}>
         <h2 class="footer-head">{t.footer.areas}</h2>
-        <ul role="list" class="footer-areas">{areaLinks.map((a) => <li><a href={a.path}>{a.name}</a></li>)}</ul>
+        <div class="footer-groups">
+          {groups.map((g) => (
+            <div>
+              <p class="footer-hub"><a href={g.path}>{g.name}</a></p>
+              <ul role="list" class="footer-areas">{g.areas.map((a) => <li><a href={a.path}>{a.name}</a></li>)}</ul>
+            </div>
+          ))}
+        </div>
       </nav>
     )}
 
@@ -81,6 +85,8 @@ const year = new Date().getFullYear();
   .site-footer a:hover { text-decoration: underline; }
   .footer-brand { display: grid; gap: var(--space-3); align-content: start; }
   .footer-centres { gap: var(--space-5); }
+  .footer-groups { display: grid; gap: var(--space-5); }
+  .footer-hub { font-weight: var(--weight-semibold); margin-block-end: var(--space-2); }
   .footer-areas { grid-template-columns: repeat(2, minmax(0, max-content)); column-gap: var(--space-5); }
   .footer-small {
     display: flex;

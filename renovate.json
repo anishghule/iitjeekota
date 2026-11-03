@@ -1,0 +1,18 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "$comment": "Dependency updates (CLAUDE.md section 5): exact versions, none younger than 14 days (the same rule pnpm enforces in pnpm-workspace.yaml), GitHub Actions pinned by commit, and a dashboard that lists the updates still waiting. Options read from Renovate's configuration docs on 2026-11-01.",
+  "extends": ["config:recommended", "helpers:pinGitHubActionDigests"],
+  "rangeStrategy": "pin",
+  "minimumReleaseAge": "14 days",
+  "internalChecksFilter": "strict",
+  "prCreation": "not-pending",
+  "internalChecksAsSuccess": true,
+  "dependencyDashboard": true,
+  "labels": ["dependencies"],
+  "enabledManagers": ["npm", "github-actions", "pip_requirements", "pip-compile"],
+  "lockFileMaintenance": { "enabled": true, "schedule": ["before 5am on monday"] },
+  "packageRules": [
+    { "matchManagers": ["github-actions"], "groupName": "GitHub Actions" },
+    { "matchDepTypes": ["devDependencies"], "groupName": "development dependencies", "matchUpdateTypes": ["minor", "patch"] }
+  ]
+}

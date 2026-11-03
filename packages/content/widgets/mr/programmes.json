@@ -20,7 +20,7 @@
       "for": "नववी आणि दहावीतील विद्यार्थी",
       "length": "2 वर्षांपर्यंत",
       "exams": "JEE चा पाया",
-      "requires": ["programme.foundation", "programme.foundation-details", "legal.foundation-minimum-age"]
+      "requires": ["programme.foundation"]
     }
   ]
 }

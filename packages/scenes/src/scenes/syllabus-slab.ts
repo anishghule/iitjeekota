@@ -15,7 +15,8 @@ import type { CameraPose, Scene, SceneContext } from "../scene.ts";
 export interface SlabChapter {
   id: string;
   subject: string;
-  symbol: string;
+  /** Short text on the tile face, large (the chapter's number within its class). */
+  label: string;
   classes: readonly number[];
   /** JEE Main unit number, or null for a chapter in JEE Advanced only. */
   main: number | null;
@@ -114,7 +115,7 @@ export function createSyllabusSlab(ctx: SceneContext, input: SlabInput): Scene {
       g.textBaseline = "middle";
       g.textAlign = "center";
       g.font = canvasFont("display", 800, a.cell * 0.42);
-      g.fillText(ch.symbol, x + a.cell / 2, y + a.cell * 0.58);
+      g.fillText(ch.label, x + a.cell / 2, y + a.cell * 0.58);
       g.textAlign = "start";
     });
   }, "colour");

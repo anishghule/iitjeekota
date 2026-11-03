@@ -1,0 +1,67 @@
+---
+/**
+ * Getting there from an area (plan B2, the doorway guard): the nearest centre with the measured distance
+ * and time, the other centre for comparison, and a link to each centre's page. A time measured at
+ * class hours is shown as a range; a time on empty roads says so. Pending commutes never reach this
+ * page: an area page waits until D-SAP confirms its commute.
+ */
+import { fill, strings, type Locale } from "../../i18n/index.ts";
+import { travelTime } from "../../lib/commute.ts";
+import { areaOfRoute, isRouteId, localName, routePath, site } from "../../lib/data.ts";
+import type { SectionData } from "../../lib/types.ts";
+import Paragraphs from "../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+  route: string;
+}
+const { section, locale, route } = Astro.props;
+const t = strings(locale);
+const area = areaOfRoute(route);
+const centres = new Map(site.centres.map((c) => [c.id, c]));
+const areaName = area ? localName(area.names, locale) : "";
+const trips = (area?.routes ?? []).map((r) => {
+  const centre = centres.get(r.centre);
+  const trip: { km?: number; minutes?: number[]; freeFlowMinutes?: number } = r;
+  return {
+    id: r.centre,
+    name: centre ? localName(centre.names, locale) : r.centre,
+    path: centre?.page && isRouteId(centre.page) ? routePath(centre.page, locale) : undefined,
+    directions: centre?.directions,
+    km: r.km,
+    time: travelTime(trip, t.areaMap),
+    nearest: r.centre === area?.nearestCentre,
+  };
+}).sort((a, b) => Number(b.nearest) - Number(a.nearest));
+const local = area?.localCentre ? centres.get(area.localCentre) : undefined;
+---
+<section id={section.id} class="section" aria-labelledby={`${section.id}-title`}>
+  <div class="container commute">
+    <div class="prose">
+      <h2 id={`${section.id}-title`} class="t-h1">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} />
+    </div>
+    {local && <p class="commute__here card t-h2">{fill(t.areaMap.inArea, { centre: localName(local.places, locale), area: areaName })}</p>}
+    {trips.length > 0 && (
+      <ul class="commute__list" role="list">
+        {trips.map((trip) => (
+          <li class="commute__trip card">
+            <p class="badge">{trip.nearest ? t.commute.nearest : t.commute.other}</p>
+            <p class="t-h2">{trip.path ? <a href={trip.path}>{trip.name}</a> : trip.name}</p>
+            <p class="tabular">{trip.time ? fill(t.commute.route, { km: trip.km ?? "", time: trip.time }) : fill(t.areaMap.km, { km: trip.km ?? "" })}</p>
+            {trip.directions && <p><a href={trip.directions} rel="external">{fill(t.areaMap.directions, { centre: trip.name })}</a></p>}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+</section>
+
+<style>
+  .commute { display: grid; gap: var(--space-5); }
+  .commute__list { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--column-min)), 1fr)); }
+  .commute__trip { display: grid; gap: var(--space-2); justify-items: start; align-content: start; }
+  .commute__trip a { text-decoration: none; }
+  .commute__trip a:hover { text-decoration: underline; }
+</style>

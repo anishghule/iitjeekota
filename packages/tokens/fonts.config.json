@@ -1,13 +1,21 @@
 {
-  "$description": "Which font files are vendored and how fallbacks are measured. Roles match the keys of font.family in tokens.json. After editing: make fonts metrics brand, then commit fonts/, fonts.lock.json and fonts.metrics.json.",
+  "$description": "Which font files are vendored and how fallbacks are measured. Roles match the keys of font.family in tokens.json. webFallbacks are further families vendored for a role (never preloaded); each must follow the role's family in its tokens.json stack. Only display keeps a measured Arial stand-in; body goes straight to its web fallback. After editing: make fonts metrics brand, then commit fonts/, fonts.lock.json and fonts.metrics.json.",
   "cssApi": "https://fonts.googleapis.com/css2",
   "families": [
     {
       "role": "body",
-      "family": "Inter",
-      "axes": "opsz,wght@14..32,100..900",
+      "family": "Google Sans Flex",
+      "axes": "wght@100..900",
       "subsets": ["latin", "latin-ext"],
-      "licenceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt"
+      "licenceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/googlesansflex/OFL.txt",
+      "webFallbacks": [
+        {
+          "family": "Inter",
+          "axes": "opsz,wght@14..32,100..900",
+          "subsets": ["latin", "latin-ext"],
+          "licenceUrl": "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/OFL.txt"
+        }
+      ]
     },
     {
       "role": "display",
@@ -27,7 +35,7 @@
   "metrics": {
     "$description": "Each role is measured at the weight and width of one type variant. Fallback faces get size and line overrides so the swap to the web font does not shift the layout.",
     "variant": { "display": "display-xl", "body": "body", "devanagari": "body" },
-    "fallbacks": { "display": "Arial Bold", "body": "Arial" },
+    "fallbacks": { "display": "Arial Bold" },
     "matchXHeight": { "devanagari": "body" },
     "boundsFor": { "devanagari": "कम" }
   },

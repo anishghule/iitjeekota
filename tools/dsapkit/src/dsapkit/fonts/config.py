@@ -15,11 +15,14 @@ DEVANAGARI_ROLE = "devanagari"
 
 @dataclass(frozen=True)
 class FamilyConfig:
+    """One vendored family. A role's web fallbacks are further families the page can use when the
+    role's own font is missing a glyph or fails to load; they are shipped but never preloaded."""
     role: str
     family: str
     axes: str
     subsets: tuple[str, ...]
     licence_url: str
+    web_fallbacks: tuple[FamilyConfig, ...] = ()
 
     @property
     def slug(self) -> str:
@@ -53,11 +56,19 @@ class FontsConfig:
                 return fam
         raise BuildError(f"fonts.config.json has no family for role {role!r}")
 
+    def vendored(self) -> list[tuple[FamilyConfig, bool]]:
+        """Every family to download, each with whether it is a web fallback."""
+        return [(f, is_fallback) for fam in self.families for f, is_fallback in [(fam, False), *((w, True) for w in fam.web_fallbacks)]]
+
+
+def _family(raw: dict, role: str) -> FamilyConfig:
+    return FamilyConfig(role, raw["family"], raw["axes"], tuple(raw["subsets"]), raw["licenceUrl"],
+                        tuple(_family(w, role) for w in raw.get("webFallbacks", [])))
+
 
 def load_fonts_config(path: Path, tokens: TokenSet) -> FontsConfig:
     raw = read_json(path)
-    families = tuple(FamilyConfig(f["role"], f["family"], f["axes"], tuple(f["subsets"]), f["licenceUrl"])
-                     for f in raw["families"])
+    families = tuple(_family(f, f["role"]) for f in raw["families"])
     systems = {name: SystemFace(name, Path(s["path"]), tuple(s["local"])) for name, s in raw["systemFonts"].items()}
     m = raw["metrics"]
     cfg = FontsConfig(raw["cssApi"], families, m["variant"], m["fallbacks"], m["matchXHeight"], m.get("boundsFor", {}), systems)
@@ -69,6 +80,12 @@ def load_fonts_config(path: Path, tokens: TokenSet) -> FontsConfig:
     for role, stack in tokens.tree["font"]["family"].items():
         if stack[0] != cfg.family(role).family:
             raise BuildError(f"font.family.{role} starts with {stack[0]!r} but fonts.config.json vendors {cfg.family(role).family!r}")
+    for fam in families:
+        stack = tokens.tree["font"]["family"][fam.role]
+        for fallback in fam.web_fallbacks:
+            if fallback.family not in stack[1:]:
+                raise BuildError(f"fonts.config.json vendors {fallback.family!r} as a fallback for {fam.role!r}, "
+                                 f"but font.family.{fam.role} in tokens.json does not list it after {fam.family!r}")
     for role, variant in cfg.metrics_variant.items():
         if variant not in tokens.tree["type"]["scale"]:
             raise BuildError(f"fonts.config.json metrics.variant.{role}: unknown type variant {variant!r}")

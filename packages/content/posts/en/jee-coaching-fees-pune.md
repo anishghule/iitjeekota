@@ -1,6 +1,7 @@
 ---
 {
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "title": "JEE coaching fees comparison for Pune parents",
   "description": "How to compare JEE coaching fees in Pune: what a fee should include, the costs outside it, how Kota compares, and how to compare two quotes fairly.",
   "author": "org.founder",

@@ -13,7 +13,7 @@ Built (2026-10-31) as `apps/web/src/components/blocks/SiteHeader.astro`, with th
   Because the tint and the blur both fade, text scrolling up under the header softens and dims gradually, with no line where the header starts.
 - The links sit in the solid top part, so they keep full contrast. The contrast pair is checked against the tint at its strongest.
 - The tint, blur strength, fade start, the faded layer's height and the bar height are the `nav` tokens in `packages/tokens/tokens.json`, not values in the component.
-- Long page names get a short link text in `packages/site/routes.json` (`navNames`), for example "Pimpri-Chinchwad". Breadcrumbs and titles keep the full name.
+- A page whose full name is too long for the bar can get a short link text in `packages/site/routes.json` (`navNames`). None needs one now. Breadcrumbs and titles keep the full name.
 - Where `backdrop-filter` is not supported, the tint alone does the job. Its top is opaque enough to read the links over any content.
 
 ## Phones and narrow screens: a hamburger menu

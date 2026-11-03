@@ -1,6 +1,7 @@
 {
   "route": "blogs",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "JEE preparation tips and guides | D-SAP Ghule",
     "description": "Guides for parents and students on JEE preparation, the syllabus, and how to choose JEE coaching in Pune and Pimpri-Chinchwad."
@@ -8,5 +9,12 @@
   "h1": "JEE preparation tips and guides",
   "intro": [
     "Plain answers to the questions families ask about JEE: when to start, how to choose coaching, Kota or Pune, and what it costs. Written by {{fact:org.founder#name}}."
+  ],
+  "sections": [
+    {
+      "id": "guides",
+      "heading": "All guides",
+      "body": ["Each guide answers one question, in plain words."]
+    }
   ]
 }

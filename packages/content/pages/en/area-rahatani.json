@@ -1,6 +1,7 @@
 {
   "route": "area-rahatani",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "IIT JEE coaching in Rahatani | D-SAP Ghule Tutorials",
     "description": "JEE coaching for Rahatani students at our nearby Wakad branch, by Rahatani Road and Jagtap Dairy. Faculty from Kota, batches of {{fact:batch.size}}."

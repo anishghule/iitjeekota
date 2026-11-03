@@ -1,6 +1,7 @@
 {
   "route": "area-wakad",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "वाकड में IIT JEE कोचिंग | D-SAP घुले ट्यूटोरियल्स",
     "description": "स्वामी विवेकानंद नगर की हमारी ब्रांच पर वाकड में JEE कोचिंग। कोटा की फैकल्टी, {{fact:batch.days}}, {{fact:batch.timings#start}} बजे से {{fact:batch.timings#end}} बजे तक।"

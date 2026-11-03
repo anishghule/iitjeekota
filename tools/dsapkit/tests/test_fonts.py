@@ -7,6 +7,7 @@ from dsapkit.fonts.google import parse_css, stretch_matches
 from dsapkit.fonts.sfnt import Face, fallback_overrides
 from dsapkit.paths import Paths
 from dsapkit.tokens import load_tokens
+from dsapkit.tokens.build import preload_files
 
 PATHS = Paths.discover()
 ARIAL = Path("/System/Library/Fonts/Supplemental/Arial.ttf")
@@ -53,6 +54,25 @@ class ConfigTest(unittest.TestCase):
         variant = tokens.tree["type"]["scale"][cfg.metrics_variant["display"]]
         self.assertEqual((weight, stretch), (variant["weight"], variant["stretch"]))
         self.assertEqual(role_instance(tokens, cfg, "devanagari")[1], 100.0)
+
+
+class WebFallbackTest(unittest.TestCase):
+    def test_a_fallback_must_follow_its_family_in_the_token_stack(self):
+        tokens = load_tokens(PATHS.tokens_json)
+        cfg = load_fonts_config(PATHS.fonts_config, tokens)
+        self.assertEqual([f.family for f in cfg.family("body").web_fallbacks], ["Inter"])
+        stack = tokens.tree["font"]["family"]["body"]
+        self.assertEqual(stack[:3], ["Google Sans Flex", "Inter", "Arial"])
+        self.assertEqual([(f.family, fb) for f, fb in cfg.vendored() if f.role == "body"],
+                         [("Google Sans Flex", False), ("Inter", True)])
+
+    def test_fallbacks_are_locked_but_never_preloaded(self):
+        lock = json.loads(PATHS.fonts_lock.read_text())
+        inter = [f for f in lock["files"] if f["family"] == "Inter"]
+        self.assertTrue(inter and all(f["fallback"] for f in inter))
+        preload = preload_files(lock, "/fonts")
+        self.assertTrue(preload)
+        self.assertFalse([p for p in preload if "inter" in p])
 
 
 class LockTest(unittest.TestCase):

@@ -1,0 +1,49 @@
+---
+/**
+ * Inside a centre: the photos and films D-SAP has supplied for it, and nothing for a slot still
+ * waiting. Photos load lazily; films play only when asked, from this site only (components/ui/FilmPlayer.astro).
+ */
+import { strings, type Locale } from "../../i18n/index.ts";
+import { centreMedia, centreOfRoute } from "../../lib/data.ts";
+import type { SectionData } from "../../lib/types.ts";
+import FilmPlayer from "../ui/FilmPlayer.astro";
+import Paragraphs from "../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+  route: string;
+}
+const { section, locale, route } = Astro.props;
+const t = strings(locale);
+const centre = centreOfRoute(route);
+const media = centre ? centreMedia(centre.id, locale) : { photos: [], films: [] };
+---
+<section id={section.id} class="section" aria-labelledby={`${section.id}-title`}>
+  <div class="container inside">
+    <div class="prose">
+      <h2 id={`${section.id}-title`} class="t-h1">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} />
+    </div>
+    {media.photos.length > 0 && (
+      <ul class="inside__photos" role="list" aria-label={t.centre.gallery}>
+        {media.photos.map((p) => (
+          <li><img src={p.url} width={p.width} height={p.height} alt={p.alt} loading="lazy" decoding="async" /></li>
+        ))}
+      </ul>
+    )}
+    {media.films.map(({ film, poster }) => (
+      <div class="inside__film">
+        <h3 class="t-h2">{t.centre.film}</h3>
+        <FilmPlayer film={film} poster={poster} locale={locale} />
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .inside { display: grid; gap: var(--space-6); }
+  .inside__photos { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--column-min)), 1fr)); }
+  .inside__photos img { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); box-shadow: var(--shadow-2); }
+  .inside__film { display: grid; gap: var(--space-4); justify-items: start; }
+</style>

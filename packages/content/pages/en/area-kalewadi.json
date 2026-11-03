@@ -1,6 +1,7 @@
 {
   "route": "area-kalewadi",
   "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
     "title": "IIT JEE coaching in Kalewadi | D-SAP Ghule Tutorials",
     "description": "JEE coaching for Kalewadi students at our Wakad branch, via Kalewadi Phata. Faculty from Kota, {{fact:batch.days}} from {{fact:batch.timings#start}}."
