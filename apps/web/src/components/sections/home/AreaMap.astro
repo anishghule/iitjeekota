@@ -1,0 +1,75 @@
+---
+/**
+ * Where we teach (plan C4): the area map from packages/map (OpenStreetMap, built by make map) with
+ * both centres, the two rivers unnamed, and each area's route to its nearer centre. Picking an area
+ * shows its confirmed commute and links to its page when that page is live.
+ */
+import { fill, strings, type Locale } from "../../../i18n/index.ts";
+import { areaMap, isRouteId, localName, routePath, site } from "../../../lib/data.ts";
+import type { SectionData } from "../../../lib/types.ts";
+import ActionLink from "../../ui/ActionLink.astro";
+import AreaMapFigure from "../../ui/AreaMapFigure.astro";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const centres = new Map(site.centres.map((c) => [c.id, c]));
+const points = new Map(areaMap.areas.map((a) => [a.id, a]));
+const areas = site.areas.filter((a) => points.has(a.id));
+
+const card = (area: (typeof areas)[number]) => {
+  const name = localName(area.names, locale);
+  const centre = centres.get(area.localCentre ?? area.nearestCentre);
+  const centreName = centre ? localName(centre.places, locale) : "";
+  const commute: { km?: number; freeFlowMinutes?: number; minutes?: number[] } | null = area.commute;
+  const page = area.page && isRouteId(area.page) ? routePath(area.page, locale) : undefined;
+  const minutes = commute?.minutes?.length === 2
+    ? fill(t.areaMap.range, { from: commute.minutes[0] ?? "", to: commute.minutes[1] ?? "" })
+    : commute?.freeFlowMinutes !== undefined ? fill(t.areaMap.freeFlow, { min: commute.freeFlowMinutes }) : undefined;
+  return { name, centreName, centre, commute, page, minutes };
+};
+---
+<section id={section.id} class="area-map section" data-area-map aria-labelledby={`${section.id}-title`}>
+  <div class="container split area-map__grid">
+    <div class="area-map__text">
+      <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} class="lede" />
+      <div class="chips" role="group" aria-label={t.areaMap.pick}>
+        {areas.map((a) => <button type="button" class="chip" data-pick={a.id} aria-pressed="false">{localName(a.names, locale)}</button>)}
+      </div>
+      {areas.map((a) => {
+        const c = card(a);
+        return (
+          <div class="area-card card" data-card={a.id} hidden>
+            {a.localCentre ? (
+              <p class="t-h2">{fill(t.areaMap.inArea, { centre: c.centreName, area: c.name })}</p>
+            ) : (
+              <>
+                <p class="muted">{fill(t.areaMap.toCentre, { area: c.name, centre: c.centreName })}</p>
+                {c.commute?.km !== undefined && <p class="t-h1 accent tabular">{fill(t.areaMap.km, { km: c.commute.km })}</p>}
+                {c.minutes && <p>{c.minutes}</p>}
+              </>
+            )}
+            <p class="area-card__links">
+              {c.page && <a href={c.page}>{fill(t.areaMap.page, { area: c.name })}</a>}
+              {c.centre?.directions && <a href={c.centre.directions} rel="external">{fill(t.areaMap.directions, { centre: c.centreName })}</a>}
+            </p>
+          </div>
+        );
+      })}
+      {section.action && <div class="actions"><ActionLink action={section.action} locale={locale} quiet /></div>}
+    </div>
+    <AreaMapFigure locale={locale} />
+  </div>
+</section>
+
+<style>
+  .area-map__grid { align-items: start; }
+  .area-map__text { display: grid; gap: var(--space-5); }
+  .area-card { display: grid; gap: var(--space-2); }
+  .area-card__links { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); }
+</style>

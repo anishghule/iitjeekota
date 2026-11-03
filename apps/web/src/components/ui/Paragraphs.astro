@@ -1,0 +1,12 @@
+---
+/** Resolved paragraphs of copy. */
+import type { Rich as RichText } from "../../lib/types.ts";
+import Rich from "./Rich.astro";
+
+interface Props {
+  paragraphs: RichText[];
+  class?: string;
+}
+const { paragraphs, class: className } = Astro.props;
+---
+{paragraphs.map((p) => <p class={className}><Rich parts={p} /></p>)}

@@ -1,0 +1,47 @@
+{
+  "$description": "Hindi draft of the two-year timeline on home. For review by a native Hindi writer before launch.",
+  "steps": [
+    {
+      "when": "अप्रैल, कक्षा 10 के बाद",
+      "title": "फ़ाउंडेशन अवधि",
+      "detail": "कक्षा 11 से पहले एक छोटी शुरुआत, ताकि पहले कुछ हफ़्ते भारी न लगें।",
+      "requires": ["programme.start"]
+    },
+    {
+      "when": "जून, कक्षा 11",
+      "title": "दो साल का प्रोग्राम शुरू",
+      "detail": "भौतिकी, रसायन और गणित, {{fact:batch.days}}, {{fact:batch.timings#start}} से {{fact:batch.timings#end}} बजे तक।",
+      "requires": ["programme.start", "programme.subjects"]
+    },
+    {
+      "when": "कक्षा 11",
+      "title": "तीनों विषयों की नींव",
+      "detail": "हर अध्याय के बाद टेस्ट और हर चौथे सप्ताह एक लंबा टेस्ट। हर महीने JEE Main का पूरा मॉक।",
+      "requires": ["test-series.format"]
+    },
+    {
+      "when": "कक्षा 12",
+      "title": "JEE Advanced की तैयारी जुड़ती है",
+      "detail": "मासिक JEE Main मॉक के साथ हर तिमाही एक JEE Advanced मॉक।",
+      "requires": ["test-series.format"]
+    },
+    {
+      "when": "{{fact:exam.jee-main#sessions}}, कक्षा 12",
+      "title": "JEE Main",
+      "detail": "दो सत्र। {{fact:exam.jee-main#hours}} घंटे में {{fact:exam.jee-main#questions}} प्रश्न, सभी अनिवार्य।",
+      "requires": ["exam.jee-main"]
+    },
+    {
+      "when": "JEE Main के बाद",
+      "title": "JEE Advanced",
+      "detail": "जो योग्य हों उनके लिए: {{fact:exam.jee-advanced#hoursEach}} घंटे के {{fact:exam.jee-advanced#papers}} पेपर, एक ही दिन।",
+      "requires": ["exam.jee-advanced"]
+    }
+  ],
+  "rhythm": [
+    { "every": "हर सप्ताह", "what": "एक प्रैक्टिस शीट", "requires": ["method.practice-sheets"] },
+    { "every": "हर सप्ताह", "what": "ऑनलाइन पोर्टल पर टेस्ट, बारी-बारी से टॉपिक-वार और पूरे सिलेबस का", "requires": ["test-series.format", "test-series.cbt"] },
+    { "every": "हर महीने", "what": "JEE Main का पूरा मॉक: {{fact:exam.jee-main#questions}} प्रश्न, {{fact:exam.jee-main#hours}} घंटे", "requires": ["test-series.format"] },
+    { "every": "किसी भी दिन", "what": "डाउट फ़ोरम पर या डाउट सेशन में अपने प्रश्न", "requires": ["method.doubts"] }
+  ]
+}

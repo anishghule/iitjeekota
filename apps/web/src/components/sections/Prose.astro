@@ -1,0 +1,28 @@
+---
+/** A section of copy: heading, paragraphs, an optional list of points and an optional action. */
+import type { Locale } from "../../i18n/index.ts";
+import type { SectionData } from "../../lib/types.ts";
+import ActionLink from "../ui/ActionLink.astro";
+import Paragraphs from "../ui/Paragraphs.astro";
+import Rich from "../ui/Rich.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+---
+<section id={section.id} class="section" aria-labelledby={`${section.id}-title`}>
+  <div class="container prose">
+    <h2 id={`${section.id}-title`} class="t-h1">{section.heading}</h2>
+    <Paragraphs paragraphs={section.body} />
+    {section.points && (
+      <ul class="points">{section.points.map((p) => <li><Rich parts={p} /></li>)}</ul>
+    )}
+    {section.action && <div class="actions"><ActionLink action={section.action} locale={locale} quiet /></div>}
+  </div>
+</section>
+
+<style>
+  .points { display: grid; gap: var(--space-2); padding-inline-start: var(--space-5); }
+</style>

@@ -1,0 +1,13 @@
+{
+  "$description": "Marathi captions of the home page's gallery strip. Draft for review by a native Marathi writer.",
+  "items": [
+    { "slot": "gallery/entrance", "shape": "arch", "caption": "प्रवेशद्वार" },
+    { "slot": "gallery/students-group", "shape": "frame", "caption": "आपल्या शिक्षकांसोबत" },
+    { "slot": "gallery/batch", "shape": "circle", "caption": "एक बॅच, एकत्र" },
+    { "slot": "gallery/class-at-work", "shape": "arch", "caption": "मान खाली, अभ्यासात" },
+    { "slot": "gallery/full-class", "shape": "frame", "caption": "भरलेला वर्ग" },
+    { "slot": "gallery/old-batch", "shape": "frame", "caption": "आधीचा एक बॅच" },
+    { "slot": "gallery/office-chat", "shape": "frame", "caption": "बसून बोलूया" },
+    { "slot": "gallery/mht-cet-poster", "shape": "frame" }
+  ]
+}

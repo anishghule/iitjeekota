@@ -1,0 +1,67 @@
+{
+  "route": "area-baner",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "IIT JEE coaching in Baner | D-SAP Ghule Tutorials",
+    "description": "Our New Sangvi head office is the nearest D-SAP JEE centre to Baner, across the Babasaheb Ambedkar Bridge. Kota faculty, evening classes from {{fact:batch.timings#start}}."
+  },
+  "h1": "IIT JEE coaching in Baner",
+  "intro": [
+    "For Baner, our nearest centre is the head office in New Sangvi, about {{commute:baner#km}} km away on the other side of the river."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "The way from Baner",
+      "body": [
+        {
+          "text": "Take Pimple Nilakh Road and cross the Babasaheb Ambedkar Bridge. The New DP Road and the Aundh-Ravet Road bring you to Sangvi Phata, and the Pimple Gurav-Navi Sangvi Road leads on to Krishna Nagar Road Number 2.",
+          "requires": ["area.baner.route"]
+        },
+        "Our Wakad branch is a longer trip from Baner, which is why we point Baner families to New Sangvi."
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Between the hill and the river",
+      "body": [
+        {
+          "text": "Baner has Baner Hill and the Baner-Pashan Biodiversity Park on one side and the river on the other. New Sangvi is a short drive across that river.",
+          "requires": ["area.baner.hill"]
+        },
+        "The evening session comes after the school day, so a student from Baner can finish school, eat at home and then cross the river for {{fact:batch.timings#start}}."
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Which programme fits",
+      "body": [
+        {
+          "text": "Baner students can start the two-year programme once Class 10 is done, or take the one-year programme in Class 12.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Asked by Baner parents",
+      "questions": [
+        {
+          "q": "Do you have a centre in Baner itself?",
+          "a": "Not in Baner. The nearest is our [head office in New Sangvi](page:centre-sangvi-head-office), about {{commute:baner#km}} km away."
+        },
+        {
+          "q": "Why New Sangvi and not Wakad?",
+          "a": "From Baner, New Sangvi is the shorter trip by road. JEE classes at both centres run at the same time."
+        },
+        {
+          "q": "How many students share a class?",
+          "a": "No more than {{fact:batch.size}}."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

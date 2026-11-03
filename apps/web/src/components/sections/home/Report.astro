@@ -1,0 +1,149 @@
+---
+/**
+ * Every test, read back (plan C1 8): an example report for an illustrative student, labelled as
+ * such. While pinned, scrolling steps through six weeks; the week buttons work at any time.
+ */
+import { fill, strings, type Locale } from "../../../i18n/index.ts";
+import { syllabus } from "../../../lib/data.ts";
+import type { ReportData, SectionData } from "../../../lib/types.ts";
+import Paragraphs from "../../ui/Paragraphs.astro";
+import ReportMap from "./ReportMap.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const w = section.widget as ReportData | undefined;
+const subjects = syllabus(locale).subjects;
+const weeks = w?.weeks ?? [];
+const max = (w?.maxPerSubject ?? 0) * subjects.length;
+const totals = weeks.map((week) => subjects.reduce((sum, s) => sum + week.marks[s.id], 0));
+// The trend chart's own coordinates: weeks spread across, score up from the bottom.
+const chart = { width: 100, height: 18, pad: 3 };
+const point = (i: number) => ({
+  x: chart.pad + (i / Math.max(1, weeks.length - 1)) * (chart.width - 2 * chart.pad),
+  y: chart.height - chart.pad - ((totals[i] ?? 0) / max) * (chart.height - 2 * chart.pad),
+});
+const trend = weeks.map((_, i) => `${i ? "L" : "M"}${point(i).x.toFixed(1)} ${point(i).y.toFixed(1)}`).join(" ");
+const lostKeys = ["careless", "concept", "time"] as const;
+---
+<section id={section.id} class:list={["report", w ? "pinned" : "section"]} data-report={w ? "" : undefined}
+  data-steps={weeks.length || undefined} aria-labelledby={`${section.id}-title`}>
+  <div class="stage">
+    <div class="container split report__grid">
+      <div class="report__text">
+        <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+        <Paragraphs paragraphs={section.body} class="lede" />
+        {w && (
+          <>
+            <div class="chips" role="group" aria-label={t.report.weeks}>
+              {weeks.map((_, i) => <button type="button" class="chip tabular" data-week-button aria-pressed={i === 0 ? "true" : "false"}>{fill(t.report.week, { n: i + 1 })}</button>)}
+            </div>
+            <p class="muted"><span class="badge">{t.common.example}</span> {w.label}</p>
+          </>
+        )}
+      </div>
+      {w && (
+        <div class="report__card card" data-pin-visual>
+          <svg class="report__trend" viewBox={`0 0 ${chart.width} ${chart.height}`} role="img" aria-label={t.report.trend}>
+            <path d={trend} />
+            {weeks.map((_, i) => <circle data-trend-point cx={point(i).x} cy={point(i).y} r="1.6" />)}
+          </svg>
+          {weeks.map((week, i) => {
+            const total = totals[i] ?? 0;
+            const prev = i > 0 ? (totals[i - 1] ?? 0) : null;
+            const delta = prev === null ? t.report.first
+              : total > prev ? fill(t.report.up, { n: total - prev })
+              : total < prev ? fill(t.report.down, { n: prev - total })
+              : t.report.same;
+            const lostTotal = lostKeys.reduce((sum, k) => sum + week.lost[k], 0);
+            return (
+              <div class="report__week" data-week hidden={i > 0}>
+                <p class="muted">{fill(t.report.week, { n: i + 1 })}: {week.test}</p>
+                <div class="report__score">
+                  <span class="t-display tabular">{total}</span>
+                  <span class="muted">{fill(t.report.outOf, { max })}</span>
+                  <span class="report__delta">{delta}</span>
+                </div>
+                <h3 class="report__head">{t.report.subjects}</h3>
+                <ul class="report__bars" role="list">
+                  {subjects.map((s) => (
+                    <li>
+                      <span>{s.name}</span>
+                      <svg class="bar" viewBox="0 0 100 1" preserveAspectRatio="none" aria-hidden="true">
+                        <rect data-subject={s.id} width={(100 * week.marks[s.id]) / (w.maxPerSubject || 1)} height="1" />
+                      </svg>
+                      <span class="tabular">{week.marks[s.id]}</span>
+                    </li>
+                  ))}
+                </ul>
+                <dl class="report__stats">
+                  <div><dt>{t.report.accuracy}</dt><dd class="tabular">{week.accuracy}%</dd></div>
+                  <div><dt>{t.report.pace}</dt><dd class="tabular">{week.minutesPerQuestion}</dd></div>
+                </dl>
+                <h3 class="report__head">{t.report.lost}</h3>
+                <svg class="report__lost" viewBox="0 0 100 1" preserveAspectRatio="none" aria-hidden="true">
+                  {lostKeys.map((k, j) => {
+                    const before = lostKeys.slice(0, j).reduce((sum, key) => sum + week.lost[key], 0);
+                    return <rect data-lost={k} x={(100 * before) / (lostTotal || 1)} width={(100 * week.lost[k]) / (lostTotal || 1)} height="1" />;
+                  })}
+                </svg>
+                <ul class="report__legend" role="list">
+                  {lostKeys.map((k) => <li data-lost={k}><i></i>{t.report[k]}: <span class="tabular">{week.lost[k]}</span></li>)}
+                </ul>
+                <h3 class="report__head">{t.report.focus}</h3>
+                <ul class="report__focus">{week.focus.map((f) => <li>{f}</li>)}</ul>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+{w?.testMap && <ReportMap id={section.id} map={w.testMap} label={w.label} locale={locale} />}
+
+<style>
+  .report__grid { align-items: center; }
+  .report__text { display: grid; gap: var(--space-5); align-content: center; }
+  .report__card { display: grid; gap: var(--space-4); }
+  .report__trend { width: 100%; height: auto; overflow: visible; }
+  .report__trend path { fill: none; stroke: var(--text-muted); stroke-width: 0.6; stroke-linejoin: round; }
+  .report__trend circle { fill: var(--bg-raised); stroke: var(--text-muted); stroke-width: 0.6; transition: fill var(--dur-base) var(--ease-enter); }
+  .report__trend circle[data-active] { fill: var(--accent); stroke: var(--accent); }
+  .report__week { display: grid; gap: var(--space-3); }
+  .report__score { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-3); }
+  .report__delta { color: var(--accent-text); font-weight: var(--weight-semibold); }
+  .report__head { font-size: var(--type-small-size); color: var(--text-muted); font-weight: var(--weight-semibold); }
+  .report__bars { display: grid; gap: var(--space-2); }
+  .report__bars li { display: grid; grid-template-columns: minmax(0, 7rem) 1fr auto; gap: var(--space-3); align-items: center; }
+  .bar { width: 100%; height: var(--space-2); border-radius: var(--radius-round); background: var(--bg-sunken); overflow: hidden; }
+  .bar [data-subject="physics"] { fill: var(--subject-physics); }
+  .bar [data-subject="chemistry"] { fill: var(--subject-chemistry); }
+  .bar [data-subject="maths"] { fill: var(--subject-maths); }
+  .report__stats { display: flex; gap: var(--space-6); }
+  .report__stats dt { font-size: var(--type-small-size); color: var(--text-muted); }
+  .report__stats dd { margin: 0; font-family: var(--font-display); font-weight: var(--weight-heavy); font-size: var(--type-h2-size); }
+  .report__lost { width: 100%; height: var(--space-3); border-radius: var(--radius-round); overflow: hidden; }
+  .report__lost [data-lost="careless"] { fill: var(--warn); }
+  .report__lost [data-lost="concept"] { fill: var(--error); }
+  .report__lost [data-lost="time"] { fill: var(--river); }
+  .report__legend [data-lost="careless"] i { background: var(--warn); }
+  .report__legend [data-lost="concept"] i { background: var(--error); }
+  .report__legend [data-lost="time"] i { background: var(--river); }
+  .report__legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); font-size: var(--type-small-size); color: var(--text-muted); }
+  .report__legend li { display: flex; align-items: center; gap: var(--space-2); }
+  .report__legend i { width: var(--space-3); height: var(--space-3); border-radius: var(--radius-sm); }
+  .report__focus { display: grid; gap: var(--space-1); padding-inline-start: var(--space-5); }
+  /* Narrow: the card is the part that holds still, so it must fit one screen with its tallest week.
+     It sizes to its content (never a fixed height the content can spill out of) and runs tighter. */
+  .report[data-pin="narrow"] .report__card { height: auto; justify-content: start; padding: var(--space-4); gap: var(--space-2); }
+  .report[data-pin="narrow"] .report__week { gap: var(--space-2); }
+  .report[data-pin="narrow"] .report__score .t-display { font-size: var(--type-h1-size); line-height: var(--type-h1-lh); }
+  .report[data-pin="narrow"] .report__stats { gap: var(--space-5); }
+  .report[data-pin="narrow"] .report__stats dd { font-size: var(--type-body-lg-size); line-height: var(--type-body-lg-lh); }
+  .report[data-pin="narrow"] .report__bars { gap: var(--space-1); }
+  .report[data-pin="narrow"] .report__head { margin-block-start: var(--space-1); }
+</style>

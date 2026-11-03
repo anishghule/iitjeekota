@@ -1,0 +1,30 @@
+# OWASP ZAP baseline scan of a deployed preview (plan D5). Run by hand with the preview's address once the site is deployed
+# (docs/setup/security.md). It only reads the site; the report is kept as an artifact and nothing is filed anywhere.
+name: ZAP baseline
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "The preview address, for example https://abc123.iitjeekota.pages.dev"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  zap:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: zaproxy/action-baseline@de8ad967d3548d44ef623df22cf95c3b0baf8b25 # v0.15.0
+        with:
+          target: ${{ inputs.url }}
+          rules_file_name: .zap/rules.tsv
+          fail_action: true
+          allow_issue_writing: false
+          artifact_name: zap-baseline-report

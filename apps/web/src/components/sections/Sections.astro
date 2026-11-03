@@ -1,0 +1,67 @@
+---
+/**
+ * Renders a page's sections by the component templates.json names for them. A component that is
+ * not built yet renders as plain copy, so every page shows all of its approved content.
+ */
+import type { Locale } from "../../i18n/index.ts";
+import type { SectionData } from "../../lib/types.ts";
+import Enquire from "../blocks/Enquire.astro";
+import Questions from "../blocks/Questions.astro";
+import AreaMap from "./home/AreaMap.astro";
+import BatchCalendar from "./BatchCalendar.astro";
+import CentreCard from "./CentreCard.astro";
+import CentreMedia from "./CentreMedia.astro";
+import Classroom from "./home/Classroom.astro";
+import CommuteCard from "./CommuteCard.astro";
+import ContactCentres from "./ContactCentres.astro";
+import Fees from "./Fees.astro";
+import ProgrammeTable from "./ProgrammeTable.astro";
+import SpokeList from "./SpokeList.astro";
+import SyllabusSummary from "./SyllabusSummary.astro";
+import TestPlan from "./TestPlan.astro";
+import Gallery from "./home/Gallery.astro";
+import Journey from "./home/Journey.astro";
+import KotaRoute from "./home/KotaRoute.astro";
+import KotaSystem from "./home/KotaSystem.astro";
+import LiveTest from "./home/LiveTest.astro";
+import Portal from "./home/Portal.astro";
+import Programmes from "./home/Programmes.astro";
+import Report from "./home/Report.astro";
+import SyllabusTeaser from "./home/SyllabusTeaser.astro";
+import Prose from "./Prose.astro";
+
+interface Props {
+  sections: SectionData[];
+  locale: Locale;
+  /** The route id of the page, for sections that are about the page's own centre or area. */
+  route?: string;
+}
+const { sections, locale, route = "" } = Astro.props;
+---
+{sections.map((section) => {
+  switch (section.component) {
+    case "KotaPrism": return <KotaSystem section={section} />;
+    case "KotaRoute": return <KotaRoute section={section} locale={locale} />;
+    case "Portal": return <Portal section={section} locale={locale} />;
+    case "LiveTest": return <LiveTest section={section} locale={locale} />;
+    case "Classroom": return <Classroom section={section} locale={locale} />;
+    case "Report": return <Report section={section} locale={locale} />;
+    case "SyllabusTeaser": return <SyllabusTeaser section={section} locale={locale} />;
+    case "Journey": return <Journey section={section} locale={locale} />;
+    case "Gallery": return <Gallery section={section} locale={locale} />;
+    case "AreaMap": return <AreaMap section={section} locale={locale} />;
+    case "Programmes": return <Programmes section={section} locale={locale} />;
+    case "SpokeList": return <SpokeList section={section} locale={locale} />;
+    case "ProgrammeTable": return <ProgrammeTable section={section} locale={locale} />;
+    case "CentreCard": return <CentreCard section={section} locale={locale} route={route} />;
+    case "CentreMedia": return <CentreMedia section={section} locale={locale} route={route} />;
+    case "CommuteCard": return <CommuteCard section={section} locale={locale} route={route} />;
+    case "Fees": return <Fees section={section} locale={locale} />;
+    case "BatchCalendar": return <BatchCalendar section={section} locale={locale} />;
+    case "TestPlan": return <TestPlan section={section} locale={locale} />;
+    case "ContactCentres": return <ContactCentres section={section} locale={locale} />;
+    case "SyllabusTable": return route === "jee-syllabus" ? <SyllabusTeaser section={section} locale={locale} /> : <SyllabusSummary section={section} locale={locale} />;
+    case "Enquire": return <Enquire section={section} locale={locale} />;
+    default: return section.kind === "faq" ? <Questions section={section} /> : <Prose section={section} locale={locale} />;
+  }
+})}

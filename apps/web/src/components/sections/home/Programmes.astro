@@ -1,0 +1,88 @@
+---
+/**
+ * Programmes (plan C1 12): the programmes table from the programmes widget, with batch size and
+ * fees from facts (fees say "ask us" until confirmed), and the Kota or Pune cost sum.
+ */
+import features from "../../../config/features.json";
+import { fill, strings, type Locale } from "../../../i18n/index.ts";
+import { fact } from "../../../lib/data.ts";
+import { formatDay, rupees } from "../../../lib/format.ts";
+import type { ProgrammesData, SectionData } from "../../../lib/types.ts";
+import ActionLink from "../../ui/ActionLink.astro";
+import ProgrammesTable from "../../ui/ProgrammesTable.astro";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const c = t.programmes.calc;
+const w = section.widget as ProgrammesData | undefined;
+// The Kota side starts with the typical amounts from the kota.cost fact; the parent overwrites them.
+const cost = fact(locale, "kota.cost");
+const amount = (value: string | undefined) => (value === undefined ? undefined : Number(value));
+const inr = (value: string | undefined) => rupees(Number(value), locale);
+const sides = [
+  {
+    id: "kota",
+    legend: c.kota,
+    fields: [
+      { label: c.coaching, value: amount(cost?.coaching), hint: cost && fill(c.coachingHint, { typical: inr(cost.coaching), high: inr(cost.coachingHigh) }) },
+      { label: c.hostel, value: amount(cost?.hostelYear), hint: cost && fill(c.hostelHint, { low: inr(cost.hostelMonthLow), high: inr(cost.hostelMonthHigh) }) },
+      { label: c.travel },
+      { label: c.other },
+    ],
+  },
+  { id: "pune", legend: c.pune, fields: [{ label: c.coaching }, { label: c.local }, { label: c.other }] },
+];
+---
+<section id={section.id} class="programmes section section--raised" aria-labelledby={`${section.id}-title`}>
+  <div class="container programmes__inner">
+    <div class="programmes__head">
+      <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} class="lede" />
+    </div>
+    <ProgrammesTable widget={w} locale={locale} />
+    {section.action && <div class="actions"><ActionLink action={section.action} locale={locale} /></div>}
+
+    {features.costCalculator && (
+      <form class="calc card" data-cost-calc aria-labelledby={`${section.id}-calc`}>
+        <h3 id={`${section.id}-calc`} class="t-h2">{c.title}</h3>
+        <p class="muted">{c.note}</p>
+        <div class="calc__sides">
+          {sides.map((side) => (
+            <fieldset class="calc__side">
+              <legend>{side.legend}</legend>
+              {side.fields.map((field, i) => (
+                <label class="field">
+                  <span>{field.label}</span>
+                  <input type="number" inputmode="numeric" min="0" step="1000" data-side={side.id} name={`${side.id}-${i}`}
+                    value={field.value} aria-describedby={field.hint ? `${side.id}-${i}-hint` : undefined} />
+                  {field.hint && <small id={`${side.id}-${i}-hint`} class="muted">{field.hint}</small>}
+                </label>
+              ))}
+              <p class="calc__total"><span>{c.total}</span> <output class="tabular" data-total={side.id}></output></p>
+            </fieldset>
+          ))}
+        </div>
+        <output class="calc__result t-h2" data-result aria-live="polite"
+          data-empty={c.empty} data-same={c.same} data-kota-more={c.kotaMore} data-pune-more={c.puneMore}>{c.empty}</output>
+        {cost && <p class="muted calc__source">{fill(c.source, { date: formatDay(cost.checked, locale) })}</p>}
+      </form>
+    )}
+  </div>
+</section>
+
+<style>
+  .programmes__inner { display: grid; gap: var(--space-6); }
+  .programmes__head { display: grid; gap: var(--space-4); }
+  .calc { display: grid; gap: var(--space-4); background: var(--bg); }
+  .calc__sides { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--column-min)), 1fr)); }
+  .calc__side { display: grid; gap: var(--space-3); align-content: start; }
+  .calc__side legend { font-weight: var(--weight-semibold); color: var(--accent-text); margin-block-end: var(--space-2); }
+  .calc__total { display: flex; justify-content: space-between; font-weight: var(--weight-semibold); }
+  .calc__result { color: var(--accent-text); }
+  .calc__side small, .calc__source { font-size: var(--type-small-size); line-height: var(--type-small-lh); }
+</style>

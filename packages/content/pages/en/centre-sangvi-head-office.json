@@ -1,0 +1,55 @@
+{
+  "route": "centre-sangvi-head-office",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "D-SAP Ghule Tutorials Sangvi | Head office, New Sangvi",
+    "description": "Our head office in Krishna Nagar, New Sangvi, where D-SAP Ghule Tutorials began. JEE classes, hours, address and directions."
+  },
+  "h1": "D-SAP Ghule Tutorials Sangvi, our head office",
+  "intro": [
+    "Our head office is in Krishna Nagar, {{fact:org.founded#place}}. D-SAP Ghule Tutorials began here as a small coaching class in {{fact:org.founded#year}}."
+  ],
+  "sections": [
+    {
+      "id": "find-us",
+      "heading": "How to find us",
+      "body": [
+        "The centre is on Krishna Nagar Road Number 2, a few minutes from Pimple Gurav and Aundh.",
+        "The map link opens Google Maps with the centre pinned, so you can get directions from home."
+      ]
+    },
+    {
+      "id": "inside",
+      "heading": "Inside the centre",
+      "body": [
+        { "text": "Classrooms have AI-powered digital boards.", "requires": ["classroom.digital-board"] },
+        "{{fact:centre.sangvi.library}} gives students a quiet place to study before or after class."
+      ]
+    },
+    {
+      "id": "batches",
+      "heading": "JEE classes here",
+      "body": ["JEE classes run from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, with at most {{fact:batch.size}} students in a batch."]
+    },
+    {
+      "id": "questions",
+      "heading": "About this centre",
+      "questions": [
+        {
+          "q": "Is this the main branch?",
+          "a": "Yes. New Sangvi is our head office, and where we started in {{fact:org.founded#year}}."
+        },
+        {
+          "q": "Which areas are closest?",
+          "a": "Sangvi, Pimple Gurav and Aundh, and by road also Baner, Pashan, Pimple Nilakh and Pimple Saudagar. Families from Balewadi, Rahatani and Hinjewadi are usually closer to [our Wakad branch](page:centre-wakad)."
+        },
+        {
+          "q": "How do we fix a visit?",
+          "a": "Call us on {{fact:contact.phone}} or send a WhatsApp message to {{fact:contact.whatsapp}}."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

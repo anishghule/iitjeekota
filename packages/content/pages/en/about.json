@@ -1,0 +1,42 @@
+{
+  "route": "about",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "About D-SAP Ghule Tutorials, since {{fact:org.founded#year}}",
+    "description": "D-SAP Ghule Tutorials began in {{fact:org.founded#place}} in {{fact:org.founded#year}}. Today it runs JEE coaching in Pune, powered by a top Kota institute."
+  },
+  "h1": "About D-SAP Ghule Tutorials",
+  "intro": [
+    "D-SAP Ghule Tutorials started in {{fact:org.founded#year}} as a small coaching class in {{fact:org.founded#place}}, founded by {{fact:org.founder#name}}."
+  ],
+  "sections": [
+    {
+      "id": "prof-ghule",
+      "kind": "prose",
+      "heading": "{{fact:org.founder#name}}",
+      "body": [
+        "{{fact:org.founder#name}} has been teaching for {{fact:org.founder#teachingYears}} years, and founded D-SAP Ghule Tutorials in {{fact:org.founded#year}}. The guides on this site are written by {{fact:org.founder#name}}."
+      ]
+    },
+    {
+      "id": "history",
+      "kind": "prose",
+      "heading": "From one class to two centres",
+      "body": [
+        "More than {{fact:org.students}} students have studied with us since {{fact:org.founded#year}}, in school and entrance exam courses. Today we teach at two centres, the head office in {{fact:org.founded#place}} and a branch in Wakad."
+      ]
+    },
+    {
+      "id": "jee-programme",
+      "kind": "prose",
+      "heading": "The JEE programme, powered by Kota",
+      "body": [
+        {
+          "text": "Our JEE programme is powered by a top coaching institute in Kota, and faculty from Kota teach it. [Powered by Kota](page:powered-by-kota) explains what the affiliation covers.",
+          "requires": ["partner.affiliation", "faculty.kota"]
+        }
+      ]
+    }
+  ]
+}

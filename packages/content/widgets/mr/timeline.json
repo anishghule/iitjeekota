@@ -1,0 +1,47 @@
+{
+  "$description": "Marathi draft of the two-year timeline on home. For review by a native Marathi writer before launch.",
+  "steps": [
+    {
+      "when": "एप्रिल, दहावीनंतर",
+      "title": "फाउंडेशन कालावधी",
+      "detail": "अकरावीपूर्वी एक छोटी सुरुवात, म्हणजे पहिले काही आठवडे जड जात नाहीत.",
+      "requires": ["programme.start"]
+    },
+    {
+      "when": "जून, अकरावी",
+      "title": "दोन वर्षांचा प्रोग्राम सुरू",
+      "detail": "भौतिकशास्त्र, रसायनशास्त्र आणि गणित, {{fact:batch.days}}, {{fact:batch.timings#start}} ते {{fact:batch.timings#end}} वाजेपर्यंत.",
+      "requires": ["programme.start", "programme.subjects"]
+    },
+    {
+      "when": "अकरावी",
+      "title": "तिन्ही विषयांचा पाया",
+      "detail": "प्रत्येक प्रकरणानंतर टेस्ट आणि दर चौथ्या आठवड्याला एक मोठी टेस्ट. दर महिन्याला JEE Main चा पूर्ण मॉक.",
+      "requires": ["test-series.format"]
+    },
+    {
+      "when": "बारावी",
+      "title": "JEE Advanced ची तयारी जोडली जाते",
+      "detail": "मासिक JEE Main मॉकसोबत दर तिमाहीला एक JEE Advanced मॉक.",
+      "requires": ["test-series.format"]
+    },
+    {
+      "when": "{{fact:exam.jee-main#sessions}}, बारावी",
+      "title": "JEE Main",
+      "detail": "दोन सत्रे. {{fact:exam.jee-main#hours}} तासांत {{fact:exam.jee-main#questions}} प्रश्न, सर्व अनिवार्य.",
+      "requires": ["exam.jee-main"]
+    },
+    {
+      "when": "JEE Main नंतर",
+      "title": "JEE Advanced",
+      "detail": "पात्र ठरणाऱ्यांसाठी: {{fact:exam.jee-advanced#hoursEach}} तासांचे {{fact:exam.jee-advanced#papers}} पेपर, एकाच दिवशी.",
+      "requires": ["exam.jee-advanced"]
+    }
+  ],
+  "rhythm": [
+    { "every": "दर आठवड्याला", "what": "एक प्रॅक्टिस शीट", "requires": ["method.practice-sheets"] },
+    { "every": "दर आठवड्याला", "what": "ऑनलाइन पोर्टलवर टेस्ट, आळीपाळीने टॉपिकनुसार आणि पूर्ण अभ्यासक्रमाची", "requires": ["test-series.format", "test-series.cbt"] },
+    { "every": "दर महिन्याला", "what": "JEE Main चा पूर्ण मॉक: {{fact:exam.jee-main#questions}} प्रश्न, {{fact:exam.jee-main#hours}} तास", "requires": ["test-series.format"] },
+    { "every": "कोणत्याही दिवशी", "what": "डाउट फोरमवर किंवा डाउट सेशनमध्ये शंका", "requires": ["method.doubts"] }
+  ]
+}

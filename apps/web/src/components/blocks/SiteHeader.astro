@@ -1,0 +1,166 @@
+---
+/**
+ * The site header (docs/design/navigation.md). Wide screens: links in a bar whose tint and blur
+ * fade out into the page, with no bottom line. Narrow screens: a menu button and a full-screen
+ * menu built from the same list. Pages come from routes.json (nav order).
+ */
+import { fill, strings, type Locale } from "../../i18n/index.ts";
+import { brandLines, brandName, navRoutes, routePath, site } from "../../lib/data.ts";
+import Icon from "../ui/Icon.astro";
+import LangSwitch from "./LangSwitch.astro";
+
+interface Props {
+  locale: Locale;
+  route: string;
+}
+const { locale, route } = Astro.props;
+const t = strings(locale);
+const brand = brandName(locale);
+const lines = brandLines(locale);
+const links = navRoutes(locale);
+const home = routePath("home", locale) ?? site.root.redirectTo;
+const phone = site.contact.phone;
+const whatsapp = site.contact.whatsapp;
+---
+<header class="site-header">
+  <div class="site-header__veil" aria-hidden="true"></div>
+  <div class="container site-header__bar">
+    <a class="brand" href={home} aria-label={fill(t.nav.home, { brand })}>
+      <img src={site.brand.logo["64"]} width="40" height="40" alt="" />
+      <!-- The link's aria-label carries the name; the visible text is shown once, by width. -->
+      <span class="brand__name brand__name--stacked nav-wide" aria-hidden="true">
+        {lines.map((line) => <span>{line}</span>)}
+      </span>
+      <span class="brand__name nav-narrow from-sm" aria-hidden="true">{brand}</span>
+    </a>
+
+    <nav class="site-nav nav-wide" aria-label={t.nav.label}>
+      <ul role="list">
+        {links.map((l) => (
+          <li><a href={l.path} aria-current={l.id === route ? "page" : undefined}>{l.name}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="site-header__tools">
+      <div class="nav-wide"><LangSwitch locale={locale} route={route} label={t.nav.languages} /></div>
+      {phone && (
+        <a class="button header-call" href={phone.href}>
+          <Icon name="phone" size="sm" />
+          <span class="from-sm">{t.nav.call}</span>
+          <span class="visually-hidden">{phone.display}</span>
+        </a>
+      )}
+      <button class="menu-button nav-narrow" type="button" data-menu-button aria-expanded="false" aria-controls="site-menu"
+        data-open={t.nav.menu} data-close={t.nav.closeMenu}>
+        <span class="menu-button__lines" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="visually-hidden" data-label>{t.nav.menu}</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="site-menu" class="site-menu nav-narrow" role="dialog" aria-label={t.nav.menu} hidden>
+    <div class="container site-menu__inner">
+      <nav aria-label={t.nav.label}>
+        <ul role="list" class="site-menu__links">
+          {links.map((l) => (
+            <li><a class="t-h2" href={l.path} aria-current={l.id === route ? "page" : undefined}>{l.name}</a></li>
+          ))}
+        </ul>
+      </nav>
+      <LangSwitch locale={locale} route={route} label={t.nav.languages} large />
+      <div class="actions">
+        {phone && <a class="button" href={phone.href}><Icon name="phone" size="sm" />{phone.display}</a>}
+        {whatsapp && <a class="button button--quiet" href={whatsapp.href}><Icon name="chat" size="sm" />{t.nav.whatsapp}</a>}
+      </div>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header { position: fixed; inset: 0 0 auto; z-index: var(--z-nav); }
+
+  /* The tint and the blur fade out together, so the page slides under with no line. */
+  .site-header__veil {
+    position: absolute;
+    inset: 0 0 auto;
+    height: var(--nav-extent);
+    pointer-events: none;
+    background: color-mix(in oklab, var(--bg) var(--nav-tint), transparent);
+    backdrop-filter: blur(var(--nav-blur));
+    mask-image: linear-gradient(to bottom, black var(--nav-fade-start), transparent);
+  }
+
+  .site-header__bar {
+    position: relative;
+    /* The links sit in the middle column, so they are centred in the bar whatever the widths of the
+       brand and the tools. Each child names its column, so a hidden nav leaves the middle empty. */
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: var(--space-5);
+    height: var(--nav-height);
+  }
+  .brand { grid-column: 1; justify-self: start; display: inline-flex; align-items: center; gap: var(--space-3); text-decoration: none; }
+  .site-nav { grid-column: 2; }
+  .brand img { width: var(--space-7); height: var(--space-7); }
+  .brand__name { font-family: var(--font-display); font-weight: var(--weight-heavy); font-stretch: var(--stretch-display); }
+  /* Two centred lines when the links show in the bar. The visibility classes set display: none
+     only below the breakpoint, so this grid is what shows above it. */
+  .brand__name--stacked { display: grid; justify-items: center; line-height: var(--type-h1-lh); white-space: nowrap; }
+
+  .site-nav ul { display: flex; gap: var(--space-5); }
+  .site-nav a { position: relative; text-decoration: none; color: var(--text-muted); padding-block: var(--space-2); white-space: nowrap; }
+  .site-nav a:hover, .site-nav a[aria-current="page"] { color: var(--text); }
+  .site-nav a::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 0;
+    height: var(--space-1);
+    border-radius: var(--radius-round);
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur-base) var(--ease-enter);
+  }
+  .site-nav a:hover::after, .site-nav a[aria-current="page"]::after { transform: scaleX(1); }
+
+  .site-header__tools { grid-column: 3; justify-self: end; display: flex; align-items: center; gap: var(--space-3); }
+  .header-call { min-height: var(--space-7); padding-block: var(--space-2); padding-inline: var(--space-4); }
+
+  .menu-button {
+    display: grid;
+    place-items: center;
+    width: var(--space-7);
+    height: var(--space-7);
+    border: 0;
+    border-radius: var(--radius-md);
+    background: var(--bg-raised);
+    box-shadow: var(--shadow-1);
+  }
+  .menu-button__lines { display: grid; gap: var(--space-1); width: var(--icon-lg); }
+  .menu-button__lines i {
+    display: block;
+    height: var(--space-1);
+    border-radius: var(--radius-round);
+    background: currentColor;
+    transition: transform var(--dur-base) var(--ease-enter), opacity var(--dur-fast) var(--ease-enter);
+  }
+  [aria-expanded="true"] .menu-button__lines i:nth-child(1) { transform: translateY(calc(var(--space-1) * 2)) rotate(45deg); }
+  [aria-expanded="true"] .menu-button__lines i:nth-child(2) { opacity: 0; }
+  [aria-expanded="true"] .menu-button__lines i:nth-child(3) { transform: translateY(calc(var(--space-1) * -2)) rotate(-45deg); }
+
+  .site-menu {
+    position: fixed;
+    inset: var(--nav-height) 0 0;
+    background: var(--bg);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .site-menu__inner { display: grid; gap: var(--space-7); padding-block: var(--space-6) var(--space-9); }
+  .site-menu__links { display: grid; gap: var(--space-4); }
+  .site-menu__links a { text-decoration: none; }
+  .site-menu__links a[aria-current="page"] { color: var(--accent-text); }
+
+  :global(html[data-menu-open]) { overflow: hidden; }
+</style>

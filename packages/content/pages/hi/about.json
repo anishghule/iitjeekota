@@ -1,0 +1,21 @@
+{
+  "route": "about",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "D-SAP घुले ट्यूटोरियल्स के बारे में, {{fact:org.founded#year}} से",
+    "description": "D-SAP घुले ट्यूटोरियल्स की शुरुआत {{fact:org.founded#year}} में {{fact:org.founded#place}} में हुई। आज यह पुणे में कोटा के एक टॉप संस्थान के साथ JEE कोचिंग चलाता है।"
+  },
+  "h1": "D-SAP घुले ट्यूटोरियल्स के बारे में",
+  "intro": [
+    "D-SAP घुले ट्यूटोरियल्स की शुरुआत {{fact:org.founded#year}} में {{fact:org.founded#place}} में एक छोटी कोचिंग क्लास के रूप में हुई थी। इसकी स्थापना {{fact:org.founder#name}} ने की।"
+  ],
+  "sections": [
+    { "id": "prof-ghule", "kind": "prose", "heading": "{{fact:org.founder#name}}", "body": [
+      "{{fact:org.founder#name}} {{fact:org.founder#teachingYears}} साल से पढ़ा रहे हैं, और उन्होंने {{fact:org.founded#year}} में D-SAP घुले ट्यूटोरियल्स की स्थापना की। इस साइट की गाइड {{fact:org.founder#name}} लिखते हैं।" ] },
+    { "id": "history", "kind": "prose", "heading": "एक क्लास से दो सेंटर तक", "body": [
+      "{{fact:org.founded#year}} से अब तक {{fact:org.students}} से ज़्यादा छात्र हमारे साथ पढ़ चुके हैं, स्कूल और प्रवेश परीक्षा के कोर्स में। आज हम दो सेंटर पर पढ़ाते हैं: {{fact:org.founded#place}} का हेड ऑफिस और वाकड की ब्रांच।" ] },
+    { "id": "jee-programme", "kind": "prose", "heading": "JEE प्रोग्राम, कोटा के साथ", "body": [
+      { "text": "हमारा JEE प्रोग्राम कोटा के एक टॉप कोचिंग संस्थान के साथ चलता है, और कोटा की फैकल्टी इसे पढ़ाती है। [कोटा के साथ](page:powered-by-kota) पेज बताता है कि इस जुड़ाव में क्या-क्या शामिल है।", "requires": ["partner.affiliation", "faculty.kota"] } ] }
+  ]
+}

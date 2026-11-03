@@ -1,0 +1,26 @@
+{
+  "$description": "Rows of the programmes table on home. route is the programme's page; its name comes from routes.json. A row waits for the facts it states. Fees show from the fees facts once confirmed; until then the table says to ask.",
+  "rows": [
+    {
+      "route": "class-11-jee",
+      "for": "Students who have passed Class 10, any board",
+      "length": "2 years",
+      "exams": "JEE Main and JEE Advanced",
+      "requires": ["programme.class-11"]
+    },
+    {
+      "route": "class-12-jee",
+      "for": "Students in Class 12",
+      "length": "1 year",
+      "exams": "JEE Main and JEE Advanced",
+      "requires": ["programme.class-12"]
+    },
+    {
+      "route": "foundation-class-9-10",
+      "for": "Students in Class 9 and 10",
+      "length": "Up to 2 years",
+      "exams": "Builds the base for JEE",
+      "requires": ["programme.foundation"]
+    }
+  ]
+}

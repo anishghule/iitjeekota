@@ -1,0 +1,30 @@
+{
+  "$description": "The sample test on home: three questions in the JEE Main style, marked like JEE Main (exam.jee-main-marking). The answer is the index of the right option. Questions and solutions are checked by hand; a teacher should review them before launch.",
+  "requires": ["exam.jee-main-marking"],
+  "minutes": 6,
+  "marking": { "right": 4, "wrong": -1, "blank": 0 },
+  "markingNote": "Marked like JEE Main: {{fact:exam.jee-main-marking#right}} for a right answer, {{fact:exam.jee-main-marking#wrong}} for a wrong one, {{fact:exam.jee-main-marking#blank}} for a question left.",
+  "questions": [
+    {
+      "subject": "physics",
+      "text": "A ball is thrown straight up at 20 m/s. Taking g = 10 m/s², how high does it rise?",
+      "options": ["10 m", "20 m", "30 m", "40 m"],
+      "answer": 1,
+      "solution": "At the top the ball stops, so v² = 2gh. That gives h = 20² ÷ (2 × 10) = 20 m."
+    },
+    {
+      "subject": "chemistry",
+      "text": "0.5 mol of aluminium reacts with excess HCl: 2Al + 6HCl → 2AlCl₃ + 3H₂. How many moles of H₂ form?",
+      "options": ["0.25", "0.50", "0.75", "1.50"],
+      "answer": 2,
+      "solution": "2 mol of Al give 3 mol of H₂. So 0.5 mol of Al gives 0.5 × 3 ÷ 2 = 0.75 mol of H₂."
+    },
+    {
+      "subject": "maths",
+      "text": "What is the value of ∫₀¹ x·e^(x²) dx?",
+      "options": ["(e − 1) ÷ 2", "e − 1", "e ÷ 2", "(e + 1) ÷ 2"],
+      "answer": 0,
+      "solution": "Put u = x², so du = 2x dx. The integral becomes ½ ∫₀¹ eᵘ du = (e − 1) ÷ 2."
+    }
+  ]
+}

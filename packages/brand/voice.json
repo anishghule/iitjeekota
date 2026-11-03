@@ -1,0 +1,137 @@
+{
+  "$description": "Voice rules for every word on iitjeekota.com. Read by the copy linter (make copy-lint), the brand guide and the linter's tests. Each example's before must fail and its after must pass.",
+  "scan": {
+    "$description": "What make copy-lint reads, relative to the repository root. Page copy and widget data are in packages/content; the site's own UI strings are in apps/web/src/i18n.",
+    "include": ["CLAUDE.md", "README.md", "docs", "packages/brand/identity.json", "packages/brand/og/copy.json", "packages/media/manifest.json", "packages/site", "packages/content", "apps/web/src/i18n"],
+    "exclude": ["packages/brand/voice.json", "packages/site/dist", "packages/site/jsonld-rules.json"]
+  },
+  "principles": [
+    "Write like a senior teacher talking to a parent at the front desk.",
+    "Short sentences. Common words. One idea per sentence.",
+    "Numbers beat adjectives: say 30 students a batch, not small batches.",
+    "Every claim has a source in the facts register, or it is cut.",
+    "Indian English spelling: programme, centre, enrol, practise (verb).",
+    "Sentence case for every heading. No labels above headings.",
+    "Hindi and Marathi are written by native writers, not translated by machine.",
+    "Explain Kota once and clearly: D-SAP Ghule Tutorials is powered by a named Kota institute, with Kota faculty. It is a partnership, never a style copied from Kota."
+  ],
+  "dashes": {
+    "characters": ["—", "–", "‒", "―"],
+    "spacedHyphen": true,
+    "message": "Use a full stop, comma or colon instead of a dash. For ranges write 9 to 10."
+  },
+  "banned": {
+    "en": [
+      { "term": "unlock", "use": "open, start" },
+      { "term": "unleash", "use": "use, start" },
+      { "term": "elevate", "use": "raise, improve" },
+      { "term": "empower", "use": "help, let" },
+      { "term": "seamless", "use": "smooth, simple" },
+      { "term": "seamlessly", "use": "smoothly" },
+      { "term": "cutting-edge", "use": "say what it is" },
+      { "term": "state-of-the-art", "use": "say what it is" },
+      { "term": "world-class", "use": "give the fact that makes it good" },
+      { "term": "best-in-class", "use": "give the fact" },
+      { "term": "next-level", "use": "say what changes" },
+      { "term": "game-changer", "use": "say what changes" },
+      { "term": "game changer", "use": "say what changes" },
+      { "term": "journey", "use": "two years, the course, preparation" },
+      { "term": "delve", "use": "look at" },
+      { "term": "holistic", "use": "complete, all-round" },
+      { "term": "tailored", "use": "planned for, set for" },
+      { "term": "nurture", "use": "teach, support" },
+      { "term": "robust", "use": "strong, reliable" },
+      { "term": "leverage", "use": "use" },
+      { "term": "synergy", "use": "say what works together" },
+      { "term": "revolutionise", "use": "change" },
+      { "term": "revolutionize", "use": "change" },
+      { "term": "transformative", "use": "say what changes" },
+      { "term": "embark", "use": "start" },
+      { "term": "realm", "use": "area, subject" },
+      { "term": "tapestry", "use": "mix" },
+      { "term": "testament", "use": "proof" },
+      { "term": "foster", "use": "build, support" },
+      { "term": "paramount", "use": "most important" },
+      { "term": "pivotal", "use": "key" },
+      { "term": "myriad", "use": "many" },
+      { "term": "plethora", "use": "many" },
+      { "term": "bespoke", "use": "planned for" },
+      { "term": "curated", "use": "chosen" },
+      { "term": "meticulous", "use": "careful" },
+      { "term": "meticulously", "use": "carefully" },
+      { "term": "unparalleled", "use": "give the fact" },
+      { "term": "unmatched", "use": "give the fact" },
+      { "term": "supercharge", "use": "speed up" },
+      { "term": "harness", "use": "use" },
+      { "term": "deep dive", "use": "close look" },
+      { "term": "look no further", "use": "cut it" },
+      { "term": "rest assured", "use": "cut it" },
+      { "term": "in today's world", "use": "cut it" },
+      { "term": "fast-paced", "use": "cut it" },
+      { "term": "one-stop", "use": "say what is included" },
+      { "term": "top-notch", "use": "give the fact" },
+      { "term": "second to none", "use": "give the fact" },
+      { "term": "kota-style", "use": "powered by Kota (name the partner)" },
+      { "term": "kota style", "use": "powered by Kota (name the partner)" },
+      { "term": "utilise", "use": "use" },
+      { "term": "utilize", "use": "use" },
+      { "term": "commence", "use": "start" },
+      { "term": "endeavour", "use": "try" },
+      { "term": "facilitate", "use": "help" },
+      { "term": "prior to", "use": "before" },
+      { "term": "in order to", "use": "to" },
+      { "term": "numerous", "use": "many" }
+    ],
+    "hi": [],
+    "mr": []
+  },
+  "claims": {
+    "$description": "Words that make a claim. Allowed only where a line carries `copy-lint-allow: <word>` after legal review (CCPA coaching guidelines 2024), for example a blog title in question form.",
+    "en": ["best", "no. 1", "number one", "top-ranked", "guarantee", "guaranteed", "100%", "assured", "sure-shot", "sure shot"],
+    "hi": ["सर्वश्रेष्ठ", "नंबर 1", "गारंटी", "100%"],
+    "mr": ["सर्वोत्तम", "नंबर 1", "हमखास", "गॅरंटी", "100%"]
+  },
+  "warnings": {
+    "$description": "Not wrong, but usually a sign of padded or formal writing. Reported, never fatal.",
+    "en": ["additionally", "furthermore", "moreover", "comprehensive", "crucial", "vital", "excel", "passionate", "ensure", "excellence", "dream"],
+    "hi": [],
+    "mr": []
+  },
+  "patterns": {
+    "en": [
+      { "pattern": "\\bnot (?:just|only|merely)\\b[^.!?]{1,80}\\bbut\\b", "message": "Drop the 'not just X, but Y' frame. Say Y." },
+      { "pattern": "(?:^|[.!?]\\s+)imagine\\b", "message": "Do not open with 'Imagine'. State the fact." },
+      { "pattern": "\\bit'?s not about\\b", "message": "Say what it is about." },
+      { "pattern": "\\bmore than just\\b", "message": "Say what it is." },
+      { "pattern": "\\bwhether you'?re\\b", "message": "Speak to one reader." },
+      { "pattern": "!", "message": "No exclamation marks.", "severity": "warning" }
+    ],
+    "hi": [],
+    "mr": []
+  },
+  "readability": {
+    "en": { "minWords": 120, "minReadingEase": 55, "maxGrade": 9, "maxSentenceWords": 28 }
+  },
+  "examples": [
+    {
+      "before": "Unlock your child's potential with our world-class Kota-style coaching.",
+      "after": "Your child learns from Kota faculty in Pune, in a batch of 30."
+    },
+    {
+      "before": "We offer a holistic journey that seamlessly blends boards and JEE.",
+      "after": "Board revision and JEE practice run in the same week, so neither falls behind."
+    },
+    {
+      "before": "Not just coaching, but a complete transformation.",
+      "after": "Daily practice, a weekly test and a report every Sunday."
+    },
+    {
+      "before": "Batches for Class 9 – 10 start soon — enrol now!",
+      "after": "Batches for Class 9 and 10 start on 1 April. Enrolment is open."
+    },
+    {
+      "before": "The best IIT JEE coaching in Pune, guaranteed results.",
+      "after": "IIT JEE coaching in Pune, powered by Kota. Results with course and year are on the results page."
+    }
+  ]
+}

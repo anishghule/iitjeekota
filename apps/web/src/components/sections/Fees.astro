@@ -1,0 +1,27 @@
+---
+/** The fees: what the fee is, said plainly, and a way to ask. No amount is shown until one is confirmed. */
+import type { Locale } from "../../i18n/index.ts";
+import type { SectionData } from "../../lib/types.ts";
+import ActionLink from "../ui/ActionLink.astro";
+import Paragraphs from "../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+---
+<section id={section.id} class="section section--raised" aria-labelledby={`${section.id}-title`}>
+  <div class="container fees">
+    <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+    <div class="fees__card card">
+      <Paragraphs paragraphs={section.body} class="lede" />
+      {section.action && <div class="actions"><ActionLink action={section.action} locale={locale} /></div>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .fees { display: grid; gap: var(--space-5); }
+  .fees__card { display: grid; gap: var(--space-5); background: var(--bg); max-width: var(--measure); }
+</style>

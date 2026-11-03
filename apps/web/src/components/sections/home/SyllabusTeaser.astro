@@ -1,0 +1,254 @@
+---
+/**
+ * The JEE syllabus as an index (plan C2, home teaser; design in docs/design/syllabus-table.md).
+ * One subject at a time, chapters in rows under their class. A row shows its code (11-P-03: class,
+ * subject, place among that subject's chapters of the class), its name and its JEE Main unit; the
+ * topics open on demand in a native <details>. All of it is in the HTML, so the index reads the
+ * same without JavaScript. The island only filters rows, opens the one in the URL hash and
+ * expands or collapses the visible ones.
+ */
+import { fill, strings, type Locale } from "../../../i18n/index.ts";
+import { syllabus } from "../../../lib/data.ts";
+import type { Chapter, SectionData } from "../../../lib/types.ts";
+import FilterChips from "../../ui/FilterChips.astro";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const data = syllabus(locale);
+const classes = [11, 12];
+const subjects = data.subjects.map((s) => {
+  const chapters = data.chapters.filter((c) => c.subject === s.id);
+  return { ...s, byClass: classes.map((n) => ({ n, chapters: chapters.filter((c) => c.classes[0] === n) })).filter((g) => g.chapters.length > 0) };
+});
+const unit = (c: Chapter) => (c.main === null ? t.syllabus.advancedOnly : fill(t.syllabus.rowUnit, { n: c.main }));
+const filters = [
+  // The list (phones) shows one subject, so it starts on the first; the table (wide) shows all three and the island starts it on All.
+  { kind: "subject", label: t.syllabus.subject,
+    options: [{ value: "all", label: t.syllabus.all, on: false }, ...data.subjects.map((s, i) => ({ value: s.id, label: s.name, on: i === 0 }))] },
+  { kind: "class", label: t.syllabus.classFilter,
+    options: [{ value: "all", label: t.syllabus.all, on: true }, ...classes.map((n) => ({ value: String(n), label: fill(t.syllabus.class, { n }), on: false }))] },
+  { kind: "exam", label: t.syllabus.exam,
+    options: [{ value: "all", label: t.syllabus.all, on: true }, { value: "main", label: t.syllabus.main, on: false }, { value: "advanced", label: t.syllabus.advanced, on: false }] },
+];
+---
+<section id={section.id} class="syllabus section section--sunken" data-syllabus data-count-template={t.syllabus.count}
+  data-expand-label={t.syllabus.expandAll} data-collapse-label={t.syllabus.collapseAll} aria-labelledby={`${section.id}-title`}>
+  <div class="container syllabus__inner">
+    <div class="syllabus__head">
+      <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} class="lede" />
+    </div>
+    <div class="syllabus__bar" role="group" aria-label={t.syllabus.filters}>
+      {filters.map((f) => <FilterChips filter={f} />)}
+      <div class="syllabus__status">
+        <p class="muted tabular" data-count aria-live="polite"></p>
+        <button type="button" class="syllabus__toggle" data-expand aria-pressed="false">{t.syllabus.expandAll}</button>
+      </div>
+    </div>
+    <div class="syllabus__table" role="group" aria-label={t.syllabus.tableLabel}>
+      {subjects.map((s) => (
+        <div class="block" data-subject-block={s.id}>
+          <h3 class="block__name">{s.name}</h3>
+          {s.byClass.map((g) => (
+            <div class="block__class">
+              <h4 class="block__heading">{fill(t.syllabus.class, { n: g.n })}</h4>
+              <div class="tiles">
+                {g.chapters.map((c) => (
+                  <button type="button" class="tile" data-tile={c.id} data-subject={c.subject} data-classes={c.classes.join(" ")}
+                    data-main={c.main !== null ? "" : undefined} data-advanced={c.advanced.length > 0 ? "" : undefined}
+                    data-advanced-only={c.main === null ? "" : undefined} aria-pressed="false">
+                    <span class="tile__code tabular">{c.code}</span>
+                    <span class="tile__name">{c.name}</span>
+                    <span class="tile__unit tabular">{c.main === null ? t.syllabus.advancedMark : c.main}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+    <div class="syllabus__index" role="group" aria-label={t.syllabus.tableLabel}>
+      {subjects.map((s, i) => (
+        <div class="subject" data-subject-block={s.id} hidden={i > 0}>
+          {s.byClass.map((g) => (
+            <section class="subject__class" data-class-group aria-label={`${s.name}, ${fill(t.syllabus.class, { n: g.n })}`}>
+              <h3 class="subject__heading">{fill(t.syllabus.class, { n: g.n })}</h3>
+              <ol role="list">
+                {g.chapters.map((c) => {
+                  const row = { "data-chapter": c.id, "data-subject": c.subject, "data-classes": c.classes.join(" "),
+                    "data-main": c.main !== null ? "" : undefined, "data-advanced": c.advanced.length > 0 ? "" : undefined };
+                  const head = (
+                    <>
+                      <span class="row__code tabular">{c.code}</span>
+                      <span class="row__name">{c.name}</span>
+                      <span class="row__unit muted" data-advanced-only={c.main === null ? "" : undefined}>{unit(c)}</span>
+                    </>
+                  );
+                  return (
+                    <li {...row}>
+                      {c.topics?.length ? (
+                        <details id={c.code.toLowerCase()}>
+                          <summary class="row">{head}</summary>
+                          <div class="row__body">
+                            {c.classes.length > 1 && <p class="muted">{fill(t.syllabus.classes, { a: c.classes[0] ?? "", b: c.classes[1] ?? "" })}</p>}
+                            <h4>{t.syllabus.covers}</h4>
+                            <ul>{c.topics.map((topic) => <li>{topic}</li>)}</ul>
+                            {c.advancedAlso?.length ? (
+                              <>
+                                <h4>{t.syllabus.advancedAlso}</h4>
+                                <ul>{c.advancedAlso.map((topic) => <li>{topic}</li>)}</ul>
+                              </>
+                            ) : null}
+                          </div>
+                        </details>
+                      ) : <div class="row" id={c.code.toLowerCase()}>{head}</div>}
+                    </li>
+                  );
+                })}
+              </ol>
+            </section>
+          ))}
+        </div>
+      ))}
+    </div>
+    <aside class="syllabus-panel" data-panel role="dialog" aria-labelledby={`${section.id}-panel-title`} hidden>
+      <div class="syllabus-panel__head">
+        <p class="syllabus-panel__meta" data-panel-meta></p>
+        <button type="button" class="syllabus-panel__close" data-panel-close>{t.common.close}</button>
+      </div>
+      <h3 class="syllabus-panel__title" id={`${section.id}-panel-title`} data-panel-title></h3>
+      <div class="syllabus-panel__body" data-panel-body></div>
+    </aside>
+  </div>
+</section>
+
+<style>
+  /* A flex column, not a grid: a sticky grid item can only move within its own row. */
+  .syllabus__inner { display: flex; flex-direction: column; gap: var(--space-5); }
+  .syllabus__head { display: grid; gap: var(--space-4); }
+  /* The filters follow the reader down the whole list, under the header, so changing subject never
+     means scrolling back up. Compact: subject on one line, class and exam in a strip that scrolls
+     sideways on a phone, the count and Expand all below. */
+  .syllabus__bar {
+    position: sticky;
+    top: var(--nav-height);
+    z-index: var(--z-sticky);
+    display: grid;
+    gap: var(--space-2);
+    margin-inline: calc(var(--space-gutter) * -1);
+    padding: var(--space-2) var(--space-gutter);
+    background: var(--bg-sunken);
+    box-shadow: 0 var(--space-2) var(--space-3) calc(var(--space-2) * -1) var(--bg);
+  }
+  .syllabus__bar :global(.chip) { min-height: var(--space-6); padding-inline: var(--space-3); white-space: nowrap; }
+  /* A phone stacks the filters, one group above the other; a group too wide for the screen scrolls sideways. */
+  .syllabus__bar > :global(.chips) { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+  .syllabus__status { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); }
+  /* Wide: the filters share a line, and the table replaces the list. */
+  :global(:root[data-layout="wide"]) .syllabus__bar { grid-auto-flow: column; justify-content: start; align-items: center; gap: var(--space-6); }
+  :global(:root[data-layout="wide"]) .syllabus__bar > :global(.chips) { flex-wrap: nowrap; overflow: visible; }
+  :global(:root[data-layout="wide"]) .syllabus__status { gap: var(--space-5); margin-inline-start: auto; }
+  :global(:root[data-layout="wide"]) [data-expand] { display: none; }
+  .syllabus__table { display: none; }
+  :global(:root[data-layout="wide"]) .syllabus__table { display: grid; gap: var(--space-6); grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: start; }
+  :global(:root[data-layout="wide"]) .syllabus__index { display: none; }
+  .block { display: grid; gap: var(--space-4); }
+  .block__name { display: flex; justify-content: space-between; align-items: baseline; font-size: var(--type-body-lg-size); }
+  .block__class { display: grid; gap: var(--space-2); }
+  .block__heading { font-size: var(--type-small-size); color: var(--text-muted); font-weight: var(--weight-semibold); }
+  .tiles { display: grid; gap: var(--space-2); grid-template-columns: repeat(auto-fill, minmax(7rem, 1fr)); }
+  .tile {
+    --tint: var(--subject-physics);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: var(--space-1);
+    min-height: 6.5rem;
+    padding: var(--space-2) var(--space-3);
+    border: 0;
+    border-radius: var(--radius-sm);
+    background: var(--bg-raised);
+    box-shadow: inset 0 var(--space-1) 0 var(--tint), var(--shadow-1);
+    text-align: start;
+    transition: opacity var(--dur-base) var(--ease-enter), transform var(--dur-fast) var(--ease-enter);
+  }
+  [data-subject-block="chemistry"] .tile { --tint: var(--subject-chemistry); }
+  [data-subject-block="maths"] .tile { --tint: var(--subject-maths); }
+  .tile[data-advanced-only] { box-shadow: inset 0 0 0 var(--space-1) var(--accent), var(--shadow-1); }
+  .tile:hover { transform: translateY(calc(var(--space-1) * -1)); }
+  .tile[aria-pressed="true"] { background: var(--action-bg); color: var(--action-text); }
+  .tile[data-dim] { opacity: 0.25; }
+  .tile__code { font-size: var(--type-small-size); color: var(--text-muted); }
+  .tile__name { font-size: var(--type-small-size); font-weight: var(--weight-semibold); line-height: var(--type-small-lh); overflow-wrap: anywhere; hyphens: auto; min-width: 0; }
+  .tile__unit { justify-self: end; font-family: var(--font-display); font-weight: var(--weight-heavy); color: var(--accent-text); }
+  .tile[aria-pressed="true"] :is(.tile__code, .tile__unit) { color: inherit; }
+  /* The panel opens from the bottom on a phone and at the bottom right on a wide screen. */
+  .syllabus-panel {
+    position: fixed;
+    inset: auto 0 0 auto;
+    z-index: var(--z-overlay);
+    width: min(100%, calc(var(--column-min) * 1.4));
+    max-height: 75dvh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--bg-raised);
+    box-shadow: var(--shadow-4);
+    animation: sheet-in var(--dur-base) var(--ease-enter);
+  }
+  @keyframes sheet-in { from { transform: translateY(var(--space-7)); opacity: 0; } }
+  .syllabus-panel__head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--space-4); }
+  .syllabus-panel__meta { color: var(--text-muted); font-weight: var(--weight-semibold); }
+  .syllabus-panel__close { border: 0; background: transparent; color: var(--text); font-weight: var(--weight-semibold); padding: var(--space-2); }
+  .syllabus-panel__title { font-family: var(--font-display); font-weight: var(--weight-heavy); font-size: var(--type-h1-size); line-height: var(--type-h1-lh); }
+  .syllabus-panel__body { display: grid; gap: var(--space-2); }
+  .syllabus-panel__body :global(h4) { margin-block-start: var(--space-2); font-size: var(--type-small-size); color: var(--text-muted); }
+  .syllabus-panel__body :global(ul) { padding-inline-start: var(--space-5); }
+  .syllabus-panel__body :global(li) { padding-block: var(--space-1); }
+  .syllabus-panel__body :global(li::marker) { color: var(--accent); }
+  .syllabus__toggle { border: 0; background: transparent; padding: var(--space-2) 0; color: var(--accent-text); font-weight: var(--weight-semibold); text-decoration: underline; text-underline-offset: 0.2em; }
+  .subject { display: grid; gap: var(--space-6); }
+  .subject__heading { padding-block-end: var(--space-2); font-size: var(--type-small-size); color: var(--text-muted); font-weight: var(--weight-semibold); }
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-1) var(--space-4);
+    padding-block: var(--space-3);
+    box-shadow: inset 0 -1px 0 var(--bg-raised);
+    list-style: none;
+  }
+  summary.row { cursor: pointer; padding-inline-end: var(--space-6); position: relative; }
+  summary.row::-webkit-details-marker { display: none; }
+  summary.row::after {
+    content: "";
+    position: absolute;
+    inset-inline-end: var(--space-2);
+    top: calc(var(--space-3) + 0.35em);
+    width: 0.55em;
+    height: 0.55em;
+    border-inline-end: var(--space-1) solid var(--text-muted);
+    border-block-end: var(--space-1) solid var(--text-muted);
+    transform: rotate(45deg);
+    transition: transform var(--dur-fast) var(--ease-enter);
+  }
+  details[open] > summary.row::after { transform: translateY(0.25em) rotate(-135deg); }
+  summary.row:hover .row__name { color: var(--accent-text); }
+  .row__code { min-width: 7ch; color: var(--text-muted); font-size: var(--type-small-size); }
+  .row__name { flex: 1 1 12rem; font-weight: var(--weight-semibold); }
+  .row__unit { font-size: var(--type-small-size); }
+  .row__unit[data-advanced-only] { color: var(--accent-text); font-weight: var(--weight-semibold); }
+  .row__body { display: grid; gap: var(--space-2); padding-block: var(--space-2) var(--space-4); padding-inline-start: calc(7ch + var(--space-4)); box-shadow: inset 0 -1px 0 var(--bg-raised); }
+  .row__body h4 { margin-block-start: var(--space-2); font-size: var(--type-small-size); color: var(--text-muted); }
+  .row__body ul { padding-inline-start: var(--space-5); columns: 16rem; column-gap: var(--space-6); }
+  .row__body li { break-inside: avoid; padding-block: var(--space-1); }
+  .row__body li::marker { color: var(--accent); }
+</style>

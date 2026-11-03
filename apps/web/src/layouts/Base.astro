@@ -1,0 +1,104 @@
+---
+/**
+ * Every page: head metadata from the page data, the stylesheets from the token and icon packages,
+ * the icon sprite, header, footer, the autoscroll toggle and the one site script.
+ */
+import "@dsap/tokens/fonts.css";
+import "@dsap/tokens/tokens.css";
+import "@dsap/tokens/typography.css";
+import "@dsap/tokens/breakpoints.css";
+import "@dsap/icons/icons.css";
+import "../styles/base.css";
+import { tokens } from "@dsap/tokens";
+import preload from "@dsap/tokens/fonts.preload.json";
+import sprite from "@dsap/icons/sprite.svg?raw";
+import settings from "../config/site.json";
+import features from "../config/features.json";
+import { strings, type Locale } from "../i18n/index.ts";
+import { brandName, mediaFile, site } from "../lib/data.ts";
+import type { HeadData } from "../lib/types.ts";
+import SiteFooter from "../components/blocks/SiteFooter.astro";
+import SiteHeader from "../components/blocks/SiteHeader.astro";
+import Icon from "../components/ui/Icon.astro";
+
+interface Props {
+  page: HeadData;
+  locale: Locale;
+}
+const { page, locale } = Astro.props;
+const t = strings(locale);
+const hreflang = site.locales.find((l) => l.code === locale)?.hreflang ?? locale;
+const og = mediaFile(`og/default-${locale}` as Parameters<typeof mediaFile>[0], locale);
+// JSON-LD is data, not script; escaping "<" keeps a value from closing the element early.
+const jsonld = page.jsonld.map((graph) => JSON.stringify(graph).replace(/</g, "\\u003c"));
+---
+<!doctype html>
+<html lang={locale} data-surface="ink" data-has-autoscroll={features.autoscroll ? "" : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{page.meta.title}</title>
+    <meta name="description" content={page.meta.description} />
+    {/* Before launch nothing is indexed. After it, a large image preview is allowed (Google robots meta tag docs).
+        A page with no address of its own (the not-found page) is never indexed. */}
+    <meta name="robots" content={settings.indexing && page.meta.canonical ? "max-image-preview:large" : "noindex, nofollow"} />
+    {page.meta.canonical && <link rel="canonical" href={page.meta.canonical} />}
+    {Object.entries(page.meta.alternates ?? {}).map(([code, url]) => <link rel="alternate" hreflang={code} href={url} />)}
+    {preload.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
+    {site.brand.headLinks.map((l) => <link {...l} />)}
+    <meta name="theme-color" content={tokens.surface.ink.bg} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={brandName(locale)} />
+    <meta property="og:title" content={page.meta.title} />
+    <meta property="og:description" content={page.meta.description} />
+    {page.meta.canonical && <meta property="og:url" content={page.meta.canonical} />}
+    <meta property="og:locale" content={hreflang.replace("-", "_")} />
+    {og && <meta property="og:image" content={new URL(og.url, site.origin).href} />}
+    {og && <meta property="og:image:alt" content={og.alt} />}
+    {jsonld.map((json) => <script type="application/ld+json" is:inline set:html={json} />)}
+  </head>
+  <body>
+    <Fragment set:html={sprite} />
+    <canvas class="world" data-world aria-hidden="true"></canvas>
+    <a class="skip-link button" href="#main">{t.common.skip}</a>
+    <SiteHeader locale={locale} route={page.route} />
+    <main id="main">
+      <slot />
+    </main>
+    <SiteFooter locale={locale} />
+    {features.autoscroll && (
+      <button class="autoscroll-toggle chip" type="button" data-autoscroll-toggle hidden aria-pressed="true"
+        title={t.autoscroll.label} data-on={t.autoscroll.on} data-off={t.autoscroll.off}>
+        <Icon name="pause" size="sm" />
+        <span data-label>{t.autoscroll.on}</span>
+      </button>
+    )}
+    <script>
+      import "../islands/main.ts";
+    </script>
+  </body>
+</html>
+
+<style>
+  .skip-link { position: absolute; inset-inline-start: var(--space-4); top: var(--space-4); z-index: var(--z-toast); transform: translateY(-200%); }
+  .skip-link:focus { transform: none; }
+  .autoscroll-toggle {
+    position: fixed;
+    inset: auto var(--space-5) var(--autoscroll-inset) auto;
+    z-index: var(--z-sticky);
+    gap: var(--space-2);
+    /* A faint, blurred tint at rest (ghost tokens) so it does not sit on the content; solid only
+       while it is being used. It is a state toggle, so the chip's solid "pressed" look is not used
+       and the text keeps its colour. */
+    background: color-mix(in oklab, var(--bg-raised) var(--ghost-tint), transparent);
+    backdrop-filter: blur(var(--ghost-blur));
+    color: var(--text);
+    box-shadow: none;
+  }
+  .autoscroll-toggle[aria-pressed="false"] { color: var(--text-muted); }
+  .autoscroll-toggle:hover, .autoscroll-toggle:focus-visible, .autoscroll-toggle:active {
+    background: var(--bg-raised);
+    color: var(--text);
+    box-shadow: var(--shadow-3);
+  }
+</style>

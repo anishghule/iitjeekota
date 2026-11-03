@@ -1,0 +1,151 @@
+{
+  "$description": "Everything a designer might tune in the 3D scenes: quality tiers, the studio light that metal reflects, and each scene's size, detail per tier, scroll keyframes and budget. Colours are token paths into packages/tokens (for example color.brass.200 or scene.light-key); finishes come from material.* tokens. Shapes that follow content (pentagon faces, syllabus tiles) take their count from the content, not from here. See docs/design/scenes.md.",
+  "tiers": {
+    "$description": "full: high-end devices. lite: four cores or fewer, or 4 GB of memory or less. still: reduced motion, Save-Data or no WebGL2, which get a still image instead.",
+    "lite": { "maxCores": 4, "maxMemoryGb": 4 },
+    "pixelRatio": { "full": 2, "lite": 1.5 }
+  },
+  "renderer": { "fov": 36, "near": 0.1, "far": 120, "exposure": 0.95 },
+  "studio": {
+    "$description": "Glowing panels the metal reflects (an environment map), and a few direct lights. Ported from the v3.2 scene, with colours from tokens.",
+    "background": "color.ink.1000",
+    "blur": 0.02,
+    "panes": [
+      { "size": [14, 6], "color": "color.brass.200", "intensity": 3.4, "position": [6, 8, 6], "rotation": [-0.9, -0.6, 0] },
+      { "size": [8, 14], "color": "color.river.300", "intensity": 1.1, "position": [-9, 1, 3], "rotation": [0, 1.1, 0] },
+      { "size": [12, 3], "color": "color.chalk.0", "intensity": 1.3, "position": [0, -8, 8], "rotation": [1.2, 0, 0] },
+      { "size": [10, 10], "color": "color.brass.700", "intensity": 0.8, "position": [0, 4, -9], "rotation": [0, 0, 0] }
+    ],
+    "ambient": { "color": "color.stone.400", "intensity": 0.22 },
+    "key": { "color": "scene.light-key", "intensity": 1.1, "position": [4, 6, 8] },
+    "rim": { "color": "scene.light-rim", "intensity": 1.4, "distance": 30, "decay": 1, "position": [-6, 2, -4] }
+  },
+  "world": {
+    "$description": "The one canvas behind the whole page (src/world.ts). Scenes sit one below another, spacing apart, and the camera travels between them as the page scrolls; fog hides the ones it is not at. dust: soft specks along the whole rail, so the flight between scenes reads as movement through one space (width and depth: how far the specks spread, world units; size in world units; opacity 0 to 1).",
+    "spacing": 22,
+    "fog": { "$description": "Distances beyond the subject (the camera's distance to what it looks at), so a subject is never dimmed however far the camera stands to fit it.", "color": "scene.fog", "near": 12, "far": 52 },
+    "dust": { "count": { "full": 420, "lite": 180 }, "width": 16, "depth": 10, "size": 0.1, "opacity": 0.5, "color": "color.brass.200", "seed": 7 }
+  },
+  "scenes": {
+    "medal": {
+      "$description": "The struck brass medal: the official medal image on the face, its normal map for relief, a reeded edge and two rims.",
+      "radius": 1.9,
+      "halfWidth": 2.5,
+      "halfHeight": 2.5,
+      "thickness": 0.3,
+      "segments": { "full": 128, "lite": 64 },
+      "reeds": 96,
+      "reedLevels": { "$description": "Bump heights of the edge ridges, 0 to 1: groove, then ridge.", "groove": 0.47, "ridge": 1 },
+      "rim": { "offset": 0.02, "tube": 0.075, "radialSegments": { "full": 24, "lite": 12 }, "tubularSegments": { "full": 160, "lite": 80 } },
+      "camera": { "position": [0, 0, 7.5], "target": [0, 0, 0] },
+      "keyframes": [
+        { "at": 0, "position": [0, 0.6, -3], "rotation": [0.55, -0.9, 0] },
+        { "at": 0.45, "position": [0, 0, 0], "rotation": [0, 0, 0] },
+        { "at": 1, "position": [0, -0.2, 0.4], "rotation": [0.08, 1.35, 0] }
+      ],
+      "intro": { "$description": "On arrival the medal spins in from its tilted distance and settles: how long it takes (ms) and how far it turns (radians).", "ms": 2200, "spin": 6.283 },
+      "float": { "$description": "The medal bobs gently while on screen: height in world units, and the time for one bob.", "amplitude": 0.08, "periodMs": 4200 },
+      "pointer": { "$description": "The medal leans towards the pointer: the largest lean in radians, and how much of the gap it closes each frame.", "maxTilt": 0.32, "follow": 0.06 },
+      "still": { "$description": "The progress shown as a still image on the still tier.", "at": 0.45 },
+      "budget": { "triangles": { "full": 60000, "lite": 25000 }, "drawCalls": 5 }
+    },
+    "kota-prism": {
+      "$description": "The Kota pentagon: a prism with one engraved plate per point of the Kota system (packages/content/blocks/{locale}/kota-system.json). Scrolling turns each plate to the front in turn.",
+      "radius": 2.05,
+      "halfWidth": 2.6,
+      "halfHeight": 2.1,
+      "height": 3.2,
+      "capHeight": 0.12,
+      "coreRadius": 1.2,
+      "cap": { "$description": "The bevelled slabs at each end: bevel size, and the finial on top (its size, world units).", "bevel": 0.035, "finial": 0.3 },
+      "pillar": { "radius": 0.06 },
+      "frame": { "$description": "The brass frame round each plate: border width, depth and bevel (world units).", "width": 0.11, "depth": 0.08, "bevel": 0.018 },
+      "rivet": { "radius": 0.05 },
+      "detail": { "full": { "round": 20, "bevel": 4, "rivet": 14 }, "lite": { "round": 12, "bevel": 2, "rivet": 8 } },
+      "plate": {
+        "$description": "Texture width in pixels; its height follows the face's proportions. Sizes are fractions of the width; labelTop is a fraction of the height.",
+        "width": 1024, "padding": 0.08, "numberSize": 0.16, "labelSize": 0.075, "lineHeight": 1.3, "labelTop": 0.32,
+        "font": "display", "text": "color.ink.950", "face": "color.brass.300",
+        "brushed": { "$description": "Fine horizontal strokes that make the brass look brushed: how many, and how strong (0 to 1).", "strokes": 260, "alpha": 0.05 }
+      },
+      "camera": { "position": [0, 1.2, 8.2], "target": [0, 0, 0] },
+      "fit": { "$description": "On narrow screens the camera moves back until this much of the prism's radius fits across, so no plate is cut off.", "value": 1.25 },
+      "tilt": 0.12,
+      "assemble": {
+        "$description": "The plates fly in before the prism turns (as in v3.2). until: the share of the section's scroll the assembly takes; the turning plays over the rest, and the page's list of points follows from there. distance and lift: how far out and up or down a plate starts (world units); spin and tumble: how much it is turned as it starts (radians); stagger: how much later each plate starts than the one before (share of the assembly).",
+        "until": 0.3, "distance": 6, "lift": 2.4, "spin": 2.4, "tumble": 1.1, "stagger": 0.12
+      },
+      "still": { "at": 0.3 },
+      "budget": { "triangles": { "full": 24000, "lite": 9000 }, "drawCalls": 75 }
+    },
+    "tree": {
+      "$description": "The journey tree, ported from the v3.2 scene: an open book with a golden tree growing from its gutter, one branch per milestone of the programme (the steps of the timeline widget) spiralling up the trunk, twigs and leaves after each, a crown and a lit finial, laurel sprigs round the book, and motes lifting off the pages. Colours are token paths. branches: from and span place each branch up the trunk (0 to 1); start and startSpan are the scroll progress at which the first and last begin to grow; crownAt when the trunk is done and the crown comes.",
+      "book": { "pageWidth": 2.5, "pageDepth": 3.3, "thickness": 0.07, "segments": 28, "openMs": 1700, "paper": "color.chalk.100", "paperEdge": "color.chalk.50", "ink": "color.brass.700", "rule": "color.brass.400", "cover": "color.brass.800", "glow": "color.brass.200" },
+      "gold": "color.brass.300",
+      "bark": "color.brass.500",
+      "trunk": { "height": 5.9, "base": 0.2, "tip": 0.032, "flare": 1.5, "points": [[0, 0.05, 0], [0.06, 1.2, 0.04], [-0.09, 2.5, -0.03], [0.07, 3.8, 0.05], [-0.02, 5, -0.02], [0.02, 5.9, 0]] },
+      "branches": { "from": 0.14, "span": 0.72, "start": 0.09, "startSpan": 0.76, "crownAt": 0.94, "spiral": 2.399, "reach": 2.05, "reachShrink": 1.15, "radius": 0.07 },
+      "leaf": { "length": 0.44, "width": 0.1, "max": 330, "colours": ["color.brass.400", "color.brass.300", "color.brass.500", "color.brass.600", "color.ok.300"] },
+      "crown": { "rings": [[14, 0.45, 1.5], [11, 0.95, 1.35], [7, 1.35, 1.15]] },
+      "detail": {
+        "full": { "trunkRings": 70, "trunkSides": 10, "branchRings": 34, "twigRings": 18, "laurelRings": 30, "motes": 140 },
+        "lite": { "trunkRings": 44, "trunkSides": 8, "branchRings": 24, "twigRings": 12, "laurelRings": 20, "motes": 70 }
+      },
+      "turn": { "from": -0.62, "to": 0.5 },
+      "stage": { "radius": 25, "ring": "color.brass.600", "spoke": "color.ink.700", "opacity": 0.35 },
+      "light": { "key": "color.brass.200", "keyIntensity": 0.55, "back": "color.river.300", "backIntensity": 0.9, "distance": 18, "glow": "color.brass.300" },
+      "halfWidth": 3.7,
+      "halfHeight": 3.6,
+      "camera": { "position": [0, 4.8, 17.2], "target": [0, 3, 0] },
+      "still": { "at": 1 },
+      "budget": { "triangles": { "full": 40000, "lite": 30000 }, "drawCalls": 80 }
+    },
+    "route": {
+      "$description": "From Kota to Pune: a small relief map (plains on the Kota side, a ridge between the cities, falling away at the edge, a contour mesh over it) with a route that draws itself from Kota to Pune as the section scrolls, a bead of light running along it. Kota is a pin on a pulsing ring; Pune is a house whose windows light when the route arrives. terrain: half size of the map, noise scale and seed, how high the plains and the ridge rise (at: where the ridge runs along x, width: how wide). cities: x and z of each city. route: lift above the ground, an arch in the middle, a sideways bend, and the tube's detail. draw: the scroll progress over which the route is drawn.",
+      "terrain": { "halfWidth": 9, "halfDepth": 4.6, "scale": 0.32, "seed": 5, "plains": 0.5, "ridge": { "at": 2.6, "width": 1.5, "height": 1.9 } },
+      "cells": { "full": [112, 56], "lite": [72, 36] },
+      "colours": { "low": "color.ink.800", "mid": "color.brass.700", "high": "color.brass.300" },
+      "contour": { "color": "color.brass.400", "opacity": 0.32, "cells": [36, 18] },
+      "cities": [[-6, -0.8], [6, 1.2]],
+      "route": { "lift": 0.28, "arch": 0.5, "bend": 0.7, "radius": 0.045, "segments": 160, "sides": 10 },
+      "bead": { "radius": 0.15, "glow": 1.2, "color": "color.brass.200" },
+      "plate": { "width": 2.6, "lift": 1.7, "face": "color.brass.300", "text": "color.ink.950" },
+      "house": { "size": 0.8 },
+      "draw": { "from": 0.08, "to": 0.85 },
+      "halfWidth": 8.4,
+      "halfHeight": 3.4,
+      "camera": { "position": [0, 8.2, 12], "target": [0, 0.6, 0.4] },
+      "still": { "at": 1 },
+      "budget": { "triangles": { "full": 40000, "lite": 20000 }, "drawCalls": 40 }
+    },
+    "syllabus-slab": {
+      "$description": "The opening scene of the syllabus page: the chapter tiles set into a stone slab with a brass edge, and the JEE Advanced only chapters as detached rows below (docs/design/syllabus-table.md).",
+      "tile": { "size": 1, "gap": 0.14, "height": 0.22 },
+      "blockGap": 0.9,
+      "rowGap": 0.35,
+      "detachedGap": 1.1,
+      "columnsPerSubject": 9,
+      "slab": { "margin": 0.6, "depth": 0.5, "edge": 0.08 },
+      "atlas": { "cell": 128, "columns": 10, "font": "display", "number": "body" },
+      "camera": {
+        "$description": "From a low angle over Physics to straight above, framing the whole slab at any screen shape; fit is the share of the screen the slab fills.",
+        "from": { "position": [-14, 6, 10], "target": [-8, 0, 0] },
+        "to": { "fit": 0.9 }
+      },
+      "still": { "at": 0.5 },
+      "budget": { "triangles": { "full": 12000, "lite": 12000 }, "drawCalls": 6 }
+    },
+    "specimens": {
+      "$description": "One object per subject in a glass case on a brass base: a pendulum (Physics), a benzene molecule (Chemistry) and a surface plot (Mathematics).",
+      "case": { "width": 2.2, "height": 2.8, "depth": 2.2, "base": 0.25, "spacing": 3.2 },
+      "sphereSegments": { "full": 24, "lite": 12 },
+      "pendulum": { "length": 1.6, "bob": 0.22, "rod": 0.02, "amplitude": 0.45, "periodMs": 2200 },
+      "molecule": { "ringRadius": 0.7, "carbon": 0.16, "hydrogen": 0.09, "bondRadius": 0.035, "hydrogenOffset": 0.45 },
+      "surface": { "size": 1.6, "segments": { "full": 48, "lite": 24 }, "amplitude": 0.35 },
+      "spinMs": 14000,
+      "camera": { "position": [0, 1.1, 9], "target": [0, 0.2, 0] },
+      "still": { "at": 0.5 },
+      "budget": { "triangles": { "full": 40000, "lite": 16000 }, "drawCalls": 24 }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "route": "fees-and-batches",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "पुणे में JEE कोचिंग फीस और बैच की तारीखें | D-SAP",
+    "description": "पुणे में हमारे JEE प्रोग्राम की फीस और बैच की तारीखें, फीस में क्या शामिल है, और न्यू सांगवी और वाकड में अगले बैच कब शुरू होंगे।"
+  },
+  "h1": "JEE कोचिंग फीस और बैच",
+  "intro": [ "हर प्रोग्राम की फीस और शुरू होने की तारीखें, और फीस में क्या शामिल है। कुछ भी साफ़ न हो तो हमें {{fact:contact.phone}} पर कॉल करें।" ],
+  "sections": [
+    { "id": "fees", "heading": "फीस", "body": [ "{{fact:fees}}।" ], "action": { "to": "enquire", "label": "हमसे पूछें" } },
+    { "id": "included", "heading": "फीस में क्या शामिल है", "body": [ { "text": "फीस में यह सब शामिल है:", "requires": ["fees"] } ],
+      "points": [
+        { "text": "पूरे सिलेबस का स्टडी मटीरियल, हल किए गए पिछले IIT JEE पेपर के साथ।", "requires": ["programme.study-material"] },
+        { "text": "ऑनलाइन पोर्टल पर हर टेस्ट, हर एक के बाद निजी विश्लेषण के साथ।", "requires": ["test-series.cbt", "method.test-analytics"] },
+        { "text": "हर हफ़्ते एक प्रैक्टिस शीट।", "requires": ["method.practice-sheets"] },
+        { "text": "डाउट फ़ोरम और डाउट सेशन।", "requires": ["method.doubts"] },
+        { "text": "अकेले में मेंटरिंग स्लॉट।", "requires": ["programme.mentoring"] },
+        { "text": "ऑनलाइन लेक्चर, छूटी हुई किसी भी क्लास के लिए।", "requires": ["method.online-lectures"] } ] },
+    { "id": "batches", "heading": "बैच की तारीखें", "body": [ "{{fact:batch.dates}}।" ] },
+    { "id": "questions", "heading": "फीस और बैच पर सवाल", "questions": [
+      { "q": "नए बैच कब शुरू होते हैं?", "a": { "text": "दो साल का प्रोग्राम जून में शुरू होता है, और अप्रैल से फाउंडेशन पीरियड चलता है।", "requires": ["programme.start"] } },
+      { "q": "क्या दोनों सेंटर पर क्लास का समय एक जैसा है?", "a": "हाँ: {{fact:batch.days}}, {{fact:batch.timings#start}} बजे से {{fact:batch.timings#end}} बजे तक।" },
+      { "q": "एक बैच में कितने छात्र होते हैं?", "a": "ज़्यादा से ज़्यादा {{fact:batch.size}}।" } ] },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

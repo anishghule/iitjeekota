@@ -1,0 +1,98 @@
+{
+  "$description": "Marathi draft of the example student portal on home. For review by a native Marathi writer before launch.",
+  "requires": ["method.online-lectures", "method.doubts", "method.practice-sheets", "test-series.cbt", "classroom.digital-board"],
+  "title": "विद्यार्थी पोर्टल",
+  "label": "उदाहरण स्क्रीन",
+  "live": {
+    "label": "लाइव्ह क्लास",
+    "status": "लाइव्ह",
+    "subject": "भौतिकशास्त्र, परिभ्रमण गती",
+    "sharing": "शिक्षक डिजिटल बोर्ड शेअर करत आहेत",
+    "joined": "{{fact:batch.size}} पैकी 27 जोडलेले"
+  },
+  "board": {
+    "label": "AI डिजिटल बोर्डची उदाहरणे, याच पानावर काढलेली",
+    "demos": [
+      {
+        "id": "area",
+        "tab": "क्षेत्रफळ",
+        "title": "वक्राखालचे क्षेत्रफळ",
+        "equation": "∫₀⁵ f(x) dx",
+        "words": { "function": "f(x) = 1 + 0.55 sin(1.3x) + 0.07x²", "sum": "रीमान बेरीज", "error": "त्रुटी", "limit": "n → ∞", "note": "बोर्ड: पट्ट्या अरुंद होताना त्रुटी कमी होते." }
+      },
+      {
+        "id": "volume",
+        "tab": "घनफळ",
+        "title": "परिभ्रमणाने तयार होणारा घनाकार",
+        "equation": "V = π ∫ [f(x)]² dx",
+        "words": { "function": "y = √x", "discs": "चकत्या", "rotate": "x-अक्षाभोवती फिरवा", "exact": "V = π ∫₀⁴ x dx = 8π ≈ 25.13" }
+      },
+      {
+        "id": "quiz",
+        "seats": "{{fact:batch.size}}",
+        "tab": "क्विझ",
+        "title": "लाइव्ह क्विझ",
+        "equation": "वर्गातील पोल",
+        "words": { "poll": "लाइव्ह पोल", "question": "d/dx [ sin(x²) ] = ?", "answered": "उत्तरे दिली", "rule": "साखळी नियम: बाहेरच्याचा अवकलज गुणिले आतल्याचा अवकलज.", "note": "उदाहरण पोल." },
+        "options": [
+          { "key": "A", "text": "2x cos(x²)", "share": 71, "right": true },
+          { "key": "B", "text": "cos(x²)", "share": 14, "right": false },
+          { "key": "C", "text": "2x sin(x²)", "share": 9, "right": false },
+          { "key": "D", "text": "−2x cos(x²)", "share": 6, "right": false }
+        ]
+      },
+      {
+        "id": "steps",
+        "tab": "पायऱ्या",
+        "title": "AI स्टेप सॉल्व्हर",
+        "equation": "∫ x · e^(x²) dx",
+        "words": { "solver": "AI स्टेप सॉल्व्हर", "badge": "AI", "steers": "शिक्षक दिशा देतात;", "shows": "बोर्ड पायऱ्या दाखवतो.", "check": "तपासणी: d/dx [½ e^(x²)] = x e^(x²)" },
+        "steps": [
+          { "label": "आतले फल ओळखा", "math": "समजा u = x²" },
+          { "label": "त्याचे अवकलन करा", "math": "du = 2x dx, म्हणजे x dx = du ÷ 2" },
+          { "label": "संकलन पुन्हा लिहा", "math": "½ ∫ eᵘ du" },
+          { "label": "संकलन करा", "math": "= ½ eᵘ + C" },
+          { "label": "x परत ठेवा", "math": "= ½ e^(x²) + C" }
+        ]
+      }
+    ]
+  },
+  "tabs": [
+    {
+      "id": "lectures",
+      "label": "लेक्चर",
+      "items": [
+        { "title": "परिभ्रमण गती: जडत्व आघूर्ण", "meta": "भौतिकशास्त्र, 48 मिनिटे" },
+        { "title": "रासायनिक बंध: संकरण", "meta": "रसायनशास्त्र, 41 मिनिटे" },
+        { "title": "निश्चित संकलन: गुणधर्म", "meta": "गणित, 52 मिनिटे" }
+      ]
+    },
+    {
+      "id": "sheets",
+      "label": "प्रॅक्टिस शीट",
+      "items": [
+        { "title": "शीट 14: गतीचे नियम", "meta": "30 प्रश्न" },
+        { "title": "शीट 14: समतोल", "meta": "30 प्रश्न" },
+        { "title": "शीट 14: सरळ रेषा", "meta": "30 प्रश्न" }
+      ]
+    },
+    {
+      "id": "doubts",
+      "label": "शंका",
+      "items": [
+        { "title": "न घसरता घरंगळणाऱ्या चाकावर घर्षण स्थिर का असते?", "meta": "भौतिकशास्त्र, उत्तर मिळाले" },
+        { "title": "प्रश्नात SN1 आणि SN2 मधील फरक कसा ओळखायचा?", "meta": "रसायनशास्त्र, उत्तर मिळाले" },
+        { "title": "L'Hôpital नियम कधी वापरता येतो?", "meta": "गणित, खुला" }
+      ]
+    },
+    {
+      "id": "tests",
+      "label": "टेस्ट",
+      "items": [
+        { "title": "साप्ताहिक टेस्ट: आतापर्यंतचा पूर्ण अभ्यासक्रम", "meta": "पोर्टल स्क्रीनवर उघडते" },
+        { "title": "प्रकरण टेस्ट: समतोल", "meta": "विश्लेषणासह निकाल" },
+        { "title": "JEE Main मॉक", "meta": "{{fact:exam.jee-main#questions}} प्रश्न, {{fact:exam.jee-main#hours}} तास" }
+      ]
+    }
+  ]
+}

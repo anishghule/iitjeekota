@@ -1,0 +1,32 @@
+{
+  "route": "results",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "D-SAP Ghule Tutorials JEE results",
+    "description": "JEE results of D-SAP Ghule Tutorials students, each with the exam, the year and the programme taken, shared with the student's consent."
+  },
+  "h1": "JEE results",
+  "intro": [
+    "Our students' JEE results, each with the details a parent needs to judge it: the exam, the year and the programme the student took with us."
+  ],
+  "sections": [
+    {
+      "id": "results",
+      "heading": "Results",
+      "body": ["Each result shows the student's name, with their consent, the exam and year, the rank or percentile, and the programme they took with us."]
+    },
+    {
+      "id": "how-we-report",
+      "heading": "How we report results",
+      "body": ["A result on this page follows four rules."],
+      "points": [
+        "We show only results we can check, and only with the student's consent.",
+        "Each result names the exam and the year.",
+        "Each result names the programme the student took with us, and for how long.",
+        "A student who took only a test series with us is not shown as if they took the full programme."
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

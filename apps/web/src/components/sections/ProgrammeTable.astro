@@ -1,0 +1,28 @@
+---
+/** The programmes at a glance on a page about an area or a centre: its words, then the shared table. */
+import type { Locale } from "../../i18n/index.ts";
+import type { ProgrammesData, SectionData } from "../../lib/types.ts";
+import ActionLink from "../ui/ActionLink.astro";
+import Paragraphs from "../ui/Paragraphs.astro";
+import ProgrammesTable from "../ui/ProgrammesTable.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+---
+<section id={section.id} class="section" aria-labelledby={`${section.id}-title`}>
+  <div class="container table-section">
+    <div class="prose">
+      <h2 id={`${section.id}-title`} class="t-h1">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} />
+    </div>
+    <ProgrammesTable widget={section.widget as ProgrammesData | undefined} locale={locale} />
+    {section.action && <div class="actions"><ActionLink action={section.action} locale={locale} quiet /></div>}
+  </div>
+</section>
+
+<style>
+  .table-section { display: grid; gap: var(--space-5); }
+</style>

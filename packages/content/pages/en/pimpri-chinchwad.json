@@ -1,0 +1,62 @@
+{
+  "route": "pimpri-chinchwad",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "IIT JEE coaching in Pimpri-Chinchwad | D-SAP Ghule",
+    "description": "JEE coaching at our head office in New Sangvi and our branch in Wakad, powered by a top Kota institute. For Class 11 and Class 12 students."
+  },
+  "h1": "IIT JEE coaching in Pimpri-Chinchwad",
+  "intro": [
+    "Both our centres are in Pimpri-Chinchwad: the head office in {{fact:org.founded#place}}, where D-SAP Ghule Tutorials began in {{fact:org.founded#year}}, and a branch in Wakad.",
+    {
+      "text": "The JEE programme here is powered by a top coaching institute in Kota. Faculty from Kota teach it, from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}.",
+      "requires": ["partner.affiliation", "faculty.kota"]
+    }
+  ],
+  "sections": [
+    {
+      "id": "spokes",
+      "heading": "Find your area",
+      "body": ["From Hinjewadi to Pimple Gurav, each area page shows which centre is closer and how to get there."]
+    },
+    {
+      "id": "why",
+      "heading": "Teaching in Pimpri-Chinchwad since {{fact:org.founded#year}}",
+      "body": [
+        "D-SAP Ghule Tutorials started as one small class in {{fact:org.founded#place}}. More than {{fact:org.students}} students have studied with us since then, in school and entrance exam courses.",
+        {
+          "text": "The JEE programme brings what Kota is known for: faculty from Kota, a fixed calendar of tests, and study material for JEE Main and Advanced.",
+          "requires": ["faculty.kota", "test-series.format", "programme.study-material"]
+        },
+        {
+          "text": "Classrooms have AI-powered digital boards, and every test is taken on an online portal that works like the real JEE.",
+          "requires": ["classroom.digital-board", "test-series.cbt"]
+        },
+        "{{fact:centre.sangvi.library}} at the head office gives students a quiet place to study before or after class."
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions from Pimpri-Chinchwad parents",
+      "questions": [
+        {
+          "q": "Which centre should we choose?",
+          "a": "The one closer to home. Classes at both run from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}."
+        },
+        {
+          "q": "My child studied in a CBSE school. Can they join?",
+          "a": {
+            "text": "Yes. Students who passed Class 10 from SSC, CBSE or ICSE can all join the two-year programme.",
+            "requires": ["programme.class-11"]
+          }
+        },
+        {
+          "q": "How many students are in a batch?",
+          "a": "At most {{fact:batch.size}}."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "route": "jee-syllabus",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "JEE Main syllabus {{syllabus:main#year}}, chapter by chapter | D-SAP",
+    "description": "All {{syllabus:all#chapters}} chapters of the JEE Main {{syllabus:main#year}} and JEE Advanced syllabus in one table, with each chapter's topics and what JEE Advanced adds."
+  },
+  "h1": "JEE Main syllabus {{syllabus:main#year}} and JEE Advanced, chapter by chapter",
+  "intro": [
+    "The full JEE syllabus for Physics, Chemistry and Mathematics, {{syllabus:all#chapters}} chapters, each with a code and its topics.",
+    "It follows the official JEE Main {{syllabus:main#year}} syllabus from the National Testing Agency and the JEE Advanced {{syllabus:advanced#year}} information brochure."
+  ],
+  "sections": [
+    {
+      "id": "table",
+      "heading": "Find a chapter",
+      "body": [
+        "Pick a subject, then narrow it by class or by exam. Open a chapter to see its topics, and what JEE Advanced asks for on top. The code in front of a chapter is its class, its subject and its place in the list: 11-P-03 is the third Class 11 Physics chapter.",
+        "Prefer a list? The full syllabus is written out below the table, and you can download it as a PDF made from the same data."
+      ]
+    },
+    {
+      "id": "changes",
+      "heading": "Chapters that are not in JEE Main",
+      "body": [
+        "Some chapters in older JEE books are not in the JEE Main {{syllabus:main#year}} syllabus. In Chemistry: States of Matter, Solid State, Surface Chemistry, Hydrogen, s-Block Elements, Isolation of Metals, Environmental Chemistry, Polymers and Chemistry in Everyday Life. Mathematical Reasoning and Communication Systems are gone too.",
+        "Those {{syllabus:advanced-only#chapters}} Chemistry chapters are still in the JEE Advanced syllabus, so the list marks them JEE Advanced only. A student aiming for the IITs needs them. A student aiming only for JEE Main can leave them."
+      ]
+    },
+    {
+      "id": "main-vs-advanced",
+      "heading": "How JEE Advanced goes further",
+      "body": [
+        "Most chapters are in both exams, but JEE Advanced often asks for more inside a chapter: the Doppler effect in Waves, radioactive decay in Nuclei, planes in three-dimensional geometry, Faraday's laws in Electrochemistry. Each chapter's card lists what Advanced adds.",
+        "Two chapters work the other way. Semiconductor Devices and Magnetism and Matter are in JEE Main but not in JEE Advanced."
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions about the JEE syllabus",
+      "questions": [
+        {
+          "q": "Where does this syllabus come from?",
+          "a": "From the JEE Main {{syllabus:main#year}} syllabus published by the National Testing Agency, and the JEE Advanced {{syllabus:advanced#year}} information brochure. We update the table when either changes."
+        },
+        {
+          "q": "Is the JEE syllabus the same as the NCERT books?",
+          "a": "Close, but not the same. Linear Inequalities and Linear Programming are in the NCERT Maths books but not in JEE Main, and JEE asks harder questions on the chapters it shares with the board exams."
+        },
+        {
+          "q": "Which chapters does JEE Advanced add?",
+          "a": "{{syllabus:advanced-only#chapters}} Chemistry chapters, from States of Matter to Chemistry in Everyday Life, plus more depth inside many chapters of all three subjects."
+        },
+        {
+          "q": "Does your programme cover the JEE Advanced chapters?",
+          "a": {
+            "text": "Yes. The two-year programme prepares for JEE Advanced as well as JEE Main, so those chapters are part of it.",
+            "requires": ["programme.class-11"]
+          }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

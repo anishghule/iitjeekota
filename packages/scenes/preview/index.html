@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" data-surface="ink">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>Scene preview</title>
+    <link rel="stylesheet" href="/dist/fonts.css" />
+    <link rel="stylesheet" href="/dist/tokens.css" />
+    <link rel="stylesheet" href="/dist/typography.css" />
+    <style>
+      body { margin: 0; background: var(--bg); color: var(--text); font-family: var(--font-body); }
+      header { position: fixed; inset: 0 0 auto; z-index: 2; display: flex; gap: var(--space-3); align-items: center; padding: var(--space-3) var(--space-4); background: var(--bg-sunken); }
+      header button { font: inherit; color: var(--action-text); background: var(--action-bg); border: 0; border-radius: var(--radius-sm); padding: var(--space-2) var(--space-3); }
+      .pinned { position: relative; height: 320vh; }
+      .stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
+      .stage canvas { display: block; width: 100%; height: 100%; }
+      .stage h2 { position: absolute; left: var(--space-5); bottom: var(--space-5); margin: 0; max-width: 18ch; }
+      .stage output { position: absolute; right: var(--space-5); bottom: var(--space-5); color: var(--text-muted); font-variant-numeric: tabular-nums; }
+      .gap { height: 60vh; display: grid; place-items: center; color: var(--text-muted); }
+    </style>
+  </head>
+  <body>
+    <header>
+      <span>Scene preview</span>
+      <button type="button" id="autoscroll" aria-pressed="true">Autoscroll on</button>
+      <output id="tier"></output>
+    </header>
+    <div class="gap">Scroll</div>
+    <section class="pinned" data-autoscroll data-scene="medal"><div class="stage"><canvas></canvas><h2 class="t-h1">The struck medal</h2><output></output></div></section>
+    <div class="gap"></div>
+    <section class="pinned" data-autoscroll data-scene="kota-prism"><div class="stage"><canvas></canvas><h2 class="t-h1">The Kota pentagon</h2><output></output></div></section>
+    <div class="gap"></div>
+    <section class="pinned" data-autoscroll data-scene="syllabus-slab"><div class="stage"><canvas></canvas><h2 class="t-h1">The syllabus slab</h2><output></output></div></section>
+    <div class="gap"></div>
+    <section class="pinned" data-autoscroll data-scene="specimens"><div class="stage"><canvas></canvas><h2 class="t-h1">Three specimens</h2><output></output></div></section>
+    <div class="gap">End</div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

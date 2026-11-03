@@ -1,0 +1,6 @@
+{
+  "$comment": "Editor settings for apps/web. The type check (make js-test) runs from the root tsconfig.json, which includes apps/web/src.",
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "types": ["vite/client"] },
+  "include": ["src/**/*.ts", "src/**/*.astro", "astro.config.ts"]
+}

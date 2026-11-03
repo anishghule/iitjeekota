@@ -1,0 +1,67 @@
+{
+  "route": "area-rahatani",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "IIT JEE coaching in Rahatani | D-SAP Ghule Tutorials",
+    "description": "JEE coaching for Rahatani students at our nearby Wakad branch, by Rahatani Road and Jagtap Dairy. Faculty from Kota, batches of {{fact:batch.size}}."
+  },
+  "h1": "IIT JEE coaching in Rahatani",
+  "intro": [
+    "From Rahatani, our Wakad branch is about {{commute:rahatani#km}} km away, the nearer of our two centres."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "Rahatani Road to Wakad",
+      "body": [
+        {
+          "text": "Rahatani Road takes you to Jagtap Dairy, and from there the Jagtap Dairy to Wakad road leads to the branch.",
+          "requires": ["area.rahatani.route"]
+        },
+        { "text": "Rainbow BRTS buses have run through Rahatani since November 2015.", "requires": ["area.rahatani.brt"] }
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Rahatani and its neighbours",
+      "body": [
+        {
+          "text": "Rahatani lies between Pimple Saudagar and Kalewadi, on the banks of the Pavana. All three are closest to our Wakad branch.",
+          "requires": ["area.rahatani.place"]
+        },
+        "Because the trip is short, the time after class ends at {{fact:batch.timings#end}} is still a usable evening for homework."
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Rahatani students' programmes",
+      "body": [
+        {
+          "text": "Rahatani students choose between two years starting in Class 11 and one year in Class 12.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Rahatani questions",
+      "questions": [
+        {
+          "q": "How far is the nearest centre?",
+          "a": "Our Wakad branch is about {{commute:rahatani#km}} km from Rahatani."
+        },
+        {
+          "q": "Is there a bus?",
+          "a": { "text": "Rainbow BRTS buses run through Rahatani.", "requires": ["area.rahatani.brt"] }
+        },
+        {
+          "q": "What does my child take home after each test?",
+          "a": { "text": "A personal analysis from our online test portal, showing how they did.", "requires": ["method.test-analytics"] }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

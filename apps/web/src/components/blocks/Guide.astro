@@ -1,0 +1,29 @@
+---
+/** A guide's body: headings, paragraphs and lists as typed blocks (make web-data parsed the Markdown), at reading width. */
+import type { Block } from "../../lib/types.ts";
+import Rich from "../ui/Rich.astro";
+
+interface Props {
+  blocks: Block[];
+}
+const { blocks } = Astro.props;
+---
+<article class="guide section">
+  <div class="container prose guide__body">
+    {blocks.map((b) => {
+      switch (b.type) {
+        case "h2": return <h2 class="t-h1">{b.text}</h2>;
+        case "h3": return <h3 class="t-h2">{b.text}</h3>;
+        case "p": return <p><Rich parts={b.runs} /></p>;
+        case "ul": return <ul class="guide__list">{b.items.map((i) => <li><Rich parts={i} /></li>)}</ul>;
+        case "ol": return <ol class="guide__list">{b.items.map((i) => <li><Rich parts={i} /></li>)}</ol>;
+      }
+    })}
+  </div>
+</article>
+
+<style>
+  .guide__body { display: grid; gap: var(--space-4); }
+  .guide__body h2 { margin-block-start: var(--space-5); }
+  .guide__list { display: grid; gap: var(--space-2); padding-inline-start: var(--space-5); }
+</style>

@@ -1,0 +1,26 @@
+{
+  "route": "jee-advanced-coaching",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "पुणे में JEE एडवांस्ड कोचिंग | D-SAP घुले",
+    "description": "एडवांस्ड स्तर के प्रश्न, कक्षा 12 में हर तिमाही JEE एडवांस्ड मॉक, और कोटा की फैकल्टी के साथ मेंटरिंग स्लॉट।"
+  },
+  "h1": "पुणे में JEE एडवांस्ड कोचिंग",
+  "intro": [ "JEE एडवांस्ड IIT में प्रवेश की परीक्षा है। इसे वही छात्र दे सकते हैं जो JEE मेन में काफ़ी अच्छा करते हैं।" ],
+  "sections": [
+    { "id": "exam", "kind": "prose", "heading": "JEE एडवांस्ड कैसे अलग है", "body": [
+      "इसमें {{fact:exam.jee-advanced#hoursEach}}-{{fact:exam.jee-advanced#hoursEach}} घंटे के {{fact:exam.jee-advanced#papers}} पेपर होते हैं, एक ही दिन। प्रश्नों के प्रकार और मार्किंग हर साल बदलते हैं, इसलिए तैयारी में एक से ज़्यादा तरह के प्रश्न होने चाहिए।" ] },
+    { "id": "preparing", "kind": "list", "heading": "हम इसकी तैयारी कैसे कराते हैं", "body": [
+      { "text": "दो साल का प्रोग्राम शुरू से ही JEE मेन के साथ JEE एडवांस्ड की तैयारी कराता है।", "requires": ["programme.class-11"] } ],
+      "points": [
+        { "text": "हर चैप्टर के JEE एडवांस्ड स्तर के प्रश्न।", "requires": ["programme.study-material"] },
+        { "text": "कक्षा 12 में हर तिमाही JEE एडवांस्ड का मॉक।", "requires": ["test-series.format"] },
+        { "text": "सबसे कठिन प्रश्नों के लिए मेंटरिंग स्लॉट।", "requires": ["programme.mentoring"] },
+        { "text": "कोटा की अनुभवी फैकल्टी।", "requires": ["faculty.kota"] } ] },
+    { "id": "questions", "heading": "JEE एडवांस्ड पर सवाल", "questions": [
+      { "q": "क्या हर छात्र JEE एडवांस्ड की तैयारी करता है?", "a": { "text": "दो साल के प्रोग्राम में, हाँ। इसकी तैयारी से JEE मेन में भी मदद मिलती है।", "requires": ["programme.class-11"] } },
+      { "q": "आधिकारिक नियम कहाँ पढ़ें?", "a": "JEE एडवांस्ड की इन्फ़ॉर्मेशन ब्रोशर में, जो परीक्षा कराने वाला IIT हर साल जारी करता है।" } ] },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

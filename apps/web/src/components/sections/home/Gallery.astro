@@ -1,0 +1,100 @@
+---
+/**
+ * Come and see it: the building, the classroom and the people, as a strip of photos in arch, circle
+ * and frame shapes, just above the footer. The strip is a plain horizontal scroller (swipe, trackpad,
+ * arrow keys) and never pins, so vertical scrolling over it moves the page. Photos come from the
+ * gallery widget (packages/content/widgets) by media slot; one whose file is not supplied is left out.
+ */
+import { strings, type Locale } from "../../../i18n/index.ts";
+import { isMediaSlotId, mediaFile } from "../../../lib/data.ts";
+import type { GalleryData, SectionData } from "../../../lib/types.ts";
+import Icon from "../../ui/Icon.astro";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const w = section.widget as GalleryData | undefined;
+const photos = (w?.items ?? []).flatMap((item) => {
+  const file = isMediaSlotId(item.slot) ? mediaFile(item.slot, locale) : undefined;
+  return file ? [{ ...item, file }] : [];
+});
+---
+{photos.length > 0 && (
+  <section id={section.id} class="gallery section" data-gallery aria-labelledby={`${section.id}-title`}>
+    <div class="container gallery__head">
+      <div class="gallery__text">
+        <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+        <Paragraphs paragraphs={section.body} class="lede" />
+      </div>
+      <div class="gallery__nav" data-gallery-nav hidden>
+        <button type="button" class="gallery__step gallery__step--previous" data-gallery-step="-1" aria-label={t.gallery.previous}>
+          <Icon name="arrow-right" />
+        </button>
+        <button type="button" class="gallery__step" data-gallery-step="1" aria-label={t.gallery.next}>
+          <Icon name="arrow-right" />
+        </button>
+      </div>
+    </div>
+    <div class="gallery__track" data-gallery-track tabindex="0" role="region" aria-label={t.gallery.label}>
+      <ul class="gallery__list" role="list">
+        {photos.map(({ file, shape, caption }, i) => (
+          <li>
+            <figure class:list={["gallery__photo", `gallery__photo--${shape}`, { "gallery__photo--captioned": caption }]}>
+              <img src={file.url} width={file.width} height={file.height} alt={file.alt}
+                loading={i < 2 ? "eager" : "lazy"} decoding="async" draggable="false" />
+              {caption && <figcaption>{caption}</figcaption>}
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+)}
+
+<style>
+  .gallery { --gallery-height: clamp(18rem, 52vh, 32rem); display: grid; gap: var(--space-6); }
+  .gallery__head { display: flex; align-items: end; justify-content: space-between; gap: var(--space-5); flex-wrap: wrap; }
+  .gallery__text { display: grid; gap: var(--space-4); }
+  .gallery__nav { display: flex; gap: var(--space-3); }
+  .gallery__step {
+    display: grid; place-items: center; inline-size: var(--space-7); block-size: var(--space-7);
+    border: 0; border-radius: var(--radius-round); background: var(--bg-raised); color: var(--text);
+    transition: background-color var(--dur-fast) var(--ease-enter), color var(--dur-fast) var(--ease-enter);
+  }
+  .gallery__step:hover:not(:disabled) { background: var(--bg-sunken); color: var(--accent-text); }
+  .gallery__step:disabled { color: var(--text-muted); cursor: default; opacity: 0.5; }
+  .gallery__step--previous :global(.icon) { transform: scaleX(-1); }
+
+  /* Sideways overflow scrolls by touch, trackpad and keys. Nothing here captures the vertical wheel or swipe.
+     The first photo lines up with the heading's edge on a wide screen; the strip then runs out to the window's edge. */
+  .gallery__track {
+    --edge: max(var(--space-gutter), (100% - var(--container)) / 2);
+    overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; scrollbar-width: thin;
+    scroll-snap-type: x proximity; scroll-padding-inline: var(--edge); padding-inline: var(--edge);
+  }
+  .gallery__list { display: flex; align-items: center; gap: var(--space-5); inline-size: max-content; }
+  .gallery__list > li { scroll-snap-align: start; flex: none; }
+
+  .gallery__photo {
+    position: relative; block-size: var(--gallery-height); overflow: hidden; background: var(--bg-raised);
+    border-radius: var(--radius-md);
+  }
+  .gallery__photo img { display: block; block-size: 100%; inline-size: auto; object-fit: cover; transition: transform var(--dur-slow) var(--ease-enter); }
+  .gallery__photo:hover img { transform: scale(1.05); }
+  .gallery__photo--arch { border-radius: var(--radius-round) var(--radius-round) var(--radius-md) var(--radius-md); }
+  .gallery__photo--circle { aspect-ratio: 1; block-size: calc(var(--gallery-height) * 0.85); border-radius: 50%; }
+  .gallery__photo--circle img { inline-size: 100%; }
+  /* A scrim under the caption keeps it readable on any photo. */
+  .gallery__photo--captioned::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(transparent 55%, color-mix(in srgb, var(--bg-sunken) 85%, transparent));
+  }
+  .gallery__photo figcaption {
+    position: absolute; inset-inline: 0; inset-block-end: var(--space-3); z-index: 1; text-align: center;
+    padding-inline: var(--space-3); font-weight: var(--weight-semibold); color: var(--text);
+  }
+</style>

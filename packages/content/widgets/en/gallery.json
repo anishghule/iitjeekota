@@ -1,0 +1,13 @@
+{
+  "$description": "The photos in the home page's 'Come and see it' strip, in order. slot is a media slot (gallery/*); shape is arch, circle or frame (an arch suits an upright photo, a circle a square one). caption is optional: leave it out for a picture that carries its own words (the MHT-CET poster). A photo whose file is not supplied yet is left out. Captions are a first draft for D-SAP to confirm against who is in each photo.",
+  "items": [
+    { "slot": "gallery/entrance", "shape": "arch", "caption": "The entrance" },
+    { "slot": "gallery/students-group", "shape": "frame", "caption": "With their teacher" },
+    { "slot": "gallery/batch", "shape": "circle", "caption": "A batch, together" },
+    { "slot": "gallery/class-at-work", "shape": "arch", "caption": "Heads down" },
+    { "slot": "gallery/full-class", "shape": "frame", "caption": "A full room" },
+    { "slot": "gallery/old-batch", "shape": "frame", "caption": "An earlier batch" },
+    { "slot": "gallery/office-chat", "shape": "frame", "caption": "Talk it through" },
+    { "slot": "gallery/mht-cet-poster", "shape": "frame" }
+  ]
+}

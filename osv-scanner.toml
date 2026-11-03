@@ -1,0 +1,10 @@
+# OSV-Scanner (CI: .github/workflows/ci.yml). A finding is fixed by upgrading. The only exceptions are listed here, each with a
+# reason and an expiry, so an exception cannot be forgotten: after ignoreUntil the build fails again.
+
+# happy-dom 21.0.3 (vitest's browser stand-in, a development dependency used only on our own test pages and never in the
+# shipped site). Fixed in 21.0.4, published 2026-10-20: pnpm's minimumReleaseAge (14 days, pnpm-workspace.yaml) holds it
+# back until 2026-11-03. Update it then (pnpm update happy-dom) and delete this entry.
+[[IgnoredVulns]]
+id = "GHSA-834v-8h66-3h79"
+ignoreUntil = 2026-11-05T00:00:00Z
+reason = "Development-only test dependency; the fix is under the 14-day release-age rule until 2026-11-03."

@@ -1,0 +1,20 @@
+{
+  "$description": "Open Graph image layout. Text blocks use type variants from tokens.json; Hindi and Marathi switch to the Devanagari role, its size-adjust, line heights and weights, exactly like the site CSS. Lines are measured with the real fonts and wrapped to the column.",
+  "canvas": { "width": 1200, "height": 630 },
+  "surface": "ink",
+  "column": { "x": 80, "width": 640 },
+  "texture": { "colour": "text", "opacity": 0.05, "frequency": 0.85, "octaves": 2, "seed": 7 },
+  "glow": { "x": 930, "y": 315, "radius": 360, "colour": "accent-text", "opacity": 0.16 },
+  "logo": { "x": 740, "y": 115, "size": 400 },
+  "regions": {
+    "top": { "y": 72, "blocks": ["brand"] },
+    "middle": { "blocks": ["title", "subtitle"], "gap": 26 },
+    "bottom": { "y": 572, "blocks": ["domain"] }
+  },
+  "blocks": {
+    "brand": { "source": "brand", "variant": "small", "size": 24, "weight": "semibold", "colour": "text-muted", "maxLines": 1 },
+    "title": { "source": "title", "variant": "h1", "size": 56, "colour": "text", "maxLines": 3 },
+    "subtitle": { "source": "subtitle", "variant": "body-lg", "size": 25, "colour": "text-muted", "maxLines": 2 },
+    "domain": { "source": "domain", "variant": "body", "size": 24, "weight": "semibold", "colour": "accent-text", "maxLines": 1 }
+  }
+}

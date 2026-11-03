@@ -1,0 +1,124 @@
+{
+  "$description": "Structured data rules read from Google's live documentation on 2026-11-01. make site checks every page's JSON-LD against them (tools/dsapkit/src/dsapkit/site/jsonld.py); make docs-drift compares the pages below with jsonld-rules.lock.json. Before changing a rule, read the page it cites and update 'updated' and 'checked'. Never decide a format from memory.",
+  "checked": "2026-11-01",
+  "staleAfterDays": 90,
+  "formats": {
+    "datetime": "ISO 8601 date and time with a timezone offset or Z, for example 2026-11-01T09:00:00+05:30. Google recommends the offset; without it Google assumes Googlebot's timezone.",
+    "datetime-or-date": "ISO 8601. A date alone (2026-11-01) when the hour is not known; otherwise a local date and time (2026-11-01T19:00) whose zone is the event's. A midnight timestamp is wrong unless the event starts at midnight.",
+    "date": "ISO 8601 date, YYYY-MM-DD.",
+    "date-partial": "ISO 8601 date as a year (1994), a month (1994-06) or a day (1994-06-15); Google asks for 'ISO 8601 date format' for foundingDate.",
+    "time": "hh:mm:ss, for example 15:00:00.",
+    "duration": "ISO 8601 duration, for example PT1H30M5S.",
+    "url": "Absolute https URL that works.",
+    "phone": "With the country code and the area code, for example +91 22 6971 9828.",
+    "email": "An email address, name@domain.",
+    "country": "ISO 3166-1 alpha-2 code, for example IN.",
+    "day-of-week": "A schema.org day URL (https://schema.org/Monday) or the short name (Monday).",
+    "text": "Plain text: not empty, no HTML tags."
+  },
+  "multiType": "A node with several types must meet the required properties of every type; recommended properties come from its first type, so list the most specific type first.",
+  "types": {
+    "Organization": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/organization", "updated": "2026-09-08",
+      "required": [], "recommended": ["name", "url", "logo", "sameAs", "description", "alternateName", "contactPoint", "address"],
+      "fields": { "url": "url", "logo": "url", "sameAs": "url", "telephone": "phone", "email": "email", "foundingDate": "date-partial", "description": "text", "name": "text" },
+      "minLogoPixels": 112,
+      "note": "Home page. Use the same name and alternateName as the site name. Logo at least 112x112 px, crawlable. address.addressCountry is the two-letter code."
+    },
+    "EducationalOrganization": { "sameAs": "Organization" },
+    "WebSite": {
+      "docs": "https://developers.google.com/search/docs/appearance/site-names", "updated": "2025-12-10",
+      "required": ["name", "url"], "recommended": ["alternateName"], "forbidden": ["potentialAction"],
+      "fields": { "url": "url", "name": "text" },
+      "note": "Home page only, domain root url. The root redirects to /en/ and Google reads the redirect target, so the markup lives on /en/. One WebSite node per home page; use the same data on every duplicate home page."
+    },
+    "LocalBusiness": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/local-business", "updated": "2026-09-08",
+      "required": ["name", "address"], "recommended": ["url", "telephone", "geo", "openingHoursSpecification", "image", "priceRange"],
+      "forbidden": ["aggregateRating", "review"],
+      "fields": { "url": "url", "image": "url", "hasMap": "url", "telephone": "phone", "name": "text" },
+      "maxLength": { "priceRange": 99 },
+      "note": "One per centre, on its centre page, with the most specific subtype. Several types go in an array (additionalType is not supported). Ratings only for sites that review other businesses."
+    },
+    "PostalAddress": { "docs": "https://developers.google.com/search/docs/appearance/structured-data/local-business", "updated": "2026-09-08",
+      "required": [], "recommended": ["streetAddress", "addressLocality", "addressRegion", "postalCode", "addressCountry"],
+      "fields": { "addressCountry": "country" } },
+    "GeoCoordinates": { "docs": "https://developers.google.com/search/docs/appearance/structured-data/local-business", "updated": "2026-09-08",
+      "required": ["latitude", "longitude"], "recommended": [], "minDecimals": 5 },
+    "OpeningHoursSpecification": { "docs": "https://developers.google.com/search/docs/appearance/structured-data/local-business", "updated": "2026-09-08",
+      "required": ["dayOfWeek", "opens", "closes"], "recommended": [],
+      "fields": { "dayOfWeek": "day-of-week", "opens": "time", "closes": "time", "validFrom": "date", "validThrough": "date" } },
+    "BreadcrumbList": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/breadcrumb", "updated": "2026-09-08",
+      "required": ["itemListElement"], "recommended": [], "minItems": 2,
+      "items": { "required": ["position", "name"], "requiredExceptLast": ["item"] },
+      "note": "At least two ListItems. The last item may leave out item; Google then uses the page itself. Must match the visible trail; built from routes.json."
+    },
+    "ItemList": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/course", "updated": "2026-09-08",
+      "required": ["itemListElement"], "recommended": [], "minItems": 3,
+      "items": { "required": ["position", "url"] },
+      "note": "Course list on a summary page: at least three courses, each ListItem with position and a unique canonical url."
+    },
+    "ListItem": { "required": ["position"], "recommended": [], "fields": { "url": "url" }, "note": "Checked against the rules of the list that holds it." },
+    "Course": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/course", "updated": "2026-09-08",
+      "required": ["name", "description"], "recommended": ["provider"],
+      "note": "Only for real curricula. Google shows only the first 60 characters of description, so the first sentence must stand alone."
+    },
+    "BlogPosting": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/article", "updated": "2026-09-08",
+      "required": [], "recommended": ["headline", "image", "datePublished", "dateModified", "author"],
+      "fields": { "datePublished": "datetime", "dateModified": "datetime", "headline": "text", "image": "url" },
+      "note": "No required properties. Each author is its own object; do not merge several authors into one name. Images: crawlable, at least 50,000 pixels (width times height), ideally 16x9, 4x3 and 1x1."
+    },
+    "Person": { "required": ["name"], "recommended": ["url"], "fields": { "url": "url" } },
+    "VideoObject": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/video", "updated": "2026-09-24",
+      "required": ["name", "thumbnailUrl", "uploadDate"], "recommended": ["description", "contentUrl", "embedUrl", "duration", "creator"],
+      "fields": { "uploadDate": "datetime", "duration": "duration", "thumbnailUrl": "url", "contentUrl": "url", "embedUrl": "url" }
+    },
+    "Event": {
+      "docs": "https://developers.google.com/search/docs/appearance/structured-data/event", "updated": "2026-09-08",
+      "required": ["name", "startDate", "location"], "recommended": ["endDate", "eventStatus", "image", "description", "offers", "organizer"],
+      "fields": { "startDate": "datetime-or-date", "endDate": "datetime-or-date" },
+      "note": "Physical events only (an admission test day, an open day). Never remove startDate when an event is cancelled or postponed. Not for business hours or coupons."
+    },
+    "Place": { "required": ["name", "address"], "recommended": [] },
+    "ImageObject": { "required": ["url"], "recommended": ["width", "height"], "fields": { "url": "url" } },
+    "ContactPoint": { "required": [], "recommended": ["telephone", "contactType"], "fields": { "telephone": "phone", "email": "email" } },
+    "WebPage": { "required": [], "recommended": ["name", "url", "inLanguage"], "fields": { "url": "url", "dateModified": "datetime", "datePublished": "datetime" } },
+    "CollectionPage": { "sameAs": "WebPage" },
+    "AboutPage": { "sameAs": "WebPage" },
+    "ContactPage": { "sameAs": "WebPage" }
+  },
+  "retired": {
+    "FAQPage": "FAQ rich results are no longer shown and the documentation was removed 2026-06-15. FAQs stay as visible HTML.",
+    "HowTo": "Retired.",
+    "SearchAction": "Sitelinks search box retired in 2024.",
+    "SpecialAnnouncement": "Retired 2025.",
+    "EducationalOccupationalProgram": "Not a Google rich result; there is no Course-info result either (retired 2025).",
+    "PracticeProblem": "Removed from Google Search in 2026."
+  },
+  "urlKeys": ["@id", "url", "item", "logo", "image", "sameAs", "thumbnailUrl", "contentUrl", "embedUrl", "hasMap"],
+  "watch": [
+    { "id": "structured-data-policies", "url": "https://developers.google.com/search/docs/appearance/structured-data/sd-policies", "updated": "2026-07-10",
+      "why": "Markup must be visible on the page, up to date, relevant and complete." },
+    { "id": "search-gallery", "url": "https://developers.google.com/search/docs/appearance/structured-data/search-gallery", "updated": "2026-10-16",
+      "why": "Which types have a rich result at all." },
+    { "id": "sitelinks", "url": "https://developers.google.com/search/docs/appearance/sitelinks", "updated": "2025-12-10",
+      "why": "Sitelinks are automatic; titles and structure are what we control." },
+    { "id": "sitemaps", "url": "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap", "updated": "2026-07-08",
+      "why": "lastmod is used only if consistently and verifiably accurate; priority and changefreq are ignored." },
+    { "id": "localized-versions", "url": "https://developers.google.com/search/docs/specialty/international/localized-versions", "updated": "2026-09-21",
+      "why": "hreflang and x-default, in tags or in the sitemap." },
+    { "id": "robots-intro", "url": "https://developers.google.com/search/docs/crawling-indexing/robots/intro", "updated": "2025-12-10",
+      "why": "robots.txt controls crawling, not indexing." },
+    { "id": "robots-meta-tag", "url": "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag", "updated": "2026-03-24",
+      "why": "max-image-preview:large lets Search show a large image preview; noindex keeps a page out." },
+    { "id": "ai-features", "url": "https://developers.google.com/search/docs/appearance/ai-features", "updated": "2025-12-10",
+      "why": "No extra requirements for AI Overviews and AI Mode; structured data must match visible text." },
+    { "id": "ai-optimization-guide", "url": "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide", "updated": "2026-07-10",
+      "why": "llms.txt, chunking and special markup are not used by Google Search." }
+  ]
+}

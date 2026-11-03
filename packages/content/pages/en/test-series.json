@@ -1,0 +1,55 @@
+{
+  "route": "test-series",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "JEE test series in Pune | D-SAP Ghule Tutorials",
+    "description": "Chapter tests, weekly tests, monthly JEE Main mocks and quarterly JEE Advanced mocks, all on an online portal that works like the real JEE."
+  },
+  "h1": "JEE test series in Pune",
+  "intro": [
+    {
+      "text": "Our students take tests on a fixed calendar, from a short test after each chapter to full JEE mocks. Every test is taken on our online portal, which works like the real JEE screen.",
+      "requires": ["test-series.format", "test-series.cbt"]
+    }
+  ],
+  "sections": [
+    {
+      "id": "calendar",
+      "kind": "list",
+      "heading": "The test calendar",
+      "body": [{ "text": "Each kind of test has its own job.", "requires": ["test-series.format"] }],
+      "points": [
+        { "text": "After every chapter: a test on that chapter.", "requires": ["test-series.format"] },
+        { "text": "Every week: a test that switches between one topic and the full syllabus so far.", "requires": ["test-series.format"] },
+        { "text": "Every fourth week: a longer test on everything covered.", "requires": ["test-series.format"] },
+        { "text": "Every month: a full JEE Main mock, {{fact:exam.jee-main#questions}} questions in {{fact:exam.jee-main#hours}} hours.", "requires": ["test-series.format"] },
+        { "text": "Every quarter in Class 12: a JEE Advanced mock.", "requires": ["test-series.format"] }
+      ]
+    },
+    {
+      "id": "after",
+      "kind": "prose",
+      "heading": "After each test",
+      "body": [
+        { "text": "Each test comes back with a personal analysis of how your child did.", "requires": ["method.test-analytics"] },
+        { "text": "Parents also meet the teachers at parent-teacher meetings.", "requires": ["method.ptm"] }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions about the tests",
+      "questions": [
+        {
+          "q": "Are the mocks as long as the real JEE Main?",
+          "a": { "text": "Yes: {{fact:exam.jee-main#questions}} questions in {{fact:exam.jee-main#hours}} hours, all compulsory.", "requires": ["test-series.format"] }
+        },
+        {
+          "q": "Can my child try a test first?",
+          "a": "Yes. The [home page](page:home) has a short test that works like the real screen."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

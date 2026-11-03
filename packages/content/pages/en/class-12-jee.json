@@ -1,0 +1,86 @@
+{
+  "route": "class-12-jee",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "JEE coaching for Class 12 in Pune | D-SAP Ghule",
+    "description": "A one-year JEE programme for Class 12 students, with JEE Advanced mocks every quarter. Evening classes at New Sangvi and Wakad."
+  },
+  "h1": "JEE coaching for Class 12 in Pune",
+  "intro": [
+    {
+      "text": "A one-year JEE programme for students in Class 12. It runs alongside school, from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}.",
+      "requires": ["programme.class-12"]
+    }
+  ],
+  "sections": [
+    {
+      "id": "who-for",
+      "heading": "Who should join",
+      "body": [
+        {
+          "text": "Students starting Class 12 who want coaching for the JEE in the year ahead, including those who had no coaching in Class 11.",
+          "requires": ["programme.class-12"]
+        },
+        { "text": "We do not run a batch for students taking a drop year.", "requires": ["programme.repeater"] }
+      ]
+    },
+    {
+      "id": "covers",
+      "heading": "The year's work",
+      "body": [
+        { "text": "Physics, Chemistry and Mathematics for the JEE, with the material to match.", "requires": ["programme.subjects"] }
+      ],
+      "points": [
+        { "text": "Notes and solved examples, chapter by chapter.", "requires": ["programme.study-material"] },
+        { "text": "Problem sets at JEE Main and JEE Advanced level.", "requires": ["programme.study-material"] },
+        { "text": "Previous years' papers, solved.", "requires": ["programme.study-material"] },
+        { "text": "One practice sheet each week.", "requires": ["method.practice-sheets"] }
+      ]
+    },
+    {
+      "id": "week",
+      "heading": "How the week runs",
+      "body": [
+        "Classes start at {{fact:batch.timings#start}}, once school is over, and end at {{fact:batch.timings#end}}.",
+        {
+          "text": "Any doubt can go to the forum or the next doubt session. A mentoring slot gives your child one teacher's full attention.",
+          "requires": ["method.doubts", "programme.mentoring"]
+        }
+      ]
+    },
+    {
+      "id": "tests",
+      "heading": "Mock tests in Class 12",
+      "body": [
+        {
+          "text": "Class 12 students take a JEE Advanced mock every quarter, on top of the monthly JEE Main mock and the chapter tests.",
+          "requires": ["test-series.format"]
+        },
+        {
+          "text": "Mocks are taken on our online portal, which works like the real JEE screen, so exam day holds no surprises.",
+          "requires": ["test-series.cbt"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions about Class 12 coaching",
+      "questions": [
+        {
+          "q": "Is one year enough for JEE?",
+          "a": "It depends on how well your child knows the Class 11 topics, which make up much of the paper. If they are in Class 10 now, the [two-year programme](page:class-11-jee) gives more time."
+        },
+        {
+          "q": "Are there JEE Advanced mocks?",
+          "a": { "text": "Yes, one every quarter.", "requires": ["test-series.format"] }
+        },
+        {
+          "q": "How many students are in a batch?",
+          "a": "At most {{fact:batch.size}}."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

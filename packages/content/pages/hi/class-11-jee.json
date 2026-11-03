@@ -1,0 +1,37 @@
+{
+  "route": "class-11-jee",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "पुणे में कक्षा 11 के लिए JEE कोचिंग | D-SAP",
+    "description": "कक्षा 11 से दो साल का JEE मेन और एडवांस्ड प्रोग्राम, किसी भी बोर्ड से कक्षा 10 पास छात्रों के लिए। पुणे में शाम की क्लास।"
+  },
+  "h1": "पुणे में कक्षा 11 के लिए JEE कोचिंग",
+  "intro": [
+    { "text": "दो साल का प्रोग्राम कक्षा 10 के बाद जून में शुरू होता है, और अप्रैल से फाउंडेशन पीरियड चलता है। यह कक्षा 11 और 12 दोनों में चलता है और JEE मेन और JEE एडवांस्ड, दोनों की तैयारी कराता है।", "requires": ["programme.class-11", "programme.start"] }
+  ],
+  "sections": [
+    { "id": "who-for", "heading": "यह किसके लिए है", "body": [
+      { "text": "किसी भी बोर्ड, SSC, CBSE या ICSE, से कक्षा 10 पास छात्रों के लिए।", "requires": ["programme.class-11"] },
+      "कक्षा 11 से शुरू करने पर उस सिलेबस के लिए पूरे दो साल मिलते हैं जिसमें कक्षा 11 और कक्षा 12, दोनों आते हैं।" ] },
+    { "id": "covers", "heading": "इसमें क्या है", "body": [
+      { "text": "फ़िज़िक्स, केमिस्ट्री और मैथ्स, JEE मेन और JEE एडवांस्ड के स्तर तक।", "requires": ["programme.subjects"] } ],
+      "points": [
+        { "text": "हर चैप्टर के थ्योरी नोट्स, हल किए गए उदाहरणों के साथ।", "requires": ["programme.study-material"] },
+        { "text": "मेन और एडवांस्ड स्तर के चैप्टर-वार प्रश्न।", "requires": ["programme.study-material"] },
+        { "text": "पिछले IIT JEE पेपर, पूरे हल के साथ।", "requires": ["programme.study-material"] },
+        { "text": "हर हफ़्ते एक प्रैक्टिस शीट।", "requires": ["method.practice-sheets"] } ] },
+    { "id": "week", "heading": "एक आम हफ़्ता", "body": [
+      { "text": "क्लास स्कूल के बाद, {{fact:batch.timings#start}} बजे से {{fact:batch.timings#end}} बजे तक, AI-पावर्ड डिजिटल बोर्ड पर होती है।", "requires": ["classroom.digital-board"] },
+      { "text": "डाउट के लिए डाउट फ़ोरम या डाउट सेशन है, और छात्र मेंटरिंग स्लॉट में टीचर के साथ अकेले में समय ले सकते हैं।", "requires": ["method.doubts", "programme.mentoring"] },
+      { "text": "लेक्चर ऑनलाइन भी हैं, इसलिए छूटी हुई क्लास बाद में देखी जा सकती है।", "requires": ["method.online-lectures"] } ] },
+    { "id": "tests", "heading": "दो साल के टेस्ट", "body": [
+      { "text": "हर चैप्टर के बाद एक टेस्ट, और हर चौथे हफ़्ते एक लंबा टेस्ट। हफ़्ते के टेस्ट कभी एक टॉपिक पर होते हैं, कभी अब तक के पूरे सिलेबस पर। महीने में एक बार JEE मेन का पूरा मॉक।", "requires": ["test-series.format"] },
+      { "text": "कक्षा 12 में हर तिमाही JEE एडवांस्ड का मॉक जुड़ता है। हर टेस्ट ऑनलाइन पोर्टल पर होता है और उसके बाद निजी विश्लेषण मिलता है।", "requires": ["test-series.format", "test-series.cbt", "method.test-analytics"] } ] },
+    { "id": "questions", "heading": "दो साल के प्रोग्राम पर सवाल", "questions": [
+      { "q": "यह JEE मेन के लिए है या JEE एडवांस्ड के लिए?", "a": { "text": "दोनों के लिए, पहले महीने से।", "requires": ["programme.class-11"] } },
+      { "q": "यह कब शुरू होता है?", "a": { "text": "कक्षा 10 की परीक्षा के बाद जून में, और अप्रैल से फाउंडेशन पीरियड।", "requires": ["programme.start"] } },
+      { "q": "एक बैच में कितने छात्र होते हैं?", "a": "ज़्यादा से ज़्यादा {{fact:batch.size}}।" } ] },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

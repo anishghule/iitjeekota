@@ -1,0 +1,68 @@
+---
+/**
+ * From Kota to Pune (plan C1 3). The two names set in type with
+ * a line between them that draws itself as the reader scrolls through the section. With the 3D
+ * world running, the figure is the slot of the route scene (scene "route": plinths, a route that
+ * draws itself, a house lighting at Pune) and the type steps aside. The figure is
+ * for wide screens only: on a phone the section is just its text and does not pin.
+ */
+import { strings, type Locale } from "../../../i18n/index.ts";
+import type { SectionData } from "../../../lib/types.ts";
+import Icon from "../../ui/Icon.astro";
+import Paragraphs from "../../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const input = JSON.stringify({ kota: t.kotaRoute.kota, pune: t.kotaRoute.pune }).replace(/</g, "\\u003c");
+---
+<section id={section.id} class="route pinned pinned--short" data-scene="route" data-pin-wide-only data-pin-wide-from="lg" data-steps="2" aria-labelledby={`${section.id}-title`}>
+  <script type="application/json" is:inline data-scene-input set:html={input} />
+  <div class="stage">
+    <div class="container split">
+      <div class="route__text">
+        <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+        <Paragraphs paragraphs={section.body} class="lede" />
+      </div>
+      <figure class="route__figure" aria-label={t.kotaRoute.caption} data-pin-visual data-scene-slot>
+        <span class="route__city t-display-xl">{t.kotaRoute.kota}</span>
+        <span class="route__line" aria-hidden="true"><span></span></span>
+        <span class="route__city route__city--home t-display-xl">
+          <Icon name="kota-route" size="xl" />
+          {t.kotaRoute.pune}
+        </span>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<style>
+  .route__text { display: grid; gap: var(--space-5); }
+  .route__figure { display: grid; gap: var(--space-4); justify-items: start; margin: 0; }
+  .route__city { color: var(--text-muted); }
+  .route__city--home { display: inline-flex; align-items: center; gap: var(--space-4); color: var(--accent-text); }
+  .route__line {
+    display: block;
+    width: var(--space-1);
+    height: calc(var(--space-10) * 2);
+    margin-inline-start: var(--space-6);
+    border-radius: var(--radius-round);
+    background: var(--bg-raised);
+    overflow: hidden;
+  }
+  .route__line span {
+    display: block;
+    height: 100%;
+    background: var(--accent);
+    transform-origin: top;
+    transform: scaleY(var(--progress, 1));
+  }
+  .route:not([data-pin]) .route__line span { transform: none; }
+  .route[data-pin="off"] .route__figure { display: none; }
+  /* Wide, the figure is the slot of the 3D route (the typed names and line stay for the still tier and no JavaScript). */
+  .route__figure { min-height: 50dvh; }
+  :global(:root[data-world]) .route__figure > * { visibility: hidden; }
+</style>

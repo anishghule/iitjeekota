@@ -1,0 +1,46 @@
+{
+  "$description": "The blog collection: /{locale}/blogs/{slug}/. Category filters are a page control, not separate indexed pages. Each post is planned (no page yet) or written (its copy is in packages/content/posts/{locale}/{id}.md and make content checks the two agree). gates are facts a post waits for, as on any page. Each post's language versions are linked by hreflang only when they are true translations.",
+  "slugPattern": "blogs/{slug}",
+  "categories": [
+    { "id": "jee-preparation", "names": { "en": "JEE preparation", "hi": "JEE तैयारी", "mr": "JEE तयारी" } },
+    { "id": "kota-and-pune", "names": { "en": "Kota and Pune", "hi": "कोटा और पुणे", "mr": "कोटा आणि पुणे" } },
+    { "id": "area-guides", "names": { "en": "Area guides", "hi": "इलाक़े की जानकारी", "mr": "परिसर माहिती" } },
+    { "id": "for-parents", "names": { "en": "For parents", "hi": "अभिभावकों के लिए", "mr": "पालकांसाठी" } }
+  ],
+  "draftLocales": ["hi", "mr"],
+  "posts": [
+    {
+      "id": "choosing-jee-coaching-pune", "status": "written", "category": "for-parents", "targets": ["pune", "pimpri-chinchwad"],
+      "$copyLintAllow": ["best"],
+      "query": { "en": "best iit jee coaching in pune" },
+      "title": { "en": "How to choose the best IIT JEE coaching in Pune: what to check before you pay" }
+    },
+    {
+      "id": "kota-or-pune", "status": "written", "category": "kota-and-pune", "targets": ["home", "powered-by-kota"],
+      "query": { "en": "kota or pune for jee" },
+      "title": { "en": "Kota or Pune for JEE: what changes for your child, week by week" }
+    },
+    {
+      "id": "choosing-jee-coaching-pcmc", "status": "written", "category": "area-guides", "targets": ["pimpri-chinchwad", "area-wakad", "area-pimple-saudagar"],
+      "$copyLintAllow": ["best"],
+      "query": { "en": "best jee coaching in pimpri chinchwad" },
+      "title": { "en": "Best JEE coaching in Pimpri-Chinchwad: questions to ask on a centre visit" }
+    },
+    {
+      "id": "class-11-or-12-start", "status": "written", "category": "jee-preparation", "targets": ["class-11-jee", "class-12-jee"],
+      "query": { "en": "start jee preparation class 11 or 12" },
+      "title": { "en": "Starting JEE preparation in Class 11 or Class 12: an honest comparison" }
+    },
+    {
+      "id": "jee-coaching-fees-pune", "status": "written", "category": "for-parents", "targets": ["fees-and-batches", "programmes"],
+      "query": { "en": "jee coaching fees comparison" },
+      "title": { "en": "What JEE coaching in Pune costs, and what the fee should include" }
+    },
+    {
+      "id": "foundation-when-to-start", "status": "written", "category": "for-parents", "targets": ["foundation-class-9-10"],
+      "gates": ["legal.foundation-minimum-age"],
+      "query": { "en": "iit foundation class 9 worth it" },
+      "title": { "en": "Is IIT foundation in Class 9 worth it? What it should and should not do" }
+    }
+  ]
+}

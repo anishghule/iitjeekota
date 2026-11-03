@@ -1,0 +1,69 @@
+---
+/**
+ * A centre's card: the address exactly as on its Google Business Profile, the phone, the hours, the
+ * areas it serves (each linked to its page) and directions. Every value is a fact from the register,
+ * the same facts the structured data states, so the page and its markup agree.
+ */
+import { fill, strings, type Locale } from "../../i18n/index.ts";
+import { hoursLines, weekdayName } from "../../lib/format.ts";
+import { isRouteId, localName, routePath, site, type Centre } from "../../lib/data.ts";
+import Icon from "./Icon.astro";
+
+interface Props {
+  centre: Centre;
+  locale: Locale;
+  /** Link the centre's name to its page (on the contact page). */
+  link?: boolean;
+}
+const { centre, locale, link = false } = Astro.props;
+const t = strings(locale);
+const c = t.centre;
+const served = site.areas.filter((a) => a.nearestCentre === centre.id || a.localCentre === centre.id).map((a) => ({
+  name: localName(a.names, locale), path: a.page && isRouteId(a.page) ? routePath(a.page, locale) : undefined }));
+const specs = (centre.hours ?? []) as { dayOfWeek: string[]; opens: string; closes: string }[];
+const lines = hoursLines(specs, locale, c.to);
+const open = new Set(specs.flatMap((s) => s.dayOfWeek));
+const week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const closed = specs.length > 0 ? week.filter((d) => !open.has(d)).map((d) => weekdayName(d, locale)).join(", ") : "";
+const phone = site.contact.phone;
+const page = centre.page && isRouteId(centre.page) ? routePath(centre.page, locale) : undefined;
+const name = localName(centre.names, locale);
+---
+<div class="centre-card card">
+  <p class="badge">{centre.role === "head office" ? c.head : c.branch}</p>
+  <address class="centre-card__address">
+    <p class="t-h2">{link && page ? <a href={page}>{name}</a> : name}</p>
+    <p>{centre.address}</p>
+  </address>
+  <dl class="centre-card__facts">
+    {phone && <>
+      <dt>{c.phone}</dt>
+      <dd><a href={phone.href}>{phone.display}</a></dd>
+    </>}
+    {lines.length > 0 && <>
+      <dt>{c.hours}</dt>
+      <dd>
+        {lines.map((l) => <span>{l.days}: <span class="tabular">{l.times}</span></span>)}
+        {closed && <span class="muted">{fill(c.closed, { days: closed })}</span>}
+      </dd>
+    </>}
+    {served.length > 0 && <>
+      <dt>{c.serves}</dt>
+      <dd class="centre-card__areas">{served.map((a, i) => <>{a.path ? <a href={a.path}>{a.name}</a> : a.name}{i < served.length - 1 ? ", " : ""}</>)}</dd>
+    </>}
+  </dl>
+  <p class="centre-card__links">
+    {centre.directions && <a class="button" href={centre.directions} rel="external"><Icon name="pin" size="sm" />{c.directions}</a>}
+    {centre.maps && <a class="button button--quiet" href={centre.maps} rel="external"><Icon name="map" size="sm" />{c.map}</a>}
+  </p>
+</div>
+
+<style>
+  .centre-card { display: grid; gap: var(--space-4); justify-items: start; align-content: start; }
+  .centre-card__address { display: grid; gap: var(--space-1); font-style: normal; }
+  .centre-card__facts { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2) var(--space-5); }
+  .centre-card__facts dt { color: var(--text-muted); }
+  .centre-card__facts dd { margin: 0; display: grid; gap: var(--space-1); }
+  .centre-card__facts dd.centre-card__areas { display: block; }
+  .centre-card__links { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+</style>

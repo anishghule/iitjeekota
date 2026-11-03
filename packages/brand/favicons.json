@@ -1,0 +1,19 @@
+{
+  "$description": "Favicon and app icon set, every file made from the official medal (logo.json). Plates put the medal on the identity's icon surface.",
+  "ico": { "name": "favicon.ico", "sizes": [16, 32, 48] },
+  "transparent": [
+    { "name": "favicon-16.png", "size": 16 },
+    { "name": "favicon-32.png", "size": 32 },
+    { "name": "icon-192.png", "size": 192 },
+    { "name": "icon-512.png", "size": 512 }
+  ],
+  "plates": [
+    { "name": "apple-touch-icon.png", "size": 180, "scale": 0.86 },
+    { "name": "icon-maskable-512.png", "size": 512, "scale": 0.76, "purpose": "maskable", "$description": "Maskable icons keep their content inside the central 80% circle." }
+  ],
+  "manifest": {
+    "name": "site.webmanifest",
+    "display": "minimal-ui",
+    "icons": ["icon-192.png", "icon-512.png", "icon-maskable-512.png"]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "@dsap/scenes",
+  "private": true,
+  "description": "The 3D scenes of iitjeekota.com, built procedurally with three.js from tokens and content data (docs/adr/0006-browser-toolchain-and-3d.md).",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./config": "./src/config.ts",
+    "./quality": "./src/quality.ts"
+  },
+  "dependencies": {
+    "@dsap/motion": "workspace:*",
+    "@dsap/tokens": "workspace:*",
+    "three": "0.186.1"
+  }
+}

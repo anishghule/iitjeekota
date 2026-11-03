@@ -1,0 +1,58 @@
+---
+/**
+ * The next batch as a table: which batch, when it starts, whether admissions are open, the class days
+ * and times, and the batch size. Every value is a fact from the register, in the page's language.
+ */
+import { fill, strings, type Locale } from "../../i18n/index.ts";
+import { fact } from "../../lib/data.ts";
+import type { SectionData } from "../../lib/types.ts";
+import ActionLink from "../ui/ActionLink.astro";
+import Paragraphs from "../ui/Paragraphs.astro";
+
+interface Props {
+  section: SectionData;
+  locale: Locale;
+}
+const { section, locale } = Astro.props;
+const t = strings(locale);
+const b = t.batch;
+const next = fact(locale, "batch.next");
+const days = fact(locale, "batch.days");
+const timings = fact(locale, "batch.timings");
+const size = fact(locale, "batch.size");
+const rows = [
+  [b.exam, next?.exam],
+  [b.starts, next?.start],
+  [b.admissions, next?.admissions],
+  [b.days, days],
+  [b.times, timings ? `${timings.start} ${t.centre.to} ${timings.end}` : undefined],
+  [b.size, size ? fill(b.upTo, { size }) : undefined],
+].filter((row): row is [string, string] => typeof row[1] === "string");
+---
+<section id={section.id} class="section" aria-labelledby={`${section.id}-title`}>
+  <div class="container batches">
+    <div class="prose">
+      <h2 id={`${section.id}-title`} class="t-h1">{section.heading}</h2>
+      <Paragraphs paragraphs={section.body} />
+    </div>
+    <div class="table-scroll">
+      <table class="batches__table">
+        <caption class="visually-hidden">{b.caption}</caption>
+        <tbody>
+          {rows.map(([name, value]) => <tr><th scope="row">{name}</th><td class="tabular">{value}</td></tr>)}
+        </tbody>
+      </table>
+    </div>
+    <div class="actions"><ActionLink action={section.action ?? { to: "enquire", label: b.ask }} locale={locale} /></div>
+  </div>
+</section>
+
+<style>
+  .batches { display: grid; gap: var(--space-5); }
+  .table-scroll { overflow-x: auto; }
+  .batches__table { width: 100%; max-width: var(--measure); text-align: start; }
+  .batches__table th, .batches__table td { padding: var(--space-3) var(--space-4); text-align: start; vertical-align: top; }
+  .batches__table th { color: var(--text-muted); font-weight: var(--weight-semibold); white-space: nowrap; }
+  .batches__table tbody tr { background: var(--bg-raised); }
+  .batches__table tbody tr + tr { box-shadow: inset 0 var(--space-1) 0 var(--bg); }
+</style>

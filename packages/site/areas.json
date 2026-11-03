@@ -1,0 +1,68 @@
+{
+  "$description": "Areas with their own page (iit-jee-coaching-{id}). Hub is the pillar the area hangs under; nearestCentre is the centre the page sends students to; neighbours are the adjacent areas each page links to. A commute is a placeholder until D-SAP checks it and sets status to confirmed with who checked it and when; the area page publishes only then (site.json commute). minutes is a time at the batch start; freeFlowMinutes is a time on empty roads, and the page says so. Sources are explained in site.json commuteSources. Names in Hindi and Marathi are drafts until native review.",
+  "areas": [
+    { "id": "aundh", "hub": "pune", "tier": 1, "nearestCentre": "sangvi-head-office", "neighbours": ["baner", "sangvi", "pimple-nilakh", "pashan"],
+      "names": { "en": "Aundh", "hi": "औंध", "mr": "औंध" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 3.4, "freeFlowMinutes": 6, "source": "osm" },
+        { "centre": "wakad", "km": 8.6, "minutes": [12, 16], "source": "web-wakad-aundh" } ] } },
+    { "id": "baner", "hub": "pune", "tier": 1, "nearestCentre": "sangvi-head-office", "neighbours": ["balewadi", "aundh", "pashan"],
+      "names": { "en": "Baner", "hi": "बाणेर", "mr": "बाणेर" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 7.8, "freeFlowMinutes": 12, "source": "osm" },
+        { "centre": "wakad", "km": 9.4, "freeFlowMinutes": 12, "source": "osm" } ] } },
+    { "id": "balewadi", "hub": "pune", "tier": 1, "nearestCentre": "wakad", "neighbours": ["baner", "wakad", "pimple-nilakh"],
+      "names": { "en": "Balewadi", "hi": "बालेवाड़ी", "mr": "बालेवाडी" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 9.6, "freeFlowMinutes": 14, "source": "osm" },
+        { "centre": "wakad", "km": 8.6, "freeFlowMinutes": 12, "source": "osm" } ] } },
+    { "id": "pashan", "hub": "pune", "tier": 2, "nearestCentre": "sangvi-head-office", "neighbours": ["baner", "aundh"],
+      "names": { "en": "Pashan", "hi": "पाषाण", "mr": "पाषाण" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 9.0, "freeFlowMinutes": 12, "source": "osm" },
+        { "centre": "wakad", "km": 12.2, "freeFlowMinutes": 16, "source": "osm" } ] } },
+    { "id": "wakad", "hub": "pimpri-chinchwad", "tier": 1, "nearestCentre": "wakad", "neighbours": ["hinjewadi", "pimple-saudagar", "rahatani", "balewadi"],
+      "names": { "en": "Wakad", "hi": "वाकड", "mr": "वाकड" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "localCentre": "wakad", "routes": [
+        { "centre": "sangvi-head-office", "km": 6.0, "source": "web-wakad-new-sangvi" } ] } },
+    { "id": "sangvi", "hub": "pimpri-chinchwad", "tier": 1, "nearestCentre": "sangvi-head-office", "neighbours": ["pimple-gurav", "pimple-nilakh", "aundh"],
+      "names": { "en": "Sangvi", "hi": "सांगवी", "mr": "सांगवी" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "localCentre": "sangvi-head-office", "routes": [
+        { "centre": "wakad", "km": 6.0, "source": "web-wakad-new-sangvi" } ] } },
+    { "id": "pimple-saudagar", "hub": "pimpri-chinchwad", "tier": 1, "nearestCentre": "sangvi-head-office", "neighbours": ["wakad", "rahatani", "pimple-nilakh"],
+      "names": { "en": "Pimple Saudagar", "hi": "पिंपले सौदागर", "mr": "पिंपळे सौदागर" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 4.6, "freeFlowMinutes": 7, "source": "osm" },
+        { "centre": "wakad", "km": 5.2, "freeFlowMinutes": 7, "source": "osm" } ] } },
+    { "id": "pimple-nilakh", "hub": "pimpri-chinchwad", "tier": 2, "nearestCentre": "sangvi-head-office", "neighbours": ["sangvi", "pimple-saudagar", "aundh"],
+      "names": { "en": "Pimple Nilakh", "hi": "पिंपले निलख", "mr": "पिंपळे निलख" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 4.7, "freeFlowMinutes": 7, "source": "osm" },
+        { "centre": "wakad", "km": 7.2, "freeFlowMinutes": 8, "source": "osm" } ] } },
+    { "id": "pimple-gurav", "hub": "pimpri-chinchwad", "tier": 2, "nearestCentre": "sangvi-head-office", "neighbours": ["sangvi", "pimple-saudagar"],
+      "names": { "en": "Pimple Gurav", "hi": "पिंपले गुरव", "mr": "पिंपळे गुरव" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 1.4, "freeFlowMinutes": 3, "source": "osm" },
+        { "centre": "wakad", "km": 8.4, "freeFlowMinutes": 12, "source": "osm" } ] } },
+    { "id": "rahatani", "hub": "pimpri-chinchwad", "tier": 2, "nearestCentre": "wakad", "neighbours": ["pimple-saudagar", "wakad", "kalewadi"],
+      "names": { "en": "Rahatani", "hi": "रहाटणी", "mr": "रहाटणी" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 4.9, "freeFlowMinutes": 7, "source": "osm" },
+        { "centre": "wakad", "km": 4.4, "freeFlowMinutes": 6, "source": "osm" } ] } },
+    { "id": "kalewadi", "hub": "pimpri-chinchwad", "tier": 2, "nearestCentre": "wakad", "neighbours": ["rahatani", "chinchwad"],
+      "names": { "en": "Kalewadi", "hi": "काळेवाड़ी", "mr": "काळेवाडी" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 6.3, "freeFlowMinutes": 9, "source": "osm" },
+        { "centre": "wakad", "km": 3.1, "freeFlowMinutes": 5, "source": "osm" } ] } },
+    { "id": "chinchwad", "hub": "pimpri-chinchwad", "tier": 2, "nearestCentre": "wakad", "neighbours": ["kalewadi", "rahatani"],
+      "names": { "en": "Chinchwad", "hi": "चिंचवड", "mr": "चिंचवड" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 9.0, "freeFlowMinutes": 12, "source": "osm" },
+        { "centre": "wakad", "km": 6.8, "freeFlowMinutes": 7, "source": "osm" } ] } },
+    { "id": "hinjewadi", "hub": "pimpri-chinchwad", "tier": 2, "nearestCentre": "wakad", "neighbours": ["wakad", "balewadi"],
+      "names": { "en": "Hinjewadi", "hi": "हिंजवडी", "mr": "हिंजवडी" },
+      "commute": { "status": "confirmed", "checked": "D-SAP, 2026-10-31", "routes": [
+        { "centre": "sangvi-head-office", "km": 10.0, "freeFlowMinutes": 12, "source": "osm" },
+        { "centre": "wakad", "km": 3.7, "freeFlowMinutes": 5, "source": "osm" } ] } }
+  ]
+}

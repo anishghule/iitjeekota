@@ -1,0 +1,8 @@
+# The security tools CI and make security run (CLAUDE.md section 5). Exact pins; requirements.txt is the
+# hash-locked closure of this file (make ci-lock), so an install fails if any file changes.
+# Each version, and every dependency in the lock, is at least 14 days old.
+# Semgrep is not here: 1.181.0 pins mcp 1.29.0 and opentelemetry-api 1.37, which have known vulnerabilities
+# (docs/adr/0009-security-headers-and-supply-chain.md). Add it back when a release at least 14 days old pins fixed versions.
+ruff==0.17.1
+bandit==1.9.4
+pip-audit==2.10.1

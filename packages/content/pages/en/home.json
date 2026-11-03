@@ -1,0 +1,172 @@
+{
+  "route": "home",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "D-SAP Ghule Tutorials | IIT JEE coaching, powered by Kota",
+    "description": "JEE Main and Advanced coaching in Pune, powered by a top coaching institute in Kota. Faculty from Kota. Centres in New Sangvi and Wakad."
+  },
+  "h1": "IIT JEE coaching in Pune, powered by Kota",
+  "intro": [
+    {
+      "text": "D-SAP Ghule Tutorials runs its JEE programme with a top coaching institute in Kota. Faculty from Kota teach here, so your child gets Kota coaching and still lives at home.",
+      "requires": ["partner.affiliation", "faculty.kota"]
+    },
+    "Classes run {{fact:batch.days}}, from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, at our centres in New Sangvi and Wakad."
+  ],
+  "sections": [
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "kota-to-pune",
+      "heading": "From Kota to Pune",
+      "body": [
+        "Many families in Pune think about sending their child to Kota for JEE. That means a hostel, a new city and two years away from home.",
+        {
+          "text": "Here the Kota programme comes to your child instead. They sleep at home, eat at home and keep their school.",
+          "requires": ["partner.affiliation"]
+        }
+      ]
+    },
+    {
+      "id": "faculty",
+      "heading": "The teachers",
+      "body": [
+        {
+          "text": "Physics, Chemistry and Maths are taught by faculty who have taught in Kota. Their names, subjects and years of teaching are below.",
+          "requires": ["faculty.kota"]
+        }
+      ]
+    },
+    {
+      "id": "classroom",
+      "heading": "A class, as it happens",
+      "body": [
+        {
+          "text": "This is a real class at one of our centres, taught on an AI-powered digital board. Press play to watch it.",
+          "requires": ["classroom.digital-board"]
+        }
+      ]
+    },
+    {
+      "id": "portal",
+      "heading": "Lectures, doubts and tests, online",
+      "body": [
+        {
+          "text": "Watch the live lecture online, or each class recording whenever you need to. Post on our doubt forum or get it cleared directly with a teacher during a doubt session.",
+          "requires": ["method.online-lectures", "method.doubts"]
+        },
+        {
+          "text": "Weekly practice sheet to keep your preparation on track. Computer-Based Tests (CBT) on our online portal, designed to give you the same experience as the actual JEE exam.",
+          "requires": ["method.practice-sheets", "test-series.cbt"]
+        }
+      ]
+    },
+    {
+      "id": "live-test",
+      "heading": "Try a test the way JEE sets it",
+      "body": [
+        "JEE Main is taken on a computer. There is a timer, a panel of question numbers and a button to mark a question for review. Try a short test below and see your score as soon as you submit.",
+        {
+          "text": "Our tests run on the same kind of screen, so the real exam feels familiar.",
+          "requires": ["test-series.cbt"]
+        }
+      ]
+    },
+    {
+      "id": "report",
+      "heading": "Every test, read back to you",
+      "body": [
+        {
+          "text": "Every test on the portal comes back with a personal analysis of how your child did. The report below is an example.",
+          "requires": ["method.test-analytics"]
+        },
+        {
+          "text": "You also meet the teachers at parent-teacher meetings, so you hear about progress from the people who teach.",
+          "requires": ["method.ptm"]
+        }
+      ]
+    },
+    {
+      "id": "syllabus",
+      "heading": "The JEE syllabus, chapter by chapter",
+      "body": [
+        "Physics, Chemistry and Maths for JEE Main and Advanced, one chapter to a line, each with a code like 11-P-03. Open a chapter to see what it covers. The [full syllabus](page:jee-syllabus) has every chapter."
+      ]
+    },
+    {
+      "id": "journey",
+      "heading": "Two years, month by month",
+      "body": [
+        {
+          "text": "The programme starts in June after Class 10, with a foundation period from April. Class 11 builds the base in all three subjects. In Class 12, a JEE Advanced mock every quarter joins the monthly JEE Main mock.",
+          "requires": ["programme.start", "test-series.format"]
+        }
+      ]
+    },
+    {
+      "id": "area-map",
+      "heading": "Where we teach",
+      "body": [
+        "Both centres are in Pimpri-Chinchwad, close to Aundh, Baner and Balewadi. Pick your area to see the way to the nearest centre."
+      ],
+      "action": { "to": "page", "page": "centres", "label": "See both centres" }
+    },
+    {
+      "id": "programmes",
+      "heading": "Programmes",
+      "body": [
+        {
+          "text": "A two-year programme for students starting Class 11, a one-year programme for Class 12, and a foundation programme for Class 9 and 10.",
+          "requires": ["programme.class-11", "programme.class-12", "programme.foundation"]
+        }
+      ],
+      "action": { "to": "page", "page": "programmes", "label": "Compare programmes" }
+    },
+    {
+      "id": "results",
+      "heading": "Results",
+      "body": ["Each result here names the exam, the year and the programme the student took with us."]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions parents ask",
+      "questions": [
+        {
+          "q": "Is this the same coaching as in Kota?",
+          "a": {
+            "text": "We are affiliated with a top coaching institute in Kota, and faculty from Kota teach here. [Powered by Kota](page:powered-by-kota) explains what comes from Kota and what we add in Pune.",
+            "requires": ["partner.affiliation", "faculty.kota"]
+          }
+        },
+        {
+          "q": "Who can join?",
+          "a": {
+            "text": "Students who have passed Class 10 from any board (SSC, CBSE or ICSE) can join the two-year programme. Class 12 students can join the one-year programme.",
+            "requires": ["programme.class-11", "programme.class-12"]
+          }
+        },
+        {
+          "q": "What are the class timings?",
+          "a": "Classes run from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, after school."
+        },
+        {
+          "q": "How often are tests held?",
+          "a": {
+            "text": "There is a test after every chapter, a longer test every fourth week and a full JEE Main mock every month. Class 12 students also take a JEE Advanced mock every quarter.",
+            "requires": ["test-series.format"]
+          }
+        },
+        {
+          "q": "How many students are in a batch?",
+          "a": "A batch has at most {{fact:batch.size}} students."
+        },
+        {
+          "q": "What are the fees?",
+          "a": "Fees depend on the programme. Call us on {{fact:contact.phone}} and we will explain them, or ask at either centre."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" },
+    { "id": "gallery", "heading": "Come and see it.", "body": ["The building, the classroom and the people in it."] }
+  ]
+}

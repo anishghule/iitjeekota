@@ -1,0 +1,10 @@
+---
+/** A row of toggle chips for one filter; islands/syllabus.ts reads data-filter="{kind}:{value}". */
+interface Props {
+  filter: { kind: string; label: string; options: { value: string; label: string; on: boolean }[] };
+}
+const { filter } = Astro.props;
+---
+<div class="chips" role="group" aria-label={filter.label}>
+  {filter.options.map((o) => <button type="button" class="chip" data-filter={`${filter.kind}:${o.value}`} aria-pressed={String(o.on)}>{o.label}</button>)}
+</div>

@@ -1,0 +1,55 @@
+{
+  "route": "foundation-class-9-10",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "IIT foundation classes in Pune for Class 9 and 10 | D-SAP",
+    "description": "A foundation programme for Class 9 and Class 10 students in Pune, before the two-year JEE programme. What it covers and who can join."
+  },
+  "h1": "IIT foundation classes in Pune",
+  "intro": [
+    {
+      "text": "A foundation programme for students in Class 9 and Class 10, before the two-year JEE programme begins.",
+      "requires": ["programme.foundation"]
+    }
+  ],
+  "sections": [
+    {
+      "id": "who-for",
+      "heading": "Who it is for",
+      "body": [
+        {
+          "text": "Students in Class 9 or Class 10 who enjoy Maths and Science and want to build the habits JEE needs: steady practice, regular tests and asking for help early.",
+          "requires": ["programme.foundation"]
+        }
+      ]
+    },
+    {
+      "id": "details",
+      "heading": "What the programme covers",
+      "body": ["{{fact:programme.foundation-details}}"]
+    },
+    {
+      "id": "minimum-age",
+      "heading": "Age rules for coaching",
+      "body": [
+        "The Ministry of Education's 2024 guidelines for coaching centres include rules on the age at which students can join. {{fact:legal.foundation-minimum-age}}"
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions about the foundation programme",
+      "questions": [
+        {
+          "q": "When does my child move to the two-year programme?",
+          "a": { "text": "After Class 10. The two-year programme starts in June, with a foundation period from April.", "requires": ["programme.start"] }
+        },
+        {
+          "q": "Is the foundation programme needed before Class 11?",
+          "a": { "text": "No. Any student who has passed Class 10 can join the two-year programme.", "requires": ["programme.class-11"] }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "$description": "Feature flags. enquiryTransport: how the enquiry form sends, whatsapp (opens WhatsApp with the message ready; nothing is stored) until the API exists in Phase 8, then api. autoscroll: the reading aid on pinned sections (plan C5). costCalculator: the Kota or Pune cost sum under the programmes.",
+  "enquiryTransport": "whatsapp",
+  "autoscroll": true,
+  "costCalculator": true
+}

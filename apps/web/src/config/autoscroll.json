@@ -1,0 +1,9 @@
+{
+  "$description": "Which sections autoscroll (islands/autoscroll.ts); timing is motion.autoscroll in tokens.json. Each unit lists section ids. Sections in one unit are one stretch of page, so autoscroll carries on across them without stopping between: the hero, the Kota system, From Kota to Pune and the classroom film, from the top of the page to the end of the classroom section. A section not listed here never autoscrolls, pinned or not.",
+  "units": {
+    "intro": ["hero", "kota-system", "kota-to-pune", "classroom"],
+    "report": ["report"],
+    "report-test": ["report-test"],
+    "journey": ["journey"]
+  }
+}

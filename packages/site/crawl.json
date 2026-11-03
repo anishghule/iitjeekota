@@ -1,0 +1,6 @@
+{
+  "$description": "What crawlers may fetch (make web-data writes robots.txt and the sitemaps from this and the exported pages). Until apps/web/src/config/site.json sets indexing to true, robots.txt disallows everything and every page is noindex. After launch it follows dsapghuletutorials.com's robots.txt (read 2026-11-01): search and AI answers allowed, training refused. Content-Signal is Cloudflare's published convention; Google has not said it honours it, so the blocked agents are what enforce it. Search and user-triggered agents (Googlebot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot) are not listed, so User-agent: * allows them. Google-Extended only controls Gemini training and grounding, not Search or AI Overviews.",
+  "disallow": ["/api/"],
+  "contentSignal": { "search": "yes", "ai-input": "yes", "ai-train": "no" },
+  "blockedAgents": ["GPTBot", "CCBot", "Google-Extended", "ClaudeBot", "anthropic-ai", "cohere-ai", "Bytespider", "Diffbot", "Omgilibot", "Amazonbot"]
+}

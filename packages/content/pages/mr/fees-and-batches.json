@@ -1,0 +1,28 @@
+{
+  "route": "fees-and-batches",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "पुण्यातील JEE क्लासेस फी आणि बॅचच्या तारखा | D-SAP",
+    "description": "पुण्यातील आमच्या JEE प्रोग्रामची फी आणि बॅचच्या तारखा, फीमध्ये काय येते, आणि नवी सांगवी व वाकड येथे पुढच्या बॅच कधी सुरू होतील."
+  },
+  "h1": "JEE क्लासेस फी आणि बॅच",
+  "intro": [ "प्रत्येक प्रोग्रामची फी आणि सुरू होण्याच्या तारखा, आणि फीमध्ये काय येते. काहीही स्पष्ट नसेल तर आम्हाला {{fact:contact.phone}} वर कॉल करा." ],
+  "sections": [
+    { "id": "fees", "heading": "फी", "body": [ "{{fact:fees}}." ], "action": { "to": "enquire", "label": "आम्हाला विचारा" } },
+    { "id": "included", "heading": "फीमध्ये काय येते", "body": [ { "text": "फीमध्ये हे सर्व येते:", "requires": ["fees"] } ],
+      "points": [
+        { "text": "संपूर्ण अभ्यासक्रमाचे स्टडी मटेरियल, सोडवलेल्या मागील IIT JEE पेपरसह.", "requires": ["programme.study-material"] },
+        { "text": "ऑनलाइन पोर्टलवरील प्रत्येक टेस्ट, प्रत्येकीनंतर वैयक्तिक विश्लेषणासह.", "requires": ["test-series.cbt", "method.test-analytics"] },
+        { "text": "दर आठवड्याला एक प्रॅक्टिस शीट.", "requires": ["method.practice-sheets"] },
+        { "text": "डाउट फोरम आणि डाउट सेशन.", "requires": ["method.doubts"] },
+        { "text": "वैयक्तिक मेंटरिंग स्लॉट.", "requires": ["programme.mentoring"] },
+        { "text": "ऑनलाइन लेक्चर, चुकलेल्या कोणत्याही क्लाससाठी.", "requires": ["method.online-lectures"] } ] },
+    { "id": "batches", "heading": "बॅचच्या तारखा", "body": [ "{{fact:batch.dates}}." ] },
+    { "id": "questions", "heading": "फी आणि बॅचविषयी प्रश्न", "questions": [
+      { "q": "नवीन बॅच कधी सुरू होतात?", "a": { "text": "दोन वर्षांचा प्रोग्राम जूनमध्ये सुरू होतो, आणि एप्रिलपासून फाउंडेशन कालावधी असतो.", "requires": ["programme.start"] } },
+      { "q": "दोन्ही सेंटरवर क्लासची वेळ सारखीच आहे का?", "a": "हो: {{fact:batch.days}}, {{fact:batch.timings#start}} ते {{fact:batch.timings#end}} या वेळेत." },
+      { "q": "एका बॅचमध्ये किती विद्यार्थी असतात?", "a": "जास्तीत जास्त {{fact:batch.size}}." } ] },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

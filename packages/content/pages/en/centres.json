@@ -1,0 +1,50 @@
+{
+  "route": "centres",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "D-SAP Ghule Tutorials centres in New Sangvi and Wakad",
+    "description": "Two JEE coaching centres in Pimpri-Chinchwad: the head office in New Sangvi and a branch in Wakad. Addresses, hours and directions."
+  },
+  "h1": "Our centres in New Sangvi and Wakad",
+  "intro": [
+    "We teach JEE at two centres in Pimpri-Chinchwad. The head office in {{fact:org.founded#place}} is where D-SAP Ghule Tutorials started in {{fact:org.founded#year}}. The branch in Wakad is closer for families from Hinjewadi, Balewadi and Kalewadi."
+  ],
+  "sections": [
+    {
+      "id": "spokes",
+      "heading": "Visit a centre",
+      "body": ["Each centre page has the address, a map link, photos and the classes that run there."]
+    },
+    {
+      "id": "why",
+      "heading": "What you will find there",
+      "body": [
+        {
+          "text": "Classrooms have AI-powered digital boards. JEE classes run from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, with at most {{fact:batch.size}} students in a batch.",
+          "requires": ["classroom.digital-board"]
+        },
+        "{{fact:centre.sangvi.library}} is at the head office, for students who want a quiet place to study."
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Visiting us",
+      "questions": [
+        {
+          "q": "Which centre is the head office?",
+          "a": "New Sangvi. D-SAP Ghule Tutorials started there in {{fact:org.founded#year}}."
+        },
+        {
+          "q": "Do both centres teach JEE?",
+          "a": "Yes. JEE classes run at both, from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}."
+        },
+        {
+          "q": "How do we fix a visit?",
+          "a": "Call us on {{fact:contact.phone}} or send a WhatsApp message to {{fact:contact.whatsapp}}."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

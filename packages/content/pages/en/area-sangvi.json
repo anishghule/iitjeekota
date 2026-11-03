@@ -1,0 +1,67 @@
+{
+  "route": "area-sangvi",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "IIT JEE coaching in Sangvi | D-SAP Ghule Tutorials",
+    "description": "JEE coaching at our head office in Krishna Nagar, New Sangvi, where D-SAP Ghule Tutorials began in {{fact:org.founded#year}}. Faculty from Kota."
+  },
+  "h1": "IIT JEE coaching in Sangvi",
+  "intro": [
+    "Our head office is in Krishna Nagar, New Sangvi. D-SAP Ghule Tutorials started here in {{fact:org.founded#year}}, so for families in Sangvi the centre is close to home."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "Finding the head office",
+      "body": [
+        "The centre is on Krishna Nagar Road Number 2. From anywhere in Old or New Sangvi it is a short ride.",
+        {
+          "text": "The Rajiv Gandhi Bridge connects Sangvi with Aundh, which is why Aundh students come here too.",
+          "requires": ["area.sangvi.bridge", "area.aundh.schools"]
+        }
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Where we began",
+      "body": [
+        {
+          "text": "Students from Mastermind High School and Tannu School in New Sangvi study with us.",
+          "requires": ["area.sangvi.schools"]
+        },
+        "{{fact:centre.sangvi.library}} at the head office means a Sangvi student can stay on and study once class is over."
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Programmes at the head office",
+      "body": [
+        {
+          "text": "Sangvi students can begin JEE preparation in Class 11 with the two-year programme, or in Class 12 with the one-year programme.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "From Sangvi families",
+      "questions": [
+        {
+          "q": "Is New Sangvi the main centre?",
+          "a": "Yes. It is our head office and the place D-SAP Ghule Tutorials started in {{fact:org.founded#year}}."
+        },
+        {
+          "q": "Do students from Sangvi schools study here?",
+          "a": { "text": "Yes, including students from Mastermind High School and Tannu School.", "requires": ["area.sangvi.schools"] }
+        },
+        {
+          "q": "Can my child study at the centre after class?",
+          "a": "{{fact:centre.sangvi.library}} is at the head office for quiet study. Ask us about the times it is open."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

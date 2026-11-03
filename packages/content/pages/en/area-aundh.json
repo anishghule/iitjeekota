@@ -1,0 +1,70 @@
+{
+  "route": "area-aundh",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "IIT JEE coaching in Aundh | D-SAP Ghule Tutorials",
+    "description": "Our New Sangvi head office is the nearest JEE centre to Aundh, just across the Rajiv Gandhi Bridge. Kota faculty, classes from {{fact:batch.timings#start}}."
+  },
+  "h1": "IIT JEE coaching in Aundh",
+  "intro": [
+    "The nearest D-SAP centre to Aundh is our head office in New Sangvi, about {{commute:aundh#km}} km away, just across the river."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "Getting there from Aundh",
+      "body": [
+        {
+          "text": "Cross the Rajiv Gandhi Bridge to Sangvi Phata, then follow Old Sangvi Road and the Pimple Gurav-Navi Sangvi Road to Krishna Nagar Road Number 2.",
+          "requires": ["area.aundh.route"]
+        },
+        "The time shown is for clear roads, so leave a little earlier on weekday afternoons."
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Aundh students at D-SAP",
+      "body": [
+        {
+          "text": "Students from Vidyanchal High School and AW Sindhu Vidya Bhavan in Aundh already study with us.",
+          "requires": ["area.aundh.schools"]
+        },
+        {
+          "text": "Aundh sits on the Pune side of the river and our head office on the Pimpri-Chinchwad side, but one bridge makes them neighbours. For a family in Aundh, that short crossing is the whole trip.",
+          "requires": ["area.sangvi.bridge"]
+        }
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Programmes for Aundh students",
+      "body": [
+        {
+          "text": "Aundh students join the two-year programme after Class 10, or the one-year programme in Class 12, in batches of at most {{fact:batch.size}}.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions from Aundh",
+      "questions": [
+        {
+          "q": "Is there a D-SAP centre in Aundh?",
+          "a": { "text": "No. The nearest is our head office in New Sangvi, about {{commute:aundh#km}} km away across the Rajiv Gandhi Bridge.", "requires": ["area.aundh.route"] }
+        },
+        {
+          "q": "Is the Wakad branch an option?",
+          "a": "It is farther from Aundh. The [New Sangvi head office](page:centre-sangvi-head-office) is the shorter trip."
+        },
+        {
+          "q": "When should my child leave home?",
+          "a": "Classes start at {{fact:batch.timings#start}}. Plan the trip with time to spare, since afternoon traffic varies."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

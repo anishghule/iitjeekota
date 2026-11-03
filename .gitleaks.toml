@@ -1,0 +1,16 @@
+# Gitleaks (CI: .github/workflows/ci.yml). The default rules, plus the few paths that hold long random-looking values
+# which are not secrets: lock files (integrity hashes) and generated output (rebuilt, never committed).
+title = "iitjeekota gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Hashes and generated output, not secrets"
+paths = [
+  '''pnpm-lock\.yaml$''',
+  '''tools/ci/requirements\.txt$''',
+  '''packages/[a-z]+/[a-z.-]*lock\.json$''',
+  '''packages/media/media\.lock\.json$''',
+  '''packages/tokens/fonts\.lock\.json$''',
+]

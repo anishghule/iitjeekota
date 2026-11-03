@@ -1,0 +1,69 @@
+{
+  "route": "area-pashan",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "IIT JEE coaching in Pashan | D-SAP Ghule Tutorials",
+    "description": "JEE coaching for Pashan students at our New Sangvi head office, with faculty from Kota. Students from St Joseph High School, Pashan, study with us."
+  },
+  "h1": "IIT JEE coaching in Pashan",
+  "intro": [
+    "From Pashan, our nearest centre is the head office in New Sangvi, about {{commute:pashan#km}} km away through Aundh."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "Getting to New Sangvi from Pashan",
+      "body": [
+        {
+          "text": "Take Dr Homi Bhabha Marg and University Road to Aundh, cross the river to Sangvi Phata, then follow the Pimple Gurav-Navi Sangvi Road to Krishna Nagar Road Number 2.",
+          "requires": ["area.pashan.route"]
+        }
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Science on the doorstep",
+      "body": [
+        {
+          "text": "Pashan has IISER Pune, the National Chemical Laboratory and the Indian Institute of Tropical Meteorology close by. Few areas give a student interested in science such a view of where it can lead.",
+          "requires": ["area.pashan.institutes"]
+        },
+        {
+          "text": "Students from St Joseph High School in Pashan study with us.",
+          "requires": ["area.pashan.schools"]
+        }
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Programmes for Pashan",
+      "body": [
+        {
+          "text": "Pashan students join after Class 10 for two years, or in Class 12 for one, with at most {{fact:batch.size}} in a batch.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "From Pashan parents",
+      "questions": [
+        {
+          "q": "Which centre is closer to Pashan?",
+          "a": "The [head office in New Sangvi](page:centre-sangvi-head-office). Our Wakad branch is a longer drive."
+        },
+        {
+          "q": "Do students from Pashan study with you?",
+          "a": { "text": "Yes, including students from St Joseph High School.", "requires": ["area.pashan.schools"] }
+        },
+        {
+          "q": "What if traffic makes my child miss a class?",
+          "a": { "text": "Lectures are also online, so the class can be watched later.", "requires": ["method.online-lectures"] }
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

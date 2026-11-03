@@ -1,0 +1,21 @@
+{
+  "route": "about",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "D-SAP घुले ट्यूटोरियल्सविषयी, {{fact:org.founded#year}} पासून",
+    "description": "D-SAP घुले ट्यूटोरियल्सची सुरुवात {{fact:org.founded#year}} मध्ये {{fact:org.founded#place}} येथे झाली. आज पुण्यात कोट्यातील नामांकित संस्थेच्या साथीने JEE कोचिंग."
+  },
+  "h1": "D-SAP घुले ट्यूटोरियल्सविषयी",
+  "intro": [
+    "D-SAP घुले ट्यूटोरियल्सची सुरुवात {{fact:org.founded#year}} मध्ये {{fact:org.founded#place}} येथे एका छोट्या कोचिंग क्लासपासून झाली. संस्थेची स्थापना {{fact:org.founder#name}} यांनी केली."
+  ],
+  "sections": [
+    { "id": "prof-ghule", "kind": "prose", "heading": "{{fact:org.founder#name}}", "body": [
+      "{{fact:org.founder#name}} {{fact:org.founder#teachingYears}} वर्षांपासून शिकवत आहेत, आणि त्यांनी {{fact:org.founded#year}} मध्ये D-SAP घुले ट्यूटोरियल्सची स्थापना केली. या साइटवरील मार्गदर्शक लेख {{fact:org.founder#name}} लिहितात." ] },
+    { "id": "history", "kind": "prose", "heading": "एका क्लासपासून दोन सेंटरपर्यंत", "body": [
+      "{{fact:org.founded#year}} पासून आतापर्यंत {{fact:org.students}} पेक्षा जास्त विद्यार्थी आमच्याकडे शिकले आहेत, शालेय आणि प्रवेश परीक्षांच्या कोर्सेसमध्ये. आज आम्ही दोन सेंटरवर शिकवतो: {{fact:org.founded#place}} येथील मुख्य कार्यालय आणि वाकडची शाखा." ] },
+    { "id": "jee-programme", "kind": "prose", "heading": "JEE प्रोग्राम, कोट्याच्या साथीने", "body": [
+      { "text": "आमचा JEE प्रोग्राम कोट्यातील एका नामांकित कोचिंग संस्थेच्या साथीने चालतो, आणि कोट्याचे शिक्षक तो शिकवतात. [कोट्याच्या साथीने](page:powered-by-kota) या पानावर या संलग्नतेत काय काय येते ते सांगितले आहे.", "requires": ["partner.affiliation", "faculty.kota"] } ] }
+  ]
+}

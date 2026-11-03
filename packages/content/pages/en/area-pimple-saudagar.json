@@ -1,0 +1,66 @@
+{
+  "route": "area-pimple-saudagar",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "IIT JEE coaching in Pimple Saudagar | D-SAP Ghule",
+    "description": "JEE coaching for Pimple Saudagar students, a short ride from our New Sangvi head office. Students from SNBP International School study with us."
+  },
+  "h1": "IIT JEE coaching in Pimple Saudagar",
+  "intro": [
+    "Pimple Saudagar is about {{commute:pimple-saudagar#km}} km from our head office in New Sangvi, by way of Pimple Gurav."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "From Pimple Saudagar to New Sangvi",
+      "body": [
+        {
+          "text": "Take Nashik Phata Road and Pimple Saudagar Road to Pimple Gurav, then the Pimple Gurav-Navi Sangvi Road to Krishna Nagar Road Number 2.",
+          "requires": ["area.pimple-saudagar.route"]
+        }
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Pimple Saudagar students",
+      "body": [
+        {
+          "text": "Students from SNBP International School in Pimple Saudagar study with us.",
+          "requires": ["area.pimple-saudagar.schools"]
+        },
+        "Our Wakad branch is not much farther, so a family here can pick whichever centre fits the day better."
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "Joining from Pimple Saudagar",
+      "body": [
+        {
+          "text": "After Class 10, the two-year programme. Already in Class 12, the one-year programme. Either way, at most {{fact:batch.size}} students in the room.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Pimple Saudagar questions",
+      "questions": [
+        {
+          "q": "Which centre is nearer?",
+          "a": "The [head office in New Sangvi](page:centre-sangvi-head-office), about {{commute:pimple-saudagar#km}} km away. The Wakad branch is a little farther."
+        },
+        {
+          "q": "Do students from SNBP International School come to you?",
+          "a": { "text": "Yes, students from SNBP International School study with us.", "requires": ["area.pimple-saudagar.schools"] }
+        },
+        {
+          "q": "Can my child switch centres later?",
+          "a": "Talk to us about it. Both centres teach JEE at the same times."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

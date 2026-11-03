@@ -1,0 +1,87 @@
+{
+  "route": "class-11-jee",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "JEE coaching for Class 11 in Pune | D-SAP Ghule",
+    "description": "A two-year JEE Main and Advanced programme from Class 11, for students who passed Class 10 from any board. Evening classes in Pune."
+  },
+  "h1": "JEE coaching for Class 11 in Pune",
+  "intro": [
+    {
+      "text": "The two-year programme starts in June after Class 10, with a foundation period from April. It runs through Class 11 and Class 12 and prepares for both JEE Main and JEE Advanced.",
+      "requires": ["programme.class-11", "programme.start"]
+    }
+  ],
+  "sections": [
+    {
+      "id": "who-for",
+      "heading": "Who it is for",
+      "body": [
+        { "text": "Students who have passed Class 10 from any board: SSC, CBSE or ICSE.", "requires": ["programme.class-11"] },
+        "Starting in Class 11 gives two full years for a syllabus that covers both Class 11 and Class 12."
+      ]
+    },
+    {
+      "id": "covers",
+      "heading": "What it covers",
+      "body": [
+        { "text": "Physics, Chemistry and Mathematics, to the level of JEE Main and JEE Advanced.", "requires": ["programme.subjects"] }
+      ],
+      "points": [
+        { "text": "Theory notes for every chapter, with solved examples.", "requires": ["programme.study-material"] },
+        { "text": "Chapter-wise problem sets at Main and Advanced level.", "requires": ["programme.study-material"] },
+        { "text": "Past IIT JEE papers with full solutions.", "requires": ["programme.study-material"] },
+        { "text": "A practice sheet every week.", "requires": ["method.practice-sheets"] }
+      ]
+    },
+    {
+      "id": "week",
+      "heading": "A normal week",
+      "body": [
+        {
+          "text": "Classes run from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}, after school, on AI-powered digital boards.",
+          "requires": ["classroom.digital-board"]
+        },
+        {
+          "text": "Doubts go to the doubts forum or a doubt session, and students can book one-on-one time with a teacher in mentoring slots.",
+          "requires": ["method.doubts", "programme.mentoring"]
+        },
+        { "text": "Lectures are also online, so a missed class can be watched again.", "requires": ["method.online-lectures"] }
+      ]
+    },
+    {
+      "id": "tests",
+      "heading": "Tests across the two years",
+      "body": [
+        {
+          "text": "A test after every chapter, and a longer test every fourth week. Weekly tests switch between one topic and the full syllabus so far. Once a month there is a full JEE Main mock.",
+          "requires": ["test-series.format"]
+        },
+        {
+          "text": "In Class 12, a JEE Advanced mock is added every quarter. Every test is taken on the online portal and comes back with a personal analysis.",
+          "requires": ["test-series.format", "test-series.cbt", "method.test-analytics"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Questions about the two-year programme",
+      "questions": [
+        {
+          "q": "Does it prepare for JEE Main or JEE Advanced?",
+          "a": { "text": "Both, from the first month.", "requires": ["programme.class-11"] }
+        },
+        {
+          "q": "When does it start?",
+          "a": { "text": "In June after the Class 10 exams, with a foundation period from April.", "requires": ["programme.start"] }
+        },
+        {
+          "q": "How many students are in a batch?",
+          "a": "At most {{fact:batch.size}}."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

@@ -1,0 +1,90 @@
+---
+/**
+ * A dropdown of this page in the other languages that have it. Never an automatic redirect.
+ * It is a <details> of real links, so it works without a script and crawlers see every hreflang
+ * link; islands/lang-menu.ts only closes it on Esc, on a click outside, and after a choice.
+ */
+import type { Locale } from "../../i18n/index.ts";
+import { isRouteId, routePath, site } from "../../lib/data.ts";
+import Icon from "../ui/Icon.astro";
+
+interface Props {
+  locale: Locale;
+  route: string;
+  label: string;
+  large?: boolean;
+}
+const { locale, route, label, large = false } = Astro.props;
+// A page that is no route of the site (the not-found page) has no versions in other languages:
+// each language then leads to its home page, and none of them is "this page".
+const isPage = isRouteId(route);
+const options = site.locales
+  .map((l) => ({ ...l, path: routePath(isPage ? route : "home", l.code as Locale) }))
+  .filter((l): l is typeof l & { path: string } => l.path !== undefined);
+const current = options.find((l) => l.code === locale);
+---
+{options.length > 1 && (
+  <details class:list={["lang", { "lang--large": large }]} data-lang-menu>
+    <summary aria-label={label}>
+      <Icon name="globe" size="sm" />
+      <span lang={locale}>{current?.nativeName}</span>
+      <Icon name="chevron-down" size="sm" class="lang__chevron" />
+    </summary>
+    <ul role="list">
+      {options.map((l) => (
+        <li>
+          <a href={l.path} hreflang={l.hreflang} lang={l.code} aria-current={isPage && l.code === locale ? "page" : undefined}>{l.nativeName}</a>
+        </li>
+      ))}
+    </ul>
+  </details>
+)}
+
+<style>
+  .lang { position: relative; }
+  .lang summary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: var(--space-7);
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-round);
+    color: var(--text-muted);
+    font-size: var(--type-small-size);
+    cursor: pointer;
+    list-style: none;
+  }
+  .lang summary::-webkit-details-marker { display: none; }
+  .lang summary:hover, .lang[open] summary { color: var(--text); background: var(--bg-raised); }
+  .lang__chevron { transition: transform var(--dur-base) var(--ease-enter); }
+  .lang[open] .lang__chevron { transform: rotate(180deg); }
+
+  .lang ul {
+    position: absolute;
+    inset: calc(100% + var(--space-2)) 0 auto auto;
+    z-index: var(--z-raised);
+    min-width: 100%;
+    padding: var(--space-2);
+    border-radius: var(--radius-md);
+    background: var(--bg-raised);
+    box-shadow: var(--shadow-3);
+  }
+  .lang a {
+    display: flex;
+    align-items: center;
+    min-height: var(--space-7);
+    padding: 0 var(--space-3);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: var(--type-small-size);
+    white-space: nowrap;
+  }
+  .lang a:hover { color: var(--text); }
+  .lang a[aria-current="page"] { color: var(--accent-text); }
+
+  /* In the phone menu the list opens in the flow of the page, not over it. */
+  .lang--large summary { min-height: var(--space-8); font-size: var(--type-body-lg-size); }
+  .lang--large ul { position: static; margin-block-start: var(--space-2); box-shadow: none; background: transparent; padding: 0; }
+  .lang--large a { min-height: var(--space-8); font-size: var(--type-body-lg-size); }
+</style>

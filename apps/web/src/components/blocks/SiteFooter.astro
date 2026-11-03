@@ -1,0 +1,99 @@
+---
+/** Footer: both centres with their addresses (NAP as on Google), the pages, contact, the parent site. */
+import { fill, strings, type Locale } from "../../i18n/index.ts";
+import { areaGroups, brandName, fact, localName, navRoutes, routePath, site } from "../../lib/data.ts";
+import Icon from "../ui/Icon.astro";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = strings(locale);
+const brand = brandName(locale);
+const trademark = fact(locale, "org.trademark");
+const groups = areaGroups(locale);
+const year = new Date().getFullYear();
+---
+<footer class="site-footer section section--sunken">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img src={site.brand.logo["128"]} width="64" height="64" alt="" />
+      <p class="t-h2">{brand}</p>
+      <p class="muted">
+        <a href={site.brand.parentSite} rel="external">{fill(t.footer.partOf, { site: new URL(site.brand.parentSite).host })} <Icon name="external" size="sm" /></a>
+      </p>
+    </div>
+
+    <nav aria-label={t.footer.pages}>
+      <h2 class="footer-head">{t.footer.pages}</h2>
+      <ul role="list">{navRoutes(locale).map((l) => <li><a href={l.path}>{l.name}</a></li>)}</ul>
+    </nav>
+
+    {groups.length > 0 && (
+      <nav aria-label={t.footer.areas}>
+        <h2 class="footer-head">{t.footer.areas}</h2>
+        <div class="footer-groups">
+          {groups.map((g) => (
+            <div>
+              <p class="footer-hub"><a href={g.path}>{g.name}</a></p>
+              <ul role="list" class="footer-areas">{g.areas.map((a) => <li><a href={a.path}>{a.name}</a></li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </nav>
+    )}
+
+    <div>
+      <h2 class="footer-head">{t.footer.centres}</h2>
+      <ul role="list" class="footer-centres">
+        {site.centres.map((c) => {
+          const page = c.page ? routePath(c.page as Parameters<typeof routePath>[0], locale) : undefined;
+          return (
+            <li>
+              <p><strong>{page ? <a href={page}>{localName(c.names, locale)}</a> : localName(c.names, locale)}</strong></p>
+              <p class="muted">{c.address}</p>
+              {c.directions && <p><a href={c.directions} rel="external">{fill(t.areaMap.directions, { centre: localName(c.places, locale) })}</a></p>}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="footer-head">{t.footer.contact}</h2>
+      <ul role="list">
+        {site.contact.phone && <li><a href={site.contact.phone.href}><Icon name="phone" size="sm" /> {site.contact.phone.display}</a></li>}
+        {site.contact.whatsapp && <li><a href={site.contact.whatsapp.href} rel="external"><Icon name="chat" size="sm" /> {t.nav.whatsapp}</a></li>}
+      </ul>
+    </div>
+  </div>
+  <div class="container footer-small muted">
+    <p>{fill(t.footer.rights, { year, brand })}</p>
+    {trademark && <p>{trademark}</p>}
+  </div>
+</footer>
+
+<style>
+  .footer-grid {
+    display: grid;
+    gap: var(--space-7);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, calc(var(--column-min) / 1.5)), 1fr));
+  }
+  .footer-head { font-size: var(--type-small-size); color: var(--text-muted); font-weight: var(--weight-semibold); margin-block-end: var(--space-3); }
+  .site-footer ul { display: grid; gap: var(--space-2); }
+  .site-footer a { text-decoration: none; }
+  .site-footer a:hover { text-decoration: underline; }
+  .footer-brand { display: grid; gap: var(--space-3); align-content: start; }
+  .footer-centres { gap: var(--space-5); }
+  .footer-groups { display: grid; gap: var(--space-5); }
+  .footer-hub { font-weight: var(--weight-semibold); margin-block-end: var(--space-2); }
+  .footer-areas { grid-template-columns: repeat(2, minmax(0, max-content)); column-gap: var(--space-5); }
+  .footer-small {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3);
+    margin-block-start: var(--space-8);
+    font-size: var(--type-small-size);
+  }
+</style>

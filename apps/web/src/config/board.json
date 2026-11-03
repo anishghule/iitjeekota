@@ -1,0 +1,9 @@
+{
+  "$description": "The AI digital board demonstrations (apps/web/src/islands/board.ts). The board is drawn in its own units, width by height, and scaled to fit. durationMs: how long each demonstration plays before the next. pauseAfterPickMs: how long a picked demonstration stays before the cycle resumes. type: text sizes in board units. grid: the spacing of the board's squared lines. Colours and fonts come from the surface roles and type tokens.",
+  "width": 1280,
+  "height": 720,
+  "grid": 40,
+  "durationMs": { "area": 9000, "volume": 9000, "quiz": 7500, "steps": 8500 },
+  "pauseAfterPickMs": 20000,
+  "type": { "label": 19, "small": 17, "axis": 26, "body": 24, "equation": 30, "number": 52, "problem": 60 }
+}

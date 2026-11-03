@@ -1,0 +1,70 @@
+{
+  "route": "area-pimple-gurav",
+  "status": "draft",
+  "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
+  "meta": {
+    "title": "IIT JEE coaching in Pimple Gurav | D-SAP Ghule",
+    "description": "Pimple Gurav is the closest area to our New Sangvi head office. JEE coaching with faculty from Kota, from {{fact:batch.timings#start}} to {{fact:batch.timings#end}}."
+  },
+  "h1": "IIT JEE coaching in Pimple Gurav",
+  "intro": [
+    "Pimple Gurav is the closest area to our head office: about {{commute:pimple-gurav#km}} km to Krishna Nagar, New Sangvi."
+  ],
+  "sections": [
+    {
+      "id": "getting-there",
+      "heading": "A short trip to New Sangvi",
+      "body": [
+        {
+          "text": "Take Kate Puram Road and the Pimple Gurav-Navi Sangvi Road to Krishna Nagar Road Number 2.",
+          "requires": ["area.pimple-gurav.route"]
+        },
+        "At about {{commute:pimple-gurav#km}} km, it is close enough to walk."
+      ]
+    },
+    {
+      "id": "local",
+      "heading": "Pimple Gurav schools",
+      "body": [
+        {
+          "text": "Students from three Pimple Gurav schools study with us: Mar Ivanios Convent High School, Kilbil High School and The New Millennium School.",
+          "requires": ["area.pimple-gurav.schools"]
+        },
+        {
+          "text": "If you know the Rajmata Jijau Garden, the Dinosaur Park, you are already close to us.",
+          "requires": ["area.pimple-gurav.garden"]
+        }
+      ]
+    },
+    { "id": "kota-system", "block": "kota-system" },
+    {
+      "id": "programmes",
+      "heading": "What Pimple Gurav students join",
+      "body": [
+        {
+          "text": "The two-year programme starts after Class 10; the one-year programme is for Class 12. Batches have {{fact:batch.size}} students at most.",
+          "requires": ["programme.class-11", "programme.class-12"]
+        }
+      ]
+    },
+    {
+      "id": "questions",
+      "heading": "Pimple Gurav questions",
+      "questions": [
+        {
+          "q": "How far is the head office from Pimple Gurav?",
+          "a": "About {{commute:pimple-gurav#km}} km, the shortest trip of any area we list."
+        },
+        {
+          "q": "Do students from Pimple Gurav schools study with you?",
+          "a": { "text": "Yes: from Mar Ivanios Convent High School, Kilbil High School and The New Millennium School.", "requires": ["area.pimple-gurav.schools"] }
+        },
+        {
+          "q": "Can my child study at the centre after class?",
+          "a": "{{fact:centre.sangvi.library}} is at the head office. Ask us about the times it is open."
+        }
+      ]
+    },
+    { "id": "enquiry", "block": "enquiry" }
+  ]
+}

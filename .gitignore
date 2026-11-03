@@ -1,0 +1,44 @@
+# Secrets: API keys and tokens live in .env.local (never committed)
+.env
+.env.*
+
+# OS and editors
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# JavaScript (docs/adr/0006-browser-toolchain-and-3d.md). pnpm-lock.yaml is committed.
+node_modules/
+test-results/
+playwright-report/
+
+# Generated output: rebuilt with `make brand`, never edited by hand
+packages/tokens/dist/
+packages/icons/dist/
+packages/brand/dist/
+packages/site/dist/
+packages/map/dist/
+packages/scenes/dist/
+apps/web/src/generated/
+apps/web/dist/
+apps/web/.astro/
+docs/brand/guide/
+
+# Caches (render fonts are plain TTF instances for PNG rendering, never shipped)
+packages/tokens/.cache/
+
+resources
+
+# Keys, certificates and local deployment state: never committed
+*.pem
+*.key
+*.p12
+*.pfx
+.dev.vars
+.wrangler/
+
+# Software bills of materials are build artifacts
+sbom*.json

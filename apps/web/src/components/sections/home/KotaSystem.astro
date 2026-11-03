@@ -1,0 +1,89 @@
+---
+/**
+ * The Kota system (plan C1 2): the shared block's points beside the Kota prism, one plate per
+ * point. First the plates fly in and lock onto the prism; then scrolling turns it plate by plate
+ * and the list marks the plate in front. On narrow screens the heading scrolls past and the prism
+ * holds still with the current point beneath it.
+ */
+import { config } from "@dsap/scenes/config";
+import type { SectionData } from "../../../lib/types.ts";
+import Icon from "../../ui/Icon.astro";
+import Paragraphs from "../../ui/Paragraphs.astro";
+import Rich from "../../ui/Rich.astro";
+
+interface Props {
+  section: SectionData;
+}
+const { section } = Astro.props;
+const points = section.points ?? [];
+const input = JSON.stringify({ points: points.map((p) => p.map((part) => part.text).join("")) }).replace(/</g, "\\u003c");
+// The list starts stepping where the prism has finished assembling (packages/scenes/scenes.json).
+const stepsFrom = config.scenes["kota-prism"].assemble.until;
+---
+<section id={section.id} class="kota pinned" data-scene="kota-prism" data-steps={points.length} data-steps-from={stepsFrom} data-steps-goto
+  aria-labelledby={`${section.id}-title`}>
+  <script type="application/json" is:inline data-scene-input set:html={input} />
+  <div class="stage">
+    <div class="container kota__grid">
+      <div class="kota__text">
+        <h2 id={`${section.id}-title`} class="t-display">{section.heading}</h2>
+        <Paragraphs paragraphs={section.body} class="lede" />
+      </div>
+      <div class="kota__visual" data-pin-visual>
+        <div class="kota__prism" data-scene-slot>
+          <Icon name="kota-system" class="kota__still" />
+        </div>
+        <ol class="kota__points" role="list">
+          {points.map((p, i) => (
+            <li data-step-item data-step-goto tabindex="0">
+              <span class="kota__n tabular" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <span><Rich parts={p} /></span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .kota__grid { display: grid; gap: var(--space-5); }
+  .kota__text { display: grid; gap: var(--space-5); }
+  /* Narrow: the text then the held visual, in a column (the layout layer's flex column loses to the grid above). */
+  .kota[data-pin="narrow"] .kota__grid { display: flex; flex-direction: column; }
+  /* Wide: text and points on the left, the prism on the right. */
+  .kota[data-pin="wide"] .kota__grid {
+    /* minmax(0, …): the canvas's pixel size must not widen its column. */
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: "text prism" "points prism";
+    column-gap: var(--space-7);
+  }
+  .kota[data-pin="wide"] .kota__text { grid-area: text; align-content: end; }
+  .kota[data-pin="wide"] .kota__visual { display: contents; }
+  .kota[data-pin="wide"] .kota__prism { grid-area: prism; }
+  .kota[data-pin="wide"] .kota__points { grid-area: points; align-self: start; }
+
+  .kota__points { display: grid; gap: var(--space-2); }
+  .kota__points li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-4);
+    align-items: baseline;
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+    transition: background-color var(--dur-base) var(--ease-enter), color var(--dur-base) var(--ease-enter);
+  }
+  .kota__points li { cursor: pointer; }
+  .kota__points li:hover { color: var(--text); }
+  .kota__points li[aria-current] { background: var(--bg-raised); color: var(--text); box-shadow: var(--shadow-1); }
+  .kota__n { font-family: var(--font-display); font-weight: var(--weight-heavy); color: var(--accent); }
+  .kota__prism { display: grid; place-items: center; aspect-ratio: 1; min-height: 0; min-width: 0; max-height: 80dvh; }
+  .kota__prism :global(canvas) { width: 100%; height: 100%; }
+  .kota__prism :global(.kota__still) { width: 50%; height: auto; aspect-ratio: 1; color: var(--accent); }
+  /* Narrow: the prism fills what the current point leaves; only that point shows. */
+  .kota[data-pin="narrow"] .kota__prism { flex: 1; aspect-ratio: auto; }
+  .kota[data-pin="narrow"] .kota__points li:not([aria-current]) { display: none; }
+  /* Without pinning (no JavaScript) every point reads at full strength. */
+  .kota:not([data-pin]) .kota__points li { color: var(--text); }
+</style>

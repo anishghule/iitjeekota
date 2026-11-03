@@ -1,0 +1,59 @@
+{
+  "$description": "The two centres. NAP lines must match each Google Business Profile character for character. Values that are not yet confirmed point at facts.json.",
+  "centres": [
+    {
+      "id": "sangvi-head-office",
+      "role": "head office",
+      "area": "sangvi",
+      "names": {
+        "en": "D-SAP Ghule Tutorials, New Sangvi",
+        "hi": "D-SAP घुले ट्यूटोरियल्स, न्यू सांगवी",
+        "mr": "D-SAP घुले ट्यूटोरियल्स, नवी सांगवी"
+      },
+      "places": { "en": "New Sangvi", "hi": "न्यू सांगवी", "mr": "नवी सांगवी" },
+      "draftLocales": ["hi", "mr"],
+      "address": {
+        "streetAddress": "Krishna Nagar Rd Number 2, Krishna Nagar",
+        "addressLocality": "New Sangvi, Pimpri-Chinchwad",
+        "addressRegion": "Maharashtra",
+        "postalCode": "411061",
+        "addressCountry": "IN"
+      },
+      "facts": {
+        "address": "centre.sangvi.address",
+        "maps": "centre.sangvi.maps",
+        "gbp": "centre.sangvi.gbp",
+        "hours": "centre.sangvi.hours",
+        "geo": "centre.sangvi.geo",
+        "phone": "contact.phone"
+      }
+    },
+    {
+      "id": "wakad",
+      "role": "branch",
+      "area": "wakad",
+      "names": {
+        "en": "D-SAP Ghule Tutorials, Wakad",
+        "hi": "D-SAP घुले ट्यूटोरियल्स, वाकड",
+        "mr": "D-SAP घुले ट्यूटोरियल्स, वाकड"
+      },
+      "places": { "en": "Wakad", "hi": "वाकड", "mr": "वाकड" },
+      "draftLocales": ["hi", "mr"],
+      "address": {
+        "streetAddress": "First floor, Shiv Malhar, Swami Vivekanand Nagar",
+        "addressLocality": "Wakad, Pimpri-Chinchwad",
+        "addressRegion": "Maharashtra",
+        "postalCode": "411057",
+        "addressCountry": "IN"
+      },
+      "facts": {
+        "address": "centre.wakad.address",
+        "maps": "centre.wakad.maps",
+        "gbp": "centre.wakad.gbp",
+        "hours": "centre.wakad.hours",
+        "geo": "centre.wakad.geo",
+        "phone": "contact.phone"
+      }
+    }
+  ]
+}

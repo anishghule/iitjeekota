@@ -1,0 +1,52 @@
+{
+  "$description": "Where D-SAP must appear, besides its own site. Researched 2026-10-30 from searches for JEE coaching in Pune, Pimpri-Chinchwad, Wakad, Aundh, Baner and Balewadi. 'seen' lists competitors found there. Every listing uses the exact NAP lines from centres.json. Claims in any listing follow the same rules as the site (facts register, CCPA coaching guidelines).",
+  "listings": {
+    "$description": "Business directories and maps. Claim or create one profile per centre, identical NAP, the centre page as website, real photos, prompt replies to reviews. Never offer anything in exchange for a review.",
+    "platforms": [
+      { "id": "google-business-profile", "name": "Google Business Profile", "url": "https://business.google.com", "priority": 1, "action": "Claim and clean up both existing profiles (see docs/seo/google-business-profiles.md)." },
+      { "id": "justdial", "name": "Justdial", "url": "https://www.justdial.com", "priority": 1, "seen": ["Bakliwal Tutorials (347 reviews reported in 2020)"], "action": "Claim or create a free listing per centre; category IIT JEE coaching classes; ask enrolled families for honest reviews." },
+      { "id": "sulekha", "name": "Sulekha", "url": "https://www.sulekha.com", "priority": 2, "seen": ["tuition listings in Pimpri-Chinchwad and Ganeshkhind"], "action": "Create a free business profile per centre." },
+      { "id": "urbanpro", "name": "UrbanPro", "url": "https://www.urbanpro.com", "priority": 2, "seen": ["Bansal Classes Moshi", "tutors in Pimpri-Chinchwad"], "action": "Create an institute profile with courses and both centres." },
+      { "id": "bing-places", "name": "Bing Places", "url": "https://www.bingplaces.com", "priority": 2, "action": "Import from Google Business Profile once it is clean." },
+      { "id": "apple-business-connect", "name": "Apple Business Connect", "url": "https://businessconnect.apple.com", "priority": 2, "action": "One place card per centre (Apple Maps on iPhones)." },
+      { "id": "learnpick", "name": "LearnPick", "url": "https://www.learnpick.in", "priority": 3, "seen": ["IIT JEE course listings in Pune"], "action": "Institute profile with the two programmes." },
+      { "id": "academycheck", "name": "AcademyCheck", "url": "https://academycheck.com", "priority": 3, "seen": ["Target 1 Academy, Wakad"], "action": "Claim or add both centres." },
+      { "id": "lyfskills", "name": "Lyfskills Discover", "url": "https://discover.lyfskills.com", "priority": 3, "seen": ["Target 1 Academy", "Wisdom Edugate Wakad", "Infinity Classes", "Vishvam Coaching Institute Wakad"], "action": "Add both centres." },
+      { "id": "facebook", "name": "Facebook page", "url": "https://www.facebook.com", "priority": 2, "action": "Same NAP, website link to the centre page, sameAs in Organization markup." },
+      { "id": "instagram", "name": "Instagram", "url": "https://www.instagram.com", "priority": 2, "action": "Profile link to the site; sameAs in Organization markup." },
+      { "id": "youtube", "name": "YouTube", "url": "https://www.youtube.com", "priority": 3, "action": "Classroom and concept videos; VideoObject markup where embedded." },
+      { "id": "parent-site", "name": "dsapghuletutorials.com", "url": "https://www.dsapghuletutorials.com", "priority": 1, "action": "Contextual links to iitjeekota.com in body copy; same NAP; sameAs both ways." }
+    ]
+  },
+  "aggregators": {
+    "$description": "Education portals with institute pages and ranked lists. Get an institute profile with verified facts, then pitch for inclusion in their Pune lists. Paid placement, if ever used, must be disclosed as advertising.",
+    "platforms": [
+      { "id": "collegedunia", "name": "Collegedunia (coaching section)", "priority": 1, "urls": ["https://collegedunia.com/coaching/jee-main-institutes-in-pune", "https://collegedunia.com/coaching/jee-advanced-institutes-in-pune"], "seen": ["ALLEN (7 Pune centres listed)", "Aakash", "Bakliwal Tutorials (Aundh and Pune profiles with fees)"], "action": "Create an institute profile per centre with courses and fees, then request inclusion in the Pune JEE Main and JEE Advanced lists." },
+      { "id": "careers360", "name": "Careers360", "priority": 1, "urls": ["https://engineering.careers360.com/articles/best-jee-main-coaching-institutes-in-pune-with-fees-structure", "https://www.careers360.com/question-which-is-the-best-coaching-for-iit-jee-in-pune"], "seen": ["ALLEN", "Bakliwal Tutorials", "FIITJEE", "Aakash"], "action": "Pitch the article's editors with verified facts; answer the Q&A threads as D-SAP, openly stating the affiliation." },
+      { "id": "collegedekho", "name": "CollegeDekho", "priority": 1, "urls": ["https://www.collegedekho.com/articles/best-iit-jee-coaching-institutes-in-pune/"], "seen": ["ALLEN", "Bakliwal Tutorials", "Aakash"], "action": "Pitch inclusion with fees, batch size and the Kota partnership once confirmed." },
+      { "id": "targetstudy", "name": "TargetStudy", "priority": 2, "urls": ["https://targetstudy.com/coaching/jee-coaching-in-pune.htm"], "seen": ["ALLEN Pimpri-Chinchwad campus"], "action": "Submit both centres to the Pune JEE coaching directory." },
+      { "id": "shiksha", "name": "Shiksha", "priority": 3, "urls": [], "seen": [], "action": "Not seen in these searches; check whether it lists coaching institutes in Pune before investing time." }
+    ]
+  },
+  "listicles": {
+    "$description": "Ranked 'top 10' pages. Many are run by competitors and rank themselves first; those cannot be joined, only outranked with our own guides. Independent ones can be pitched.",
+    "pages": [
+      { "url": "https://chaitanyas-academy.com/blog/best-iit-jee-coaching-institutes-in-pune", "owner": "competitor (Chaitanya's Academy)", "seen": ["ALLEN", "Aakash", "Bakliwal Tutorials"], "action": "Outrank with the D-SAP blog guide on choosing JEE coaching in Pune." },
+      { "url": "http://www.rajatacademy.com/top-5-iit-coaching-institutes-in-pune.php", "owner": "competitor (Rajat Academy)", "action": "Outrank." },
+      { "url": "https://toppersacademy.app/top-iit-jee-coaching-in-pune/", "owner": "independent app site", "action": "Pitch inclusion." },
+      { "url": "https://www.bestcoaching.app/top-iit-jee-coaching-institute-in-pune/", "owner": "independent app site", "action": "Pitch inclusion." },
+      { "url": "https://ranker-8ah.pages.dev/best-jee-coaching-in-pimpri-chinchwad", "owner": "auto-generated ranking, no stated method", "seen": ["Bakliwal Tutorials first"], "action": "Low value; ignore unless it starts ranking." },
+      { "url": "https://vocal.media/education/top-10-iit-jee-coaching-institutes-in-pimpri-chinchwad-r21igd0fhi", "owner": "user-written post", "seen": ["Chate Coaching Classes first", "Aakash"], "action": "Do not publish self-ranking listicles; publish factual guides on our own blog instead." },
+      { "url": "https://www.collegesimplified.in/post/top-neet-coaching-in-pune-2026-allen-vs-iib-vs-bakliwal-fees-review", "owner": "independent blog (comparisons)", "seen": ["ALLEN", "IIB", "Bakliwal Tutorials"], "action": "Pitch a JEE comparison including D-SAP with verified fees." }
+    ]
+  },
+  "press": {
+    "$description": "News coverage of results. Bakliwal Tutorials' JEE Advanced 2026 results ran on The Wire through the PTI PR wire. Use only verified results (facts.json results.verified), labelled as a press release where required.",
+    "examples": ["https://m.thewire.in/article/ptiprnews/bakliwal-tutorials-continues-excellent-run-in-jee-advanced-2026-145-students-secure-air-within-top-10000"],
+    "gates": ["results.verified"]
+  },
+  "community": {
+    "$description": "Places parents and students ask for advice. Answer as D-SAP, say so in the first line, give useful facts, no claims we cannot prove.",
+    "platforms": ["Careers360 questions", "Quora", "Reddit (Pune and JEE communities)", "Local parent WhatsApp groups (only where invited)"]
+  }
+}

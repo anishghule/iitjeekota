@@ -1,0 +1,72 @@
+---
+/**
+ * The area map as a picture (plan C4): the Mula river and the main roads from OpenStreetMap (built by
+ * make map), both centres, and each area with its route to its nearer centre. It is plain SVG, drawn
+ * here from data, so it needs no map service, no script and no third party. The area map section on
+ * the home page adds the picker on top of it; the contact page shows it as it is.
+ */
+import { strings, type Locale } from "../../i18n/index.ts";
+import { areaMap, localName, site } from "../../lib/data.ts";
+
+interface Props {
+  locale: Locale;
+}
+const { locale } = Astro.props;
+const t = strings(locale);
+const centres = new Map(site.centres.map((c) => [c.id, c]));
+const [, , width, height] = areaMap.viewBox;
+// Sizes in map units from packages/map/map.json (style); colours come from the surface roles below.
+const s = areaMap.style;
+const gap = s.area * 2;
+---
+<figure class="area-map__figure">
+  <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={t.areaMap.map}>
+    <g class="roads">
+      {areaMap.roads.map((r) => <path d={r.d} stroke-width={r.kind === "primary" ? s.road.primary : s.road.major} />)}
+    </g>
+    <g class="rivers" stroke-width={s.river}>{areaMap.rivers.map((d) => <path d={d} />)}</g>
+    <g class="routes" stroke-width={s.route} stroke-dasharray={s.routeDash}>
+      {areaMap.routes.map((r) => <path d={r.d} data-area={r.area} />)}
+    </g>
+    <g class="points" font-size={s.label}>
+      {areaMap.areas.filter((p) => !p.centre).map((p) => (
+        <g data-area={p.id}>
+          <circle cx={p.x} cy={p.y} r={s.area} />
+          <text x={p.x + gap} y={p.y + s.area}>{localName(site.areas.find((a) => a.id === p.id)?.names ?? {}, locale)}</text>
+        </g>
+      ))}
+    </g>
+    <g class="centres" font-size={s.centreLabel} stroke-width={s.centreRing}>
+      {areaMap.centres.map((c) => (
+        <g data-area={centres.get(c.id)?.area}>
+          <circle cx={c.x} cy={c.y} r={s.centre} />
+          <text x={c.x + s.centre + gap / 2} y={c.y - s.centre}>{localName(centres.get(c.id)?.places ?? {}, locale)}</text>
+        </g>
+      ))}
+    </g>
+  </svg>
+  <figcaption class="muted">{areaMap.attribution}</figcaption>
+</figure>
+
+<style>
+  .area-map__figure { margin: 0; display: grid; gap: var(--space-2); }
+  .area-map__figure svg { width: 100%; height: auto; border-radius: var(--radius-lg); background: var(--bg-sunken); box-shadow: var(--shadow-2); }
+  .area-map__figure figcaption { font-size: var(--type-small-size); text-align: end; }
+  .roads path { fill: none; stroke: var(--bg-raised); stroke-linecap: round; }
+  .rivers path { fill: none; stroke: var(--river); stroke-linecap: round; stroke-linejoin: round; }
+  .routes path {
+    fill: none;
+    stroke: var(--accent);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0;
+    transition: opacity var(--dur-base) var(--ease-enter);
+  }
+  .routes path[data-active] { opacity: 1; }
+  .points circle { fill: var(--text-muted); transition: fill var(--dur-base) var(--ease-enter); }
+  .points text, .centres text { fill: var(--text-muted); font-family: var(--font-body); }
+  .points [data-active] circle { fill: var(--text); }
+  .points [data-active] text { fill: var(--text); font-weight: var(--weight-semibold); }
+  .centres circle { fill: var(--action-bg); stroke: var(--accent); }
+  .centres text { fill: var(--accent-text); font-weight: var(--weight-bold); }
+</style>

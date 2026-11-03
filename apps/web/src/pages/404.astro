@@ -1,0 +1,17 @@
+---
+/**
+ * The not-found page of the whole site (dist/404.html), in every language at once; the head is in
+ * the site's default language (packages/site/site.json). Astro writes a language folder's 404 as a
+ * folder, which Cloudflare Pages would not find, so there is one, at the root.
+ */
+import NotFound from "../components/blocks/NotFound.astro";
+import Base from "../layouts/Base.astro";
+import { strings, type Locale } from "../i18n/index.ts";
+import { brandName, site } from "../lib/data.ts";
+import { notFoundHead } from "../lib/not-found.ts";
+
+const lang = site.defaultLocale as Locale;
+---
+<Base page={notFoundHead(strings(lang).notFound, brandName(lang))} locale={lang}>
+  <NotFound />
+</Base>
