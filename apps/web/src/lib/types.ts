@@ -61,7 +61,7 @@ export interface PageData {
   locale: string;
   template: string;
   status: "draft" | "ready";
-  meta: { title: string; description: string; canonical: string; alternates: Record<string, string> };
+  meta: { title: string; description: string; canonical: string; alternates: Record<string, string>; indexable: boolean };
   h1: string;
   intro: Rich[];
   breadcrumbs: Crumb[];
@@ -79,11 +79,11 @@ export interface PageData {
 /**
  * What the head and header need from a page. A page has an address of its own (canonical) and
  * language versions (alternates); an error page has neither, so it carries no canonical link and
- * is always noindex.
+ * is never indexable. indexable is decided once, by make web-data (packages/site/crawl.json).
  */
 export interface HeadData {
   route: string;
-  meta: { title: string; description: string; canonical?: string; alternates?: Record<string, string> };
+  meta: { title: string; description: string; canonical?: string; alternates?: Record<string, string>; indexable?: boolean };
   jsonld: unknown[];
 }
 

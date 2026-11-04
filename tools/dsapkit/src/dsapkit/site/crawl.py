@@ -1,6 +1,6 @@
 """robots.txt and the sitemaps, written from data (packages/site/crawl.json) and the pages that were exported.
 
-A sitemap lists only pages the site really builds, each with its hreflang alternates (every language
+A sitemap lists only pages the site really builds and lets be indexed, each with its hreflang alternates (every language
 that page exists in, including itself, and x-default). lastmod is written only where the page's own
 data says when it last changed: Google uses lastmod only if it is consistently accurate, and ignores
 priority and changefreq, so those are never written.
@@ -20,12 +20,19 @@ URLSET = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtm
 SITEMAP_INDEX = "sitemap.xml"
 
 
+def is_indexable(crawl: Mapping[str, Any], indexing: bool, route_id: str, locale: str) -> bool:
+    """Whether a built page may be indexed: the site is launched and crawl.json lets this language's page in."""
+    allowed = crawl["indexable"].get(locale, [])
+    return indexing and (allowed == "all" or route_id in allowed)
+
+
 def robots_txt(site: Site, crawl: Mapping[str, Any], indexing: bool) -> str:
     """Before launch nothing may be crawled; after it, the policy in crawl.json."""
     if not indexing:
         return "# Not launched yet: every page is also noindex.\nUser-agent: *\nDisallow: /\n"
     signal = ", ".join(f"{k}={v}" for k, v in crawl["contentSignal"].items())
-    lines = ["User-agent: *", f"Content-Signal: {signal}", "Allow: /", *(f"Disallow: {path}" for path in crawl["disallow"])]
+    notice = [f"# {line}" if line else "" for line in crawl["contentSignalNotice"]]
+    lines = [*notice, "", "User-agent: *", f"Content-Signal: {signal}", "Allow: /", *(f"Disallow: {path}" for path in crawl["disallow"])]
     for agent in crawl["blockedAgents"]:
         lines += ["", f"User-agent: {agent}", "Disallow: /"]
     lines += ["", f"Sitemap: {site.origin}/{SITEMAP_INDEX}"]

@@ -3,7 +3,7 @@
   "status": "draft",
   "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
-    "title": "JEE मेन अभ्यासक्रम {{syllabus:main#year}}, धडा दर धडा | D-SAP",
+    "title": "JEE अभ्यासक्रम {{syllabus:main#year}}: धडा दर धडा | D-SAP",
     "description": "JEE मेन {{syllabus:main#year}} आणि JEE ॲडव्हान्स्ड अभ्यासक्रमातील सर्व {{syllabus:all#chapters}} धडे एका सारणीत, प्रत्येक धड्याचे टॉपिक आणि JEE ॲडव्हान्स्डमध्ये जास्तीचे काय आहे त्यासह."
   },
   "h1": "JEE मेन अभ्यासक्रम {{syllabus:main#year}} आणि JEE ॲडव्हान्स्ड, धडा दर धडा",

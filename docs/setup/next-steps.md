@@ -42,7 +42,7 @@ The workflow is `.github/workflows/deploy.yml`. Cloudflare builds nothing: GitHu
 - [ ] Hindi and Marathi reviewed and rewritten by native writers. Drafts are marked in `docs/content/status.md`.
 - [ ] Confirm the AI crawler policy in `packages/site/crawl.json` (it follows dsapghuletutorials.com), and whether `llms.txt` stays unbuilt. Google says it has no effect on Search.
 - [ ] Replace placeholder photos with real ones. Student photos need the parents' written consent. Every image and video must be stripped of hidden data (`make media-fetch`, `make media-encode`).
-- [ ] Set `indexing` on in `apps/web/src/config/site.json` and let `robots.txt` open, as the last step.
+- [x] `indexing` is on in `apps/web/src/config/site.json`; `crawl.json` `indexable` opens English and the Hindi and Marathi home pages. To open another Hindi or Marathi page after native review, add its route id there.
 - [ ] Move the HSTS stage up in `packages/site/security.json` after the site has run clean for a while.
 - [ ] Run `make docs-drift` to compare Google's structured data docs with `packages/site/jsonld-rules.json`. It is due quarterly and before any schema change. `make site` fails when the rules are over 90 days old.
 - [ ] In Search Console: add the sitemaps, inspect a few URLs, and watch the structured data reports for the first weeks.

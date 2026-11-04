@@ -4,7 +4,7 @@ import xml.etree.ElementTree as ET
 from dsapkit.errors import BuildError
 from dsapkit.jsonio import read_json
 from dsapkit.paths import Paths
-from dsapkit.site.crawl import robots_txt, sitemap_files
+from dsapkit.site.crawl import is_indexable, robots_txt, sitemap_files
 from dsapkit.site.drift import Drift, check_drift, live_date, require_no_drift, watched_pages
 from dsapkit.site.model import load_site
 
@@ -26,7 +26,10 @@ class RobotsTest(unittest.TestCase):
 
     def test_after_launch_it_follows_the_policy_in_crawl_json(self):
         text = robots_txt(self.site, CRAWL, indexing=True)
-        self.assertIn("User-agent: *\nContent-Signal: search=yes, ai-input=yes, ai-train=no\nAllow: /\nDisallow: /api/", text)
+        self.assertIn("\n\nUser-agent: *\nContent-Signal: search=yes, ai-input=yes, ai-train=no\nAllow: /\nDisallow: /api/", text)
+        self.assertTrue(text.startswith("# As a condition of accessing this website, you agree to abide by the following\n# content signals:\n\n# (a)"))
+        self.assertIn("# AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.\n\nUser-agent: *", text)
+        self.assertTrue(all(line.startswith("#") or not line.strip() for line in text.split("User-agent: *")[0].splitlines()))
         for agent in CRAWL["blockedAgents"]:
             self.assertIn(f"User-agent: {agent}\nDisallow: /\n", text)
         self.assertTrue(text.rstrip().endswith("Sitemap: https://iitjeekota.com/sitemap.xml"))
@@ -34,6 +37,20 @@ class RobotsTest(unittest.TestCase):
     def test_search_and_answer_agents_are_not_blocked(self):
         for agent in ("Googlebot", "OAI-SearchBot", "ChatGPT-User", "Claude-SearchBot", "Claude-User", "PerplexityBot"):
             self.assertNotIn(agent, CRAWL["blockedAgents"])
+
+
+class IndexableTest(unittest.TestCase):
+    def test_nothing_is_indexable_before_launch(self):
+        self.assertFalse(is_indexable(CRAWL, False, "home", "en"))
+
+    def test_english_is_open_and_hindi_and_marathi_open_only_their_home_page(self):
+        self.assertTrue(is_indexable(CRAWL, True, "programmes", "en"))
+        for loc in ("hi", "mr"):
+            self.assertTrue(is_indexable(CRAWL, True, "home", loc))
+            self.assertFalse(is_indexable(CRAWL, True, "programmes", loc))
+
+    def test_a_language_the_policy_does_not_name_is_closed(self):
+        self.assertFalse(is_indexable(CRAWL, True, "home", "ta"))
 
 
 class SitemapTest(unittest.TestCase):

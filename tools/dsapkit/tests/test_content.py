@@ -122,6 +122,16 @@ class StructureTest(unittest.TestCase):
         self.assertTrue(any("meta.title is 70 characters" in m for m in found))
         self.assertTrue(any("primary keyword" in m for m in found))
 
+    def test_a_navbar_page_title_starts_with_the_navbar_word_in_its_language(self):
+        content, site = project()
+        for locale, label in (("en", "Fees and Batches"), ("hi", "फीस और बैच"), ("mr", "फी आणि बॅच")):
+            page = content.pages[("fees-and-batches", locale)]
+            self.assertTrue(page.title.startswith(label), page.title)
+            content.pages[("fees-and-batches", locale)] = replace(page, title="Fees in Pune | D-SAP")
+        found = messages(check_content(content, site), "error")
+        self.assertTrue(any("navbar word 'Fees and Batches'" in m for m in found))
+        self.assertTrue(any("navbar word 'फीस और बैच'" in m for m in found))
+
     def test_page_for_a_later_phase_is_refused(self):
         content, site = project()
         content.pages = {("privacy-policy", "en"): replace(area_page("area-aundh", "x"), route="privacy-policy")}

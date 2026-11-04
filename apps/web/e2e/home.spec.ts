@@ -109,11 +109,11 @@ test("the root redirects to English", async ({ page }) => {
   await expect(page).toHaveURL(/\/en\/$/);
 });
 
-test("home renders every approved section without errors, and is noindex before launch", async ({ page }) => {
+test("home renders every approved section without errors, and may be indexed", async ({ page }) => {
   const errors = await noErrors(page);
   await page.goto("/en/");
   await expect(page.locator("h1")).toHaveCount(1);
-  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", /noindex/);
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute("content", "max-image-preview:large");
   for (const id of ["kota-system", "kota-to-pune", "classroom", "portal", "live-test", "report", "syllabus", "journey", "area-map", "programmes", "questions", "enquiry"]) {
     await expect(page.locator(`section#${id}`)).toHaveCount(1);
   }

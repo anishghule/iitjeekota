@@ -1,6 +1,33 @@
 {
-  "$description": "What crawlers may fetch (make web-data writes robots.txt and the sitemaps from this and the exported pages). Until apps/web/src/config/site.json sets indexing to true, robots.txt disallows everything and every page is noindex. After launch it follows dsapghuletutorials.com's robots.txt (read 2026-11-01): search and AI answers allowed, training refused. Content-Signal is Cloudflare's published convention; Google has not said it honours it, so the blocked agents are what enforce it. Search and user-triggered agents (Googlebot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot) are not listed, so User-agent: * allows them. Google-Extended only controls Gemini training and grounding, not Search or AI Overviews.",
+  "$description": "What crawlers may fetch (make web-data writes robots.txt and the sitemaps from this and the exported pages). Until apps/web/src/config/site.json sets indexing to true, robots.txt disallows everything and every page is noindex. After launch it follows dsapghuletutorials.com's robots.txt (read 2026-11-04, when it added Applebot-Extended, CloudflareBrowserRenderingCrawler and meta-externalagent to the blocked agents): search and AI answers allowed, training refused. Content-Signal is Cloudflare's published convention; Google has not said it honours it, so the blocked agents are what enforce it. Search and user-triggered agents (Googlebot, OAI-SearchBot, ChatGPT-User, Claude-SearchBot, Claude-User, PerplexityBot) are not listed, so User-agent: * allows them. Google-Extended only controls Gemini training and grounding, not Search or AI Overviews. indexable: which pages of each language may be indexed once indexing is on ('all', or a list of route ids). A page outside it is noindex, left out of the sitemaps and out of every page's hreflang set, and robots.txt must still let it be crawled or Google never sees the noindex (Google robots meta tag docs). English is the reviewed language; Hindi and Marathi open only their home pages while their other pages are drafts (docs/content/status.md), so Search shows a language entry point without drafts competing with the English pages.",
+  "indexable": { "en": "all", "hi": ["home"], "mr": ["home"] },
   "disallow": ["/api/"],
   "contentSignal": { "search": "yes", "ai-input": "yes", "ai-train": "no" },
-  "blockedAgents": ["GPTBot", "CCBot", "Google-Extended", "ClaudeBot", "anthropic-ai", "cohere-ai", "Bytespider", "Diffbot", "Omgilibot", "Amazonbot"]
+  "contentSignalNotice": [
+    "As a condition of accessing this website, you agree to abide by the following",
+    "content signals:",
+    "",
+    "(a)  If a Content-Signal = yes, you may collect content for the corresponding",
+    "     use.",
+    "(b)  If a Content-Signal = no, you may not collect content for the",
+    "     corresponding use.",
+    "(c)  If the website operator does not include a Content-Signal for a",
+    "     corresponding use, the website operator neither grants nor restricts",
+    "     permission via Content-Signal with respect to the corresponding use.",
+    "",
+    "The content signals and their meanings are:",
+    "",
+    "search:   building a search index and providing search results (e.g., returning",
+    "          hyperlinks and short excerpts from your website's contents). Search does not",
+    "          include providing AI-generated search summaries.",
+    "ai-input: inputting content into one or more AI models (e.g., retrieval",
+    "          augmented generation, grounding, or other real-time taking of content for",
+    "          generative AI search answers).",
+    "ai-train: training or fine-tuning AI models.",
+    "",
+    "ANY RESTRICTIONS EXPRESSED VIA CONTENT SIGNALS ARE EXPRESS RESERVATIONS OF",
+    "RIGHTS UNDER ARTICLE 4 OF THE EUROPEAN UNION DIRECTIVE 2019/790 ON COPYRIGHT",
+    "AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET."
+  ],
+  "blockedAgents": ["GPTBot", "CCBot", "Google-Extended", "ClaudeBot", "anthropic-ai", "cohere-ai", "Bytespider", "Diffbot", "Omgilibot", "Amazonbot", "Applebot-Extended", "CloudflareBrowserRenderingCrawler", "meta-externalagent"]
 }

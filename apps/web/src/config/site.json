@@ -1,4 +1,4 @@
 {
-  "$description": "Site settings that are not copy or data. indexing stays false until launch (plan Phase 10): every page carries noindex until then.",
-  "indexing": false
+  "$description": "Site settings that are not copy or data. indexing is the launch switch: false makes every page noindex and robots.txt disallow all; true lets the pages packages/site/crawl.json lists as indexable be indexed.",
+  "indexing": true
 }
