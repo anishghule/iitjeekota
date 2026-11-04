@@ -26,7 +26,10 @@ class RobotsTest(unittest.TestCase):
 
     def test_after_launch_it_follows_the_policy_in_crawl_json(self):
         text = robots_txt(self.site, CRAWL, indexing=True)
-        self.assertIn("User-agent: *\nContent-Signal: search=yes, ai-input=yes, ai-train=no\nAllow: /\nDisallow: /api/", text)
+        self.assertIn("\n\nUser-agent: *\nContent-Signal: search=yes, ai-input=yes, ai-train=no\nAllow: /\nDisallow: /api/", text)
+        self.assertTrue(text.startswith("# As a condition of accessing this website, you agree to abide by the following\n# content signals:\n\n# (a)"))
+        self.assertIn("# AND RELATED RIGHTS IN THE DIGITAL SINGLE MARKET.\n\nUser-agent: *", text)
+        self.assertTrue(all(line.startswith("#") or not line.strip() for line in text.split("User-agent: *")[0].splitlines()))
         for agent in CRAWL["blockedAgents"]:
             self.assertIn(f"User-agent: {agent}\nDisallow: /\n", text)
         self.assertTrue(text.rstrip().endswith("Sitemap: https://iitjeekota.com/sitemap.xml"))

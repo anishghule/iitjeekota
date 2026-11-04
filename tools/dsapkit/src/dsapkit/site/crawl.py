@@ -31,7 +31,8 @@ def robots_txt(site: Site, crawl: Mapping[str, Any], indexing: bool) -> str:
     if not indexing:
         return "# Not launched yet: every page is also noindex.\nUser-agent: *\nDisallow: /\n"
     signal = ", ".join(f"{k}={v}" for k, v in crawl["contentSignal"].items())
-    lines = ["User-agent: *", f"Content-Signal: {signal}", "Allow: /", *(f"Disallow: {path}" for path in crawl["disallow"])]
+    notice = [f"# {line}" if line else "" for line in crawl["contentSignalNotice"]]
+    lines = [*notice, "", "User-agent: *", f"Content-Signal: {signal}", "Allow: /", *(f"Disallow: {path}" for path in crawl["disallow"])]
     for agent in crawl["blockedAgents"]:
         lines += ["", f"User-agent: {agent}", "Disallow: /"]
     lines += ["", f"Sitemap: {site.origin}/{SITEMAP_INDEX}"]
