@@ -3,7 +3,7 @@
   "status": "draft",
   "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
-    "title": "JEE Main syllabus {{syllabus:main#year}}, chapter by chapter | D-SAP",
+    "title": "JEE Syllabus {{syllabus:main#year}}: Chapter by Chapter | D-SAP",
     "description": "All {{syllabus:all#chapters}} chapters of the JEE Main {{syllabus:main#year}} and JEE Advanced syllabus in one table, with each chapter's topics and what JEE Advanced adds."
   },
   "h1": "JEE Main syllabus {{syllabus:main#year}} and JEE Advanced, chapter by chapter",

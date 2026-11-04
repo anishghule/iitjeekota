@@ -1,6 +1,6 @@
 """robots.txt and the sitemaps, written from data (packages/site/crawl.json) and the pages that were exported.
 
-A sitemap lists only pages the site really builds, each with its hreflang alternates (every language
+A sitemap lists only pages the site really builds and lets be indexed, each with its hreflang alternates (every language
 that page exists in, including itself, and x-default). lastmod is written only where the page's own
 data says when it last changed: Google uses lastmod only if it is consistently accurate, and ignores
 priority and changefreq, so those are never written.
@@ -18,6 +18,12 @@ from .model import Site
 XML = '<?xml version="1.0" encoding="UTF-8"?>\n'
 URLSET = '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n'
 SITEMAP_INDEX = "sitemap.xml"
+
+
+def is_indexable(crawl: Mapping[str, Any], indexing: bool, route_id: str, locale: str) -> bool:
+    """Whether a built page may be indexed: the site is launched and crawl.json lets this language's page in."""
+    allowed = crawl["indexable"].get(locale, [])
+    return indexing and (allowed == "all" or route_id in allowed)
 
 
 def robots_txt(site: Site, crawl: Mapping[str, Any], indexing: bool) -> str:

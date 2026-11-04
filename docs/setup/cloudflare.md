@@ -100,6 +100,12 @@ If D-SAP will use email on this domain, skip this and tell Claude which mail ser
 
 **Manage Account**, then **Members**, invite one more trusted D-SAP person as Administrator, so the account never depends on one login.
 
-## Later (Phase 6)
+## 13. The Pages project, created once
 
-Deployment will connect Cloudflare to the GitHub repository, so a merge to `main` that you make publishes the site and other branches publish noindex previews. Claude will give the exact steps when the site build exists. No Cloudflare API token is needed for that.
+GitHub Actions builds the site and uploads the finished files (`.github/workflows/deploy.yml`); Cloudflare builds nothing and is not connected to the repository. The upload needs a Pages project named `iitjeekota`, created as **Upload assets** (a direct upload, not Git), with `main` as its production branch.
+
+1. **Workers & Pages**, **Create application**, then the **Pages** option (look for "Looking to deploy Pages? Get started"), then **Upload assets**.
+2. Project name `iitjeekota`, then **Create project**. Skip the first upload.
+3. Or from a terminal: `npx wrangler@4.151.1 pages project create iitjeekota --production-branch=main` (it opens a browser to log in).
+
+The API token (My Profile, API Tokens, custom token, Account, Cloudflare Pages, Edit) and the Account ID are GitHub secrets. Add them to the `preview` and `production` environments (`docs/setup/security.md`, "Deploying and the headers"). A merge to `main` publishes after you approve the `production` environment; other branches publish noindex previews.

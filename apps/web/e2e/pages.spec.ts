@@ -37,6 +37,20 @@ test("an address that does not exist gets the 404 page with status 404, in every
   }
 });
 
+test("English pages and the Hindi and Marathi home pages are indexable; other translations are noindex", async ({ page }) => {
+  for (const path of ["/en/", "/en/fees-and-batches/", "/hi/", "/mr/"]) {
+    await page.goto(path);
+    await expect(page.locator('meta[name="robots"]'), path).toHaveAttribute("content", "max-image-preview:large");
+  }
+  for (const path of ["/hi/programmes/", "/mr/contact/"]) {
+    await page.goto(path);
+    await expect(page.locator('meta[name="robots"]'), path).toHaveAttribute("content", /noindex/);
+    await expect(page.locator('link[rel="alternate"][hreflang]'), path).toHaveCount(0);
+  }
+  await page.goto("/en/contact/");
+  await expect(page.locator('link[rel="alternate"][hreflang]')).toHaveCount(2); // en-IN and x-default only
+});
+
 test("/programmes/ links every programme by its own heading and compares them in a table", async ({ page }) => {
   const errors = await open(page, "/en/programmes/");
   await expect(page.locator("h1")).toHaveCount(1);

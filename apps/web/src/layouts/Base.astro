@@ -12,7 +12,6 @@ import "../styles/base.css";
 import { tokens } from "@dsap/tokens";
 import preload from "@dsap/tokens/fonts.preload.json";
 import sprite from "@dsap/icons/sprite.svg?raw";
-import settings from "../config/site.json";
 import features from "../config/features.json";
 import { strings, type Locale } from "../i18n/index.ts";
 import { brandName, mediaFile, site } from "../lib/data.ts";
@@ -39,9 +38,9 @@ const jsonld = page.jsonld.map((graph) => JSON.stringify(graph).replace(/</g, "\
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{page.meta.title}</title>
     <meta name="description" content={page.meta.description} />
-    {/* Before launch nothing is indexed. After it, a large image preview is allowed (Google robots meta tag docs).
-        A page with no address of its own (the not-found page) is never indexed. */}
-    <meta name="robots" content={settings.indexing && page.meta.canonical ? "max-image-preview:large" : "noindex, nofollow"} />
+    {/* make web-data decides (indexing in config/site.json and crawl.json): an indexable page may show a large image
+        preview (Google robots meta tag docs); every other page, and the not-found page, is noindex. */}
+    <meta name="robots" content={page.meta.indexable ? "max-image-preview:large" : "noindex, nofollow"} />
     {page.meta.canonical && <link rel="canonical" href={page.meta.canonical} />}
     {Object.entries(page.meta.alternates ?? {}).map(([code, url]) => <link rel="alternate" hreflang={code} href={url} />)}
     {preload.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}

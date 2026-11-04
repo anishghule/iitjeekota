@@ -121,6 +121,24 @@ These anchors show as plain text until the page goes live.
 - home (mr): questions.questions[0]: links to powered-by-kota, not live yet (shown as plain text)
 - pune (mr): questions.questions[2]: links to powered-by-kota, not live yet (shown as plain text)
 
+## Warnings
+
+Draft pages that would fail the checks if marked ready.
+
+- centres (en): primary keyword 'd-sap ghule tutorials centres' is in neither the title nor the h1
+- contact (en): primary keyword 'd-sap ghule tutorials contact' is in neither the title nor the h1
+- fees-and-batches (en): primary keyword 'jee coaching fees in pune' is in neither the title nor the h1
+- powered-by-kota (en): primary keyword 'kota institute partnership pune' is in neither the title nor the h1
+- results (en): primary keyword 'd-sap ghule tutorials jee results' is in neither the title nor the h1
+- centres (hi): primary keyword 'D-SAP घुले ट्यूटोरियल्स के केंद्र' is in neither the title nor the h1
+- contact (hi): primary keyword 'D-SAP घुले ट्यूटोरियल्स संपर्क' is in neither the title nor the h1
+- fees-and-batches (hi): primary keyword 'पुणे में JEE कोचिंग फीस' is in neither the title nor the h1
+- results (hi): primary keyword 'D-SAP घुले ट्यूटोरियल्स JEE परिणाम' is in neither the title nor the h1
+- centres (mr): primary keyword 'D-SAP घुले ट्यूटोरियल्सची केंद्रे' is in neither the title nor the h1
+- contact (mr): primary keyword 'D-SAP घुले ट्यूटोरियल्स संपर्क क्रमांक' is in neither the title nor the h1
+- fees-and-batches (mr): primary keyword 'पुण्यातील JEE क्लासेस फी' is in neither the title nor the h1
+- results (mr): primary keyword 'D-SAP घुले ट्यूटोरियल्स JEE निकाल' is in neither the title nor the h1
+
 ## Most alike pages
 
 Share of 4-word runs two pages have in common, for area, centre, programme, pillar pages. The limit is 20%.

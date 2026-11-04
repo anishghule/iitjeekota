@@ -3,7 +3,7 @@
   "status": "draft",
   "dates": { "published": "2026-11-02", "modified": "2026-11-02" },
   "meta": {
-    "title": "JEE मेन सिलेबस {{syllabus:main#year}}, चैप्टर दर चैप्टर | D-SAP",
+    "title": "JEE सिलेबस {{syllabus:main#year}}: चैप्टर दर चैप्टर | D-SAP",
     "description": "JEE मेन {{syllabus:main#year}} और JEE एडवांस्ड सिलेबस के सभी {{syllabus:all#chapters}} चैप्टर एक टेबल में, हर चैप्टर के टॉपिक और JEE एडवांस्ड में जो अतिरिक्त है उसके साथ।"
   },
   "h1": "JEE मेन सिलेबस {{syllabus:main#year}} और JEE एडवांस्ड, चैप्टर दर चैप्टर",

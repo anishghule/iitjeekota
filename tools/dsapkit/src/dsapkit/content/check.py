@@ -175,6 +175,10 @@ def _check_meta(page: Page, route: Route, content: Content, site: Site) -> list[
     m = content.meta
     if not title or len(title) > m["titleMax"]:
         out.append(("error", f"meta.title is {len(title)} characters, keep 1 to {m['titleMax']}"))
+    label = {**route.names, **route.nav_names}.get(page.locale) if route.nav else None
+    if label and not title.startswith(label):
+        # Google builds sitelinks from titles and anchor text (sitelinks docs), so a navbar page opens with its navbar word.
+        out.append(("error", f"meta.title must start with the navbar word {label!r}"))
     if not m["descriptionMin"] <= len(description) <= m["descriptionMax"]:
         out.append(("error", f"meta.description is {len(description)} characters, keep {m['descriptionMin']} to {m['descriptionMax']}"))
     if not page.h1:

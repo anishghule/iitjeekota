@@ -28,7 +28,7 @@ from ..images.info import media_size
 from ..jsonio import GENERATED, read_json, reset_dir, write_bytes, write_json, write_text
 from ..media.library import load_library
 from ..paths import Paths
-from ..site.crawl import robots_txt, sitemap_files
+from ..site.crawl import is_indexable, robots_txt, sitemap_files
 from ..site.jsonld import Finding, PageGraph, check_graphs
 from ..site.jsonld_build import Brand, PageInfo, build_graph
 from ..site.report import structured_data_results_doc
@@ -407,11 +407,16 @@ def export_web(paths: Paths, site: Site, content: Content, out_dir: Path | None 
     media = _media(paths, public)
     brand = _brand(identity, statics)
     graphs: list[PageGraph] = []
+    crawl = read_json(paths.site / "crawl.json")
+    indexing = bool(read_json(paths.web_site_config)["indexing"])
+    indexable = {key for key in pages if is_indexable(crawl, indexing, *key)}
     for (rid, loc), page in pages.items():
         route = site.routes[rid]
-        exported = {site.url(rid, other) for other in route.locales if (rid, other) in pages}
+        # hreflang sets hold only pages Search may show; a noindex page has none (Google: every version lists all the others).
+        exported = {site.url(rid, other) for other in route.locales if (rid, other) in indexable}
         page["meta"]["canonical"] = site.url(rid, loc)
-        page["meta"]["alternates"] = {code: url for code, url in alternates(site, route).items() if url in exported}
+        page["meta"]["indexable"] = (rid, loc) in indexable
+        page["meta"]["alternates"] = {code: url for code, url in alternates(site, route).items() if url in exported} if (rid, loc) in indexable else {}
         built = build_graph(site, brand, route, loc, _page_info(site, content, media, page))
         graphs.append(PageGraph(rid, loc, built))
         page["jsonld"] = [built.graph]
@@ -425,8 +430,7 @@ def export_web(paths: Paths, site: Site, content: Content, out_dir: Path | None 
         write_text(paths.seo_docs / "structured-data-results.md", structured_data_results_doc(report.findings, report.pages))
 
     modified = {(rid, loc): _copy_of(content, rid, loc).modified for rid, loc in pages}
-    crawl = read_json(paths.site / "crawl.json")
-    write_text(public / "robots.txt", robots_txt(site, crawl, bool(read_json(paths.web_site_config)["indexing"])))
+    write_text(public / "robots.txt", robots_txt(site, crawl, indexing))
     security = read_json(paths.site / "security.json")
     weak = check_security(security) + check_security_txt(security, date.today())
     if weak:
@@ -434,7 +438,7 @@ def export_web(paths: Paths, site: Site, content: Content, out_dir: Path | None 
     write_text(public / ".well-known" / "security.txt", security_txt(site, security))
     write_text(public / "_headers", headers_file(security))
     write_text(public / "_redirects", redirects_file(site))
-    for name, xml in sitemap_files(site, set(pages), modified).items():
+    for name, xml in sitemap_files(site, indexable, modified).items():
         write_text(public / name, xml)
 
     write_json(data / "site.json", {

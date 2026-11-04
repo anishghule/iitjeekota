@@ -137,6 +137,26 @@ class ExportTest(unittest.TestCase):
         for route, locale in self.report.pages:
             self.assertIn("dates", self.page(locale, route))
 
+    def test_english_and_the_other_home_pages_are_indexable_and_other_translations_are_not(self):
+        self.assertTrue(self.page("en", "programmes")["meta"]["indexable"])
+        self.assertTrue(self.page("hi", "home")["meta"]["indexable"])
+        self.assertFalse(self.page("hi", "programmes")["meta"]["indexable"])
+        self.assertEqual(self.page("hi", "programmes")["meta"]["alternates"], {})
+
+    def test_hreflang_sets_hold_only_indexable_pages_and_are_the_same_on_each_member(self):
+        home = {loc: self.page(loc, "home")["meta"]["alternates"] for loc in ("en", "hi", "mr")}
+        self.assertEqual(home["en"], home["hi"])
+        self.assertEqual(home["en"], home["mr"])
+        self.assertEqual(set(home["en"]), {"en-IN", "hi-IN", "mr-IN", "x-default"})
+        self.assertEqual(set(self.page("en", "programmes")["meta"]["alternates"]), {"en-IN", "x-default"})
+
+    def test_the_sitemaps_list_exactly_the_indexable_pages(self):
+        root = Path(self.tmp.name)
+        sitemaps = {p.name: p.read_text(encoding="utf-8") for p in root.rglob("sitemap-*.xml")}
+        self.assertEqual(sitemaps["sitemap-hi.xml"].count("<url>"), 1)
+        self.assertEqual(sitemaps["sitemap-mr.xml"].count("<url>"), 1)
+        self.assertNotIn("/hi/programmes/", "".join(sitemaps.values()))
+
     def test_the_contact_page_has_centres_and_no_embedded_map(self):
         contact = self.page("en", "contact")
         self.assertEqual([s["id"] for s in contact["sections"]], ["visit", "enquiry"])
@@ -175,7 +195,10 @@ class ExportTest(unittest.TestCase):
             page = self.page(locale, route)
             modified = page["dates"]["modified"]
             url = self.site.url(route, locale)
-            self.assertEqual(sitemap.get(url) or None, modified, url)
+            if page["meta"]["indexable"]:  # a page kept out of Search is not in the sitemap
+                self.assertEqual(sitemap.get(url) or None, modified, url)
+            else:
+                self.assertNotIn(url, sitemap)
             webpage = next(n for n in page["jsonld"][0]["@graph"] if n["@type"] in ("WebPage", "CollectionPage", "AboutPage", "ContactPage"))
             self.assertEqual(webpage.get("dateModified"), timestamp(modified, offsets) if modified else None, url)
 
